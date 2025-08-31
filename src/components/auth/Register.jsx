@@ -1,6 +1,8 @@
 import {useState} from 'react';
 import {Link} from 'react-router-dom'
 import '../../css/Common.css';
+import '../../css/Register.css';
+import mascotImage from '../../assets/images/mascot-normal-mouth.png';
 
 const Register = () => {
     const [formData, setFormData ] = useState({
@@ -105,17 +107,20 @@ const Register = () => {
 
             <div className = "register-right-section">
                 <div className ="register-right-card">
-                    <div className="register-right-header">
-                        <h1> Vegie</h1>
+                    <div className="veggie-logo">
+                        <h1>Vegie</h1>
+                        <div className="mascot-container">
+                        <p className="mascot-text">Bạn Đã Có Tài Khoản?</p>
+                        <Link to="/dang-nhap" className="d-btn register-link-btn d-btn-font">
+                        <span>Đăng nhập</span></Link>
+                        </div>
+                        <div className="register-logo">
+                        <img 
+                        src={mascotImage}
+                        alt="Mascot image"
+                        className ="logo-c"></img>
+                        </div>
                     </div>
-
-                    <div className = "register-right-title">
-                        <h3> Bạn Đã Có Tài Khoản?</h3>
-                    </div>
-
-                    <Link to = "/dang-nhap" className = "login-link">
-                        Đăng nhập
-                    </Link>
                 </div>
             </div>
         </div>

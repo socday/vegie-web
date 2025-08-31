@@ -18,7 +18,8 @@ function App() {
         <Router>
           <NavBar/>
           <Routes>
-            <Route path='/veggie-care' element={<Home/>} />
+            <Route path='/vegie-care' element={<Home/>} />
+            <Route path='/gioi-thieu' element={<Home/>} />
             <Route path='/dang-nhap' element={<Login/>} />
             <Route path='/khoi-phuc-mat-khau' element={<PasswordRecovery/>} />
             <Route path='/stage-notification' element={<StageNotification/>} />

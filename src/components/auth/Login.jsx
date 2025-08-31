@@ -27,14 +27,15 @@ const Login = () => {
     <div className="login-page">
       <div className="login-left-section">
         <div className="login-left-card">
-          <div className="veggie-logo">
+          <div className="vegie-logo">
             <h1>Vegie</h1>
             <div className="mascot-container">
               <p className="mascot-text">Bạn Chưa Có Tài Khoản?</p>
               <Link to="/dang-ky" className="d-btn d-btn-font register-link-btn">
               <span>Đăng ký</span></Link>
             </div>
-            <div className="logo">
+            <div className="login-logo">
+              <div className = "hover-logo"></div>
               <img 
               src={mascotImage}
               alt="Mascot image"

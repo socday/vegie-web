@@ -3,8 +3,8 @@
   background-image: none;
   color: #27600B;
   cursor: pointer;
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 1.2rem;
+  font-family:Inter, sans-serif; 
+  font-size: 0.8rem;
   line-height: 1.5;
   margin: 0;
   padding: 0;
@@ -29,14 +29,15 @@
 .d-btn::after {
   content: "";
   position: absolute;
-  bottom: 0;
-  left: 50%;
+  bottom: -50%;
+  left: 90%;
   width: 0%;
   height: 0%;
   background: #27600B;
+  /* border-radius: 50%; */
   border-radius: 999px 999px 0px 0px;
   transform: translateX(-50%);
-  transition: width 0.5s ease, height 0.5s ease, border-radius 0.5s ease;
+  transition: width 0.3s ease, height 0.3s ease, border-radius 0.3s  linear;
   z-index: 0;
 }
 
@@ -47,10 +48,10 @@
 .d-btn:hover::after {
   width: 200%;
   height: 500%;
-  border-radius: 0;
+  border-radius: 0%;
 }
 
 .d-btn span { 
   position: relative; 
-  z-index: 1; /* keep text above */
+  z-index: 1;
 }
