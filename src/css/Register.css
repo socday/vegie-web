@@ -6,7 +6,6 @@
   position: relative;
 }
 
-/* Left section with mascot */
 .register-right-section {
   position: relative;
   flex: 1;
@@ -30,6 +29,7 @@
 
 .veggie-logo {
   position: relative;
+  text-align: center;
 }
 
 .register-logo{
@@ -62,7 +62,7 @@
 }
 
 .mascot-container {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
   margin-top: 1rem;
@@ -99,4 +99,13 @@
   position: relative;
   flex: 1;
   margin: 2rem 2rem 2rem 0rem;
+}
+
+.register-left-card {
+  display: flex;
+  position: relative;
+}
+
+.register-left-card h3{
+  
 }

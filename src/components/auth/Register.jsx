@@ -29,9 +29,7 @@ const Register = () => {
         <div className = "register-page">
             <div className = "register-left-section">
                 <div className = "register-left-card">
-                    <div className = "register-left-header">
-                        <h3> Đăng ký</h3>
-                    </div>
+                    <h3> Đăng ký</h3>
                     <form onSubmit= {handleSubmit} className="register-form">
                         <div className = "form-group">
                             <input 
