@@ -35,8 +35,7 @@
 .register-logo{
   position: absolute;
   top: 25%;
-  left: -25%;
-  display: inline-block;
+  left: -7%;
   justify-content: center;
   align-items: center;
   z-index: 1;
@@ -53,7 +52,12 @@
   transform: scale(1.2);
 }
 
-.veggie-logo h1 {
+.vegie-logo {
+  display: inline-block;
+  text-align: center;
+}
+
+.vegie-logo h1 {
   margin-top: -3rem;
   font-size: 14rem;
   color: #27600B;
@@ -103,9 +107,15 @@
 
 .register-left-card {
   display: flex;
+  flex-direction: column;
   position: relative;
+  text-align: center;
 }
 
-.register-left-card h3{
-  
+.register-left-card {
+  display:contents;
+}
+
+.register-form{
+  flex-wrap: wrap;
 }

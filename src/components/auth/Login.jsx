@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../css/Login.css';
-import '../../css/Common.css';
 import mascotImage from '../../assets/images/mascot-normal-mouth.png';
 
 const Login = () => {
@@ -35,7 +34,6 @@ const Login = () => {
               <span>Đăng ký</span></Link>
             </div>
             <div className="login-logo">
-              <div className = "hover-logo"></div>
               <img 
               src={mascotImage}
               alt="Mascot image"

@@ -28,14 +28,10 @@
   z-index: 0;
 }
 
-.vegie-logo {
-  position: relative;
-}
-
 .login-logo{
   position: absolute;
   top: 25%;
-  left: -20%;
+  left: -7%;
   display: inline-block;
   justify-content: center;
   align-items: center;
@@ -73,7 +69,7 @@
 }
 
 .mascot-container {
-  display:contents;
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
   margin-top: 1rem;
@@ -140,8 +136,7 @@
   position: relative;
 }
 
-.login-form input[type="text"],
-.login-form input[type="password"] {
+.login-form input {
   width: 100%;
   padding: 0.75rem 1rem;
   border: 1px solid #ced4da;
