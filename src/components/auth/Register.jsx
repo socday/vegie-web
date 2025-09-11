@@ -101,6 +101,9 @@ const Register = () => {
                             />
                         </div>
                         <div className = "coupon-form-group">
+                            <span className = "r-coupon-text">
+                                Mã
+                            </span>
                             <input
                                 type = "text"
                                 name = "coupon"

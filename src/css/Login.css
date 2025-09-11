@@ -73,7 +73,6 @@
     flex-direction: column;
   }
   
-  .login-left-section,
   .login-right-section {
     padding: 1.5rem;
   }
@@ -86,22 +85,3 @@
     width: 150px;
   }
 }
-
-
-@media (max-width: 480px) {
-  .login-card {
-    padding: 20px;
-  }
-  
-  .login-form input[type="email"],
-  .login-form input[type="password"] {
-    padding: 10px 10px 10px 35px;
-    font-size: 14px;
-  }
-  
-  .form-options {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-} 

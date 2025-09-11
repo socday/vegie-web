@@ -11,40 +11,102 @@
   display: flex;
   margin: 2rem 2rem 2rem 3rem;
   height: 100%;
-  justify-content: center;
-  align-items: center;
 }
 
 .register-left-card {
   display: flex;
   flex-direction: column;
-  position: relative;
   text-align: center;
-  width: 75%;
+  align-items: center;
+  width: 100%;
 }
 
-.form-group__item{
+.register-form {
   display: flex;
-  flex-direction: row;
-  width:100%;
-  gap: 0.75rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 60%;
+}
+
+.form-group {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  background:black;
+}
+
+.form-group__item {
+  display: flex;
+  gap: 0.8rem;
+  width: 100%;
+}
+
+.coupon-form-group {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .inputName {
-  flex: 1 1 0;
+  flex: 0 0 40%;
 }
 
 .inputPhonenumber{
-  flex: 3 1 0;
+  flex: 0 0 60%;
   overflow: hidden;
 }
 
 .coupon-form-group{
-  width: 80%;
   display: flex;
   margin-left: auto;
 }
 
 .inputCoupon{
+  border-left: none;
   width: 60%;
+}
+
+.r-coupon-text {
+  outline: none;
+  position:relative;
+  z-index: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid #8B8B8B;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  border-radius: 999px 0 0 999px;
+  border-right: none;
+  text-align: center;
+  font-weight:600;
+  display:inline-flex;
+  max-width: 80vh;
+  overflow: visible;
+}
+
+@media (max-width: 900px) {
+  .register-page {
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 1rem;
+  }
+
+  .register-left-section,
+  .login-left-section {
+    margin: 1rem 0;
+    flex: unset;
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .head2 {
+    font-size: 2rem;
+  }
+
+  .register-form input {
+    font-size: 0.9rem;
+    padding: 0.6rem 0.8rem;
+  }
 }

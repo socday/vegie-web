@@ -4,7 +4,7 @@ import "../../css/LoginRegisterForm.css"
 const LoginRegisterForm = ({ mode }: { mode: "login" | "register" }) => {
   return (
     <div className="lr-section">
-      <div className={mode === "login" ? "login-card" : "register-card"}>
+      <div className={mode === "login" ? "login-card lr-card" : "register-card lr-card"}>
         <h1 className="head1">Vegie</h1>
         <div className="lr-mascot-container">
           {mode === "login" ? (
