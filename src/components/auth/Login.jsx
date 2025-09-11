@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../css/Login.css';
-import mascotImage from '../../assets/images/mascot-normal-mouth.png';
+import LoginRegisterForm from './LoginRegisterForm.tsx';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -24,29 +24,12 @@ const Login = () => {
 
   return (
     <div className="login-page">
-      <div className="login-left-section">
-        <div className="login-left-card">
-          <div className="vegie-logo">
-            <h1>Vegie</h1>
-            <div className="mascot-container">
-              <p className="mascot-text">Bạn Chưa Có Tài Khoản?</p>
-              <Link to="/dang-ky" className="d-btn d-btn-font register-link-btn">
-              <span>Đăng ký</span></Link>
-            </div>
-            <div className="login-logo">
-              <img 
-              src={mascotImage}
-              alt="Mascot image"
-              className ="logo-c"></img>
-            </div>
-          </div>
-        </div>
-      </div>
-      
+
+      <LoginRegisterForm mode ="login"/>
       <div className="login-right-section">
         <div className="login-right-card">
           <div className="login-header">
-            <h2>Đăng nhập</h2>
+            <h2 className="head2">Đăng nhập</h2>
           </div>
           
           <form onSubmit={handleSubmit} className="login-form">
@@ -78,7 +61,7 @@ const Login = () => {
                 <span>Đăng nhập</span>
               </button>
               <Link to="/khoi-phuc-mat-khau" className="d-btn-font d-btn">
-                <span>Quên mật khẩu? </span>
+                <span>Quên mật khẩu</span>
               </Link>
             </div>
           </form>

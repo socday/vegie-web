@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import '../../css/Register.css';
 import '../../index.css';
 import mascotImage from '../../assets/images/mascot-normal-mouth.png';
+import LoginRegisterForm from './LoginRegisterForm';
 
 const Register = () => {
     const [formData, setFormData ] = useState({
@@ -34,22 +35,26 @@ const Register = () => {
                     <h2 className = "head2"> Đăng ký</h2>
                     <form onSubmit= {handleSubmit} className="register-form">
                         <div className = "form-group">
-                            <input 
-                                type = "text"
-                                name =  "fullName"
-                                value = {formData.fullName}
-                                onChange = {handleChange}
-                                placeholder=" Họ, tên"
-                                required
-                            />
-                            <input
-                                type = "text"
-                                name = "phoneNumber"
-                                value = {formData.phoneNumber}
-                                onChange = {handleChange}
-                                placeholder="Số điện thoại"
-                                required
-                            />
+                            <div className = "form-group__item">
+                                <input 
+                                    type = "text"
+                                    name =  "fullName"
+                                    value = {formData.fullName}
+                                    onChange = {handleChange}
+                                    placeholder=" Họ, tên"
+                                    required
+                                    className = "inputName"
+                                />
+                                <input
+                                    type = "text"
+                                    name = "phoneNumber"
+                                    value = {formData.phoneNumber}
+                                    onChange = {handleChange}
+                                    placeholder="Số điện thoại"
+                                    required
+                                    className="inputPhonenumber"
+                                />
+                            </div>
                         </div>
 
                         <div className = "form-group">
@@ -102,6 +107,7 @@ const Register = () => {
                                 value = {formData.coupon}
                                 onChange = {handleChange}
                                 placeholder="Nhập mã"
+                                className = "inputCoupon"
                             />
                         </div>
 
@@ -113,24 +119,7 @@ const Register = () => {
                 </div>
             </div>
 
-            <div className = "register-right-section">
-                <div className ="register-right-card">
-                    <div className="vegie-logo">
-                        <h1>Vegie</h1>
-                        <div className="mascot-container">
-                        <p className="mascot-text">Bạn Đã Có Tài Khoản?</p>
-                        <Link to="/dang-nhap" className="d-btn register-link-btn d-btn-font">
-                        <span>Đăng nhập</span></Link>
-                        </div>
-                        <div className="register-logo">
-                        <img 
-                        src={mascotImage}
-                        alt="Mascot image"
-                        className ="logo-c"></img>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <LoginRegisterForm mode="register"/>
         </div>
     );
 }
