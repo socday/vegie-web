@@ -11,7 +11,7 @@ type Item = {
 
 export default function Cart() {
   const [items, setItems] = useState<Item[]>([
-    { id: 1, name: "Laptop", price: 999, image: "/images/laptop.png", quantity: 1 },
+    { id: 1, name: "Laptop", price: 999, image: "/images/laptop.png", quantity: 10 },
     { id: 2, name: "Headphones", price: 199, image: "/images/headphones.png", quantity: 2 },
   ]);
 
