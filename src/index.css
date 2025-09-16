@@ -14,7 +14,8 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #f8f9fa; /* Một màu nền xám rất nhạt */
+  background-color: #f8f9fa; 
+  font-family: Inter;
   color: #333;
 }
 
@@ -24,6 +25,14 @@ body {
 
 a {
   text-decoration: none;
+}
+.form-group {
+  display:flex;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+link {
 }
 
 .head1 {
@@ -54,8 +63,9 @@ input{
   text-align: center;
   font-weight:600;
   display:inline-flex;
-  max-width: 40vh;
+  max-width: 900px;
   overflow: visible;
+  box-sizing: border-box;
 }
 
 input:hover{

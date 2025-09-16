@@ -42,12 +42,14 @@
 
 .form-group {
   position: relative;
+  justify-content: center;
 }
 
 .form-actions {
   display:flex;
   justify-content: center;
   gap: 1rem;
+  overflow: hidden;
 }
 
 .login-footer {

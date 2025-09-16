@@ -100,18 +100,21 @@ const Register = () => {
                                 required
                             />
                         </div>
-                        <div className = "coupon-form-group">
-                            <span className = "r-coupon-text">
-                                Mã
-                            </span>
-                            <input
-                                type = "text"
-                                name = "coupon"
-                                value = {formData.coupon}
-                                onChange = {handleChange}
-                                placeholder="Nhập mã"
-                                className = "inputCoupon"
-                            />
+                        <div className = "form-group">
+                            <div className = "coupon-form-group">
+                                <span className = "r-coupon-text">
+                                    <p className="r-coupon-text-visible">Mã</p>
+                                    <p className="r-coupon-text-hidden"></p>
+                                </span>
+                                <input
+                                    type = "text"
+                                    name = "coupon"
+                                    value = {formData.coupon}
+                                    onChange = {handleChange}
+                                    placeholder="Nhập mã"
+                                    className = "inputCoupon"
+                                />
+                            </div>
                         </div>
 
                         <button type ="submit" className = "d-btn d-btn-font">

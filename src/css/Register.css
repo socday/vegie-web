@@ -25,22 +25,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  width: 60%;
+  gap: 0.833rem;
+  width: 70%;
+  text-align: center;
 }
 
-.form-group {
+.input {
   align-self: stretch;
-  width: 100%;
-  display: flex;
-  background:black;
 }
-
 .form-group__item {
   display: flex;
+  box-sizing: border-box;
+  min-width: 0;
   gap: 0.8rem;
-  width: 100%;
+  width: calc(100% - 0.8rem);
+  margin-right: auto;
 }
+
 
 .coupon-form-group {
   display: flex;
@@ -48,13 +49,16 @@
   width: 100%;
 }
 
+.form-group__item input {
+  width: 200px;
+}
 .inputName {
-  flex: 0 0 40%;
+  flex: 0 0 45%;
 }
 
 .inputPhonenumber{
-  flex: 0 0 60%;
-  overflow: hidden;
+  flex: 0 0 55%;
+  width: calc(100% - 0.8rem);
 }
 
 .coupon-form-group{
@@ -63,13 +67,13 @@
 }
 
 .inputCoupon{
-  border-left: none;
-  width: 60%;
+  flex: 0 0 70%;
+  margin-left: auto;
 }
 
 .r-coupon-text {
   outline: none;
-  position:relative;
+  position:absolute;
   z-index: 1;
   padding: 0.75rem 1rem;
   border: 1px solid #8B8B8B;
@@ -82,6 +86,21 @@
   display:inline-flex;
   max-width: 80vh;
   overflow: visible;
+  flex: 0 0 30%;
+  border-right: none;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  font-family: Inter;
+  display:flex;
+  flex-direction: row;
+}
+
+.r-coupon-text-visible{
+  flex-basis: 70%;
+  color: #27600B;
+  opacity: 47%;
 }
 
 @media (max-width: 900px) {
