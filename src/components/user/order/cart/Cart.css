@@ -5,20 +5,36 @@
 }
 
 .cart {
-  background: transparent;
+    background: transparent;
+    display:flex;
+    width: 90%;
+    min-height: 500px;
+    margin: 0 auto;
+}
+
+.cart-item-page {
+    width:70%;
+}
+
+.cart-checkout-page {
+    width:30%;
+    justify-content: center;
+    align-items: center;
+    background-color: blue;
 }
 
 .cart-item {
-  border: 1px solid #ddd;
-  width: 100%;
+width: 100%;
     align-items: center;
     padding: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .cart-image {
     width: 50px;
     height: 50px;
     object-fit: cover;
+    border-radius: 8px;
 }
 
 .cart-name-remove{
@@ -28,15 +44,21 @@
     align-items: baseline;
     gap: 0.5rem;
     padding-left: 0.6rem;
-    width: 30%;
+    width: 50%;
+    white-space:inherit;  
+    display: -webkit-box;          /* Use a flex-like layout for text */
+  -webkit-box-orient: vertical;  /* Vertical stacking of lines */
+  -webkit-line-clamp: 2;         /* Number of lines before truncation */
 }
 
 .cart-name-remove h3{
     font-size: 1.2rem;
+    width: 100%;
     color:#27600B;
+    max-width: 100%;
     font-weight: 400;
     margin:0;
-    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .cart-remove {
@@ -65,15 +87,17 @@
     margin-bottom: 0;
     padding-top: 0.3rem;
     font-size: 1.2rem;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .cart-quantity {
     margin-left: auto;
-    width: 15%;
+    width: 100%;
     text-align: center;
     display:flex;
     flex-direction: row;
+    background-color: transparent;
+    justify-content: flex-end;
 }
 
 .cart-quantity span{
@@ -91,11 +115,11 @@
     width: 3.25rem;
     height: 2.5rem;
     color:#27600B;
-    font-weight: 500;
-    font-size: 1.25rem;
-    background-color: transparent;
+    font-weight: 300;
+    font-size: 2rem;
     border: 1px solid #6B7280;
-
+    background-color: transparent;
+    line-height: 1;
 }
 
 .cart-decrease-style {
@@ -106,4 +130,12 @@
 .cart-increase-style {
     border-radius: 0 10px 10px 0;
     border-left: none;
+}
+
+.cart-checkout-form {
+    width: 90%;
+    height: 90%;
+    border: 1px solid #6B7280;
+    border-radius: 10px;
+    background-color: green;
 }

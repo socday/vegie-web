@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CartItem from "./CartItem";
+import { CartCheckout } from "./CartCheckout";
 
 type Item = {
   id: number;
@@ -11,7 +12,8 @@ type Item = {
 
 export default function Cart() {
   const [items, setItems] = useState<Item[]>([
-    { id: 1, name: "Laptop", price: 999, image: "/images/laptop.png", quantity: 10 },
+    { id: 1, name: "Lwioasdsajdopijw3eoipjaioprj31094je0q9dw013h4r0931qh0931h4r01-4hr30ij3jqoiejqoiejqwoijeqiowejqoiejqwoiejqwoosjdozijdoizjsoizjdsozijdoaptop", price: 999, image: "/images/laptop.png", quantity: 10 },
+
     { id: 2, name: "Headphones", price: 199, image: "/images/headphones.png", quantity: 2 },
   ]);
 
@@ -26,7 +28,7 @@ export default function Cart() {
   };
 
   return (
-    <div className="cart max-w-md mx-auto mt-8 p-4 border rounded shadow">
+    <div className="cart">
       <div className="cart-item-page">
 
         <h2 className="head2">Giỏ hàng</h2>
@@ -53,6 +55,9 @@ export default function Cart() {
           Total: $
           {items.reduce((sum, item) => sum + item.price * item.quantity, 0)}
         </div>
+      </div>
+      <div className="cart-checkout-page">
+          <CartCheckout/>
       </div>
     </div>
   );
