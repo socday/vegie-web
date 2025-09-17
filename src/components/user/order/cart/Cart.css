@@ -50,11 +50,22 @@
     color:#373333
 }
 
+.cart-price-quantity {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin-left:auto;
+    justify-content: flex-end;
+    
+}
 .cart-item-price {
-    margin-left: auto;
-    width:10%;
-    align-items: end;
-    justify-content: end;
+    display:flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-bottom: 0;
+    padding-top: 0.3rem;
+    font-size: 1.2rem;
+    font-weight: 600;
 }
 
 .cart-quantity {

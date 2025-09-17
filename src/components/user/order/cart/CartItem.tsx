@@ -48,12 +48,14 @@ export default function CartItem({
             Remove
             </button>
         </div>
+        <div className="cart-price-quantity">
 
-        <p className="cart-item-price">${price}</p>
-        <div className="cart-quantity">
-            <button onClick={decrease} className="cart-quantity-button cart-decrease-style">-</button>
-            <span>{quantity}</span>
-            <button onClick={increase} className="cart-quantity-button cart-increase-style">+</button>
+          <div className="cart-quantity">
+              <button onClick={decrease} className="cart-quantity-button cart-decrease-style">-</button>
+              <span>{quantity}</span>
+              <button onClick={increase} className="cart-quantity-button cart-increase-style">+</button>
+          </div>
+          <p className="cart-item-price">${price}</p>
         </div>
 
     </div>

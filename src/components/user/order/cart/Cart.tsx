@@ -27,14 +27,16 @@ export default function Cart() {
 
   return (
     <div className="cart max-w-md mx-auto mt-8 p-4 border rounded shadow">
-      <h2 className="head2">Giỏ hàng</h2>
+      <div className="cart-item-page">
 
-      {items.length === 0 ? (
-        <p>Giỏ hàng bạn chưa có gì cả. <br></br> Ngại ngần gì chưa mua?</p>
-        
-      ) : (
-        items.map(item => (
-          <CartItem
+        <h2 className="head2">Giỏ hàng</h2>
+
+        {items.length === 0 ? (
+          <p>Giỏ hàng bạn chưa có gì cả. <br></br> Ngại ngần gì chưa mua?</p>
+          
+        ) : (
+          items.map(item => (
+            <CartItem
             key={item.id}
             id={item.id}
             name={item.name}
@@ -43,13 +45,14 @@ export default function Cart() {
             initialQuantity={item.quantity}
             onRemove={handleRemove}
             onQuantityChange={handleQuantityChange}
-          />
-        ))
-      )}
+            />
+          ))
+        )}
 
-      <div className="mt-4 font-semibold">
-        Total: $
-        {items.reduce((sum, item) => sum + item.price * item.quantity, 0)}
+        <div className="mt-4 font-semibold">
+          Total: $
+          {items.reduce((sum, item) => sum + item.price * item.quantity, 0)}
+        </div>
       </div>
     </div>
   );
