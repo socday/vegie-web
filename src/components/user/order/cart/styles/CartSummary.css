@@ -1,0 +1,48 @@
+.cart-summary {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  margin-top:5%;
+}
+
+.cart-summary__row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.cart-summary__total {
+  font-weight: bold;
+  border-top: 1px solid #eee;
+  padding-top: 8px;
+}
+
+.cart-summary__discount {
+  display: flex;
+  margin: 12px 0;
+}
+
+.cart-summary__discount input {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+}
+
+.cart-summary__discount button {
+  padding: 6px 12px;
+  background: #2f6627;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+}
+
+
+
+.cart-summary__or {
+  text-align: center;
+  margin: 8px 0;
+  color: #666;
+}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CartItem from "./CartItem";
 import { CartCheckout } from "./CartCheckout";
-
+import "../cart/styles/Cart.css"
 type Item = {
   id: number;
   name: string;
@@ -57,7 +57,7 @@ export default function Cart() {
         </div>
       </div>
       <div className="cart-checkout-page">
-          <CartCheckout/>
+        <CartCheckout/>
       </div>
     </div>
   );

@@ -14,12 +14,14 @@
 
 .cart-item-page {
     width:70%;
+    background-color: gold;
 }
 
 .cart-checkout-page {
+    display: flex;
     width:30%;
-    justify-content: center;
-    align-items: center;
+    justify-content:center;
+    align-items: flex-start;
     background-color: blue;
 }
 
@@ -46,9 +48,9 @@ width: 100%;
     padding-left: 0.6rem;
     width: 50%;
     white-space:inherit;  
-    display: -webkit-box;          /* Use a flex-like layout for text */
-  -webkit-box-orient: vertical;  /* Vertical stacking of lines */
-  -webkit-line-clamp: 2;         /* Number of lines before truncation */
+    display: -webkit-box;          
+  -webkit-box-orient: vertical;  
+  -webkit-line-clamp: 2;         
 }
 
 .cart-name-remove h3{
