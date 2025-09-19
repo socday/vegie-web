@@ -16,6 +16,7 @@
 .cart-item-page {
     width:70%;
     /* background-color: blue; */
+    padding-left: 1rem;
     padding-right: 2rem;
 }
 

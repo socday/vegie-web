@@ -10,6 +10,7 @@ import StageNotification from './components/notifications/StageNotification'
 import PasswordRecovery from './components/auth/PasswordRecovery'
 import Register from './components/auth/Register'
 import Cart from './components/user/order/cart/Cart'
+import Payment from './components/user/order/payment/Payment'
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
             <Route path='/stage-notification' element={<StageNotification/>} />
             <Route path='/dang-ky' element={<Register/>}/>
             <Route path='/gio-hang' element={<Cart/>}/>
+            <Route path='/thanh-toan' element={<Payment/>}/>
 
           </Routes>
           <Footer/>

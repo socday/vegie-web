@@ -15,6 +15,7 @@ export default function Cart() {
     { id: 1, name: "12345678912345678912345678912345678912345678912345678912345678912321321321113uh2139812h4914h1298u2h1b391h38921h38912h3198", price: 999, image: "/images/laptop.png", quantity: 10 },
 
     { id: 2, name: "Headphones", price: 199, image: "/images/headphones.png", quantity: 2 },
+    
   ]);
 
   const handleRemove = (id: number) => {
@@ -51,14 +52,9 @@ export default function Cart() {
           ))
         )}
 
-        <div className="mt-4 font-semibold">
-          Total: $
-          {items.reduce((sum, item) => sum + item.price * item.quantity, 0)}
-        </div>
       </div>
       <div className="cart-checkout-page">
-        <CartCheckout items={items}
-        />
+        <CartCheckout items={items} mode={"checkout"}/>
       </div>
     </div>
   );

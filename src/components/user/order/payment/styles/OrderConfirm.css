@@ -1,8 +1,7 @@
 .order-confirmation {
-  border: 1px solid #ddd;
   border-radius: 6px;
-  padding: 16px;
-  max-width: 500px;
+  padding: 2rem;
+  width: 95%;
 }
 
 .order-confirmation__address {
@@ -10,7 +9,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
-  border: 1px solid #2f6627;
+  border: 1px solid #27600B;
   padding: 8px;
   border-radius: 6px;
 }
@@ -26,11 +25,34 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 16px;
 }
 
 .order-confirmation label {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+}
+
+.order-confirmation input{
+  flex:0 0 auto;
+  width: 20px;
+  min-width: 10px;
+  margin-right: 10px;
+}
+.order-confirmation input:hover{
+
+  box-shadow: none;
+}
+
+.order-confirmation h3
+,.order-confirmation h4{
+  color: #27600B;
+  font-size:1.25rem;
+  margin:0px;
+  padding: 0.75rem;
+}
+
+.order-confirmation label{
+  border: 1px solid #27600B;
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
 }

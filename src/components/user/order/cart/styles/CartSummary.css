@@ -50,6 +50,7 @@
 .cart-summary__discount {
   display: flex;
   margin: 12px 0;
+  width: 100%;
 }
 
 
