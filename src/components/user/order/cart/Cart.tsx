@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CartItem from "./CartItem";
-import { CartCheckout } from "./CartCheckout";
 import "../cart/styles/Cart.css"
+import CartCheckout from "./CartCheckout"
 type Item = {
   id: number;
   name: string;
@@ -12,7 +12,7 @@ type Item = {
 
 export default function Cart() {
   const [items, setItems] = useState<Item[]>([
-    { id: 1, name: "Lwioasdsajdopijw3eoipjaioprj31094je0q9dw013h4r0931qh0931h4r01-4hr30ij3jqoiejqoiejqwoijeqiowejqoiejqwoiejqwoosjdozijdoizjsoizjdsozijdoaptop", price: 999, image: "/images/laptop.png", quantity: 10 },
+    { id: 1, name: "12345678912345678912345678912345678912345678912345678912345678912321321321113uh2139812h4914h1298u2h1b391h38921h38912h3198", price: 999, image: "/images/laptop.png", quantity: 10 },
 
     { id: 2, name: "Headphones", price: 199, image: "/images/headphones.png", quantity: 2 },
   ]);
@@ -57,7 +57,8 @@ export default function Cart() {
         </div>
       </div>
       <div className="cart-checkout-page">
-        <CartCheckout/>
+        <CartCheckout items={items}
+        />
       </div>
     </div>
   );

@@ -1,0 +1,36 @@
+.order-confirmation {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 16px;
+  max-width: 500px;
+}
+
+.order-confirmation__address {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  border: 1px solid #2f6627;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.edit-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.order-confirmation__shipping,
+.order-confirmation__payment {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.order-confirmation label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
