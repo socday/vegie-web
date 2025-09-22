@@ -11,6 +11,7 @@ import PasswordRecovery from './components/auth/PasswordRecovery'
 import Register from './components/auth/Register'
 import Cart from './components/user/order/cart/Cart'
 import Payment from './components/user/order/payment/Payment'
+import Profile from './components/user/profile/Profile'
 
 function App() {
 
@@ -29,7 +30,7 @@ function App() {
             <Route path='/dang-ky' element={<Register/>}/>
             <Route path='/gio-hang' element={<Cart/>}/>
             <Route path='/thanh-toan' element={<Payment/>}/>
-
+            <Route path='/profile' element={<Profile/>}/>
           </Routes>
           <Footer/>
         </Router>
