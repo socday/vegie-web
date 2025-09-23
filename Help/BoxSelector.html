@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Button Background</title>
+  <style>
+    .fancy-btn {
+      width: 200px;
+      height: 60px;
+      background-color: #27600B;
+      background-image: url('Custom-Box.png'); /* Đường dẫn đến ảnh nền */
+      background-repeat: no-repeat;
+      background-size: cover; /* hoặc contain nếu muốn toàn bộ ảnh hiển thị */
+      background-position: center;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .fancy-btn:hover {
+      opacity: 0.85;
+    }
+
+    .blindbox-btn {
+      width: 200px;
+      height: 60px;
+      background-color: #D0E9FE;
+      background-image: url('Blind-Box.png'); /* Đường dẫn đến ảnh nền */
+      background-repeat: no-repeat;
+      background-size: cover; /* hoặc contain nếu muốn toàn bộ ảnh hiển thị */
+      background-position: center;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    @font-face {
+  font-family: "MyCustomFont";
+  src: url("NightyDEMO.otf") format("opentype");
+}
+
+.large-text {
+  font-family: "MyCustomFont", sans-serif;
+}
+  </style>
+</head>
+<body>
+
+
+<button class="blindbox-btn">
+  <span class="large-text" style="display:block; font-size:30px; font-weight:700; color: #27600B;">Blind Box</span>
+  <span style="display:block; font-size:6px; font-weight:800; color:#27600B; ">Món Tròn Ngẫu Nhiên</span>
+  <span style="display:block; font-size:3px; font-weight:550; color:#27600B; opacity: 0.8">Giao hàng tận nơi</span>
+  <span style="display:block; font-size:3px; font-weight:550; color:#27600B; opacity: 0.8;">Được cung cấp thực đơn AI kèm Chat với bé cừu AI dinh dưỡng về các thông tin thực phẩm rau củ quả
+</span>
+</button>
+<br>
+<br>
+<br>
+<button class="fancy-btn">
+  <span class="large-text" style="display:block; font-size:30px; font-weight:700; color: white;">Custom</span>
+  <span style="display:block; font-size:7px; font-weight:700; color:white; ">Gift Box - Detox Box</span>
+  <span style="display:block; font-size:3px; font-weight:550; color:white; opacity: 0.8">Tự tay chọn loại rau củ theo sở thích cho box detox của bạn. </span>
+  <span style="display:block; font-size:3px; font-weight:550; color:white; opacity: 0.8;">Hay tự trang trí Gift Box để gửi đến người thân nhé!</span>
+</button>
+
+</body>
+</html>

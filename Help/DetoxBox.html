@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Button Background</title>
+  <style>
+    .fancy-btn {
+      width: 200px;
+      height: 60px;
+      background-color: #D0E9FE;
+      background-image: url('BlindBox.png'); /* Đường dẫn đến ảnh nền */
+      background-repeat: no-repeat;
+      background-size: cover; /* hoặc contain nếu muốn toàn bộ ảnh hiển thị */
+      background-position: center;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .fancy-btn:hover {
+      opacity: 0.85;
+    }
+
+    .blindbox-btn {
+      width: 200px;
+      height: 60px;
+      background-color: #91CF43;
+      background-image: url('Gift-Box.png'); /* Đường dẫn đến ảnh nền */
+      background-repeat: no-repeat;
+      background-size: cover; /* hoặc contain nếu muốn toàn bộ ảnh hiển thị */
+      background-position: center;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    @font-face {
+  font-family: "MyCustomFont";
+  src: url("NightyDEMO.otf") format("opentype");
+}
+
+.large-text {
+  font-family: "MyCustomFont", sans-serif;
+
+}
+.inner-button {
+  background-color: white;
+  color: #27600B;
+  font-weight: bold;
+  padding: 4px 8px; /* Giảm padding để nút nhỏ hơn */
+  font-size: 3px; /* Giảm kích thước chữ */
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 5px; /* Giảm khoảng cách giữa các phần tử */
+  display: inline-block;
+  /* border: 1px solid #27600B; */
+}
+
+.inner-button:hover {
+  background-color: #b8d9f9;
+}
+  </style>
+</head>
+<body>
+
+
+<button class="blindbox-btn">
+  <span class="large-text" style="display:block; font-size:26px; font-weight:650; color: white;">Gift Box</span>
+  <span style="display:block; font-size:6px; font-weight:600; color:white; ">Trọn Vị An</span>
+  <span style="display:block; font-size:3px; font-weight:400; color:white; opacity: 0.8 ">Định lượng 5kg - Order trc 2-3 ngày</span>
+  <span style="display:block; font-size:3px; font-weight:500; color:white; opacity: 0.8;">Được tuỳ ý lựa chọn dựa trên những sản phẩm có sẵn ( tối đa 5 loại )</span>
+  <span style="display:block; font-size:3px; font-weight:500; color:white; opacity: 0.8;">Được đóng gói thùng deco sạch sẽ đảm bảo tính trang trọng</span>
+  <span style="display:block; font-size:3px; font-weight:500; color:white; opacity: 0.8;">Quà cá nhân hoá được tự ý thiết kế theo dạng 3D</span>
+
+</button>
+<br>
+<br>
+<br>
+<button class="fancy-btn">
+    <span class="large-text" style="display:block; font-size:30px; font-weight:650; color: #27600B;">Detox Box</span>
+    <div class="inner-button">Xem Chi Tiết</div>
+</button>
+
+</body>
+</html>
