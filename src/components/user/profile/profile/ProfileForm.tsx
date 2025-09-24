@@ -12,7 +12,7 @@ export default function ProfileForm({ onChangePassword }: ProfileFormProps) {
 
         <div className="profile-row">
           <div className="avatar"></div>
-          <button className="d-btn d-btn-font">Tải ảnh lên</button>
+          <button className="d-btn d-btn-font"><span>Tải ảnh lên </span></button>
         </div>
 
         <div className="form-fields">

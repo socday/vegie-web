@@ -60,7 +60,7 @@
   color: #27600B;
   cursor: pointer;
   width: 84%;
-  transition: background-color 0.3s ease; /* smooth hover */
+  transition: background-color 1s ease, color 0.5s ease; /* smooth hover */
 }
 
 /* Hover effect */
@@ -120,9 +120,8 @@
   margin-top: 1.4rem;
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 90%;
 }
-
 
 .form-fields input {
   margin-top: 0.875rem;
@@ -196,3 +195,13 @@
 .profile-sidebar-invincible {
   margin-bottom: 2rem;
 }
+
+.form-password-fields {
+  margin-left: 2rem;
+  width: 100%;
+}
+
+.form-password-fields input {
+  width: 100%;
+}
+
