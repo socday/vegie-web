@@ -1,24 +1,16 @@
-import { Order } from "./OrderStatus";
 import OrderItem from "./OrderItem";
-import { useState } from "react";
-import "../styles/Order.css"
+import { Order } from "./OrderStatus";
+
 type Props = {
   orders: Order[];
+  onCancel: (id: number) => void;
 };
 
-
-export default function OrderList({ orders }: Props) {
-  const [orderList, setOrderList] = useState(orders);
-
-  const handleCancelOrder = (id: number) => {
-    // Option 1: remove it completely
-    setOrderList(prev => prev.filter(order => order.id !== id));
-  };
-
+export default function OrderList({ orders, onCancel }: Props) {
   return (
     <div>
-      {orderList.map(order => (
-        <OrderItem key={order.id} order={order} onCancel={handleCancelOrder} />
+      {orders.map(order => (
+        <OrderItem key={order.id} order={order} onCancel={onCancel} />
       ))}
     </div>
   );
