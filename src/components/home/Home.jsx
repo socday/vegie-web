@@ -55,6 +55,7 @@ export default function Home() {
 
   return (
     <>
+      <div className="home-page-container">
         <section className='mascot-section'>
             <img
             src={mascotImage}
@@ -66,39 +67,27 @@ export default function Home() {
         <section className='intro-section'>
             <div className="intro-container">
                 <div className="intro-brand">
-                    <img src={brandLogo} alt="Vegie Care Brand" />
+                  <h1 className="head1">
+                    Vegie
+                    Care</h1>
                 </div>
 
-                {/* Cột bên phải chỉ chứa một danh sách các mục có thể tương tác */}
-                <div className="intro-actions">
-                    {tabsData.map((tab) => (
-                    // Với mỗi mục, chúng ta sẽ quyết định hiển thị BUTTON hay NỘI DUNG
-                    <div key={tab.id} className="tab-item-container">
-                        {openTabId === tab.id ? (
-                        // ----- NẾU TAB NÀY ĐANG MỞ: HIỂN THỊ NỘI DUNG -----
-                        <div
-                            className="content-bubble"
-                            onClick={() => handleToggleTab(tab.id)} // Click để đóng lại
-                        >
-                            {tab.content}
-                        </div>
-                        ) : (
-                        // ----- NẾU TAB NÀY ĐANG ĐÓNG: HIỂN THỊ BUTTON -----
-                        <button
-                            className="action-button"
-                            onClick={() => handleToggleTab(tab.id)} // Click để mở ra
-                        >
-                            {tab.title}
-                        </button>
-                        )}
-                    </div>
-                    ))}
-                </div>
+               <div className="intro-actions">
+                {tabsData.map((tab) => (
+                  <div key={tab.id} className="tab-item-container">
+                    <button className="action-button">{tab.title}</button>
+                    <div className="content-bubble">{tab.content}</div>
+                  </div>
+                ))}
+              </div> 
             </div>
         </section>
+        <div className="divider"></div>
         <section className='ai-menu-section'>
             <div className="ai-menu-container">
                 <div className={`ai-menu-wrapper ${isAiMenuOpen ? 'open' : ''}`}
+                    onMouseEnter={() => setIsAiMenuOpen(true)}
+                    onMouseLeave={() => setIsAiMenuOpen(false)}
                     onClick={() => setIsAiMenuOpen(!isAiMenuOpen)}>
                   {/* Nội dung ban đầu (chữ AI Menu) */}
                   <div className="ai-menu-initial-content">
@@ -196,6 +185,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+      </div>
     </>
   );
 }
