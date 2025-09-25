@@ -120,7 +120,6 @@
 .divider {
     
     padding-top: 10rem;
-    background-color: #9A2C37;
 }
 
 .ai-menu-section {
@@ -272,86 +271,7 @@
  *  PHẦN 4: COMBO DỊCH VỤ - ĐÃ CẬP NHẬT HOÀN CHỈNH
  * =========================================================
 */
-.combo-section {
-    padding: 8rem 0;
-}
 
-.combo-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 2rem;
-}
-
-.combo-title {
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Inter', sans-serif;
-    font-weight: 900;
-    color: var(--dark-green);
-    line-height: 0.9; 
-}
-
-.combo-title-top { font-size: 8rem; }
-.combo-title-bottom { font-size: 7.5rem; }
-
-
-.combo-packages {
-    display: flex;
-    gap: 1.5rem;
-}
-
-.package-card {
-    width: 240px; /* Tăng chiều rộng một chút */
-    height: 140px; /* Chiều cao ban đầu */
-    padding: 1.5rem;
-    box-sizing: border-box;
-    border-radius: 20px;
-    background-color: var(--dark-green);
-    color: var(--primary-green);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    cursor: pointer;
-    transition: all 0.4s ease-in-out;
-}
-
-/* KHI HOVER VÀO CARD */
-.package-card:hover {
-    height: 240px; 
-    transform: translateY(-20px); /* Tăng hiệu ứng "nhấc lên" */
-    box-shadow: 0 15px 25px rgba(0,0,0,0.1);
-}
-
-.package-title {
-    font-family: 'Inter', sans-serif;
-    font-weight: 900;
-    font-size: 1.8rem;
-    line-height: 1.1;
-}
-
-.package-title span {
-    display: block; /* Buộc mỗi span chiếm 1 dòng riêng */
-}
-
-.package-description {
-    font-size: 0.9rem; 
-    font-weight: 400;
-    color: #fff;
-    margin: 0;
-    margin-top: 0.75rem;
-    opacity: 0;
-    max-height: 0;
-    transition: opacity 0.4s ease, max-height 0.4s ease;
-}
-
-.package-card:hover .package-description {
-    opacity: 1;
-    max-height: 50px;
-}
 /* 
  * =========================================================
  *  PHẦN 5: CÁC LOẠI BOX SẢN PHẨM (MỚI)

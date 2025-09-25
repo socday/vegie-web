@@ -4,6 +4,7 @@ import mascotImage from '../../assets/mascot.png';
 import brandLogo from '../../assets/logo-brand.png';
 
 import '../../css/Home.css';
+import ComboSection from './ComboSection';
 
 // Dữ liệu vẫn giữ nguyên, rất tiện lợi
 const tabsData = [
@@ -106,38 +107,7 @@ export default function Home() {
                 </div>
             </div>
         </section>
-        <section className='combo-section'>
-          <div className='combo-container'>
-            {/* Cột bên trái: Tiêu đề */}
-            <div className='combo-title'>
-              <span className='combo-title-top'>Gói</span>
-              <span className='combo-title-bottom'>dịch vụ</span>
-            </div>
-
-            {/* Cột bên phải: Chứa các gói */}
-            <div className='combo-packages'>
-              {/* --- Gói mua lẻ --- */}
-              <div className='package-card'>
-                  <div className="package-title">
-                    <span className="package-line-1">Gói</span>
-                    <span className="package-line-2">mua lẻ</span>
-                  </div>
-                  {/* Dòng mô tả */}
-                  <p className="package-description">Linh hoạt - Tiện lợi - Theo ý bạn</p>
-              </div>
-
-              {/* --- Gói theo tuần --- */}
-              <div className='package-card'>
-                  <div className="package-title">
-                    <span className="package-line-1">Gói</span>
-                    <span className="package-line-2">theo tuần</span>
-                  </div>
-                  {/* Dòng mô tả */}
-                  <p className="package-description">Linh hoạt - Tiện lợi - Theo ý bạn</p>
-              </div>
-            </div>
-          </div>
-        </section>
+        <ComboSection />
         <section className="box-section">
           <div className="box-section-container">
             {/* Tiêu đề cho section (tùy chọn) */}

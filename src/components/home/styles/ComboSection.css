@@ -1,0 +1,116 @@
+.package-card {
+  width: 19rem;
+  height: auto;
+  min-height: 13.125rem;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  border-radius: 20px;
+  background-color: var(--dark-green);
+  color: var(--primary-green);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  cursor: pointer;
+  transition: all 0.4s ease-in-out;
+  overflow: hidden;
+  position: relative; /* so we can overlay front/back */
+}
+
+/* Hover effect */
+.package-card:hover {
+  min-height: 16rem;
+  box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+}
+
+/* Title styles (keep your sizes/line-height) */
+.package-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  line-height: 0.837;
+  font-size: 3.75rem;
+}
+
+.package-title span {
+  display: block;
+}
+
+/* Description (keep your original rules) */
+.package-description {
+  font-size: 0.9rem; 
+  font-weight: 400;
+  color: #fff;
+  margin: 0;
+  margin-top: 0.75rem;
+}
+
+/* Two faces stacked */
+.package-front,
+.package-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1.5rem;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  transition: opacity 0.4s ease;
+}
+
+.package-front {
+  opacity: 1;
+}
+
+.package-back {
+  opacity: 0;
+}
+
+/* Switch on hover */
+.package-card:hover .package-front {
+  opacity: 0;
+}
+
+.package-card:hover .package-back {
+  opacity: 1;
+}
+
+
+.combo-section{
+}
+.combo-section {
+    padding: 8rem 0;
+}
+
+.combo-container {
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.combo-title {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    color: var(--dark-green);
+    line-height: 0.9; 
+    width:50%;
+    padding-left: 5rem;
+}
+
+.combo-title-top { font-size: 8rem; }
+.combo-title-bottom { font-size: 7.5rem; }
+
+
+.combo-packages {
+    width: 50%;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.combo-packages span{
+    font-size: 3.75rem;
+    color: #91CF43;
+}
