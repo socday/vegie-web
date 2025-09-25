@@ -23,9 +23,9 @@ export default function Profile() {
         {section === "orders" && (
           <Orders/>
         )}
-        {section === "services" && <div>🛠 Đây là Gói dịch vụ</div>}
-        {section === "groups" && <div>👥 Đây là Đơn nhóm</div>}
-        {section === "health" && <div>🩺 Đây là Phiếu sức khỏe</div>}
+        {section === "services" && <div>Đây là Gói dịch vụ</div>}
+        {section === "groups" && <div>Đây là Đơn nhóm</div>}
+        {section === "health" && <div>Đây là Phiếu sức khỏe</div>}
         {section === "change-password" && (
           <ProfileChangePassword onCancel={() => setSection("profile")} />
         )}

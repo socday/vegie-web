@@ -1,18 +1,20 @@
-import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { FiUser, FiShoppingCart, FiBell, FiSearch } from 'react-icons/fi';
-import logo from '../../assets/logo.png' // Ví dụ: ../assets/logo.png
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import { FiUser, FiShoppingCart, FiBell, FiMenu, FiSearch } from 'react-icons/fi';
+import logo from '../../assets/logo.png';
 import '../../css/NavBar.css';
 
 const NavBar = () => {
+    const [isOpen, setIsOpen] = useState(false);
+
     return (
         <header className="header">
             <nav className="navbar-container">
                 {/* 1. Logo */}
                 <div className="navbar-logo">
-                    <Link to="/">
+                    <NavLink to="/">
                         <img src={logo} alt="Vegie Logo" />
-                    </Link>
+                    </NavLink>
                 </div>
 
                 {/* 2. Các liên kết chính */}
@@ -23,26 +25,31 @@ const NavBar = () => {
                 </ul>
 
                 <div className="nav-actions">
-                    {/* 4. Thanh tìm kiếm */}
+                    {/* 3. Thanh tìm kiếm */}
                     <form className="search-form">
                         <input type="text" placeholder="Tìm kiếm" className="search-input" />
                         <button type="submit" className="search-button">
                             <FiSearch />
                         </button>
                     </form>
-                    {/* 3. Các icon chức năng */}
-                    <ul className="nav-icons">
-                        <li><Link to="/gio-hang"><FiShoppingCart /></Link></li>
-                        <li><Link to="/thong-bao"><FiBell /></Link></li>
-                        <li><Link to="/dang-nhap" title="Đăng nhập"><FiUser /></Link></li>
-                    </ul>
 
-                    
+                    {/* 4. Toggle button for dropdown */}
+                    <div className="nav-icons-action">
+                        <button className="menu-toggle" onClick={() => setIsOpen(!isOpen)}>
+                            <FiMenu />
+                        </button>
+
+                        {/* 5. Dropdown icons */}
+                        <ul className={`nav-icons ${isOpen ? "open" : ""}`}>
+                            <li><NavLink to="/dang-nhap" title="Đăng nhập"><FiUser /></NavLink></li>
+                            <li><NavLink to="/gio-hang"><FiShoppingCart /></NavLink></li>
+                            <li><NavLink to="/thong-bao"><FiBell /></NavLink></li>
+                        </ul>
+                    </div>
                 </div>
             </nav>
         </header>
     );
 };
-
 
 export default NavBar;
