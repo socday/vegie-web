@@ -1,0 +1,254 @@
+@font-face {
+  font-family: "MyCustomFont";
+  src: url('../assets/fonts/nighty/NightyDEMO.otf') format("opentype");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.blindbox-container {
+  background: linear-gradient(135deg, #4a7c59, #6b8e23);
+  background-image: url('../assets/images/DetoxBox.png');
+  background-color: #27600B;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 40px;
+  padding: 40px 60px;
+  width: 1306px;
+  height: 445.01px;
+  margin-left: 100px;
+  margin-top: 100px;
+  margin-bottom: 300px;
+  position: relative;
+  overflow: hidden;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  font-family: Arial, sans-serif;
+}
+
+.left-section {
+  flex: 1;
+  z-index: 2;
+  padding-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100%;
+}
+
+.right-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+  z-index: 2;
+  position: relative;
+  top: 120px;
+  max-width: 200px; /* Giới hạn chiều rộng để không bị đẩy ra ngoài */
+}
+
+.title {
+  position: relative;
+  left: 70%; /* Giữ nguyên để căn giữa */
+  font-family: "MyCustomFont", sans-serif;
+  color: white;
+  font-size: 240px; /* Tăng lên 240px như yêu cầu */
+  font-weight: 650;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  white-space: nowrap;
+  margin-bottom: 5px;
+  line-height: 0.8; /* Giảm line-height để compact hơn */
+  transform: translateX(-50%) scale(0.85); /* Kết hợp cả căn giữa và scaling */
+  transform-origin: center; /* Anchor point ở giữa */
+}
+
+.subtitle {
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  opacity: 0.9;
+  display: block;
+  margin-top: -20px; /* Đẩy lên gần title hơn */
+}
+
+.stars {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.star {
+  color: #ffd700;
+  font-size: 1.2rem;
+}
+
+.rating {
+  color: white;
+  font-size: 6px;
+  opacity: 0.8;
+}
+
+.description {
+  color: white;
+  font-size: 10px;
+  line-height: 1.4;
+  font-weight: 550;
+  max-width: 280px;
+  margin-bottom: 20px;
+}
+
+.description-line {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-top: auto; /* Đẩy controls xuống dưới */
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 7px;
+}
+
+.quantity-btn {
+  width: 35px;
+  height: 35px;
+  border: none;
+  background: white;
+  color: #27600B;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  border-radius: 7px;
+}
+
+.quantity-btn:hover {
+  background: #f0f0f0;
+  transform: scale(1.05);
+}
+
+.quantity-btn:active {
+  transform: scale(0.95);
+}
+
+.quantity-display {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0 15px;
+  min-width: 20px;
+  text-align: center;
+  color: #27600B;
+}
+
+.price-btn {
+  background: white;
+  color: #27600B;
+  font-weight: bold;
+  padding: 8px 16px;
+  font-size: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 3px solid #91CF43 !important;
+  width: 120px;
+  height: 35px;
+  transition: all 0.2s ease;
+}
+
+.price-btn:hover {
+  background-color: #b8d9f9;
+  transform: translateY(-2px);
+}
+
+.action-btn {
+  border: 3px solid #91CF43 !important;
+  height: 36px;
+  border-radius: 18px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  background-color: white;
+  padding: 4px 10px;
+  flex-shrink: 0; /* Không cho phép shrink */
+}
+
+.mua-le {
+  width: 120px;
+}
+
+.mua-theo-tuan {
+  width: 160px;
+}
+
+.them-gio {
+  width: 200px;
+}
+
+.action-btn:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+.action-btn-text {
+  display: block;
+  font-size: 16px;
+  font-weight: 650;
+  color: #91CF43;
+  margin-bottom: 4px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .blindbox-container {
+    flex-direction: column;
+    text-align: center;
+    padding: 30px;
+    gap: 30px;
+    height: auto;
+  }
+
+  .title {
+    font-size: 60px;
+    transform: translateX(-50%) scale(1);
+    left: 50%;
+    line-height: 1;
+  }
+
+  .left-section {
+    padding-bottom: 20px;
+  }
+
+  .right-section {
+    position: static;
+    top: auto;
+    align-items: center;
+    max-width: none;
+  }
+
+  .description {
+    max-width: none;
+  }
+
+  .action-btn {
+    width: 120px;
+    height: 40px;
+  }
+}

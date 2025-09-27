@@ -14,6 +14,7 @@ import BoxSelector from './components/user/order/box/boxselector'
 import GiftDetoxBox from './components/user/order/box/GiftDetoxBox'
 import RetailPackage from './components/user/order/subcription/retailpackage'
 import WeeklyPackage from './components/user/order/subcription/weeklypackage'
+import BlindBox from './components/user/order/box/BlindBox'
 function App() {
 
   return(
@@ -34,6 +35,7 @@ function App() {
             <Route path='/custom-box' element={<GiftDetoxBox/>}/>
             <Route path='/retail-package' element={<RetailPackage/>}/>
             <Route path='/weekly-package' element={<WeeklyPackage/>}/>
+            <Route path='/blind-box' element={<BlindBox/>}/>
           </Routes>
           <Footer/>
         </Router>
