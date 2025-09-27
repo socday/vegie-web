@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import mascotImage from '../../assets/mascot.png';
 import brandLogo from '../../assets/logo-brand.png';
-
+import { useNavigate } from 'react-router-dom';
 import '../../css/Home.css';
 
 // Dữ liệu vẫn giữ nguyên, rất tiện lợi
@@ -36,7 +36,7 @@ const boxesData = [
 ];
 
 export default function Home() {
-
+  const navigate = useNavigate(); // <-- đây là chỗ thiếu
   const [isAiMenuOpen, setIsAiMenuOpen] = useState(false);
 
   // State ban đầu thành `null` để không có tab nào mở
@@ -127,26 +127,31 @@ export default function Home() {
 
             {/* Cột bên phải: Chứa các gói */}
             <div className='combo-packages'>
-              {/* --- Gói mua lẻ --- */}
-              <div className='package-card'>
-                  <div className="package-title">
-                    <span className="package-line-1">Gói</span>
-                    <span className="package-line-2">mua lẻ</span>
-                  </div>
-                  {/* Dòng mô tả */}
-                  <p className="package-description">Linh hoạt - Tiện lợi - Theo ý bạn</p>
+            {/* --- Gói mua lẻ --- */}
+            <div 
+              className='package-card'  
+              onClick={() => navigate("/retail-package")}
+            >
+              <div className="package-title">
+                <span className="package-line-1">Gói</span>
+                <span className="package-line-2">mua lẻ</span>
               </div>
-
-              {/* --- Gói theo tuần --- */}
-              <div className='package-card'>
-                  <div className="package-title">
-                    <span className="package-line-1">Gói</span>
-                    <span className="package-line-2">theo tuần</span>
-                  </div>
-                  {/* Dòng mô tả */}
-                  <p className="package-description">Linh hoạt - Tiện lợi - Theo ý bạn</p>
-              </div>
+              <p className="package-description">Linh hoạt - Tiện lợi - Theo ý bạn</p>
             </div>
+
+            {/* --- Gói theo tuần --- */}
+            <div 
+              className='package-card' 
+              onClick={() =>  navigate("/weekly-package")}
+            >
+              <div className="package-title">
+                <span className="package-line-1">Gói</span>
+                <span className="package-line-2">theo tuần</span>
+              </div>
+              <p className="package-description">Linh hoạt - Tiện lợi - Theo ý bạn</p>
+            </div>
+          </div>
+
           </div>
         </section>
         <section className="box-section">

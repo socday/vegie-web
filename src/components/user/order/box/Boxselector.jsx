@@ -7,7 +7,7 @@ export default function BoxSelector() {
 
   return (
     <>
-      <button className="blindbox-btn">
+      <button className="blindbox-btn" onClick={() => navigate("/blind-box")}>
         <span
           className="large-text"
           style={{ color: "#27600B" }}

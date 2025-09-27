@@ -10,11 +10,13 @@ import StageNotification from './components/notifications/StageNotification'
 import PasswordRecovery from './components/auth/PasswordRecovery'
 import Register from './components/auth/Register'
 import Cart from './components/user/order/cart/Cart'
-import BoxSelector from './components/user/order/box/boxselector'
+import BoxSelector from './components/user/order/box/Boxselector'
 import GiftDetoxBox from './components/user/order/box/GiftDetoxBox'
 import RetailPackage from './components/user/order/subcription/retailpackage'
 import WeeklyPackage from './components/user/order/subcription/weeklypackage'
 import BlindBox from './components/user/order/box/BlindBox'
+import ScrollToTop from "./components/notifications/ScrollToTop";
+
 function App() {
 
   return(
@@ -22,6 +24,7 @@ function App() {
       <main>
         <Router>
           <NavBar/>
+          <ScrollToTop/>
           <Routes>
             <Route path='/' element={<Home/>} />
             <Route path='/vegie-care' element={<Home/>} />

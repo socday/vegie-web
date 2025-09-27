@@ -8,7 +8,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 .blindbox-container {
   background: linear-gradient(135deg, #4a7c59, #6b8e23);
   background-image: url('../assets/images/DetoxBox.png');
