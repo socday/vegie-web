@@ -10,7 +10,10 @@ import StageNotification from './components/notifications/StageNotification'
 import PasswordRecovery from './components/auth/PasswordRecovery'
 import Register from './components/auth/Register'
 import Cart from './components/user/order/cart/Cart'
-
+import BoxSelector from './components/user/order/box/boxselector'
+import GiftDetoxBox from './components/user/order/box/GiftDetoxBox'
+import RetailPackage from './components/user/order/subcription/retailpackage'
+import WeeklyPackage from './components/user/order/subcription/weeklypackage'
 function App() {
 
   return(
@@ -27,7 +30,10 @@ function App() {
             <Route path='/stage-notification' element={<StageNotification/>} />
             <Route path='/dang-ky' element={<Register/>}/>
             <Route path='/gio-hang' element={<Cart/>}/>
-
+            <Route path='/san-pham' element={<BoxSelector/>}/>
+            <Route path='/custom-box' element={<GiftDetoxBox/>}/>
+            <Route path='/retail-package' element={<RetailPackage/>}/>
+            <Route path='/weekly-package' element={<WeeklyPackage/>}/>
           </Routes>
           <Footer/>
         </Router>
