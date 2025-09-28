@@ -12,10 +12,10 @@ import Register from './components/auth/Register'
 import Cart from './components/user/order/cart/Cart'
 import Payment from './components/user/order/payment/Payment'
 import Profile from './components/user/profile/Profile'
+import PrivateRoute from './router/PrivateRoute'
 
 function App() {
-
-  return(
+  return (
     <>
       <main>
         <Router>
@@ -30,7 +30,15 @@ function App() {
             <Route path='/dang-ky' element={<Register/>}/>
             <Route path='/gio-hang' element={<Cart/>}/>
             <Route path='/thanh-toan' element={<Payment/>}/>
-            <Route path='/profile' element={<Profile/>}/>
+            
+            <Route
+              path='/profile'
+              element={
+                <PrivateRoute>
+                  <Profile/>
+                </PrivateRoute>
+              }
+            />
           </Routes>
           <Footer/>
         </Router>

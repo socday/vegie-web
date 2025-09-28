@@ -16,7 +16,7 @@
 .cart-item-page {
     width:70%;
     /* background-color: blue; */
-    padding-left: 1rem;
+    padding-left: 3%;
     padding-right: 2rem;
 }
 
@@ -51,6 +51,14 @@ width: 100%;
     padding-left: 0.6rem;
     width: 50%;
     white-space:inherit;  
+}
+
+.cart-item-page p {
+    align-items: center;
+    text-align: center;
+    font-size: 2rem;
+    color: #91CF43;
+    font-weight: 700;
 }
 
 .cart-name-remove h3{

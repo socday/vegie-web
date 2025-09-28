@@ -27,6 +27,11 @@
   gap: 8px;
 }
 
+.order-confirmation__shipping span,
+.order-confirmation__payment span{
+  margin-left: auto;
+}
+
 .order-confirmation label {
   display: flex;
   align-items: center;

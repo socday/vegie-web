@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // ✅ add useNavigate
 import "../../css/Login.css";
 import LoginRegisterForm from "./LoginRegisterForm.tsx";
-import { loginUser } from "../router/authApi.ts";
+import { loginUser } from "../../router/authApi.ts";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -32,7 +32,7 @@ const Login = () => {
     try {
     
       const response = await loginUser({
-        login: formData.login,
+        emailOrPhoneNumber: formData.login,
         password: formData.password,
       });    
       if (response.isSuccess) {
