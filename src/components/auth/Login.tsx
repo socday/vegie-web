@@ -39,8 +39,6 @@ const Login = () => {
         localStorage.setItem("accessToken", response.data.accessToken);
         localStorage.setItem("refreshToken", response.data.refreshToken);
 
-        console.log("Login success:", response.data);
-
         navigate("/"); // ✅ redirect to homepage
       } else {
         setError(response.message || "Login failed");

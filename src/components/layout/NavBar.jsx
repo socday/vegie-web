@@ -6,7 +6,7 @@ import '../../css/NavBar.css';
 
 const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);
-
+    const isLoggedIn = !!localStorage.getItem("accessToken");
     return (
         <header className="header">
             <nav className="navbar-container">
@@ -41,8 +41,18 @@ const NavBar = () => {
 
                         {/* 5. Dropdown icons */}
                         <ul className={`nav-icons ${isOpen ? "open" : ""}`}>
-                            <li><NavLink to="/dang-nhap" title="Đăng nhập"><FiUser /></NavLink></li>
-                            <li><NavLink to="/gio-hang"><FiShoppingCart /></NavLink></li>
+                            <li>
+                            {isLoggedIn ? (
+                                <NavLink to="/profile" title="Hồ sơ">
+                                <FiUser />
+                                </NavLink>
+                            ) : (
+                                <NavLink to="/dang-nhap" title="Đăng nhập">
+                                <FiUser />
+                                </NavLink>
+                            )}
+                            </li>
+                                <li><NavLink to="/gio-hang"><FiShoppingCart /></NavLink></li>
                             <li><NavLink to="/thong-bao"><FiBell /></NavLink></li>
                         </ul>
                     </div>
