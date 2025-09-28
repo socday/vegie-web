@@ -4,6 +4,8 @@ import "../../../../css/GiftDetoxBox.css";
 export default function GiftDetoxBox() {
   return (
     <>  
+    <div className="button-container">
+
       <button className="giftbox-btn">
         <span
           className="large-text"
@@ -62,7 +64,8 @@ export default function GiftDetoxBox() {
       <br />
       <br /><br />
       <br />
-      <br />
+      <br />      
+    </div>
     </>
   );
 }

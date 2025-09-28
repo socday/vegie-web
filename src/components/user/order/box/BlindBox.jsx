@@ -8,6 +8,9 @@ export default function BlindBox() {
   const decreaseQuantity = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
 
   return (
+    <div className="button-container">
+      
+
     <div className="blindbox-container">
       <div className="left-section">
         <div className="title">Blind Box</div>
@@ -49,5 +52,6 @@ export default function BlindBox() {
         </button>
       </div>
     </div>
-  );
+ </div>
+  );   
 }

@@ -1,0 +1,104 @@
+.cart-summary {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  margin-top:5%;
+  width: 100%;
+}
+
+.cart-summary__row span {
+  color: #27600B;
+    display: -webkit-box;            /* creates a flexible box */
+  -webkit-box-orient: vertical;    /* stack children vertically */
+  -webkit-line-clamp: 1;           /* limit text to 2 lines */
+  overflow: hidden;                /* hide overflowing text */
+  text-overflow: ellipsis;         /* add ellipsis */
+  white-space: normal;             /* allow wrapping */
+  overflow-wrap: break-word;  
+}
+
+.cart-summary-name {
+  width: 60%;
+}
+.cart-summary__row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.cart-summary__form {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.5rem;
+  display:flex;
+  flex-direction: column;
+}
+
+.cart-summary__form a{
+
+  padding: 0.5rem 1.2rem;
+}
+.cart-summary__total {
+  font-weight: bold;
+  border-top: 1px solid #ccc;
+  padding-top: 0.5rem;
+}
+
+.cart-summary__discount {
+  display: flex;
+  margin: 12px 0;
+  width: 100%;
+}
+
+
+.cart-summary__discount button span{
+  color: white;
+}
+.cart-summary__discount input {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+}
+
+.cart-summary__discount button {
+  padding: 6px 12px;
+  background: #2f6627;
+  color: #ccc;
+  border: none;
+  border-radius: 0 4px 4px 0;
+}
+
+.cart-summary a {
+  flex: 0 0 auto; 
+  display:inline-flex;
+  width: auto;
+  justify-content: center;
+}
+
+
+.cart-summary__or {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #27600B; 
+  width: 100%;
+}
+
+.cart-summary__or::before,
+.cart-summary__or::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #ccc; /* line color */
+}
+
+.cart-summary__or:not(:empty)::before {
+  margin-right: .75em; /* space between line and text */
+}
+
+.cart-summary__or:not(:empty)::after {
+  margin-left: .75em;
+}

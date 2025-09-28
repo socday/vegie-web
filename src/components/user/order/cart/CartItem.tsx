@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../cart/Cart.css"
+import "../cart/styles/Cart.css"
 type CartItemProps = {
   id: number;
   name: string;

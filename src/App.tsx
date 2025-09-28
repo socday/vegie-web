@@ -10,6 +10,7 @@ import StageNotification from './components/notifications/StageNotification'
 import PasswordRecovery from './components/auth/PasswordRecovery'
 import Register from './components/auth/Register'
 import Cart from './components/user/order/cart/Cart'
+
 import BoxSelector from './components/user/order/box/Boxselector'
 import GiftDetoxBox from './components/user/order/box/GiftDetoxBox'
 import RetailPackage from './components/user/order/subcription/retailpackage'
@@ -17,9 +18,13 @@ import WeeklyPackage from './components/user/order/subcription/weeklypackage'
 import BlindBox from './components/user/order/box/BlindBox'
 import ScrollToTop from "./components/notifications/ScrollToTop";
 
-function App() {
+import Payment from './components/user/order/payment/Payment'
+import Profile from './components/user/profile/Profile'
+import PrivateRoute from './router/PrivateRoute'
 
-  return(
+
+function App() {
+  return (
     <>
       <main>
         <Router>
@@ -39,6 +44,16 @@ function App() {
             <Route path='/retail-package' element={<RetailPackage/>}/>
             <Route path='/weekly-package' element={<WeeklyPackage/>}/>
             <Route path='/blind-box' element={<BlindBox/>}/>
+            <Route path='/thanh-toan' element={<Payment/>}/>
+            
+            <Route
+              path='/profile'
+              element={
+                <PrivateRoute>
+                  <Profile/>
+                </PrivateRoute>
+              }
+            />
           </Routes>
           <Footer/>
         </Router>

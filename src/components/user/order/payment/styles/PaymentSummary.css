@@ -1,0 +1,84 @@
+.payment-summary {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 16px;
+  width: 320px;
+}
+
+.payment-summary__product {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.payment-summary__image {
+  width: 40px;
+  height: 40px;
+  background: #eee;
+  margin-right: 12px;
+}
+
+.payment-summary__title {
+  font-weight: bold;
+}
+
+.payment-summary__desc {
+  color: #777;
+  font-size: 14px;
+}
+
+.payment-summary__row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.payment-summary__total {
+  font-weight: bold;
+  border-top: 1px solid #eee;
+  padding-top: 8px;
+}
+
+.payment-summary__discount {
+  display: flex;
+  margin: 12px 0;
+}
+
+.payment-summary__discount input {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+}
+
+.payment-summary__discount button {
+  padding: 6px 12px;
+  background: #2f6627;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+}
+
+.payment-summary__continue,
+.payment-summary__back {
+  display: block;
+  margin: 8px auto;
+  padding: 8px 16px;
+  border: 1px solid #2f6627;
+  background: white;
+  color: #2f6627;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.payment-summary__continue:hover,
+.payment-summary__back:hover {
+  background: #2f6627;
+  color: white;
+}
+
+.payment-summary__or {
+  text-align: center;
+  margin: 8px 0;
+  color: #666;
+}

@@ -27,9 +27,9 @@
   min-height: 320px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 40px;
   font-family: Arial, sans-serif;
+  justify-content: center;
 }
 
 .left-section {

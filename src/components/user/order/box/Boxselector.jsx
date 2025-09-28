@@ -7,6 +7,7 @@ export default function BoxSelector() {
 
   return (
     <>
+    <div className="button-container">
       <button className="blindbox-btn" onClick={() => navigate("/blind-box")}>
         <span
           className="large-text"
@@ -37,7 +38,7 @@ export default function BoxSelector() {
       <br />
       <br />
       <br />
-      <button className="fancy-btn" onClick={() => navigate("/custom-box")}>
+      <button className="fancie-btn" onClick={() => navigate("/custom-box")}>
         <span
           className="large-text"
           style={{ color: "white" }}
@@ -66,6 +67,7 @@ export default function BoxSelector() {
        <br />
       <br />
       <br />
+      </div>
     </>
   );
 }
