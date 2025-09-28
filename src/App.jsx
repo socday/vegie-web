@@ -10,6 +10,7 @@ import StageNotification from './components/notifications/StageNotification'
 import PasswordRecovery from './components/auth/PasswordRecovery'
 import Register from './components/auth/Register'
 import Cart from './components/user/order/cart/Cart'
+import Box3D from './components/3d/Box3D'
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
             <Route path='/stage-notification' element={<StageNotification/>} />
             <Route path='/dang-ky' element={<Register/>}/>
             <Route path='/gio-hang' element={<Cart/>}/>
+            <Route path='/box-3d' element={<Box3D/>}/>
 
           </Routes>
           <Footer/>

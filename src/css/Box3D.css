@@ -1,0 +1,126 @@
+/* Box3D Page - Theo thông số Figma */
+.box3d-page {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.content-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+  margin: 0;
+}
+
+.content-container {
+  width: 1440px;
+  height: 528px;        
+  background-color: #D9D9D9;
+  border: 16px solid transparent;
+  padding: 16px;    
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.content-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #666;
+}
+
+.model-container {
+  width: 100%;
+  height: 100%;         
+  background-color: transparent;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 3D Viewer Container */
+.box3d-viewer {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Control Buttons */
+.box-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  display: flex;
+  gap: 1rem;
+  z-index: 10;
+}
+
+.control-btn {
+  width: 40px;       
+  height: 34px;      /* Thay từ 40px */
+  padding: 9px 12px; /* Thay từ 0 */
+  border: 1px solid #E5E5E5; /* Thay từ 2px solid #91CF43 */
+  background-color: #FFFFFF; /* Thay từ #91CF43 */
+  color: #333333;    /* Thay từ #27600B */
+  border-radius: 100px; /* Thay từ 50% */
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  display: flex;    
+  justify-content: center; 
+  align-items: center;     
+}
+
+.control-btn:hover {
+  background-color: #F5F5F5; /* Thay từ #fff */
+  border-color: #91CF43;     /* Thêm */
+  color: #91CF43;            /* Thay từ #91CF43 */
+  /* Xóa transform: scale(1.05); */
+}
+.control-btn.active {
+  background-color: #91CF43; /* Thay từ #27600B */
+  color: #FFFFFF;            /* Thay từ #91CF43 */
+  border-color: #91CF43;     /* Thay từ #27600B */
+}
+
+/* Responsive design */
+@media (max-width: 1440px) {
+  .content-container {
+    width: 100%;
+    max-width: 1440px;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-container {
+    height: auto;
+    min-height: 300px;
+    padding: 12px 6px;
+    border: 8px solid transparent;
+  }
+  
+  .content-title {
+    font-size: 1.5rem;
+  }
+  
+  .content-description {
+    font-size: 1rem;
+  }
+  
+  .model-container {
+    height: 200px;
+  }
+}
