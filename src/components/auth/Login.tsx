@@ -14,7 +14,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const navigate = useNavigate(); // ✅ hook for redirect
+  const navigate = useNavigate(); 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -30,17 +30,11 @@ const Login = () => {
     setError(null);
     
     try {
-      console.log("Submitting form data:", {
-      login: formData.login, // or email, depending on mapping
-      password: formData.password,
-      });
+    
       const response = await loginUser({
         login: formData.login,
         password: formData.password,
-      });     console.log("Submitting form data:", {
-      login: formData.login, // or email, depending on mapping
-      password: formData.password,
-      });
+      });    
       if (response.isSuccess) {
         localStorage.setItem("accessToken", response.data.accessToken);
         localStorage.setItem("refreshToken", response.data.refreshToken);
@@ -52,7 +46,7 @@ const Login = () => {
         setError(response.message || "Login failed");
       }
     } catch (err) {
-      console.error("Login error:", err.response.data);
+      console.error("Login error:", err);
       setError("");
     } finally {
       setLoading(false);

@@ -7,6 +7,6 @@ export async function loginUser(payload: LoginRequest): Promise<LoginResponse> {
       "Content-Type": "application/json",
     },
   });
-  console.log("API Response:", res.data);
+  console.log("REQUEST DATA");
   return res.data;
 }
