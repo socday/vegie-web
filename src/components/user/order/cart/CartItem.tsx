@@ -1,13 +1,14 @@
 import { useState } from "react";
-import "../cart/Cart.css"
+import "../cart/styles/Cart.css"
+import { removeCartItem, updateCartItem } from "../../../../router/cartApi";
 type CartItemProps = {
-  id: number;
+  id: string;
   name: string;
   price: number;
   image: string;
   initialQuantity?: number;
-  onRemove: (id: number) => void;
-  onQuantityChange: (id: number, newQty: number) => void;
+  onRemove: (id: string) => void;
+  onQuantityChange: (id: string, newQty: number) => void;
 };
 
 export default function CartItem({
@@ -20,7 +21,7 @@ export default function CartItem({
   onQuantityChange,
 }: CartItemProps) {
   const [quantity, setQuantity] = useState(initialQuantity);
-
+ const userId = localStorage.getItem("userId");
   const increase = () => {
     const newQty = quantity + 1;
     setQuantity(newQty);            
@@ -34,20 +35,32 @@ export default function CartItem({
       onQuantityChange(id, newQty);
     }
   };
+const handleRemove = async () => {
+   
+    if (!userId) return;
+
+    try {
+      await removeCartItem(userId, id); // call backend
+      onRemove(id); // update UI state
+    } catch (err) {
+      console.error("Failed to remove item:", err);
+    }
+  };
+
 
   return (
     <div className="cart-item">
         <img src={image} alt={name} className="cart-image" />
         
-        <div className="cart-name-remove">
-            <h3 className="">{name}</h3>
-            <button 
-            onClick={() => onRemove(id)} 
-            className="d-btn-font cart-remove"
-            >
-            Remove
-            </button>
-        </div>
+             <div className="cart-name-remove">
+        <h3>{name}</h3>
+        <button
+          onClick={handleRemove}
+          className="d-btn-font cart-remove"
+        >
+          Remove
+        </button>
+      </div>
         <div className="cart-price-quantity">
 
           <div className="cart-quantity">

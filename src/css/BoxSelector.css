@@ -1,0 +1,75 @@
+.blindbox-btn {
+  width: 1306px;
+  height: 445.01px;
+  margin-left: 100px;
+  background-color: #D0E9FE;
+  background-image: url('../assets/images/Blind-Box.png'); /* Corrected path */
+  background-repeat: no-repeat;
+  background-size: cover; /* hoặc contain nếu muốn toàn bộ ảnh hiển thị */
+  background-position: center;
+  border: none;
+  border-radius: 50px;
+  font-size: 18px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.fancie-btn {
+  width: 1306px;
+  height: 445.01px;
+  margin-left: 100px;
+  background-color: #27600B;
+  background-image: url('../assets/images/Custom-Box.png'); /* Corrected path */
+  background-repeat: no-repeat;
+  background-size: cover; /* hoặc contain nếu muốn toàn bộ ảnh hiển thị */
+  background-position: center;
+  border: none;
+  border-radius: 50px;
+  font-size: 18px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.fancy-btn:hover, .blindbox-btn:hover {
+  opacity: 0.85;
+}
+
+
+@font-face {
+  font-family: "MyCustomFont";
+  src: url('../assets/fonts/nighty/NightyDEMO.otf') format("opentype");
+}
+.large-text {
+  font-family: "MyCustomFont", sans-serif;
+  margin-top: -50px;
+  display: block; 
+  font-size: 200px; 
+  font-weight: 700;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+  line-height: 0.9; /* giảm bớt so với 1 */
+
+}
+.middle-text {
+    font-size: 35px;
+    font-weight: 800;
+}
+
+.small-text{
+    display: block;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+/* Bao ngoài để căn giữa màn hình */
+.button-container {
+  display: flex;
+  flex-direction: column; /* 2 button xếp dọc */
+  justify-content: center; /* căn giữa theo chiều dọc */
+  align-items: center;     /* căn giữa theo chiều ngang */
+  gap: 20px;               /* khoảng cách giữa 2 button */
+  padding: 20px;
+  box-sizing: border-box;
+}
+

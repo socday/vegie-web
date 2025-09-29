@@ -1,0 +1,207 @@
+.profile-page {
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+
+.profile-sidebar {
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+}
+
+.profile-information {
+  width: 70%;
+  justify-content: center;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  align-items: center;
+}
+
+.sidebar {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 41px;
+  background: #D0E9FE;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 20rem;
+  width:60%;
+}
+
+.profile-pic {
+  width: 143px;
+  height: 143px;
+  background: white;
+  border-radius: 50%;
+  margin: 0 auto;
+  margin-top: 2rem;
+}
+
+.username {
+  font-weight:900;
+  font-size: 1.5rem;
+  margin: 10px 0;
+  margin-bottom: 1.5rem;
+  color: #27600B;
+}
+
+.sidebar-btn {
+  display: block;
+  margin: 0.44rem auto;
+  padding: 0.4rem 1rem;
+  font-size: 0.875rem;
+  border: none;
+  border-radius: 20px;
+  background: white;
+  color: #27600B;
+  cursor: pointer;
+  width: 84%;
+  transition: background-color 1s ease, color 0.5s ease; /* smooth hover */
+}
+
+/* Hover effect */
+.sidebar-btn:hover {
+  background: #27600B;
+  color: white;
+}
+
+/* Active (clicked) state */
+.sidebar-btn.active {
+  background: #27600B;
+  color: white;
+}
+
+.profile-form {
+  background-color: #D0E9FE;
+  padding: 2rem 2.5rem;
+  width: 100%;
+  border-radius: 22px;
+  display:flex;
+  flex-direction: column;
+}
+
+.profile-form-show {
+  display:flex;
+  flex-direction: row;
+  width: 100%;
+  padding-right: 3rem;
+}
+
+.profile-form h2 {
+  color: #27600B;
+  border-bottom: 2px solid #27600B;
+  padding-bottom: 5px;
+  font-weight: 600;
+  font-size: 2rem;
+  margin: 2rem;
+  width: 93%;
+}
+
+.profile-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width:40%;
+  gap: 0.8125rem;
+}
+
+.avatar {
+  width: 195px;
+  height: 195px;
+  border-radius: 50%;
+  background: white;
+}
+
+.form-fields {
+  margin-top: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+
+.form-fields input {
+  margin-top: 0.875rem;
+  font-size: 0.875rem;
+  text-align: start;
+  height: 35px;
+}
+  
+.form-fields input::placeholder {
+  color: #0D330E;
+  font-weight: 600;
+}
+
+.profile-layout {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: calc(100% - 1rem);
+}
+
+.p1 {
+  width: 55%;
+}
+.p2 {
+  width: 45%;
+}
+
+.full-width {
+}
+
+.profile-form input{
+  border:none;
+  flex:0 0 auto;
+}
+
+.profile-form-actions {
+  display: flex;
+  margin-left:auto;
+  gap:2rem;
+  padding-right:3.125rem;
+  margin-top: 5rem;
+}
+
+.profile-form-actions button {
+  padding: 0.5rem 1.84rem;
+}
+
+.profile-form button {
+  border:none;
+}
+
+.primary-btn {
+  background: #27600B;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.secondary-btn {
+  background: white;
+  color: #27600B;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.profile-sidebar-invincible {
+  margin-bottom: 2rem;
+}
+
+.form-password-fields {
+  margin-left: 2rem;
+  width: 100%;
+}
+
+.form-password-fields input {
+  width: 100%;
+}
+

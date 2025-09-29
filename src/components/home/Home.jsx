@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 
 import mascotImage from '../../assets/mascot.png';
 import brandLogo from '../../assets/logo-brand.png';
-
+import { useNavigate } from 'react-router-dom';
 import '../../css/Home.css';
+import ComboSection from './ComboSection';
+
 
 // Dữ liệu vẫn giữ nguyên, rất tiện lợi
 const tabsData = [
@@ -36,7 +38,7 @@ const boxesData = [
 ];
 
 export default function Home() {
-
+  const navigate = useNavigate(); // <-- đây là chỗ thiếu
   const [isAiMenuOpen, setIsAiMenuOpen] = useState(false);
 
   // State ban đầu thành `null` để không có tab nào mở
@@ -55,6 +57,7 @@ export default function Home() {
 
   return (
     <>
+      <div className="home-page-container">
         <section className='mascot-section'>
             <img
             src={mascotImage}
@@ -66,39 +69,27 @@ export default function Home() {
         <section className='intro-section'>
             <div className="intro-container">
                 <div className="intro-brand">
-                    <img src={brandLogo} alt="Vegie Care Brand" />
+                  <h1 className="head1">
+                    Vegie
+                    Care</h1>
                 </div>
 
-                {/* Cột bên phải chỉ chứa một danh sách các mục có thể tương tác */}
-                <div className="intro-actions">
-                    {tabsData.map((tab) => (
-                    // Với mỗi mục, chúng ta sẽ quyết định hiển thị BUTTON hay NỘI DUNG
-                    <div key={tab.id} className="tab-item-container">
-                        {openTabId === tab.id ? (
-                        // ----- NẾU TAB NÀY ĐANG MỞ: HIỂN THỊ NỘI DUNG -----
-                        <div
-                            className="content-bubble"
-                            onClick={() => handleToggleTab(tab.id)} // Click để đóng lại
-                        >
-                            {tab.content}
-                        </div>
-                        ) : (
-                        // ----- NẾU TAB NÀY ĐANG ĐÓNG: HIỂN THỊ BUTTON -----
-                        <button
-                            className="action-button"
-                            onClick={() => handleToggleTab(tab.id)} // Click để mở ra
-                        >
-                            {tab.title}
-                        </button>
-                        )}
-                    </div>
-                    ))}
-                </div>
+               <div className="intro-actions">
+                {tabsData.map((tab) => (
+                  <div key={tab.id} className="tab-item-container">
+                    <button className="action-button">{tab.title}</button>
+                    <div className="content-bubble">{tab.content}</div>
+                  </div>
+                ))}
+              </div> 
             </div>
         </section>
+        <div className="divider"></div>
         <section className='ai-menu-section'>
             <div className="ai-menu-container">
                 <div className={`ai-menu-wrapper ${isAiMenuOpen ? 'open' : ''}`}
+                    onMouseEnter={() => setIsAiMenuOpen(true)}
+                    onMouseLeave={() => setIsAiMenuOpen(false)}
                     onClick={() => setIsAiMenuOpen(!isAiMenuOpen)}>
                   {/* Nội dung ban đầu (chữ AI Menu) */}
                   <div className="ai-menu-initial-content">
@@ -117,38 +108,8 @@ export default function Home() {
                 </div>
             </div>
         </section>
-        <section className='combo-section'>
-          <div className='combo-container'>
-            {/* Cột bên trái: Tiêu đề */}
-            <div className='combo-title'>
-              <span className='combo-title-top'>Gói</span>
-              <span className='combo-title-bottom'>dịch vụ</span>
-            </div>
-
-            {/* Cột bên phải: Chứa các gói */}
-            <div className='combo-packages'>
-              {/* --- Gói mua lẻ --- */}
-              <div className='package-card'>
-                  <div className="package-title">
-                    <span className="package-line-1">Gói</span>
-                    <span className="package-line-2">mua lẻ</span>
-                  </div>
-                  {/* Dòng mô tả */}
-                  <p className="package-description">Linh hoạt - Tiện lợi - Theo ý bạn</p>
-              </div>
-
-              {/* --- Gói theo tuần --- */}
-              <div className='package-card'>
-                  <div className="package-title">
-                    <span className="package-line-1">Gói</span>
-                    <span className="package-line-2">theo tuần</span>
-                  </div>
-                  {/* Dòng mô tả */}
-                  <p className="package-description">Linh hoạt - Tiện lợi - Theo ý bạn</p>
-              </div>
-            </div>
-          </div>
-        </section>
+        
+        <ComboSection />
         <section className="box-section">
           <div className="box-section-container">
             {/* Tiêu đề cho section (tùy chọn) */}
@@ -196,6 +157,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+      </div>
     </>
   );
 }

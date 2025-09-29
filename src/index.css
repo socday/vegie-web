@@ -11,6 +11,28 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html{
+  font-size: 16px;
+}
+
+@media (max-width: 1200px) {
+  html {
+    font-size: 15px; 
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 12px;
+  }
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -31,8 +53,11 @@ a {
   width: 100%;
   box-sizing: border-box;
 }
-
 link {
+}
+
+span{
+  color: #27600B;
 }
 
 .head1 {
@@ -136,11 +161,70 @@ div {
   border-radius: 0%;
 }
 
+.d-btn:hover span {
+  color: white;
+}
+
 .d-btn span { 
   position: relative; 
+  transition: color 0.3s ease;
   z-index: 1;
 }
 
+/* Reusable fancy green button */
+.fancy-btn {
+  position: relative;
+  overflow: hidden;
+  border: none;
+  background: white;
+  color: #91CF43;
+  padding: 0.625rem 1.25rem; /* 10px 20px */
+  border-radius: 1.25rem;    /* 20px */
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.4s ease;
+}
+
+.fancy-btn::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -50%;
+  width: 0%;
+  height: 100%;
+  background: #91CF43;
+  z-index: 0;
+  transform: translateX(-50%);
+  transition: width 0.4s ease, height 0.4s ease;
+  border-radius: inherit;
+}
+
+.fancy-btn:hover::before {
+  width: 100%;
+  height: 200%;
+}
+
+.fancy-btn span {
+  position: relative;
+  z-index: 1;
+  transition: color 0.4s ease;
+}
+
+.fancy-btn:hover span {
+  color: white;
+}
+
+.fancy-btn.active {
+  background: #91CF43;
+  color: white;
+}
+
+.fancy-btn span {
+  color:#91CF43;
+}
+.fancy-btn.active span{
+  color:white;
+}
 
 @font-face {
   font-family: NightyDemo;

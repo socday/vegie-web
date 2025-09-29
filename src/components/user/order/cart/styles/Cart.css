@@ -1,26 +1,31 @@
 .cart-item{
     display: flex;
     flex-direction: row;
-
+    max-height: 100px;
 }
 
 .cart {
     background: transparent;
     display:flex;
-    width: 90%;
+    width: 100%;
+    padding: 2rem;
     min-height: 500px;
     margin: 0 auto;
 }
 
 .cart-item-page {
     width:70%;
+    /* background-color: blue; */
+    padding-left: 3%;
+    padding-right: 2rem;
 }
 
 .cart-checkout-page {
+    display: flex;
+    /* background-color: green; */
     width:30%;
-    justify-content: center;
-    align-items: center;
-    background-color: blue;
+    justify-content:center;
+    align-items: flex-start;
 }
 
 .cart-item {
@@ -46,9 +51,14 @@ width: 100%;
     padding-left: 0.6rem;
     width: 50%;
     white-space:inherit;  
-    display: -webkit-box;          /* Use a flex-like layout for text */
-  -webkit-box-orient: vertical;  /* Vertical stacking of lines */
-  -webkit-line-clamp: 2;         /* Number of lines before truncation */
+}
+
+.cart-item-page p {
+    align-items: center;
+    text-align: center;
+    /* font-size: 2rem; */
+    color: #91CF43;
+    font-weight: 700;
 }
 
 .cart-name-remove h3{
@@ -58,7 +68,15 @@ width: 100%;
     max-width: 100%;
     font-weight: 400;
     margin:0;
-    text-overflow: ellipsis;
+  display: -webkit-box;            /* creates a flexible box */
+  -webkit-box-orient: vertical;    /* stack children vertically */
+  -webkit-line-clamp: 2;           /* limit text to 2 lines */
+  overflow: hidden;                /* hide overflowing text */
+  text-overflow: ellipsis;         /* add ellipsis */
+  white-space: normal;             /* allow wrapping */
+  overflow-wrap: break-word;       /* break long words if needed */
+    /* hide extra text */
+
 }
 
 .cart-remove {

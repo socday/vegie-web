@@ -1,44 +1,48 @@
 /* File: NavBar.css */
 
-/* === CẬP NHẬT MÀU CHỦ ĐẠO MỚI === */
+/* === COLORS === */
 :root {
-  --primary-green: #91CF43; /* Màu xanh lá cây mới của bạn */
+  --primary-green: #91CF43;
   --text-dark: #333;
   --text-light: #fff;
 }
 
+/* Header wrapper */
 .header {
   width: 100%;
-  background-color: var(--text-light);
+  height: 5.125rem;
   position: sticky;
   top: 0;
   z-index: 1000;
+  background-color: #FFFFFF;
+   box-shadow: 0 6px 12px rgba(0,0,0,0.1);
 }
 
+/* Navbar container */
 .navbar-container {
   display: flex;
-  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  flex-direction: row;
   align-items: center;
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0.75rem 2rem;
-  height: 80px;
+  justify-content: center;
 }
 
-/* 1. Logo */
+/* Logo */
+.navbar-logo {
+  margin-left: 2rem;
+  width: 100%;
+  width: 15%;
+}
+
 .navbar-logo img {
-  height: 50px;
   display: block;
+  width: auto;
+  height: 2.5em;
+  margin: 0 auto;
 }
 
-/* Nhóm các chức năng bên phải */
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem; /* Tăng khoảng cách một chút */
-}
-
-/* GỘP CHUNG STYLE CHO CÁC LIÊN KẾT VÀ ICON */
+/* Links + Icons shared base */
 .nav-links,
 .nav-icons {
   display: flex;
@@ -46,92 +50,188 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 0.5rem;
 }
 
+/* Navigation links */
+.nav-links {
+  width: 30%;
+  margin-left: 2rem;
+  justify-content: space-between;
+}
+
+/* Action icons area */
+.nav-icons {
+  justify-content: space-evenly;
+  padding: 0;
+  padding-right: 2rem;
+}
+
+/* Link + Icon base */
 .nav-links a,
-.nav-icons a {
-  display: flex;
+.nav-icons a,
+.menu-toggle {
+  font-size: 1.125rem;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--primary-green);
   background-color: transparent;
-  transition: all 0.3s ease;
   border-radius: 25px 10px 25px 10px;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
+/* Larger font for icons */
 .nav-icons a {
   font-size: 1.4rem;
-  padding: 12px;
 }
 
+/* Hover + active state */
 .nav-links a:hover,
 .nav-icons a:hover,
-.nav-links a.active {
+.menu-toggle:hover,
+.nav-links a.active,
+.nav-icons a.active {
   background-color: var(--primary-green);
   color: var(--text-light);
   box-shadow: 0 4px 12px rgba(145, 207, 67, 0.4);
   transform: translateY(-2px);
 }
 
-
-/*
- * ==========================================================
- *  4. THANH TÌM KIẾM - ĐÃ CẬP NHẬT THEO ĐÚNG HÌNH MẪU
- * ==========================================================
-*/
-
-/* Container chính của form, tạo ra viền và hình dạng viên thuốc */
-.search-form {
-  display: flex; /* Đặt input và button nằm ngang */
-  align-items: center;
-  height: 42px; /* Tăng chiều cao một chút */
-  border: 3px solid var(--primary-green); /* Viền màu xanh */
-  border-radius: 50px; /* Bo tròn để tạo hình viên thuốc */
-  overflow: hidden; /* Cực kỳ quan trọng: cắt các góc của phần tử con */
-  background-color: var(--text-light); /* Nền màu trắng cho phần input */
-  width: 200px; /* Đặt chiều rộng ban đầu cho form */
-  transition: width 0.4s ease-in-out; /* Thêm hiệu ứng chuyển động cho chiều rộng */
-}
-.search-form:focus-within {
-  width: 280px; /* Chiều rộng mới khi người dùng click vào */
-}
-
-/* Ô nhập liệu */
-.search-input {
-  flex-grow: 1; /* Cho phép ô input co giãn chiếm đầy không gian thừa */
-  height: 100%;
-  border: none; /* Bỏ viền mặc định */
-  outline: none; /* Bỏ đường viền khi focus */
-  padding: 0 1rem; /* Khoảng cách cho chữ bên trong */
-  font-size: 0.9rem;
-  background-color: transparent; /* Nền trong suốt để thấy màu trắng của form */
-  color: var(--text-dark);
-}
-/* Style cho chữ "Tìm kiếm" (placeholder) */
-.search-input::placeholder {
-  color: var(--primary-green);
-  opacity: 0.8;
-}
-
-/* Nút bấm tìm kiếm */
-.search-button {
+/* Right-side group */
+.nav-actions {
   display: flex;
+  width: 55%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Search form */
+.search-form {
+  display: flex;
+  width: 22%;
+  margin-left:1rem;
+  margin-right: auto;
+  height: 40%;
+  flex-direction: row;
+  background-color: #91CF43;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  width: 50px; /* Tăng chiều rộng nút một chút */
+  border-radius: 999px;
+  transition: width 0.05s ease-in-out;
+}
+
+
+.search-form input {
+  width: 75%;
+  margin: 0.2rem;
+  margin-right: 0;
   border: none;
-  border-radius: 50px; /* Bo tròn nút */
-  background-color: var(--primary-green); /* Nền nút màu xanh */
-  color: var(--text-light); /* Icon màu trắng */
-  font-size: 1.3rem;
+  text-align: left;
+  height: 80%;
+  line-height: normal;
+  align-items: center;
+  padding-left: 0.7rem; 
+}
+
+.search-form input::placeholder {
+  font-size: 0.75rem;
+}
+
+.search-form button {
+  background: none;
+  width: 25%;
+  border: none;
+  color:white;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
-.search-button:hover {
-  background-color: #79b433; /* Màu xanh đậm hơn một chút khi hover */
+
+.search-form:hover,
+.search-form:focus-within {
+  width: 35%;
 }
+
+.search-form:hover input,
+.search-form:focus-within input {
+  width: 85%;
+}
+
+.search-form:hover button,
+.search-form:focus-within button {
+  width: 15%;
+}
+/* Icons inside nav-actions */
+.nav-icons-action {
+  width: 30%;
+}
+
+/* Hamburger button */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  margin: 0 auto;
+}
+
+/* ================== MEDIA QUERIES ================== */
+
+/* Medium screens */
+@media (max-width: 1200px) {
+  .nav-links {
+    width: 50%;
+    margin-left: 1rem;
+  }
+
+  .navbar-container a {
+    border-radius: 20px 5px 20px 5px;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .nav-icons-action {
+    width: 40%;
+  }
+
+  .search-form {
+    width: 60%;
+  }
+}
+
+/* Small screens */
+@media (max-width: 900px) {
+  .nav-icons-action {
+    width: 30%;
+  }
+
+  .menu-toggle {
+    display: flex;
+    background-color: var(--primary-green);
+  }
+
+  .nav-icons {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 3rem;
+    right: 1rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+
+  .nav-icons.open {
+    display: flex;
+  }
+}
+
+
+/* Active state for both nav-links and nav-icons */
+
+
+/* Expand search-form on hover or when focused */

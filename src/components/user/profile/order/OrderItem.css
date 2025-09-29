@@ -1,0 +1,116 @@
+.order-item {
+  display: flex;
+  border-top: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+  margin-right: 1rem;
+}
+
+.order-left {
+  width: 60%;
+  display: flex;
+  gap: 1rem;
+}
+
+.product-image {
+  width: 5.3125rem;
+  height: 5.3125rem;
+  background: #cce7ff;
+  border-radius: 1.125rem;
+  margin-left: 2rem;
+}
+
+.product-info h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #27600b;
+  margin-bottom: 1rem;
+}
+
+.product-info p {
+  margin: 0.2rem 0;
+  color: #91cf43;
+  font-size: 0.875rem;
+}
+
+.order-right {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.order-price {
+  width: 100%;
+  border: 1px solid #91cf43;
+  border-radius: 2rem;
+  text-align: center;
+  padding: 0.5rem 0;
+  font-weight: bold;
+  color: #27600b;
+  margin-bottom: 0.5rem;
+}
+
+.order-actions {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.fancy-btn {
+  flex: 1;
+  border: 1px solid #91cf43;
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  background: white;
+  color: #91cf43;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.fancy-btn:hover {
+  background: #91cf43;
+  color: white;
+}
+
+.fancy-btn.active {
+  background: #91cf43;
+  color: white;
+}
+
+.cancel {
+  border-color: #91cf43;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  max-width: 25rem;
+  width: 90%;
+  box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.3);
+}
+
+.popup-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
