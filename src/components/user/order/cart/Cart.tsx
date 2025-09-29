@@ -2,13 +2,13 @@ import CartItem from "./CartItem";
 import "../cart/styles/Cart.css";
 import CartCheckout from "./CartCheckout";
 import React, { useEffect, useState } from "react";
-import { getCart } from "../../../../router/cartApi";
+import { getCart, updateCartItem } from "../../../../router/cartApi";
 import { CartResponse, Item } from "../../../../router/types/cartResponse";
 
 export default function Cart() {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
-
+ const userId = localStorage.getItem("userId");
   useEffect(() => {
     async function fetchCart() {
       try {
@@ -27,10 +27,18 @@ export default function Cart() {
     setItems(items.filter(item => item.id !== id));
   };
 
-  const handleQuantityChange = (id: string, newQty: number) => {
-    setItems(items.map(item =>
-      item.id === id ? { ...item, quantity: newQty } : item
-    ));
+ 
+    const handleQuantityChange = async (id: string, newQty: number) => {  if (!userId) return ("Ko lay duoc userid");
+    try {
+      await updateCartItem(userId, id, newQty);
+      setItems((prev) =>
+        prev.map((item) =>
+          item.id === id ? { ...item, initialQuantity: newQty } : item
+        )
+      );
+    } catch (err) {
+      console.error("Failed to update quantity:", err);
+    }
   };
 
   if (loading) {

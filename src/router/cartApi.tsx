@@ -49,3 +49,12 @@ export async function removeCartItem(userId: string, orderDetailId: string): Pro
     },
   });
 }
+
+export async function updateCartItem(userId: string, boxTypeId: string, quantity: number) {
+  const token = localStorage.getItem("accessToken");
+  return api.post(
+    `/Cart/${userId}/items`,
+    { boxTypeId, quantity },
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+}

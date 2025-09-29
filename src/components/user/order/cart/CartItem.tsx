@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../cart/styles/Cart.css"
-import { removeCartItem } from "../../../../router/cartApi";
+import { removeCartItem, updateCartItem } from "../../../../router/cartApi";
 type CartItemProps = {
   id: string;
   name: string;
@@ -21,7 +21,7 @@ export default function CartItem({
   onQuantityChange,
 }: CartItemProps) {
   const [quantity, setQuantity] = useState(initialQuantity);
-
+ const userId = localStorage.getItem("userId");
   const increase = () => {
     const newQty = quantity + 1;
     setQuantity(newQty);            
@@ -36,7 +36,7 @@ export default function CartItem({
     }
   };
 const handleRemove = async () => {
-    const userId = localStorage.getItem("userId");
+   
     if (!userId) return;
 
     try {
@@ -46,6 +46,8 @@ const handleRemove = async () => {
       console.error("Failed to remove item:", err);
     }
   };
+
+
   return (
     <div className="cart-item">
         <img src={image} alt={name} className="cart-image" />
