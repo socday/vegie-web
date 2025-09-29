@@ -38,7 +38,7 @@ const Login = () => {
       if (response.isSuccess) {
         localStorage.setItem("accessToken", response.data.accessToken);
         localStorage.setItem("refreshToken", response.data.refreshToken);
-
+        localStorage.setItem("userId", response.data.id);
         navigate("/"); // ✅ redirect to homepage
       } else {
         setError(response.message || "Login failed");

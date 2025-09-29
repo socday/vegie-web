@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../cart/styles/CartSummary.css";
 
 type CartItem = {
-  id: number;
+  id: string;
   name: string;
   price: number;
   quantity: number;
@@ -40,7 +40,7 @@ export default function CartCheckout({ items, mode}: CartSummaryProps )  {
 
         <div className="cart-summary__row cart-summary__total">
             <span>Tổng</span>
-            <span>{items.reduce((sum, item) => sum + item.price * item.quantity, 0)}</span>
+            <span>{items.reduce((sum, item) =>sum + item.price * item.quantity, 0)+100}</span>
         </div>
 
         <div className="cart-summary__form">

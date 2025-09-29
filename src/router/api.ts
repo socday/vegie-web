@@ -2,7 +2,7 @@
 import axios from "axios";
 
 // read base URL from .env
-const API_URL = import.meta.env.VITE_API_URL; 
+const API_URL = "https://exe-be-qu8u.onrender.com/api"; 
 // or process.env.REACT_APP_API_URL if you're on Create React App
 
 export const api = axios.create({
@@ -11,24 +11,31 @@ export const api = axios.create({
 });
 
 // Log all requests
+// Log all requests
 api.interceptors.request.use((config) => {
-  console.log("Request:", {
-    url: config.url,
+  const fullUrl = `${config.baseURL ?? ""}${config.url ?? ""}`;
+
+  console.log("DIA CHI FULL", fullUrl);
+  console.log("Api Request:", {
+    url: fullUrl,
     method: config.method,
     headers: config.headers,
     data: config.data,
   });
+
   return config;
 });
 
+
 // Log all responses
 api.interceptors.response.use(
-  (response) => {
+   (response) => {
     console.log("Response:", {
       status: response.status,
       headers: response.headers,
       data: response.data,
     });
+    console.log("DATA LA", response.data);
     return response;
   },
   (error) => {

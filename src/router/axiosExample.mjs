@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5071/api", // <-- change to your backend root
+  baseURL: "https://exe-be-qu8u.onrender.com/api", // <-- change to your backend root
 });
 
 // Log all requests
@@ -43,12 +43,20 @@ api.interceptors.response.use(
 );
 
 async function testApi() {
-  try {
-    const response = await api.post("/Auth/login", {login: "user@example.com", password: "string"});
-    console.log("Returned body:", response.data); // this is the final payload
-  } catch (err) {
-    // console.error("Test failed:", err);
+  const auth = await checkAuth();
+
+  if (!auth.isAuthenticated || !auth.user) {
+    throw new Error("User not authenticated");
   }
+
+  const res = await api.get<CartResponse>(`/Cart/${auth.user.id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${auth.token}`,
+    },
+  });
+
+  return res.data;
 }
 
 export default testApi();

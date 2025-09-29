@@ -38,13 +38,11 @@ function App() {
             <Route path='/khoi-phuc-mat-khau' element={<PasswordRecovery/>} />
             <Route path='/stage-notification' element={<StageNotification/>} />
             <Route path='/dang-ky' element={<Register/>}/>
-            <Route path='/gio-hang' element={<Cart/>}/>
             <Route path='/san-pham' element={<BoxSelector/>}/>
             <Route path='/custom-box' element={<GiftDetoxBox/>}/>
             <Route path='/retail-package' element={<RetailPackage/>}/>
             <Route path='/weekly-package' element={<WeeklyPackage/>}/>
             <Route path='/blind-box' element={<BlindBox/>}/>
-            <Route path='/thanh-toan' element={<Payment/>}/>
             
             <Route
               path='/profile'
@@ -53,7 +51,24 @@ function App() {
                   <Profile/>
                 </PrivateRoute>
               }
-            />
+            /><Route
+  path='/gio-hang'
+  element={
+    <PrivateRoute>
+      <Cart/>
+    </PrivateRoute>
+  }
+/>
+
+<Route
+  path='/thanh-toan'
+  element={
+    <PrivateRoute>
+      <Payment/>
+    </PrivateRoute>
+  }
+/>
+
           </Routes>
           <Footer/>
         </Router>

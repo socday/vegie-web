@@ -13,7 +13,7 @@ export default function PrivateRoute({ children }: Props) {
 
   useEffect(() => {
     checkAuth().then((result) => {
-      setAuthenticated(!!result);
+      setAuthenticated(result.isAuthenticated);
       setLoading(false);
     });
   }, []);

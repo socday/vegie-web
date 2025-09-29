@@ -1,6 +1,6 @@
 // types/cart.ts
 export type Item = {
-  id: number;
+  id: string;
   name: string;
   price: number;
   image: string;

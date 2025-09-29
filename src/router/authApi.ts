@@ -13,19 +13,62 @@ export async function loginUser(payload: LoginRequest): Promise<LoginResponse> {
 }
 
 export async function checkAuth() {
-  const token = localStorage.getItem("accessToken");
-  if (!token) return false;
+  let token = localStorage.getItem("accessToken");
+  const refreshToken = localStorage.getItem("refreshToken");
+
+  if (!token) {
+    return { isAuthenticated: false, user: null, token: null };
+  }
 
   try {
+    console.log("HERE");
     const response = await api.get("/Auth/current-user", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    return response.status === 200 ? response.data : false;
-  } catch (error) {
+    return {
+      isAuthenticated: response.status === 200,
+      user: response.data,
+      token,
+    };
+  } catch (error: any) {
     console.error("Auth check failed:", error);
-    return false;
+
+    // Only attempt refresh if we have a refresh token
+    if (refreshToken) {
+      try {
+        const refreshRes = await api.post("/Auth/refresh-token", {
+          refreshToken,
+        });
+
+        if (refreshRes.data?.isSuccess) {
+          const newToken = refreshRes.data.data.accessToken;
+
+          // Save new token in localStorage
+          localStorage.setItem("accessToken", newToken);
+          token = newToken;
+
+          // Retry current-user with the new token
+          const retryRes = await api.get("/Auth/current-user", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          return {
+            isAuthenticated: retryRes.status === 200,
+            user: retryRes.data,
+            token,
+          };
+        }
+      } catch (refreshError) {
+        console.error("Token refresh failed:", refreshError);
+      }
+    }
+
+    // If refresh also fails → force logout
+    return { isAuthenticated: false, user: null, token: null };
   }
 }

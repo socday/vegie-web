@@ -1,13 +1,13 @@
 import { useState } from "react";
 import "../cart/styles/Cart.css"
 type CartItemProps = {
-  id: number;
+  id: string;
   name: string;
   price: number;
   image: string;
   initialQuantity?: number;
-  onRemove: (id: number) => void;
-  onQuantityChange: (id: number, newQty: number) => void;
+  onRemove: (id: string) => void;
+  onQuantityChange: (id: string, newQty: number) => void;
 };
 
 export default function CartItem({
