@@ -185,7 +185,7 @@
   transition: all 0.2s ease;
   text-align: center;
   background-color: white;
-  padding: 4px 10px;
+  padding: 4px 10px !important;
   flex-shrink: 0; /* Không cho phép shrink */
 }
 
@@ -212,6 +212,10 @@
   font-weight: 650;
   color: #91CF43;
   margin-bottom: 4px;
+}
+
+.description span {
+  color: #FFFFFF;
 }
 
 /* Responsive adjustments */

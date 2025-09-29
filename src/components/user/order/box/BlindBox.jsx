@@ -39,15 +39,15 @@ export default function BlindBox() {
       </div>
 
       <div className="right-section">
-        <button className="action-btn mua-le">
+        <button className="action-btn mua-le fancy-btn">
           <span className="action-btn-text">Mua lẻ</span>
         </button>
 
-        <button className="action-btn mua-theo-tuan">
+        <button className="fancy-btn action-btn mua-theo-tuan">
           <span className="action-btn-text">Mua theo tuần</span>
         </button>
 
-        <button className="action-btn them-gio">
+        <button className="fancy-btn action-btn them-gio bb-btn-p">
           <span className="action-btn-text">Thêm vào giỏ</span>
         </button>
       </div>

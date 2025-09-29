@@ -68,7 +68,6 @@
   flex-direction: column; /* 2 button xếp dọc */
   justify-content: center; /* căn giữa theo chiều dọc */
   align-items: center;     /* căn giữa theo chiều ngang */
-  height: 100vh;           /* cao full màn hình */
   gap: 20px;               /* khoảng cách giữa 2 button */
   padding: 20px;
   box-sizing: border-box;
