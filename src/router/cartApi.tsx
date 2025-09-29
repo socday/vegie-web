@@ -38,3 +38,14 @@ export async function getCart(): Promise<CartResponse> {
     totalPrice: apiData.totalPrice,
   };
 }
+
+export async function removeCartItem(userId: string, orderDetailId: string): Promise<void> {
+  const token = localStorage.getItem("accessToken");
+  if (!token) throw new Error("User not authenticated");
+
+  await api.delete(`/Cart/${userId}/items/${orderDetailId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}

@@ -21,13 +21,38 @@ export async function checkAuth() {
   }
 
   try {
-    console.log("HERE");
+    // Try with current token
     const response = await api.get("/Auth/current-user", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
+    if (refreshToken) {
+      try {
+        console.log("DANG REFRESH TOKEN");
+        const refreshRes = await api.post(
+          "/Auth/refresh-token",
+          { refreshToken }, // body
+          // optional: depends on backend
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        if (refreshRes.data?.isSuccess) {
+          const newToken = refreshRes.data.data.accessToken;
+
+          localStorage.setItem("accessToken", newToken);
+          api.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
+          console.log("REFRESH SUCCESS");
+          const retryRes = await api.get("/Auth/current-user");
+          return {
+            isAuthenticated: retryRes.status === 200,
+            user: retryRes.data,
+            token: newToken,
+          };
+        }
+      } catch (refreshError) {
+        console.error("Token refresh failed:", refreshError);
+      }
+    }
     return {
       isAuthenticated: response.status === 200,
       user: response.data,
@@ -36,39 +61,8 @@ export async function checkAuth() {
   } catch (error: any) {
     console.error("Auth check failed:", error);
 
-    // Only attempt refresh if we have a refresh token
-    if (refreshToken) {
-      try {
-        const refreshRes = await api.post("/Auth/refresh-token", {
-          refreshToken,
-        });
 
-        if (refreshRes.data?.isSuccess) {
-          const newToken = refreshRes.data.data.accessToken;
-
-          // Save new token in localStorage
-          localStorage.setItem("accessToken", newToken);
-          token = newToken;
-
-          // Retry current-user with the new token
-          const retryRes = await api.get("/Auth/current-user", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          return {
-            isAuthenticated: retryRes.status === 200,
-            user: retryRes.data,
-            token,
-          };
-        }
-      } catch (refreshError) {
-        console.error("Token refresh failed:", refreshError);
-      }
-    }
-
-    // If refresh also fails → force logout
     return { isAuthenticated: false, user: null, token: null };
   }
 }
+
