@@ -10,15 +10,26 @@ import StageNotification from './components/notifications/StageNotification'
 import PasswordRecovery from './components/auth/PasswordRecovery'
 import Register from './components/auth/Register'
 import Cart from './components/user/order/cart/Cart'
-import Box3D from './components/3d/Box3D'
+
+import BoxSelector from './components/user/order/box/Boxselector'
+import GiftDetoxBox from './components/user/order/box/GiftDetoxBox'
+import RetailPackage from './components/user/order/subcription/retailpackage'
+import WeeklyPackage from './components/user/order/subcription/weeklypackage'
+import BlindBox from './components/user/order/box/BlindBox'
+import ScrollToTop from "./components/notifications/ScrollToTop";
+
+import Payment from './components/user/order/payment/Payment'
+import Profile from './components/user/profile/Profile'
+import PrivateRoute from './router/PrivateRoute'
+
 
 function App() {
-
-  return(
+  return (
     <>
       <main>
         <Router>
           <NavBar/>
+          <ScrollToTop/>
           <Routes>
             <Route path='/' element={<Home/>} />
             <Route path='/vegie-care' element={<Home/>} />
@@ -27,8 +38,36 @@ function App() {
             <Route path='/khoi-phuc-mat-khau' element={<PasswordRecovery/>} />
             <Route path='/stage-notification' element={<StageNotification/>} />
             <Route path='/dang-ky' element={<Register/>}/>
-            <Route path='/gio-hang' element={<Cart/>}/>
+            <Route path='/san-pham' element={<BoxSelector/>}/>
+            <Route path='/custom-box' element={<GiftDetoxBox/>}/>
+            <Route path='/retail-package' element={<RetailPackage/>}/>
+            <Route path='/weekly-package' element={<WeeklyPackage/>}/>
+            <Route path='/blind-box' element={<BlindBox/>}/>
             <Route path='/box-3d' element={<Box3D/>}/>
+            <Route
+              path='/profile'
+              element={
+                <PrivateRoute>
+                  <Profile/>
+                </PrivateRoute>
+              }
+            /><Route
+  path='/gio-hang'
+  element={
+    <PrivateRoute>
+      <Cart/>
+    </PrivateRoute>
+  }
+/>
+
+<Route
+  path='/thanh-toan'
+  element={
+    <PrivateRoute>
+      <Payment/>
+    </PrivateRoute>
+  }
+/>
 
           </Routes>
           <Footer/>

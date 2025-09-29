@@ -43,7 +43,6 @@ function App() {
             <Route path='/retail-package' element={<RetailPackage/>}/>
             <Route path='/weekly-package' element={<WeeklyPackage/>}/>
             <Route path='/blind-box' element={<BlindBox/>}/>
-            
             <Route
               path='/profile'
               element={
