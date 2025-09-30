@@ -11,3 +11,9 @@ export interface CartResponse {
   items: Item[];
   totalPrice: number;
 }
+
+export type CartCheckOut = {
+  paymentMethod: number;
+  deliveryMethod: number;
+  discountCode: string;
+}

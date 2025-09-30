@@ -1,7 +1,6 @@
 .detox-btn {
        width: 1306px;
       height: 445.01px;
-        margin-left: 100px;
       background-color: #D0E9FE;
       background-image: url('../assets/images/DetoxBox.png'); /* Đường dẫn đến ảnh nền */
       background-repeat: no-repeat;
@@ -22,7 +21,6 @@
     .giftbox-btn {
       width: 1306px;
       height: 445.01px;
-        margin-left: 100px;
         margin-top: 70px;
 
       background-color: #91CF43;

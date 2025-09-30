@@ -3,7 +3,7 @@ import { Order } from "./OrderStatus";
 
 type Props = {
   orders: Order[];
-  onCancel: (id: number) => void;
+  onCancel: (id: string) => void;
 };
 
 export default function OrderList({ orders, onCancel }: Props) {

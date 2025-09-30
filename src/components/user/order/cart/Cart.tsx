@@ -1,9 +1,9 @@
 import CartItem from "./CartItem";
 import "../cart/styles/Cart.css";
-import CartCheckout from "./CartCheckout";
 import React, { useEffect, useState } from "react";
-import { getCart, updateCartItem } from "../../../../router/cartApi";
+import { cartCheckout, getCart, updateCartItem } from "../../../../router/cartApi";
 import { CartResponse, Item } from "../../../../router/types/cartResponse";
+import CartCheckout from "./CartCheckout";
 
 export default function Cart() {
   const [items, setItems] = useState<Item[]>([]);
@@ -28,22 +28,24 @@ export default function Cart() {
   };
 
  
-    const handleQuantityChange = async (id: string, newQty: number) => {  if (!userId) return ("Ko lay duoc userid");
-    try {
-      await updateCartItem(userId, id, newQty);
-      setItems((prev) =>
-        prev.map((item) =>
-          item.id === id ? { ...item, initialQuantity: newQty } : item
-        )
-      );
-    } catch (err) {
-      console.error("Failed to update quantity:", err);
-    }
+  const handleQuantityChange = async (id: string, newQty: number) => {  if (!userId) return ("Ko lay duoc userid");
+  try {
+    newQty = 1;
+    console.log("Updating item:", id, "to quantity:", newQty, "name", items.find(i => i.id === id)?.name);
+    await updateCartItem(userId, id, newQty);
+    setItems((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, initialQuantity: newQty } : item
+      )
+    );
+  } catch (err) {
+    console.error("Failed to update quantity:", err);
+  }
   };
 
-  if (loading) {
-    return <p>Đang tải giỏ hàng...</p>;
-  }
+  // if (loading) {
+    // return <p>Đang tải giỏ hàng...</p>;
+  // }
 
   return (
     <div className="cart">

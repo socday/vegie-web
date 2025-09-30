@@ -5,7 +5,7 @@ import "./OrderItem.css";
 
 type Props = {
     order: Order;
-    onCancel: (id: number) => void; 
+    onCancel: (id: string) => void; 
 };
 
 export default function OrderItem({ order, onCancel }: Props) {

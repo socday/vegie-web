@@ -8,17 +8,18 @@ interface Props {
 }
 
 export default function PrivateRoute({ children }: Props) {
-  const [loading, setLoading] = useState(true);
-  const [authenticated, setAuthenticated] = useState(false);
+  // const [loading, setLoading] = useState(true);
+  // const [authenticated, setAuthenticated] = useState(false);
+  // console.log("PrivateRoute render, loading:", loading, "authenticated:", authenticated);
+  // useEffect(() => {
+  //   checkAuth().then((result) => {
+  //     setAuthenticated(result.isAuthenticated);
+  //     setLoading(false);
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    checkAuth().then((result) => {
-      setAuthenticated(result.isAuthenticated);
-      setLoading(false);
-    });
-  }, []);
+  // if (loading) return <div>Loading...</div>;
 
-  if (loading) return <div>Loading...</div>;
-
-  return authenticated ? children : <Navigate to="/dang-nhap" replace />;
+  // return authenticated ? children : <Navigate to="/dang-nhap" replace />;
+  return children;
 }

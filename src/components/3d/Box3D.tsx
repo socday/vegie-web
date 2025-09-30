@@ -2,7 +2,7 @@ import React from 'react';
 import Box3DViewer from './Box3DViewer';
 import '../../css/Box3D.css';
 
-const Box3D = () => {
+export default function Box3D () {
   return (
     <div className="box3d-page">
       <section className="content-section">
@@ -19,4 +19,3 @@ const Box3D = () => {
   );
 };
 
-export default Box3D;
