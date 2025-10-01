@@ -8,7 +8,6 @@ export async function loginUser(payload: LoginRequest): Promise<LoginResponse> {
       "Content-Type": "application/json",
     },
   });
-  console.log("REQUEST DATA");
   return res.data;
 }
 
@@ -31,14 +30,12 @@ export async function checkAuth() {
         console.log("DANG REFRESH TOKEN");
         const refreshRes = await api.post(
           "/Auth/refresh-token",
-          { refreshToken }, // body
-          // optional: depends on backend
+          { refreshToken }, 
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
         if (refreshRes.data?.isSuccess) {
           const newToken = refreshRes.data.data.accessToken;
-
           localStorage.setItem("accessToken", newToken);
           api.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
           console.log("REFRESH SUCCESS");

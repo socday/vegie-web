@@ -19,7 +19,6 @@
   padding: 40px 60px;
   width: 1306px;
   height: 445.01px;
-  margin-left: 100px;
   margin-top: 100px;
   margin-bottom: 300px;
   position: relative;
@@ -120,6 +119,7 @@
   align-items: center;
   background: white;
   border-radius: 7px;
+  height:35px;
 }
 
 .quantity-btn {
