@@ -1,6 +1,5 @@
-// src/components/auth/PrivateRoute.tsx
 import { JSX, useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { checkAuth } from "./authApi";
 
 interface Props {
@@ -10,7 +9,8 @@ interface Props {
 export default function PrivateRoute({ children }: Props) {
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
-  console.log("PrivateRoute render, loading:", loading, "authenticated:", authenticated);
+  const location = useLocation();
+
   useEffect(() => {
     checkAuth().then((result) => {
       setAuthenticated(result.isAuthenticated);
@@ -18,8 +18,12 @@ export default function PrivateRoute({ children }: Props) {
     });
   }, []);
 
-  // if (loading) return <div>Loading...</div>;
+  if (loading) {
+    // 🚨 instead of showing "nothing", keep user on the previous page
+    return null;
+  }
 
-  return authenticated ? children : <Navigate to="/dang-nhap" replace />;
-  return children;
+  return authenticated
+    ? children
+    : <Navigate to="/dang-nhap" replace state={{ from: location }} />;
 }

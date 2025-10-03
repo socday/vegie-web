@@ -13,6 +13,7 @@ export default function BlindBox() {
     description: "Random mystery box with surprise items",
     price: 150000,
   };
+
   const [items, setItems] = useState<Item[]>([]);
   const increaseQuantity = () => setQuantity((prev) => prev + 1);
   const decreaseQuantity = () =>

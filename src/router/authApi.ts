@@ -1,11 +1,21 @@
 import axios from "axios";
 import { api } from "./api";
-import { LoginRequest, LoginResponse } from "./types/authResponse";
+import { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from "./types/authResponse";
 
 export async function loginUser(payload: LoginRequest): Promise<LoginResponse> {
   const res = await api.post<LoginResponse>("/Auth/login", payload, {
     headers: {
       "Content-Type": "application/json",
+    },
+  });
+  return res.data;
+}
+
+export async function registerUser (payload: RegisterRequest) : Promise <RegisterResponse>
+{
+  const res = await api.post<RegisterResponse> ("/Customers", payload, {
+    headers: {
+      "Content-Type": "application/json"
     },
   });
   return res.data;
@@ -37,12 +47,10 @@ export async function checkAuth() {
         if (refreshRes.data?.isSuccess) {
           const newToken = refreshRes.data.data.accessToken;
           localStorage.setItem("accessToken", newToken);
-          api.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
           console.log("REFRESH SUCCESS");
-          const retryRes = await api.get("/Auth/current-user");
           return {
-            isAuthenticated: retryRes.status === 200,
-            user: retryRes.data,
+            isAuthenticated: refreshRes.status === 200,
+            user: refreshRes.data,
             token: newToken,
           };
         }
@@ -57,8 +65,6 @@ export async function checkAuth() {
     };
   } catch (error: any) {
     console.error("Auth check failed:", error);
-
-
     return { isAuthenticated: false, user: null, token: null };
   }
 }

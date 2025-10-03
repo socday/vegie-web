@@ -21,3 +21,25 @@ export interface LoginResponse {
   message: string;
   exception: string | null;
 }
+
+export interface RegisterRequest {
+  email:string;
+  password:string;
+  passwordConfirm:string ;
+  fullName: string;
+  phoneNumber: string;
+  address:string;
+}
+
+export interface RegisterResponse {
+  isSuccess: true;
+  data: {
+    email: string;
+    password: string;
+    fullName: string;
+    phoneNumber: string;
+    address: string
+  };
+  message: string;
+  exception: string| null;
+}

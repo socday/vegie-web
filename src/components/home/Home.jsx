@@ -146,15 +146,7 @@ export default function Home() {
             </div>
 
             {/* Cột bên phải (60%) */}
-            <div className="voucher-display">
-              <div className="voucher-card-row">
-                <div className="voucher-card small"></div>
-                <div className="voucher-card small"></div>
-              </div>
-              <div className="voucher-card medium">GIẢM 10% PHÍ VẬN CHUYỂN</div>
-              <div className="voucher-card large">VOUCHER GIẢM GIÁ 20%</div>
-              <button className="voucher-details-button">Xem chi tiết</button>
-            </div>
+           
           </div>
         </section>
       </div>

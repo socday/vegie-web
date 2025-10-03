@@ -45,30 +45,32 @@ function App() {
             <Route path='/weekly-package' element={<WeeklyPackage/>}/>
             <Route path='/blind-box' element={<BlindBox/>}/>
             <Route path='/box-3d' element={<Box3D/>}/>
-            <Route
-              path='/profile'
-              element={
-                <PrivateRoute>
-                  <Profile/>
-                </PrivateRoute>
-              }
-            /><Route
-  path='/gio-hang'
-  element={
-    <PrivateRoute>
-      <Cart/>
-    </PrivateRoute>
-  }
-/>
+      <Route
+        path="/profile"
+        element={
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        }
+      />
 
-<Route
-  path='/thanh-toan'
-  element={
-    <PrivateRoute>
-      <Payment/>
-    </PrivateRoute>
-  }
-/>
+      <Route
+        path="/gio-hang"
+        element={
+          <PrivateRoute>
+            <Cart />
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/thanh-toan"
+        element={
+          <PrivateRoute>
+            <Payment />
+          </PrivateRoute>
+        }
+      />
 
           </Routes>
           <Footer/>
