@@ -1,126 +1,301 @@
-/* Box3D Page - Theo thông số Figma */
+/* Box3D Page - Theo Figma */
 .box3d-page {
   min-height: 100vh;
   background-color: #f5f5f5;
-}
-
-.content-section {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem 0;
-  margin: 0;
-}
-
-.content-container {
-  width: 1440px;
-  height: 528px;        
-  background-color: #D9D9D9;
-  border: 16px solid transparent;
-  padding: 16px;    
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-}
-
-.content-placeholder {
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: #666;
 }
 
-.model-container {
-  width: 100%;
-  height: 100%;         
-  background-color: transparent;
-  
+/* Main Content Area theo Figma */
+.figma-main-content {
+  flex: 1;
   display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0;
+  position: relative;
+}
+
+.model-viewer-container {
+  position: absolute;
+  width: 100%;
+  height: 528px;
+  left: 0;
+  top: 82px;
+  background: #D9D9D9;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Prompt Banner riêng lẻ - theo Figma */
+.prompt-banner {
+  position: absolute;
+  width: 445px;
+  height: 57px;
+  left: 67px;
+  bottom: 20px;
+  background: #9AD055;
+  border-radius: 40px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 27px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #27600B;
+}
+
+/* Box Selector riêng lẻ - ở giữa */
+.box-selector {
+  position: absolute;
+  bottom: 20px;
+  left: calc(50% - 50px);
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+}
+
+/* Button 1 positioning */
+.box-selector .box-btn:first-child {
+  position: relative;
+  left: auto;
+  top: auto;
+}
+
+/* Button 2 positioning */
+.box-selector .box-btn:last-child {
+  position: relative;
+  left: auto;
+  top: auto;
+}
+
+/* Continue Button riêng lẻ - theo Figma */
+.continue-btn {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  position: relative;
+  padding: 9px 18px;
+  gap: 10px;
+  isolation: isolate;
+  position: absolute;
+  width: 90px;
+  height: 33px;
+  bottom: 20px;
+  right: 2rem;
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 100px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+  color: transparent;
+  cursor: pointer;
+  transition: color 0.5s ease;
   overflow: hidden;
+  z-index: 1;
+}
+
+.continue-btn::after {
+  content: "";
+  position: absolute;
+  bottom: -50%;
+  left: 90%;
+  width: 0%;
+  height: 0%;
+  background: #27600B;
+  border-radius: 999px 999px 0px 0px;
+  transform: translateX(-50%);
+  transition: width 0.3s ease, height 0.3s ease, border-radius 0.3s linear;
+  z-index: 0;
+}
+
+.continue-btn:hover {
+  color: white;
+}
+
+.continue-btn::before {
+  content: "Tiếp tục";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  color: #27600B;
+  transition: color 0.3s ease;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+  white-space: nowrap;
+}
+
+.continue-btn:hover::before {
+  color: white;
+}
+
+.continue-btn:hover::after {
+  width: 200%;
+  height: 500%;
+  border-radius: 0%;
 }
 
 /* 3D Viewer Container */
 .box3d-viewer {
   width: 100%;
-  height: 100%;
+  height: 528px;
   position: relative;
 }
 
-/* Control Buttons */
-.box-controls {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
+
+
+
+.box-btn {
+  box-sizing: border-box;
   display: flex;
-  gap: 1rem;
-  z-index: 10;
-}
-
-.control-btn {
-  width: 40px;       
-  height: 34px;      /* Thay từ 40px */
-  padding: 9px 12px; /* Thay từ 0 */
-  border: 1px solid #E5E5E5; /* Thay từ 2px solid #91CF43 */
-  background-color: #FFFFFF; /* Thay từ #91CF43 */
-  color: #333333;    /* Thay từ #27600B */
-  border-radius: 100px; /* Thay từ 50% */
-  font-size: 1rem;
-  font-weight: 600;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 9px 12px;
+  gap: 10px;
+  isolation: isolate;
+  position: absolute;
+  width: 40px;
+  height: 34px;
+  background: #FFFFFF;
+  border: 1px solid #91CF43;
+  border-radius: 100px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 16px;
+  color: transparent;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: 'Inter', sans-serif;
-  display: flex;    
-  justify-content: center; 
-  align-items: center;     
+  transition: color 0.5s ease;
+  overflow: hidden;
+  z-index: 0;
 }
 
-.control-btn:hover {
-  background-color: #F5F5F5; /* Thay từ #fff */
-  border-color: #91CF43;     /* Thêm */
-  color: #91CF43;            /* Thay từ #91CF43 */
-  /* Xóa transform: scale(1.05); */
-}
-.control-btn.active {
-  background-color: #91CF43; /* Thay từ #27600B */
-  color: #FFFFFF;            /* Thay từ #91CF43 */
-  border-color: #91CF43;     /* Thay từ #27600B */
+.box-btn::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  color: #91CF43;
+  transition: color 0.3s ease;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 16px;
+  white-space: nowrap;
 }
 
-/* Responsive design */
+.box-btn:hover::before {
+  color: white;
+}
+
+.box-btn span {
+  position: relative;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+.box-btn::after {
+  content: "";
+  position: absolute;
+  bottom: -50%;
+  left: 90%;
+  width: 0%;
+  height: 0%;
+  background: #91CF43;
+  border-radius: 999px 999px 0px 0px;
+  transform: translateX(-50%);
+  transition: width 0.3s ease, height 0.3s ease, border-radius 0.3s linear;
+  z-index: 0;
+}
+
+.box-btn:hover {
+  color: white;
+}
+
+.box-btn:hover::after {
+  width: 200%;
+  height: 500%;
+  border-radius: 0%;
+}
+
+.box-btn:hover span {
+  color: white;
+}
+
+.box-btn.active {
+  background-color: #91CF43;
+  border-color: #91CF43;
+}
+
+.box-btn.active::before {
+  color: white;
+}
+
+.box-btn.active span {
+  color: transparent;
+}
+
+
+/* Responsive */
 @media (max-width: 1440px) {
-  .content-container {
+  .model-viewer-container {
     width: 100%;
-    max-width: 1440px;
+    left: 0;
   }
 }
 
 @media (max-width: 768px) {
-  .content-container {
-    height: auto;
-    min-height: 300px;
-    padding: 12px 6px;
-    border: 8px solid transparent;
+  .figma-main-content {
+    padding: 0;
   }
   
-  .content-title {
-    font-size: 1.5rem;
+  .model-viewer-container {
+    height: 300px;
+    top: 20px;
   }
   
-  .content-description {
-    font-size: 1rem;
+  .box3d-viewer {
+    height: 300px;
   }
   
-  .model-container {
-    height: 200px;
+  .prompt-banner {
+    width: 90%;
+    max-width: 445px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 15px;
+    height: 50px;
+    font-size: 18px;
+    line-height: 20px;
+  }
+  
+  .box-selector {
+    bottom: 15px;
+  }
+  
+  .continue-btn {
+    bottom: 15px;
+    right: 1rem;
+    width: 80px;
+    height: 30px;
+    font-size: 11px;
+    line-height: 13px;
+    padding: 8px 16px;
   }
 }

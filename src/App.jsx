@@ -22,7 +22,7 @@ import Payment from './components/user/order/payment/Payment'
 import Profile from './components/user/profile/Profile'
 import PrivateRoute from './router/PrivateRoute'
 import Box3D from './components/3d/Box3D'
-
+import FruitSelection from './components/fruit/FruitSelection'
 
 function App() {
   return (
@@ -45,6 +45,7 @@ function App() {
             <Route path='/weekly-package' element={<WeeklyPackage/>}/>
             <Route path='/blind-box' element={<BlindBox/>}/>
             <Route path='/box-3d' element={<Box3D/>}/>
+            <Route path='/fruitselection' element={<FruitSelection/>}/>
       <Route
         path="/profile"
         element={
