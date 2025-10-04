@@ -1,6 +1,6 @@
 import axios from "axios";
 import { api } from "./api";
-import { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from "./types/authResponse";
+import { changePasswordRequest, LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from "./types/authResponse";
 
 export async function loginUser(payload: LoginRequest): Promise<LoginResponse> {
   const res = await api.post<LoginResponse>("/Auth/login", payload, {
@@ -16,6 +16,18 @@ export async function registerUser (payload: RegisterRequest) : Promise <Registe
   const res = await api.post<RegisterResponse> ("/Customers", payload, {
     headers: {
       "Content-Type": "application/json"
+    },
+  });
+  return res.data;
+}
+
+export async function changePassword (payload: changePasswordRequest) : Promise <RegisterResponse>
+{
+  let token = localStorage.getItem("accessToken");
+  const res = await api.post<RegisterResponse> ("/Auth/", payload, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
     },
   });
   return res.data;

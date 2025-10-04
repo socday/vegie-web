@@ -12,6 +12,7 @@ export default function ProfileSidebar({ onSelect, activeSection }: SidebarProps
     { key: "services", label: "Gói dịch vụ" },
     { key: "groups", label: "Đơn nhóm" },
     { key: "health", label: "Phiếu sức khỏe" },
+
   ];
 
   return (
@@ -28,6 +29,11 @@ export default function ProfileSidebar({ onSelect, activeSection }: SidebarProps
           {item.label}
         </button>
       ))}
+      <div>
+        <span className="sidebar-btn d-btn-font">Số điển hiện tại: 100
+          
+        </span>
+      </div>
       <div className="profile-sidebar-invincible"></div>
     </div>
   );

@@ -87,7 +87,7 @@ const Login = () => {
 
             <div className="form-actions">
               <button type="submit" className="d-btn-font d-btn" disabled={loading}>
-                {loading ? "Đang đăng nhập..." : <span>Đăng nhập</span>}
+                {loading ?<span>Đang đăng nhập... </span> : <span>Đăng nhập</span>}
               </button>
               <Link to="/khoi-phuc-mat-khau" className="d-btn-font d-btn">
                 <span>Quên mật khẩu</span>

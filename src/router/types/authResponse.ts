@@ -43,3 +43,9 @@ export interface RegisterResponse {
   message: string;
   exception: string| null;
 }
+
+export interface changePasswordRequest {
+  
+  password:string;
+  passwordConfirm:string ;
+}
