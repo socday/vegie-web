@@ -11,66 +11,72 @@ type CartItem = {
 type CartSummaryProps = {
   items: CartItem[];
   mode: "checkout" | "payment";
+  onCheckout?: (discountCode: string) => void;  // Make it optional with ?
 };
 
-export default function CartCheckout({ items, mode}: CartSummaryProps )  {
+export default function CartCheckout({ items, mode, onCheckout }: CartSummaryProps) {
+  const [discountCode, setDiscountCode] = useState("");
 
-    return (
+  return (
     <div className="cart-summary">
-        {items.map((item) => (
+      {items.map((item) => (
         <div key={item.id} className="cart-summary__row">
-            <span className="cart-summary-name">{item.name}</span>
-            <span>
-                {item.price * item.quantity}
-            </span>
+          <span className="cart-summary-name">{item.name}</span>
+          <span>{item.price * item.quantity}</span>
         </div>
-        ))} 
-        {mode === "payment" && (
+      ))}
+      
+      {mode === "payment" && (
+        <div className="cart-shipping cart-summary__row"></div>
+      )}
 
-            <div className="cart-shipping cart-summary__row">
-              
+      <div className="cart-summary__row cart-summary__total">
+        <span>Tổng</span>
+        <span>{items.reduce((sum, item) => sum + item.price * item.quantity, 0)}</span>
+      </div>
+
+      <div className="cart-summary__form">
+        <div className="cart-summary__discount">
+          <input
+            type="text"
+            placeholder="Mã giảm giá"
+            value={discountCode}
+            onChange={(e) => setDiscountCode(e.target.value)}
+          />
+          <button className="d-btn d-btn-font">
+            <span>Áp dụng</span>
+          </button>
+        </div>
+        
+        {mode === "checkout" ? (
+          <>
+            <a href="/thanh-toan" className="d-btn d-btn-font">
+              <span>Tiếp tục</span>
+            </a>
+            <div className="cart-summary__or">
+              <span>hoặc</span>
             </div>
-        )}
-
-
-        <div className="cart-summary__row cart-summary__total">
-            <span>Tổng</span>
-            <span>{items.reduce((sum, item) =>sum + item.price * item.quantity, 0)}</span>
-        </div>
-
-        <div className="cart-summary__form">
-            <div className="cart-summary__discount">
-            <input type="text" placeholder="Mã giảm giá" />
-            <button className="d-btn d-btn-font">
-                <span>Áp dụng</span>
+            <a href="/vegie-care" className="d-btn d-btn-font">
+              <span>Quay lại</span>
+            </a>
+          </>
+        ) : (
+          <>
+            <button 
+              onClick={() => onCheckout?.(discountCode)}  // Use optional chaining
+              className="d-btn d-btn-font"
+            >
+              <span>Tiếp tục</span>
             </button>
+            <div className="cart-summary__or">
+              <span>hoặc</span>
             </div>
-                {mode === "checkout" ? (
-                <>
-                    <a href="/thanh-toan" className="d-btn d-btn-font">
-                    <span>Tiếp tục</span>
-                    </a>
-                    <div className="cart-summary__or">
-                        <span>hoặc</span>
-                        </div>
-                    <a href="/vegie-care" className="d-btn d-btn-font">
-                    <span>Quay lại</span>
-                    </a>
-                </>
-            ) : (
-                <>
-                    <a href="/thanh-toan" className="d-btn d-btn-font">
-                    <span>Tiếp tục</span>
-                    </a>
-                    <div className="cart-summary__or">
-                        <span>hoặc</span>
-                        </div>
-                    <a href="/gio-hang" className="d-btn d-btn-font">
-                    <span>Xem lại giỏ hàng</span>
-                    </a>
-                </>
-            )}
-        </div>
+            <a href="/gio-hang" className="d-btn d-btn-font">
+              <span>Xem lại giỏ hàng</span>
+            </a>
+          </>
+        )}
+      </div>
     </div>
-    );
+  );
 }

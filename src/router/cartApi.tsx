@@ -1,6 +1,6 @@
 import { api } from "./api";
 import { getBoxTypeName } from "./boxApi";
-import { CartResponse, Item } from "./types/cartResponse";
+import { CartCheckOut, CartResponse, Item } from "./types/cartResponse";
 
 export async function getCart(): Promise<CartResponse> {
   const token = localStorage.getItem("accessToken");
@@ -24,7 +24,7 @@ export async function getCart(): Promise<CartResponse> {
     apiData.items.map(async (i: any) => {
       const name = await getBoxTypeName(i.boxTypeId);
       return {
-        id: i.id,
+        id: i.boxTypeId,
         name,
         price: i.unitPrice,
         image: "", // still placeholder, backend doesn’t send it
@@ -57,4 +57,12 @@ export async function updateCartItem(userId: string, boxTypeId: string, quantity
     { boxTypeId, quantity },
     { headers: { Authorization: `Bearer ${token}` } }
   );
+}
+
+export async function cartCheckout (userId: string, checkOut: CartCheckOut) {
+  return api.post(
+    `/Cart/${userId}/checkout`,
+    checkOut,
+    { headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` } }
+  )
 }

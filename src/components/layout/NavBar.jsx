@@ -7,6 +7,7 @@ import '../../css/NavBar.css';
 const NavBar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const isLoggedIn = !!localStorage.getItem("accessToken");
+    console.log("User is logged in:", isLoggedIn);
     return (
         <header className="header">
             <nav className="navbar-container">

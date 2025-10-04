@@ -21,6 +21,7 @@ import ScrollToTop from "./components/notifications/ScrollToTop";
 import Payment from './components/user/order/payment/Payment'
 import Profile from './components/user/profile/Profile'
 import PrivateRoute from './router/PrivateRoute'
+import Box3D from './components/3d/Box3D'
 
 
 function App() {
@@ -43,30 +44,33 @@ function App() {
             <Route path='/retail-package' element={<RetailPackage/>}/>
             <Route path='/weekly-package' element={<WeeklyPackage/>}/>
             <Route path='/blind-box' element={<BlindBox/>}/>
-            <Route
-              path='/profile'
-              element={
-                <PrivateRoute>
-                  <Profile/>
-                </PrivateRoute>
-              }
-            /><Route
-  path='/gio-hang'
-  element={
-    <PrivateRoute>
-      <Cart/>
-    </PrivateRoute>
-  }
-/>
+            <Route path='/box-3d' element={<Box3D/>}/>
+      <Route
+        path="/profile"
+        element={
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        }
+      />
 
-<Route
-  path='/thanh-toan'
-  element={
-    <PrivateRoute>
-      <Payment/>
-    </PrivateRoute>
-  }
-/>
+      <Route
+        path="/gio-hang"
+        element={
+          <PrivateRoute>
+            <Cart />
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/thanh-toan"
+        element={
+          <PrivateRoute>
+            <Payment />
+          </PrivateRoute>
+        }
+      />
 
           </Routes>
           <Footer/>
