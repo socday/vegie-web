@@ -132,18 +132,31 @@ body {
 .pay-btn {
   width: 100px;
   height: 30px;
-  background-color: #3cac3c;
+  background-color: white;
   border: none;
   border-radius: 14px;
-  color: white;
   text-align: center;
   font-weight: 600;
   font-size: 12px;
   cursor: pointer;
-  align-self: flex-start;
-  padding: 0;
+  align-self: flex-end;
+  padding:0;
 }
 
+.pay-btn span {
+  color: #27600B;
+}
 .pay-btn:hover {
-  background-color: #347534;
+  background-color: #27600B;
+}
+
+.pay-btn:hover span{
+  color: white;
+}
+
+.weekly-package .fancy-btn {
+  background-color: #91CF43;
+  color: white;
+  padding: 0.5rem 10%;
+  font-weight: 500;
 }

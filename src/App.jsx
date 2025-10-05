@@ -23,6 +23,7 @@ import Profile from './components/user/profile/Profile'
 import PrivateRoute from './router/PrivateRoute'
 import Box3D from './components/3d/Box3D'
 import MyWeeklyPackage from './components/home/WeeklyPackage'
+import AiMenu from './components/home/AiMenu'
 
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
             <Route path='/box-3d' element={<Box3D/>}/>
             <Route path='/profile-test' element={<Profile/>}/>
             <Route path='/my-weekly-package' element = {<MyWeeklyPackage/>}/>
+            <Route path='/ai-menu' element = {<AiMenu/>}/>
       <Route
         path="/profile"
         element={

@@ -1,0 +1,50 @@
+.ai-menu-page {
+    display:flex;
+    width: 100%;
+    min-height: 100vh;
+   
+    justify-content: center;
+}
+
+.ai-menu-background {
+    position: absolute; /* layer it */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/src/assets/images/ai-menu-object.png');
+    background-size: cover;
+    background-position: center top; /* top of image visible */
+    z-index: 1; 
+}
+
+.ai-menu-container {
+    margin: 0;
+    max-width: none;
+    margin-top: 10vh;
+    width: 80%;
+    height: 30.25rem;
+    background-color: #27600B;
+    border-radius: 40px;
+    justify-content: center;
+    margin-bottom: 20vh;
+}
+
+.ai-menu-word {
+    width: 100%;
+    text-align: center;
+}
+.ai-menu-word h2{
+    padding-top: 2%;
+    padding-left: 30%;
+    font-family: NightyDemo;
+    font-size: 12.5rem;
+    color: white;
+    line-height: 0.8;
+}
+
+.ai-menu-word span{
+    padding-left: 18%;
+    color: white;
+    font-size: 1.25rem;
+}

@@ -16,7 +16,7 @@ export default function WeeklyPackage() {
           <li>Cung cấp 7-8 loại rau củ quả</li>
           <li>Phù hợp cho gia đình với từ 4 người trở lên</li>
         </ul>
-        <button className="price-btn">Giá tiền</button>
+        <button className="fancy-btn">Giá tiền</button>
       </article>
 
       <div className="form-divider"></div>
@@ -32,7 +32,8 @@ export default function WeeklyPackage() {
             />
           </label>
           <button type="submit" className="pay-btn">
-            Thanh toán
+            <span>Thanh toán
+              </span>
           </button>
         </form>
       </article>

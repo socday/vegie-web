@@ -22,7 +22,7 @@ const NavBar = () => {
                 <ul className="nav-links">
                     <li><NavLink to="/gioi-thieu">Giới Thiệu</NavLink></li>
                     <li><NavLink to="/san-pham">Sản Phẩm</NavLink></li>
-                    <li><NavLink to="/blog">AI Menu</NavLink></li>
+                    <li><NavLink to="/ai-menu">AI Menu</NavLink></li>
                 </ul>
 
                 <div className="nav-actions">

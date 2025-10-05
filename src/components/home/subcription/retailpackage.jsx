@@ -27,8 +27,9 @@ export default function RetailPackage() {
           name="feeling"
           placeholder="Hôm nay bạn cảm thấy như thế nào?"
         />
-        <button type="submit" className="btn-submit">
-          Thanh toán
+        <button type="submit" className="pay-btn">
+          <span>Thanh toán
+            </span>
         </button>
       </form>
     </div>

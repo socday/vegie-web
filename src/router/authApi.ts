@@ -46,7 +46,10 @@ export async function checkAuth() {
     const response = await api.get("/Auth/current-user", {
       headers: { Authorization: `Bearer ${token}` },
     });
-
+    if (!response.data.isSuccess){
+      console.log(response);
+      return { isAuthenticated: false, user: null, token: null };
+    }
     if (refreshToken) {
       try {
         console.log("DANG REFRESH TOKEN");
