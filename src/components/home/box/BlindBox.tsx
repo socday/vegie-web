@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "../../../../css/BlindBox.css";
-import { updateCartItem } from "../../../../router/cartApi";
-import { Item } from "../../../../router/types/cartResponse";
+import "../../../css/BlindBox.css";
+import { updateCartItem } from "../../../router/cartApi";
+import { Item } from "../../../router/types/cartResponse";
 
 export default function BlindBox() {
   const [quantity, setQuantity] = useState(1);

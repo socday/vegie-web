@@ -31,6 +31,15 @@
   justify-content: center;
 }
 
+.blindbox-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none; /* lets clicks pass through */
+  z-index: 2;
+  background: url('../assets/images/blind-box-object.png')  center bottom/ 23.3125rem 20.375rem no-repeat;
+}
+
 .left-section {
   flex: 1;
   z-index: 2;
@@ -58,10 +67,11 @@
   left: 70%; /* Giữ nguyên để căn giữa */
   font-family: "MyCustomFont", sans-serif;
   color: white;
-  font-size: 240px; /* Tăng lên 240px như yêu cầu */
+  font-size: 15rem; /* Tăng lên 240px như yêu cầu */
   font-weight: 650;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
   white-space: nowrap;
+  margin-top: 7%;
   margin-bottom: 5px;
   line-height: 0.8; /* Giảm line-height để compact hơn */
   transform: translateX(-50%) scale(0.85); /* Kết hợp cả căn giữa và scaling */
@@ -218,6 +228,9 @@
   color: #FFFFFF;
 }
 
+.fancy-btn {
+  color: #FFFFFF;
+}
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .blindbox-container {

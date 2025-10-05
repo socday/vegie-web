@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../../css/RetailPackage.css";
+import "../../../css/RetailPackage.css";
 
 export default function RetailPackage() {
   return (

@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../../css/WeeklyPackage.css";
+import "../../../css/WeeklyPackage.css";
 
 export default function WeeklyPackage() {
   return (

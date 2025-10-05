@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../../css/BoxSelector.css";
+import "../../../css/BoxSelector.css";
 import { useNavigate } from "react-router-dom"; // 👈 import thêm
 
 export default function BoxSelector() {

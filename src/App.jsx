@@ -11,17 +11,18 @@ import PasswordRecovery from './components/auth/PasswordRecovery'
 import Register from './components/auth/Register'
 import Cart from './components/user/order/cart/Cart'
 
-import BoxSelector from './components/user/order/box/Boxselector'
-import GiftDetoxBox from './components/user/order/box/GiftDetoxBox'
-import RetailPackage from './components/user/order/subcription/retailpackage'
-import WeeklyPackage from './components/user/order/subcription/weeklypackage'
-import BlindBox from './components/user/order/box/BlindBox'
+import BoxSelector from './components/home/box/Boxselector'
+import GiftDetoxBox from './components/home/box/GiftDetoxBox'
+import RetailPackage from './components/home/subcription/retailpackage'
+import WeeklyPackage from './components/home/subcription/weeklypackage'
+import BlindBox from './components/home/box/BlindBox'
 import ScrollToTop from "./components/notifications/ScrollToTop";
 
 import Payment from './components/user/order/payment/Payment'
 import Profile from './components/user/profile/Profile'
 import PrivateRoute from './router/PrivateRoute'
 import Box3D from './components/3d/Box3D'
+import MyWeeklyPackage from './components/home/WeeklyPackage'
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
             <Route path='/blind-box' element={<BlindBox/>}/>
             <Route path='/box-3d' element={<Box3D/>}/>
             <Route path='/profile-test' element={<Profile/>}/>
+            <Route path='/my-weekly-package' element = {<MyWeeklyPackage/>}/>
       <Route
         path="/profile"
         element={

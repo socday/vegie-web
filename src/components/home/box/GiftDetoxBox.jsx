@@ -1,5 +1,5 @@
 import React from "react";
-import "../../../../css/GiftDetoxBox.css";
+import "../../../css/GiftDetoxBox.css";
 
 export default function GiftDetoxBox() {
   return (
