@@ -25,6 +25,7 @@ import Box3D from './components/3d/Box3D'
 import MyWeeklyPackage from './components/home/WeeklyPackage'
 import AiMenu from './components/home/AiMenu'
 
+import FruitSelection from './components/fruit/FruitSelection'
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
             <Route path='/profile-test' element={<Profile/>}/>
             <Route path='/my-weekly-package' element = {<MyWeeklyPackage/>}/>
             <Route path='/ai-menu' element = {<AiMenu/>}/>
+            <Route path='/fruitselection' element={<FruitSelection/>}/>
       <Route
         path="/profile"
         element={

@@ -3,6 +3,7 @@ import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { Box3, Sphere, Vector3 } from 'three';
+import * as THREE from 'three';
 
 // Component tự động điều chỉnh camera
 function FitCameraToObject({ object3D }) {
@@ -32,9 +33,27 @@ function FitCameraToObject({ object3D }) {
   return null
 }
 
+// Function để apply màu carton cho model
+function applyCartonMaterial(scene) {
+  const cartonMaterial = new THREE.MeshStandardMaterial({
+    color: '#654321', // Màu nâu carton rất đậm
+    roughness: 0.8,
+    metalness: 0.1,
+  });
+
+  scene.traverse((child) => {
+    if (child.isMesh) {
+      // Force thay đổi material
+      child.material = cartonMaterial.clone();
+      child.material.needsUpdate = true;
+      console.log('Applied carton material to mesh:', child.name);
+    }
+  });
+}
+
 // Component cho Box 1 - Load model GLB
 function Box1({ position, rotation, onLoaded }) {
-  const gltf = useLoader(GLTFLoader, '/models/Version_1.glb');
+  const gltf = useLoader(GLTFLoader, '/3D/hộp đóng/Hop_1.glb');
   const meshRef = useRef();
   const groupRef = useRef();
   
@@ -47,6 +66,8 @@ function Box1({ position, rotation, onLoaded }) {
   // Gọi callback khi đã có scene để fit camera
   React.useEffect(() => {
     if (groupRef.current && gltf?.scene && onLoaded) {
+      const clonedScene = gltf.scene.clone();
+      applyCartonMaterial(clonedScene);
       onLoaded(groupRef.current)
     }
   }, [gltf, onLoaded])
@@ -64,7 +85,7 @@ function Box1({ position, rotation, onLoaded }) {
 
 // Component cho Box 2 - Load model GLB với scale khác
 function Box2({ position, rotation, onLoaded }) {
-  const gltf = useLoader(GLTFLoader, '/models/Version_1.glb');
+  const gltf = useLoader(GLTFLoader, '/3D/hộp đóng/Hop_2.glb');
   const meshRef = useRef();
   const groupRef = useRef();
   
@@ -77,6 +98,8 @@ function Box2({ position, rotation, onLoaded }) {
   // Gọi callback khi đã có scene để fit camera
   React.useEffect(() => {
     if (groupRef.current && gltf?.scene && onLoaded) {
+      const clonedScene = gltf.scene.clone();
+      applyCartonMaterial(clonedScene);
       onLoaded(groupRef.current)
     }
   }, [gltf, onLoaded])
@@ -86,15 +109,14 @@ function Box2({ position, rotation, onLoaded }) {
       <primitive 
         ref={meshRef}
         object={gltf.scene.clone()} 
-        scale={[1.2, 1.2, 1.2]}
+        scale={[1, 1, 1]}
       />
     </group>
   );
 }
 
 // Component chính
-function Box3DViewer() {
-  const [currentBox, setCurrentBox] = useState(1);
+function Box3DViewer({ currentBox }) {
   const [obj3D, setObj3D] = useState(null);
 
   return (
@@ -124,22 +146,6 @@ function Box3DViewer() {
           dampingFactor={0.05}
         />
       </Canvas>
-      
-      {/* Buttons chuyển đổi */}
-      <div className="box-controls">
-        <button 
-          className={`control-btn ${currentBox === 1 ? 'active' : ''}`}
-          onClick={() => setCurrentBox(1)}
-        >
-           1
-        </button>
-        <button 
-          className={`control-btn ${currentBox === 2 ? 'active' : ''}`}
-          onClick={() => setCurrentBox(2)}
-        >
-           2
-        </button>
-      </div>
     </div>
   );
 }

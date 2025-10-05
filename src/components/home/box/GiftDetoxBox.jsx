@@ -1,12 +1,19 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../../../css/GiftDetoxBox.css";
 
 export default function GiftDetoxBox() {
+  const navigate = useNavigate();
+
+  const handleGiftBoxClick = () => {
+    navigate('/box-3d');
+  };
+
   return (
     <>  
     <div className="button-container">
 
-      <button className="giftbox-btn">
+      <button className="giftbox-btn" onClick={handleGiftBoxClick}>
         <span
           className="large-text"
           style={{  color: "white" }}
