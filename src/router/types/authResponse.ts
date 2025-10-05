@@ -22,28 +22,28 @@ export interface LoginResponse {
   exception: string | null;
 }
 
+// types.ts
 export interface RegisterRequest {
-  email:string;
-  password:string;
-  passwordConfirm:string ;
+  email: string;
+  password: string;
   fullName: string;
   phoneNumber: string;
-  address:string;
+  address: string;
+  coupon?: string; // optional, since backend may not need it
 }
 
 export interface RegisterResponse {
-  isSuccess: true;
+  isSuccess: boolean;
   data: {
     email: string;
     password: string;
     fullName: string;
     phoneNumber: string;
-    address: string
+    address: string;
   };
   message: string;
-  exception: string| null;
+  exception: string | null;
 }
-
 export interface changePasswordRequest {
   
   password:string;

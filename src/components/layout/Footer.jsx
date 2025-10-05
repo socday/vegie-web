@@ -18,8 +18,8 @@ export default function Footer() {
         <div className="footer-content">
           {/* Cột 1: Đăng ký thông tin */}
           <div className="footer-column subscribe-column">
-            <h3>Đăng ký thông tin</h3>
-            <p>Đăng ký thông tin để nhận ngay những ưu đãi từ Vegie nhé!</p>
+            <h3>ĐĂNG KÝ THÔNG TIN</h3>
+            <p>Đăng ký thông tin để nhận ngay </p> <p> những ưu đãi từ Vegie nhé!</p>
             <form className="newsletter-form">
               <input type="email" placeholder="Email" className="newsletter-input" />
               <button type="submit" className="newsletter-button">Đăng ký</button>
