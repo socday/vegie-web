@@ -77,65 +77,68 @@ export default function FruitSelection() {
     <div className="fruit-selection-page">
       {/* Container chính chứa tất cả các elements */}
       <div className="main-container">
-        {/* Title GIFT BOX - Sử dụng font Nighty DEMO */}
-        <h1 className="gift-box-title" style={{ color: "#91CF43" }}>
-          Gift Box </h1>
+        <div className="fruit-selection-left">
+          {/* Title GIFT BOX - Sử dụng font Nighty DEMO */}
+          <div className="fruit-selection-title-display">
+          <h1 className="gift-box-title" style={{ color: "#91CF43" }}>
+            Gift Box </h1>
+          <div className="title-line"></div>
+          </div>
+          
+          {/* 3 dòng text hướng dẫn */}
+          <div className="instructions">
+            <p>Hãy chọn <strong>TỐI ĐA 5 loại</strong> trong danh sách sản phẩm</p>
+            <p><strong>Một loại số lượng tối đa là 3</strong></p>
+            <p>Box được đóng gói thùng deco sạch sẽ</p>
+          </div>
         
-        {/* Dấu gạch ngang */}
-        <div className="title-line"></div>
-        
-        {/* 3 dòng text hướng dẫn */}
-        <div className="instructions">
-          <p>Hãy chọn <strong>TỐI ĐA 5 loại</strong> trong danh sách sản phẩm</p>
-          <p><strong>Một loại số lượng tối đa là 3</strong></p>
-          <p>Box được đóng gói thùng deco sạch sẽ</p>
-        </div>
-        
-        {/* Khung xanh chứa danh sách trái cây */}
-        <div className="product-selection-container">
-          <div className="product-list">
-            {Object.keys(selectedFruits).map((fruit) => (
-              <div key={fruit} className="product-item">
-                <span className="fruit-name">{fruit}</span>
-                <div className="quantity-selector">
-                  <button 
-                    className="quantity-btn minus"
-                    onClick={() => handleQuantityChange(fruit, -1)}
-                    disabled={selectedFruits[fruit] === 0}
-                  >
-                    -
-                  </button>
-                  <div className="quantity">
+          {/* Khung xanh chứa danh sách trái cây */}
+          <div className="product-selection-container">
+            <div className="product-list">
+              {Object.keys(selectedFruits).map((fruit) => (
+                <div key={fruit} className="product-item">
+                  <span className="fruit-name">{fruit}</span>
+                  <div className="cart-quantity">
+                    <button 
+                      className="cart-quantity-button cart-decrease-style"
+                      onClick={() => handleQuantityChange(fruit, -1)}
+                      disabled={selectedFruits[fruit] === 0}
+                    >
+                      -
+                    </button>
+                    
                     <span>{selectedFruits[fruit]}</span>
+                    <button 
+                      className="cart-quantity-button cart-increase-style"
+                      onClick={() => handleQuantityChange(fruit, 1)}
+                      disabled={selectedFruits[fruit] === 3}
+                    >
+                      +
+                    </button>
                   </div>
-                  <button 
-                    className="quantity-btn plus"
-                    onClick={() => handleQuantityChange(fruit, 1)}
-                    disabled={selectedFruits[fruit] === 3}
-                  >
-                    +
-                  </button>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
         
         {/* Khung xám bên phải để hiển thị box 3D */}
-        <div className="display-area">
-          <div className="box-preview">
-            {/* Hiển thị box 3D đã chọn ở dạng mở với hiệu ứng trái cây */}
-            <OpenBox3DViewer 
-              currentBox={selectedBox} 
-              fruitAnimation={fruitAnimation}
-              removeFruit={removeFruit}
-            />
+        <div className="fruit-selection-right">
+          <div className="display-area">
+            <div className="box-preview">
+              {/* Hiển thị box 3D đã chọn ở dạng mở với hiệu ứng trái cây */}
+              <OpenBox3DViewer 
+                currentBox={selectedBox} 
+                fruitAnimation={fruitAnimation}
+                removeFruit={removeFruit}
+              />
+            </div>
+            
+            {/* Button Tiếp tục */}
+            <button className="continue-btn" onClick={handleContinue}>
+              Tiếp tục
+            </button>
           </div>
-          
-          {/* Button Tiếp tục */}
-          <button className="continue-btn" onClick={handleContinue}>
-            Tiếp tục
-          </button>
         </div>
       </div>
     </div>

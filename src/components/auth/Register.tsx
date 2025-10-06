@@ -48,9 +48,13 @@ const Register = () => {
         password: formData.password,
         coupon: formData.coupon,
       });
-
-      setSuccess(true);
-      console.log("Đăng ký thành công:", res);
+      if (res.isSuccess === false) {
+        setError(res.message || "Đăng ký thất bại");
+      }
+      else {
+        setSuccess(true);
+        console.log("Đăng ký thành công:", res);
+      }
     } catch (err: any) {
       setError(err.response?.data?.message || "Đăng ký thất bại");
     } finally {
