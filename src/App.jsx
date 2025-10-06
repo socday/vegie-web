@@ -25,7 +25,7 @@ import Box3D from './components/3d/Box3D'
 import MyWeeklyPackage from './components/home/WeeklyPackage'
 import AiMenu from './components/home/AiMenu'
 
-import FruitSelection from './components/fruit/FruitSelection'
+import FruitSelection from './components/3d/FruitSelection'
 
 function App() {
   return (

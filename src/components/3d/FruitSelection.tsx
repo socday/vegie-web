@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import OpenBox3DViewer from '../3d/OpenBox3DViewer';
+import OpenBox3DViewer from './OpenBox3DViewer';
 import '../../css/FruitSelection.css';
 
 // Type cho fruit animation
