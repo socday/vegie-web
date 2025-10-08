@@ -36,37 +36,48 @@ export default function FruitSelection() {
   const [fruitAnimation, setFruitAnimation] = useState<FruitAnimationState | null>(null);
   const [removeFruit, setRemoveFruit] = useState<RemoveFruitState | null>(null);
 
-  const handleQuantityChange = (fruit, change) => {
-    setSelectedFruits(prev => {
-      const newQuantity = prev[fruit] + change;
-      if (newQuantity >= 0 && newQuantity <= 3) {
-        // Nếu là thêm trái cây (change > 0), trigger animation
-        if (change > 0) {
-          console.log('Triggering fruit animation for:', fruit);
-          setFruitAnimation({
-            fruitType: fruit,
-            isActive: true,
-            onComplete: () => {
-              console.log('Fruit animation completed for:', fruit);
-              setFruitAnimation(null);
-            }
-          });
-        }
+  // const handleQuantityChange = (fruit, change) => {
+  //   setSelectedFruits(prev => {
+  //     const newQuantity = prev[fruit] + change;
+  //     if (newQuantity >= 0 && newQuantity <= 3) {
+  //       // Nếu là thêm trái cây (change > 0), trigger animation
+  //       if (change > 0) {
+  //         console.log('Triggering fruit animation for:', fruit);
+  //         setFruitAnimation({
+  //           fruitType: fruit,
+  //           isActive: true,
+  //           onComplete: () => {
+  //             console.log('Fruit animation completed for:', fruit);
+  //             setFruitAnimation(null);
+  //           }
+  //         });
+  //       }
         
-        // Nếu là bớt trái cây (change < 0), trigger remove
-        if (change < 0) {
-          console.log('Triggering fruit removal for:', fruit);
-          setRemoveFruit({
-            fruitType: fruit
-          });
-          // Reset removeFruit sau 100ms
-          setTimeout(() => setRemoveFruit(null), 100);
-        }
-        return { ...prev, [fruit]: newQuantity };
-      }
-      return prev;
-    });
-  };
+  //       // Nếu là bớt trái cây (change < 0), trigger remove
+  //       if (change < 0) {
+  //         console.log('Triggering fruit removal for:', fruit);
+  //         setRemoveFruit({
+  //           fruitType: fruit
+  //         });
+  //         // Reset removeFruit sau 100ms
+  //         setTimeout(() => setRemoveFruit(null), 100);
+  //       }
+  //       return { ...prev, [fruit]: newQuantity };
+  //     }
+  //     return prev;
+  //   });
+  // };
+
+  const handleQuantityChange = (fruit: string, change: number) => {
+  setSelectedFruits(prev => {
+    const newQuantity = prev[fruit] + change;
+
+    // Each type can be from 0 to 3
+    if (newQuantity < 0 || newQuantity > 3) return prev;
+
+    return { ...prev, [fruit]: newQuantity };
+  });
+};
 
   const handleContinue = () => {
     // Navigate to next page

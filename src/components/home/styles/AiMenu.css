@@ -16,6 +16,7 @@
     background-size: cover;
     background-position: center top; /* top of image visible */
     z-index: 1; 
+    pointer-events: none;
 }
 
 .ai-menu-container {
@@ -28,11 +29,15 @@
     border-radius: 40px;
     justify-content: center;
     margin-bottom: 20vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .ai-menu-word {
     width: 100%;
     text-align: center;
+    margin-bottom: 10%;
+    
 }
 .ai-menu-word h2{
     margin-top: 2%;
@@ -45,7 +50,43 @@
 }
 
 .ai-menu-word span{
-    padding-left: 30%;
+    padding-left: 40%;
     color: white;
     font-size: 1.25rem;
+    
+}
+
+.circle-btn {
+    display:flex;
+    margin-left: 70%;
+    width:158px;
+    height: 158px;
+    justify-content: center;
+    align-items: center;
+  border-radius: 50%;
+  border: 5px solid #91CF43;        /* border color */
+  background-color: white;        /* background color */
+  color: #91CF43;                      /* text color */
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.6s ease;
+text-decoration: none;;
+}
+
+.circle-btn span {
+    padding:0;
+  font-size: 6rem;
+  transition: all 0.6s ease;
+    color: #91CF43;
+}
+
+.circle-btn:hover {
+  background: #91CF43;
+  border-color: white;
+  text-decoration: none;
+}
+
+.circle-btn:hover span{
+  color:   white;
+  text-decoration: none;
 }
