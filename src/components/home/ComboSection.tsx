@@ -15,20 +15,20 @@ export default function ComboSection() {
         <div className="combo-packages">
           {/* First card */}
           <div
-            className="package-card"
+            className="combo-package-card-1"
             onClick={() => navigate("/weekly-package")}
             style={{ cursor: "pointer" }}
           >
             <div className="package-front">
               <div className="package-title">
-                <span className="package-line-1">Gói</span>
-                <span className="package-line-2">mua lẻ</span>
+                <span className="package-line">Gói</span>
+                <span className="package-line">mua lẻ</span>
               </div>
             </div>
             <div className="package-back">
               <div className="package-title">
-                <span className="package-line-1">Ăn</span>
-                <span className="package-line-2">An Lành</span>
+                <span className="package-line">Ăn</span>
+                <span className="package-line">An Lành</span>
               </div>
               <div className="package-description">
                 Quà Tươi Xanh - Nấu Nhanh Ăn Lành
@@ -38,7 +38,7 @@ export default function ComboSection() {
 
           {/* Second card */}
           <div
-            className="package-card"
+            className="combo-package-card"
             onClick={() => navigate("/monthly-package")}
             style={{ cursor: "pointer" }}
           >

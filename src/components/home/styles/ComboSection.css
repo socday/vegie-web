@@ -1,6 +1,7 @@
-.package-card {
+.combo-package-card,
+.combo-package-card-1 {
   width: 19rem;
-  height: auto;
+  height: 10rem;
   min-height: 13.125rem;
   padding: 1.5rem;
   box-sizing: border-box;
@@ -18,10 +19,18 @@
 }
 
 /* Hover effect */
-.package-card:hover {
+
+.combo-package-card-1:hover{
   min-height: 20rem;
   box-shadow: 0 15px 25px rgba(0,0,0,0.2);
 }
+
+.combo-package-card:hover{
+  min-height: 20rem;
+  box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+}
+
+
 
 /* Title styles (keep your sizes/line-height) */
 .package-title {
@@ -56,7 +65,7 @@
   height: 100%; /* instead of 150% */
   box-sizing: border-box;
   transition: opacity 0.4s ease;
-
+  background-color: #27600B;
   display: flex;
   flex-direction: column;
   justify-content: flex-end; /* push content down */
@@ -72,15 +81,21 @@
 }
 
 /* Switch on hover */
-.package-card:hover .package-front {
+.combo-package-card:hover .package-front {
   opacity: 0;
 }
 
-.package-card:hover .package-back {
+.combo-package-card:hover .package-back {
   opacity: 1;
 }
 
+.combo-package-card-1:hover .package-front {
+  opacity: 0;
+}
 
+.combo-package-card-1:hover .package-back {
+  opacity: 1;
+}
 .combo-section{
 }
 .combo-section {
@@ -114,7 +129,7 @@
     width: 50%;
     display: flex;
     gap: 1.5rem;
-
+    align-items: flex-end;
 }
 
 .combo-packages span{

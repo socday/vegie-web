@@ -26,6 +26,8 @@ import MyWeeklyPackage from './components/home/WeeklyPackage'
 import AiMenu from './components/home/AiMenu'
 
 import FruitSelection from './components/3d/FruitSelection'
+import Letters from './components/3d/Letters'
+import GiftPreview from './components/3d/GiftPreview'
 
 function App() {
   return (
@@ -52,6 +54,9 @@ function App() {
             <Route path='/my-weekly-package' element = {<MyWeeklyPackage/>}/>
             <Route path='/ai-menu' element = {<AiMenu/>}/>
             <Route path='/fruit-selection' element={<FruitSelection/>}/>
+            
+            <Route path='/letters' element={<Letters/>}/>
+            <Route path='/gift-preview' element={<GiftPreview/>}/>
       <Route
         path="/profile"
         element={
