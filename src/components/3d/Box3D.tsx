@@ -8,7 +8,7 @@ export default function Box3D () {
   const navigate = useNavigate();
 
   const handleContinue = () => {
-    navigate('/fruit-selection', { state: { selectedBox: currentBox } });
+    navigate('/letters', { state: { selectedBox: currentBox } });
   };
 
   return (

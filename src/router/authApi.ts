@@ -36,7 +36,6 @@ export async function changePassword (payload: changePasswordRequest) : Promise 
 export async function checkAuth() {
   let token = localStorage.getItem("accessToken");
   const refreshToken = localStorage.getItem("refreshToken");
-
   if (!token) {
     return { isAuthenticated: false, user: null, token: null };
   }
@@ -47,6 +46,7 @@ export async function checkAuth() {
       headers: { Authorization: `Bearer ${token}` },
     });
     if (!response.data.isSuccess){
+      localStorage.removeItem("accessToken");
       console.log(response);
       return { isAuthenticated: false, user: null, token: null };
     }
@@ -79,6 +79,7 @@ export async function checkAuth() {
       token,
     };
   } catch (error: any) {
+    localStorage.removeItem("accessToken");
     console.error("Auth check failed:", error);
     return { isAuthenticated: false, user: null, token: null };
   }

@@ -1,4 +1,4 @@
-/* .letter-input-container {
+.letter-input-container {
   width: 85%;
   height: 230px;
   border-radius: 32px;
@@ -29,4 +29,48 @@
   color: #91CF43;
   opacity: 0.6;
   font-weight: 400;
-} */
+}
+
+.letter-display-area {
+    width: 100%;
+    height: 100%;
+    padding-top: 4rem;
+    padding-right: 4rem;
+    display:flex;
+    flex-direction: column;
+}
+
+.number-button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.number-btn {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 2px solid #91cf43;
+  background-color: white;
+  color: #333;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.number-btn:hover {
+  background-color: #91cf43;
+  color: white; 
+}
+
+.number-btn.active {
+  background-color: #91cf43;
+  color: white;
+}
+
+.letter-display-area .letter-continue-btn{
+    width: 90px;
+    padding: 5px 10px;
+    margin-top: 1rem;
+    margin-left: auto;
+}

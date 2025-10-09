@@ -132,7 +132,7 @@
   height:35px;
 }
 
-.quantity-btn {
+.bb-quantity-btn {
   width: 35px;
   height: 35px;
   border: none;
@@ -148,12 +148,12 @@
   border-radius: 7px;
 }
 
-.quantity-btn:hover {
+.bb-quantity-btn:hover {
   background: #f0f0f0;
   transform: scale(1.05);
 }
 
-.quantity-btn:active {
+.bb-quantity-btn:active {
   transform: scale(0.95);
 }
 

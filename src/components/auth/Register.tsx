@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../../css/Register.css";
 import "../../index.css";
 import LoginRegisterForm from "./LoginRegisterForm";
-import { registerUser } from "../../router/authApi"; // adjust path
+import { registerUser } from "../../router/authApi";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -20,16 +20,37 @@ const Register = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
+  const phonePattern = /^(0)(\d{9})$/;
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+
+    // Validate phone number while typing
+    if (name === "phoneNumber") {
+      const cleanValue = value.replace(/[^\d+]/g, "");
+      setFormData((prev) => ({ ...prev, [name]: cleanValue }));
+
+      if (cleanValue && !phonePattern.test(cleanValue)) {
+        setError("Số điện thoại không hợp lệ (bắt đầu bằng 0, gồm 10 số)");
+      } else {
+        setError(null);
+      }
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Final validation before submit
+    if (!phonePattern.test(formData.phoneNumber)) {
+      setError("Số điện thoại không hợp lệ");
+      return;
+    }
 
     if (formData.password !== formData.passwordConfirm) {
       setError("Mật khẩu không khớp");
@@ -48,10 +69,10 @@ const Register = () => {
         password: formData.password,
         coupon: formData.coupon,
       });
+
       if (res.isSuccess === false) {
         setError(res.message || "Đăng ký thất bại");
-      }
-      else {
+      } else {
         setSuccess(true);
         console.log("Đăng ký thành công:", res);
       }

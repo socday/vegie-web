@@ -19,7 +19,7 @@
     pointer-events: none;
 }
 
-/* .ai-menu-container {
+.ai-menu-container {
     margin: 0;
     max-width: none;
     margin-top: 10vh;
@@ -31,7 +31,7 @@
     margin-bottom: 20vh;
     display: flex;
     flex-direction: column;
-} */
+}
 
 .ai-menu-word {
     width: 100%;

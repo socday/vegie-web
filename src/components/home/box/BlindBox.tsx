@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import "../../../css/BlindBox.css";
 import { updateCartItem } from "../../../router/cartApi";
 import { Item } from "../../../router/types/cartResponse";
+import { useNavigate } from "react-router-dom";
 
 export default function BlindBox() {
+    const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const userId = localStorage.getItem("userId");
   // Hardcoded Blind Box data
   const box = {
-    id: "3317c3fe-ac82-4f8e-b249-78342ef32912",
+    // id: "3317c3fe-ac82-4f8e-b249-78342ef32912",
+    id: "69807b28-0187-4d52-95fe-c6ede9ab412d",
     name: "Blind Box",
     description: "Random mystery box with surprise items",
     price: 150000,
@@ -21,6 +24,9 @@ export default function BlindBox() {
   
     const handleQuantityChange = async (id: string, newQty: number) => {  if (!userId) return ("Ko lay duoc userid");
     try {
+      if (localStorage.getItem("accessToken") === null) {
+        navigate("/dang-nhap");
+      }
       console.log("Item:", id, "to quantity:", newQty, "name", items.find(i => i.id === id)?.name);
       await updateCartItem(userId, id, newQty);
       setItems((prev) =>
@@ -51,11 +57,11 @@ export default function BlindBox() {
 
           <div className="controls">
             <div className="quantity-control">
-              <button className="quantity-btn" onClick={decreaseQuantity}>
+              <button className="bb-quantity-btn" onClick={decreaseQuantity}>
                 −
               </button>
               <span className="quantity-display">{quantity}</span>
-              <button className="quantity-btn" onClick={increaseQuantity}>
+              <button className="bb-quantity-btn" onClick={increaseQuantity}>
                 +
               </button>
             </div>

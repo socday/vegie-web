@@ -28,6 +28,8 @@ import AiMenu from './components/home/AiMenu'
 import FruitSelection from './components/3d/FruitSelection'
 import Letters from './components/3d/Letters'
 import GiftPreview from './components/3d/GiftPreview'
+import TodayMenu from './components/home/TodayMenu'
+import FinishGiftBox from './components/3d/FinishGiftBox'
 
 function App() {
   return (
@@ -54,7 +56,8 @@ function App() {
             <Route path='/my-weekly-package' element = {<MyWeeklyPackage/>}/>
             <Route path='/ai-menu' element = {<AiMenu/>}/>
             <Route path='/fruit-selection' element={<FruitSelection/>}/>
-            
+            <Route path='/today-menu' element={<TodayMenu/>}/>
+            <Route path='/finish-giftbox' element={<FinishGiftBox />}/>
             <Route path='/letters' element={<Letters/>}/>
             <Route path='/gift-preview' element={<GiftPreview/>}/>
       <Route

@@ -8,7 +8,7 @@ const API_URL = "http://localhost:5071/api";
 
 export const api = axios.create({
   baseURL: API_URL,   
-  timeout: 10000,     // optional: 10s timeout
+  timeout: 2000,     // optional: 10s timeout
 });
 
 // Log all requests

@@ -1,0 +1,38 @@
+.finish-gift-box-title {
+  margin: 0;
+  padding: 0;
+  text-transform: none;
+  font-family: inter;
+  font-size: 8rem;
+  font-weight: 700;
+  line-height: 0.9;
+  display: block;
+  /* allow wrapping */
+  white-space: normal; 
+  word-break: break-word; /* ensures long words wrap too */
+  margin-bottom: 2rem;
+}
+
+.fnb-left {
+    width: 60%;
+    padding-left: 5%;
+}
+
+.fnb-right {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fnb-display-area {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #91CF43;
+    border-radius: 32px 0 0 32px;
+    background-color: #91CF43;
+}

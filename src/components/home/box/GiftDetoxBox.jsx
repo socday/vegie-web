@@ -6,7 +6,7 @@ export default function GiftDetoxBox() {
   const navigate = useNavigate();
 
   const handleGiftBoxClick = () => {
-    navigate('/box-3d');
+    navigate('/fruit-selection');
   };
 
   return (
