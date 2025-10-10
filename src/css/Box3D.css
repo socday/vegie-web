@@ -9,15 +9,15 @@
 .figma-main-content {
   flex: 1;
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   padding: 0;
   position: relative;
 }
 
 .model-viewer-container {
   position: absolute;
-  width: 100%;
+  width: 80%;
   height: 528px;
   left: 0;
   top: 82px;
@@ -32,7 +32,6 @@
   position: absolute;
   width: 350px;
   height: 40px;
-  left: 67px;
   bottom: 20px;
   background: #9AD055;
   border-radius: 40px;
@@ -51,7 +50,7 @@
 .box-selector {
   position: absolute;
   bottom: 20px;
-  left: calc(35%);
+  left: 420px; 
   transform: translateX(-50%);
   display: flex;
   gap: 1rem;
@@ -253,7 +252,7 @@
 
 
 /* Responsive */
-@media (max-width: 1440px) {
+@media (max-width: 1000px) {
   .model-viewer-container {
     width: 100%;
     left: 0;

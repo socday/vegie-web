@@ -38,32 +38,6 @@ export default function BoxSelector() {
           Được cung cấp thực đơn AI kèm Chat với bé cừu AI dinh dưỡng về các thông tin thực phẩm rau củ quả
         </span>
       </button>
-      <br />
-      <br />
-      <br />
-      <button className="fancie-btn" onClick={() => navigate("/custom-box")}>
-        <span
-          className="large-text"
-          style={{ color: "white" }}
-        >
-          Custom
-        </span>
-        <span className="middle-text" style={{  color: "white" }}>
-          Gift Box - Detox Box
-        </span>
-        <span
-        className="small-text"
-          style={{ color: "white" }}
-        >
-          Tự tay chọn loại rau củ theo sở thích cho box detox của bạn.
-        </span>
-        <span
-        className="small-text"
-          style={{ color: "white"}}
-        >
-          Hay tự trang trí Gift Box để gửi đến người thân nhé!
-        </span>
-      </button>
       <button className="giftbox-btn" onClick={handleGiftBoxClick}>
         <span
           className="large-text"

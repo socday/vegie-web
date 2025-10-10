@@ -2,7 +2,7 @@
   width: 1306px;
   height: 445.01px;
   background-color: #D0E9FE;
-  background-image: url('../assets/images/Blind-Box.png'); /* Corrected path */
+  background-image: url('../../../assets/images/Blind-Box.png'); /* Corrected path */
   background-repeat: no-repeat;
   background-size: cover; /* hoặc contain nếu muốn toàn bộ ảnh hiển thị */
   background-position: center;
@@ -13,28 +13,6 @@
   font-weight: bold;
   cursor: pointer;
 }
-
-.fancie-btn {
-  width: 1306px;
-  height: 445.01px;
-  background-color: #27600B;
-  background-image: url('../assets/images/Custom-Box.png'); /* Corrected path */
-  background-repeat: no-repeat;
-  background-size: cover; /* hoặc contain nếu muốn toàn bộ ảnh hiển thị */
-  background-position: center;
-  border: none;
-  border-radius: 50px;
-  font-size: 18px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.fancy-btn:hover, .blindbox-btn:hover {
-  opacity: 0.85;
-}
-
-
 @font-face {
   font-family: "MyCustomFont";
   src: url('../assets/fonts/nighty/NightyDEMO.otf') format("opentype");
