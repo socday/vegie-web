@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import mascotImage from '../../assets/mascot.png';
 import brandLogo from '../../assets/logo-brand.png';
 import { useNavigate } from 'react-router-dom';
-import '../../css/Home.css';
+import './styles/Home.css';
 import ComboSection from './ComboSection';
 
 
@@ -34,7 +34,6 @@ const tabsData = [
 const boxesData = [
   { id: 1, number: '01', title: 'Blind Box', description: 'Mô tả sản phẩm' },
   { id: 2, number: '02', title: 'Gift Box', description: 'Mô tả sản phẩm' },
-  { id: 3, number: '03', title: 'Detox Box', description: 'Mô tả sản phẩm' }
 ];
 
 export default function Home() {
@@ -86,7 +85,7 @@ export default function Home() {
         </section>
         <div className="divider"></div>
         <section className='ai-menu-section'>
-            <div className="ai-menu-container">
+            <div className="ai-menu-home-container">
                 <div className={`ai-menu-wrapper ${isAiMenuOpen ? 'open' : ''}`}
                     onMouseEnter={() => setIsAiMenuOpen(true)}
                     onMouseLeave={() => setIsAiMenuOpen(false)}
@@ -118,35 +117,19 @@ export default function Home() {
             {/* Lưới chứa các card */}
             <div className="box-grid">
               {boxesData.map((box) => (
-                <div key={box.id} className="product-box-card">
-                  <div className="box-number">{box.number}</div>
-                  <div className="box-content">
-                    <h3 className="box-title">{box.title}</h3>
-                    <p className="box-description">{box.description}</p>
-                    <button className="box-details-button">Xem chi tiết</button>
-                  </div>
+              <div key={box.id} className="product-box-card">
+                <div className="box-number">{box.number}</div>
+                {/* Overlay image (hidden until hover) */}
+                <img src="/images/overlay-icon.png" alt="" className="box-overlay-img" />
+
+                <div className="box-content">
+                  <h3 className="box-title">{box.title}</h3>
+                  <p className="box-description">{box.description}</p>
+                  <button className="box-details-button">Xem chi tiết</button>
                 </div>
+              </div>
               ))}
             </div>
-          </div>
-        </section>
-        <section className="voucher-section">
-          <div className="voucher-container">
-            {/* Cột bên trái (40%) */}
-            <div className="voucher-info">
-              <h2 className="voucher-title">
-                Các Ưu Đãi Trong Tuần <br />
-                Giành Cho Bạn
-              </h2>
-              <ul className="voucher-list">
-                <li>Miễn phí vận chuyển cho đơn hàng đầu tiên</li>
-                <li>Miễn phí ship nội thành với đơn hàng đặt trước 17h mỗi ngày</li>
-                <li>Miễn phí vận chuyển cả tuần khi mua gói theo tuần</li>
-              </ul>
-            </div>
-
-            {/* Cột bên phải (60%) */}
-           
           </div>
         </section>
       </div>

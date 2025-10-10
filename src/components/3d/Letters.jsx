@@ -32,7 +32,7 @@ export default function Letters() {
     }
 
     console.log("User message:", message);
-    navigate("/gift-preview", { state: { message, selectedImage } });
+    navigate("/finish-giftbox", { state: { message, selectedImage } });
   };
 
   // Handle number button click

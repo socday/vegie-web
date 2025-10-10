@@ -1,7 +1,6 @@
 /* Box3D Page - Theo Figma */
 .box3d-page {
   min-height: 100vh;
-  background-color: #f5f5f5;
   display: flex;
   flex-direction: column;
 }
@@ -22,16 +21,17 @@
   height: 528px;
   left: 0;
   top: 82px;
-  background: #D9D9D9;
+  background: transparent;
   overflow: hidden;
   position: relative;
+  margin-bottom: 4rem;
 }
 
 /* Prompt Banner riêng lẻ - theo Figma */
 .prompt-banner {
   position: absolute;
-  width: 445px;
-  height: 57px;
+  width: 350px;
+  height: 40px;
   left: 67px;
   bottom: 20px;
   background: #9AD055;
@@ -39,7 +39,7 @@
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 1rem;
   line-height: 27px;
   display: flex;
   align-items: center;
@@ -51,7 +51,7 @@
 .box-selector {
   position: absolute;
   bottom: 20px;
-  left: calc(50% - 50px);
+  left: calc(35%);
   transform: translateX(-50%);
   display: flex;
   gap: 1rem;

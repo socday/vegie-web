@@ -28,6 +28,7 @@ Fruit Selection Page - Theo Figma
 }
 
 .fruit-selection-right {
+  margin-top: 1%;
   width:50%;
 }
 
@@ -213,11 +214,11 @@ Fruit Selection Page - Theo Figma
 }
 
 
-.display-area {
+.box-display-area {
+  padding-top: 1rem;
   width: 679px;
   height: 543px;
-  margin: 2rem 0 0 2rem;
-  background: #D9D9D9;
+  background: transparent;
   border-radius: 20px;
   display: flex;
   flex-direction: column;

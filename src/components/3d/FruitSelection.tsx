@@ -130,7 +130,7 @@ export default function FruitSelection() {
         </div>
 
         <div className="fruit-selection-right">
-          <div className="display-area">
+          <div className="box-display-area">
             <div className="box-preview">
               <OpenBox3DViewer
                 currentBox={selectedBox}

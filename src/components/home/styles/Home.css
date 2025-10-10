@@ -130,12 +130,14 @@
     padding-top: 5rem;
     padding: 8rem 0;
 }
-.ai-menu-container {
+.ai-menu-home-container {
     position: relative;
     width: 100%;
     max-width: 1200px;
     display: flex;
+    align-items: center;
     justify-content: center;
+    text-align: center;
 }
 
 /* Container chính, đóng vai trò là cả button và card mở rộng */
@@ -148,6 +150,7 @@
     overflow: hidden; /* Quan trọng để nội dung không bị tràn ra ngoài */
     padding: 2rem;
     padding-top:8rem;
+    width:40%;
     /* Hiệu ứng chuyển động cho tất cả các thuộc tính */
       transition: width 0.7s ease, height 0.7s ease, border-radius 0.7s ease;
 }
@@ -301,34 +304,6 @@
     justify-content: center;
     gap: 2rem;
 }
-
-.product-box-card {
-    background-color: var(--light-blue, #D0E9FE);
-    border-radius: 25px;
-    width: 320px;
-    height: 400px;
-    padding: 2rem;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.product-box-card:hover {
-    transform: translateY(-15px);
-    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08);
-}
-
-.box-number {
-    font-size: 6rem;
-    font-weight: 700;
-    color: var(--primary-green);
-    opacity: 0.9;
-    font-family: 'Inter', sans-serif;
-    line-height: 1;
-}
-
-/* Dùng flex-grow để đẩy nội dung này xuống dưới */
 .box-content {
     margin-top: auto; 
 }
@@ -347,156 +322,81 @@
     margin: 0.5rem 0 0 0;
 }
 
+.product-box-card {
+  position: relative; /* for positioning the overlay image */
+  background-color: var(--light-blue, #D0E9FE);
+  border-radius: 25px;
+  width: 320px;
+  height: 400px;
+  padding: 2rem 2rem 0 2rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, background-image 0.5s ease;
+  overflow: hidden; /* hide overflow for the moving number */
+  background-size: cover;
+  background-position: center;
+}
+
+/* === Number animation === */
+.box-number {
+  font-size: 6rem;
+  font-weight: 700;
+  color: var(--primary-green);
+  opacity: 0.9;
+  font-family: 'Inter', sans-serif;
+  line-height: 1;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+/* Move number down and fade out on hover */
+.product-box-card:hover .box-number {
+  transform: translateY(100px); /* go down */
+  opacity: 0;
+}
+
+/* === Button margin change === */
 .box-details-button {
-    margin-top: 1.5rem;
-    padding: 0.6rem 1.5rem;
-    border: 1.5px solid var(--primary-green);
-    border-radius: 50px;
-    background-color: transparent;
-    color: var(--primary-green);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 0.2rem 0.8rem;
+  border: 1.5px solid var(--primary-green);
+  border-radius: 50px;
+  background-color: transparent;
+  color: var(--primary-green);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.8rem;
 }
 
-.box-details-button:hover {
-    background-color: var(--primary-green);
-    color: #fff;
-}
-/* 
- * =========================================================
- *  PHẦN 6: ƯU ĐÃI (MỚI)
- * =========================================================
-*/
-.voucher-section {
-    padding: 8rem 2rem;
-    background-color: #fff;
+.product-box-card:hover .box-details-button {
+  margin-top: 0.2rem; /* collapse margin */
+  margin-bottom: 0.5rem;
 }
 
-.voucher-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
+.product-box-card:hover .box-description{
+    margin: 0 0 0 0; 
+}
+/* === Background image change === */
+.product-box-card:hover {
+  background-image: url('/images/your-background.jpg'); /* replace with your image path */
+  background-color: transparent;
 }
 
-/* --- Cột bên trái (Thông tin) --- */
-.voucher-info {
-    flex-basis: 40%; /* Chiếm 40% chiều rộng */
-    color: var(--dark-green);
+/* === Overlay image above title === */
+.box-overlay-img {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  width: 120px; /* adjust as needed */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none; /* prevent blocking button clicks */
 }
 
-.voucher-title {
-    font-size: 2.5rem;
-    font-weight: 800;
-    line-height: 1.3;
-    font-family: 'Inter', sans-serif;
-}
-
-.voucher-list {
-    list-style-type: none; /* Bỏ dấu chấm đầu dòng */
-    padding: 0;
-    margin: 2rem 0 0 0;
-}
-.voucher-list li {
-    padding-left: 1.5rem;
-    position: relative;
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    color: var(--dark-green);
-    opacity: 0.8;
-}
-/* Tạo dấu chấm đầu dòng tùy chỉnh */
-.voucher-list li::before {
-    content: '•';
-    position: absolute;
-    left: 0;
-    color: var(--primary-green);
-    font-weight: 900;
-    font-size: 1.2rem;
-}
-
-/* --- Cột bên phải (Hiển thị voucher) --- */
-.voucher-display {
-    flex-basis: 60%; /* Chiếm 60% chiều rộng */
-    background-color: var(--light-blue);
-    border-radius: 50px 15px 50px 15px;
-    padding: 3rem;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.voucher-card-row {
-    display: flex;
-    gap: 1.5rem;
-    width: 100%;
-}
-
-.voucher-card {
-    background-color: var(--dark-red, #9A2C37);
-    color: #fff;
-    border-radius: 15px;
-    padding: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 600;
-    text-align: center;
-}
-.voucher-card.small {
-    flex: 1;
-    height: 50px;
-}
-.voucher-card.medium {
-    width: 100%;
-    height: 70px;
-    font-size: 1.2rem;
-}
-.voucher-card.large {
-    width: 100%;
-    height: 120px;
-    font-size: 1.8rem;
-    border-radius: 20px;
-}
-
-.voucher-details-button {
-    margin-top: 1rem;
-    padding: 0.8rem 2.5rem;
-    border: none;
-    border-radius: 50px;
-    background-color: var(--dark-red, #9A2C37);
-    color: #fff;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-.voucher-details-button:hover {
-    transform: scale(1.05);
-}
-
-.tab-item-container {
-  position: relative;
-}
-
-.action-button {
-  display: block;
-}
-
-.content-bubble {
-    font-size: 0.875rem;
-  display: none;
-  line-height: 1.3;
-}
-
-.intro-section:hover .action-button {
-  display: none;
-}
-
-.intro-section:hover .content-bubble {
-  display: block;
+.product-box-card:hover .box-overlay-img {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../../css/BlindBox.css";
+import "../styles/BlindBox.css";
 import { updateCartItem } from "../../../router/cartApi";
 import { Item } from "../../../router/types/cartResponse";
 import { useNavigate } from "react-router-dom";

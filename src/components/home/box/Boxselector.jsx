@@ -1,9 +1,12 @@
 import React from "react";
-import "../../../css/BoxSelector.css";
+import "../styles/BoxSelector.css";
 import { useNavigate } from "react-router-dom"; // 👈 import thêm
 
 export default function BoxSelector() {
       const navigate = useNavigate(); // 👈 khai báo hook để dùng navigate
+    const handleGiftBoxClick = () => {
+    navigate('/fruit-selection');
+  };
 
   return (
     <>
@@ -59,6 +62,40 @@ export default function BoxSelector() {
           style={{ color: "white"}}
         >
           Hay tự trang trí Gift Box để gửi đến người thân nhé!
+        </span>
+      </button>
+      <button className="giftbox-btn" onClick={handleGiftBoxClick}>
+        <span
+          className="large-text"
+          style={{  color: "white" }}
+        >
+          Gift Box
+        </span>
+        <span
+        className="middle-text"
+          style={{  color: "white" }}
+        >
+          Trọn Vị Ăn
+        </span>
+        <span className="small-text"
+          style={{ color: "white",}}
+        >
+          Định lượng 5kg - Order trc 2-3 ngày
+        </span>
+        <span className="small-text"
+          style={{ color: "white",  }}
+        >
+          Được tuỳ ý lựa chọn dựa trên những sản phẩm có sẵn (tối đa 5 loại)
+        </span>
+        <span className="small-text"
+          style={{ color: "white",  }}
+        >
+          Được đóng gói thùng deco sạch sẽ đảm bảo tính trang trọng
+        </span>
+        <span className="small-text"
+          style={{  color: "white",  }}
+        >
+          Quà cá nhân hoá được tự ý thiết kế theo dạng 3D
         </span>
       </button>
       <br />
