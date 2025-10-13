@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
@@ -10,104 +10,108 @@ import StageNotification from './components/notifications/StageNotification'
 import PasswordRecovery from './components/auth/PasswordRecovery'
 import Register from './components/auth/Register'
 import Cart from './components/user/order/cart/Cart'
-
 import BoxSelector from './components/home/box/Boxselector'
 import GiftDetoxBox from './components/home/box/GiftDetoxBox'
 import RetailPackage from './components/home/subcription/retailpackage'
 import WeeklyPackage from './components/home/subcription/weeklypackage'
 import BlindBox from './components/home/box/BlindBox'
-import ScrollToTop from "./components/notifications/ScrollToTop";
-
+import ScrollToTop from "./components/notifications/ScrollToTop"
 import Payment from './components/user/order/payment/Payment'
 import Profile from './components/user/profile/Profile'
 import PrivateRoute from './router/PrivateRoute'
 import Box3D from './components/3d/Box3D'
 import MyWeeklyPackage from './components/home/WeeklyPackage'
 import AiMenu from './components/home/AiMenu'
-
 import FruitSelection from './components/3d/FruitSelection'
 import Letters from './components/3d/Letters'
 import GiftPreview from './components/3d/GiftPreview'
 import TodayMenu from './components/home/TodayMenu'
 import FinishGiftBox from './components/3d/FinishGiftBox'
-import ViewComboSection from './components/home/ViewComboSection'
 import ViewComboSectionWrapper from './components/home/ViewComboSectionWrapper'
 import UserNotification from './components/notifications/UserNotification.tsx'
 
 function App() {
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const threshold = 160
+      if (
+        window.outerWidth - window.innerWidth > threshold ||
+        window.outerHeight - window.innerHeight > threshold
+      ) {
+        alert("DevTools detected. Action not allowed.")
+      }
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <>
       <main>
         <Router>
-          <NavBar/>
-          <ScrollToTop/>
+          <NavBar />
+          <ScrollToTop />
           <Routes>
-            <Route path='/' element={<Home/>} />
-            <Route path='/vegie-care' element={<Home/>} />
-            <Route path='/gioi-thieu' element={<Home/>} />
-            <Route path='/dang-nhap' element={<Login/>} />
-            <Route path='/khoi-phuc-mat-khau' element={<PasswordRecovery/>} />
-            <Route path='/stage-notification' element={<StageNotification/>} />
-            <Route path='/dang-ky' element={<Register/>}/>
-            <Route path='/san-pham' element={<BoxSelector/>}/>
-            <Route path='/custom-box' element={<GiftDetoxBox/>}/>
-            <Route path='/retail-package' element={<RetailPackage/>}/>
-            <Route path='/weekly-package' element={<WeeklyPackage/>}/>
-            <Route path='/blind-box' element={<BlindBox/>}/>
+            <Route path='/' element={<Home />} />
+            <Route path='/vegie-care' element={<Home />} />
+            <Route path='/gioi-thieu' element={<Home />} />
+            <Route path='/dang-nhap' element={<Login />} />
+            <Route path='/khoi-phuc-mat-khau' element={<PasswordRecovery />} />
+            <Route path='/stage-notification' element={<StageNotification />} />
+            <Route path='/dang-ky' element={<Register />} />
+            <Route path='/san-pham' element={<BoxSelector />} />
+            <Route path='/custom-box' element={<GiftDetoxBox />} />
+            <Route path='/retail-package' element={<RetailPackage />} />
+            <Route path='/weekly-package' element={<WeeklyPackage />} />
+            <Route path='/blind-box' element={<BlindBox />} />
+
             <Route path='/box-3d' element={
               <PrivateRoute>
-                <Box3D/>
+                <Box3D />
               </PrivateRoute>
-              }/>
-            <Route path='/profile-test' element={<Profile/>}/>
-            <Route path='/my-weekly-package' element = {<MyWeeklyPackage/>}/>
-            <Route path='/ai-menu' element = {
-              <PrivateRoute>
-                <AiMenu/>
-              </PrivateRoute>
-            }/>
-            <Route path='/fruit-selection' element={<FruitSelection/>}/>
-            <Route path='/today-menu' element={<TodayMenu/>}/>
-            <Route path='/finish-giftbox' element={<FinishGiftBox />}/>
-            <Route path='/letters' element={<Letters/>}/>
-            <Route path='/gift-preview' element={<GiftPreview/>}/>
+            } />
 
+            <Route path='/profile-test' element={<Profile />} />
+            <Route path='/my-weekly-package' element={<MyWeeklyPackage />} />
+
+            <Route path='/ai-menu' element={
+              <PrivateRoute>
+                <AiMenu />
+              </PrivateRoute>
+            } />
+
+            <Route path='/fruit-selection' element={<FruitSelection />} />
+            <Route path='/today-menu' element={<TodayMenu />} />
+            <Route path='/finish-giftbox' element={<FinishGiftBox />} />
+            <Route path='/letters' element={<Letters />} />
+            <Route path='/gift-preview' element={<GiftPreview />} />
             <Route path="/combo/:type" element={<ViewComboSectionWrapper />} />
-            <Route path="/thong-bao" 
-            element={
+
+            <Route path="/thong-bao" element={
               <PrivateRoute>
                 <UserNotification />
               </PrivateRoute>
             } />
-      <Route
-        path="/profile"
-        element={
-          <PrivateRoute>
-            <Profile />
-          </PrivateRoute>
-        }
-      />
 
-      <Route
-        path="/gio-hang"
-        element={
-          <PrivateRoute>
-            <Cart />
-          </PrivateRoute>
-        }
-      />
+            <Route path="/profile" element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            } />
 
-      <Route
-        path="/thanh-toan"
-        element={
-          <PrivateRoute>
-            <Payment />
-          </PrivateRoute>
-        }
-      />
+            <Route path="/gio-hang" element={
+              <PrivateRoute>
+                <Cart />
+              </PrivateRoute>
+            } />
 
+            <Route path="/thanh-toan" element={
+              <PrivateRoute>
+                <Payment />
+              </PrivateRoute>
+            } />
           </Routes>
-          <Footer/>
+          <Footer />
         </Router>
       </main>
     </>
