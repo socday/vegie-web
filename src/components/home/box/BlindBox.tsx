@@ -10,8 +10,8 @@ export default function BlindBox() {
   const userId = localStorage.getItem("userId");
   // Hardcoded Blind Box data
   const box = {
-    // id: "3317c3fe-ac82-4f8e-b249-78342ef32912",
-    id: "69807b28-0187-4d52-95fe-c6ede9ab412d",
+    id: "ca108cad-a026-4dea-b3d1-62f7fcc51ef9",
+    // id: "69807b28-0187-4d52-95fe-c6ede9ab412d",
     name: "Blind Box",
     description: "Random mystery box with surprise items",
     price: 150000,

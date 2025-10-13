@@ -12,7 +12,7 @@ const tabsData = [
   {
     id: 'tam-nhin',
     title: 'TẦM NHÌN',
-    content: 'Chúng tôi không chỉ là một nền tảng bán rau củ quả. Chúng tôi là người bạn đồng hành, là cánh tay phải giúp bạn có được những bữa ăn xanh, lành và đủ đầy, mà không cần mất quá nhiều thời gian hay suy nghĩ.'
+    content: 'Chúng tôi không chỉ là một nền tảng bán rau củ quả. Chúng tôi là người bạn đồng hành, là cánh tay phải giúp bạn có được những bữa ăn xanh, lành và đủ đầy, mà không cần mất quá nhiều thời gian hay suy nghĩ.',
   },
   {
     id: 'su-menh',

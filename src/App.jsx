@@ -30,6 +30,9 @@ import Letters from './components/3d/Letters'
 import GiftPreview from './components/3d/GiftPreview'
 import TodayMenu from './components/home/TodayMenu'
 import FinishGiftBox from './components/3d/FinishGiftBox'
+import ViewComboSection from './components/home/ViewComboSection'
+import ViewComboSectionWrapper from './components/home/ViewComboSectionWrapper'
+import UserNotification from './components/notifications/UserNotification.tsx'
 
 function App() {
   return (
@@ -51,15 +54,31 @@ function App() {
             <Route path='/retail-package' element={<RetailPackage/>}/>
             <Route path='/weekly-package' element={<WeeklyPackage/>}/>
             <Route path='/blind-box' element={<BlindBox/>}/>
-            <Route path='/box-3d' element={<Box3D/>}/>
+            <Route path='/box-3d' element={
+              <PrivateRoute>
+                <Box3D/>
+              </PrivateRoute>
+              }/>
             <Route path='/profile-test' element={<Profile/>}/>
             <Route path='/my-weekly-package' element = {<MyWeeklyPackage/>}/>
-            <Route path='/ai-menu' element = {<AiMenu/>}/>
+            <Route path='/ai-menu' element = {
+              <PrivateRoute>
+                <AiMenu/>
+              </PrivateRoute>
+            }/>
             <Route path='/fruit-selection' element={<FruitSelection/>}/>
             <Route path='/today-menu' element={<TodayMenu/>}/>
             <Route path='/finish-giftbox' element={<FinishGiftBox />}/>
             <Route path='/letters' element={<Letters/>}/>
             <Route path='/gift-preview' element={<GiftPreview/>}/>
+
+            <Route path="/combo/:type" element={<ViewComboSectionWrapper />} />
+            <Route path="/thong-bao" 
+            element={
+              <PrivateRoute>
+                <UserNotification />
+              </PrivateRoute>
+            } />
       <Route
         path="/profile"
         element={

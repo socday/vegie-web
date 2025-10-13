@@ -30,7 +30,7 @@ export default function ProfileSidebar({ onSelect, activeSection }: SidebarProps
         </button>
       ))}
       <div>
-        <span className="sidebar-btn d-btn-font">Số điển hiện tại: 100
+        <span className="sidebar-btn d-btn-font">Số điểm hiện tại: 100
           
         </span>
       </div>

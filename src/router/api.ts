@@ -2,13 +2,13 @@
 import axios from "axios";
 
 // read base URL from .env
-// const API_URL = "https://exe-be-qu8u.onrender.com/api"; 
-const API_URL = "http://localhost:5071/api"; 
+const API_URL = "https://exe-be-qu8u.onrender.com/api"; 
+// const API_URL = "http://localhost:5071/api"; 
 // or process.env.REACT_APP_API_URL if you're on Create React App
 
 export const api = axios.create({
   baseURL: API_URL,   
-  timeout: 2000,     // optional: 10s timeout
+  timeout: 5000,     // optional: 10s timeout
 });
 
 // Log all requests

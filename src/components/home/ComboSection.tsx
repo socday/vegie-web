@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./styles/ComboSection.css";
+import ViewComboSection from "./ViewComboSection";
 
 export default function ComboSection() {
   const navigate = useNavigate();
@@ -15,8 +16,8 @@ export default function ComboSection() {
         <div className="combo-packages">
           {/* First card */}
           <div
-            className="combo-package-card-1"
-            onClick={() => navigate("/weekly-package")}
+            className="combo-package-card"
+            onClick={() => navigate("/combo/single")}
             style={{ cursor: "pointer" }}
           >
             <div className="package-front">
@@ -37,10 +38,11 @@ export default function ComboSection() {
           </div>
 
           {/* Second card */}
+           
           <div
-            className="combo-package-card"
-            onClick={() => navigate("/monthly-package")}
-            style={{ cursor: "pointer" }}
+          className="combo-package-card"
+          onClick={() => navigate("/combo/week")}
+          style={{ cursor: "pointer" }}
           >
             <div className="package-front">
               <div className="package-title">
