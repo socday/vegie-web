@@ -3,7 +3,7 @@ import ProfileForm from "./profile/ProfileForm";
 import ProfileChangePassword from "./profile/ProfileChangePassword";
 import ProfileSidebar from "./layout/ProfileSidebar";
 import "./styles/Profile.css"
-import Orders from "./order/order";
+import Orders from "./order/Order";
 
 export default function Profile() {
   const [section, setSection] = useState("profile");
