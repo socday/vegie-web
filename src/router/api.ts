@@ -2,7 +2,8 @@
 import axios from "axios";
 
 // read base URL from .env
-const API_URL = "https://exe-be-qu8u.onrender.com/api"; 
+const API_URL = "/api"; // Use proxy in development
+// const API_URL = "https://exe-be-qu8u.onrender.com/api"; 
 // const API_URL = "http://localhost:5071/api"; 
 // or process.env.REACT_APP_API_URL if you're on Create React App
 
@@ -31,12 +32,12 @@ api.interceptors.request.use((config) => {
 // Log all responses
 api.interceptors.response.use(
    (response) => {
-    console.log("Response:", {
-      status: response.status,
-      headers: response.headers,
-      data: response.data,
-    });
-    console.log("DATA LA", response.data);
+    // console.log("Response:", {
+    //   status: response.status,
+    //   headers: response.headers,
+    //   data: response.data,
+    // });
+    // console.log("DATA LA", response.data);
     return response;
   },
   (error) => {
