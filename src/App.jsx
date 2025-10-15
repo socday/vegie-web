@@ -23,6 +23,7 @@ import AdminShell from './components/admin/AdminShell'
 import DashboardPage from './components/admin/pages/DashboardPage'
 import OrdersPage from './components/admin/pages/OrdersPage'
 import RevenuePage from './components/admin/pages/RevenuePage'
+import DiscountsPage from './components/admin/pages/DiscountsPage'
 import Box3D from './components/3d/Box3D'
 import MyWeeklyPackage from './components/home/WeeklyPackage'
 import AiMenu from './components/home/AiMenu'
@@ -123,7 +124,7 @@ function App() {
               <Route path='revenue' element={<RevenuePage />} />
               <Route path='products' element={<div />} />
               <Route path='customers' element={<div />} />
-              <Route path='coupons' element={<div />} />
+              <Route path='coupons' element={<DiscountsPage />} />
               <Route path='blog' element={<div />} />
               <Route path='payments' element={<div />} />
             </Route>

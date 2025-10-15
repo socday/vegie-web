@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 240px 1fr;
   min-height: 100vh;
-  background: #d9edff; /* nhạt như hình mẫu */
+  background: white; /* nhạt như hình mẫu */
 }
 
 .admin-sidebar {

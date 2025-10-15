@@ -1,0 +1,282 @@
+/* ========== LAYOUT CHUNG ========== */
+.discounts-page {
+    display: grid;
+    grid-template-columns: 1fr 460px;
+    gap: 16px;
+    background: #fff;
+    margin-top: 100px;
+  }
+  
+  /* ========== HEADER VÀ BUTTON ========== */
+  .discounts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  
+  .discounts-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #2a6e2a;
+  }
+  
+  .discounts-create {
+    padding: 10px 16px;
+    font-size: 14px;
+    border-radius: 10px;
+    border: 2px solid #2a6e2a;
+    background: #fff;
+    color: #2a6e2a;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .discounts-create:hover {
+    background: #2a6e2a;
+    color: #fff;
+  }
+  
+  /* ========== BẢNG GIẢM GIÁ ========== */
+  .discounts-table {
+    display: grid;
+    grid-template-columns: 1.6fr 2.6fr 0.8fr 1fr 1fr;
+    width: 100%;
+    border: 1px solid #e6e6e6;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  
+  /* Header và các dòng dùng cùng grid */
+  .discounts-table .header.discount-row,
+  .discounts-table .discount-row {
+    display: contents; /* CHÌA KHÓA: chia chung grid cha */
+  }
+  
+  /* Các ô trong header và body */
+  .discounts-table > .header.discount-row > div,
+  .discounts-table > .discount-row > div {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e6e6e6;
+    background: #fff;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  
+  /* Header nổi bật */
+  .discounts-table > .header.discount-row > div {
+    font-weight: 700;
+    background: #f4f4f4;
+    border-bottom: 2px solid #dcdcdc;
+  }
+  
+  /* Hover và Active */
+  .discounts-table > .discount-row:hover > div {
+    background: #f2faff;
+    transition: background 0.2s ease;
+  }
+  
+  .discounts-table > .discount-row.active > div {
+    background: #d0e9fe;
+    border-bottom: 1px solid #b6d8f7;
+  }
+  
+  /* ========== PHÂN TRANG ========== */
+  .discounts-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  
+  .discounts-pagination button {
+    border: 1px solid #7cc043;
+    background: #fff;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .discounts-pagination button:hover {
+    background: #7cc043;
+    color: #fff;
+  }
+  
+  /* ========== EDITOR BÊN PHẢI ========== */
+  .discounts-editor {
+    align-self: start;
+    background: #d0e9fe;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04) inset;
+  }
+  
+  .discounts-editor-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  
+  .discounts-editor-title {
+    font-weight: 700;
+    color: #2a6e2a;
+  }
+  
+  /* ========== FORM & TRƯỜNG NHẬP ========== */
+  .discounts-section-title {
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #2a6e2a;
+  }
+  
+  .discounts-form-grid {
+    display: grid;
+    gap: 8px;
+  }
+  
+  .discounts-fields-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 24px;
+  }
+  
+  .discounts-field {
+    display: grid;
+    gap: 6px;
+  }
+  
+  .discounts-label {
+    font-weight: 600;
+    color: #2f6f2a;
+  }
+  
+  .discounts-inline-grid {
+    display: grid;
+    grid-template-columns: 1fr 120px;
+    gap: 8px;
+  }
+  
+  /* Divider */
+  .discounts-divider {
+    height: 0;
+    border-top: 1px solid #b9ddf6;
+    margin: 12px 0;
+  }
+  
+  /* Ngày tháng */
+  .discounts-dates-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 24px;
+  }
+  
+  /* Nút và hành động */
+  .discounts-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  
+  .discounts-editor-header .btn.primary {
+    padding: 6px 14px;
+    border: 2px solid #2a6e2a;
+    border-radius: 10px;
+    background: #fff;
+    color: #2a6e2a;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .discounts-editor-header .btn.primary:hover {
+    background: #2a6e2a;
+    color: #fff;
+  }
+  
+  /* Checkbox tròn */
+  .discounts-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .discounts-check input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    max-width: 20px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #7cc043;
+    border-radius: 999px;
+    display: inline-block;
+    position: relative;
+    background: #d0e9fe;
+  }
+  
+  .discounts-check input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background: #7cc043;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .discounts-check span {
+    color: #2a6e2a;
+  }
+  
+  /* Input & Select */
+  .discounts-editor input,
+  .discounts-editor select {
+    border: 1.5px solid #7cc043;
+    border-radius: 12px;
+    padding: 6px 10px;
+    background: #fff;
+    height: 36px;
+    font-size: 14px;
+  }
+  
+  .discounts-editor select {
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, #2a6e2a 50%), linear-gradient(135deg, #2a6e2a 50%, transparent 50%);
+    background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 28px;
+  }
+  
+  .discounts-editor select::-ms-expand {
+    display: none;
+  }
+  
+  .discounts-inline-grid select,
+  .discounts-inline-grid input[type="number"] {
+    text-align: left;
+  }
+  
+  /* Section */
+  .discounts-section {
+    background: transparent;
+    border-radius: 12px;
+    padding: 8px 4px;
+  }
+  
+  /* ========== ẨN ========== */
+  .hidden {
+    display: none;
+  }
+  

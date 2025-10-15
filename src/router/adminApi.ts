@@ -85,3 +85,63 @@ export async function getStatistics(startDate: string, endDate: string): Promise
 }
 
 
+// Discounts (Coupons)
+export interface DiscountDTO {
+  id?: string;
+  code: string;
+  description: string;
+  discountValue: number;
+  isPercentage: boolean;
+  startDate: string; // ISO string
+  endDate: string;   // ISO string
+  isActive?: boolean;
+}
+
+export async function getDiscounts(): Promise<DiscountDTO[]> {
+  const token = localStorage.getItem("accessToken");
+  const res = await api.get("/Discounts", {
+    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+  });
+  if (res.data?.isSuccess) return res.data.data as DiscountDTO[];
+  return [];
+}
+
+export async function getDiscount(id: string): Promise<DiscountDTO | null> {
+  const token = localStorage.getItem("accessToken");
+  const res = await api.get(`/Discounts/${id}`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+  });
+  if (res.data?.isSuccess) return res.data.data as DiscountDTO;
+  return null;
+}
+
+export async function createDiscount(payload: DiscountDTO): Promise<boolean> {
+  const token = localStorage.getItem("accessToken");
+  const res = await api.post("/Discounts", payload, {
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  });
+  return !!res.data?.isSuccess;
+}
+
+export async function updateDiscount(id: string, payload: DiscountDTO): Promise<boolean> {
+  const token = localStorage.getItem("accessToken");
+  const res = await api.put(`/Discounts/${id}`, payload, {
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  });
+  return !!res.data?.isSuccess;
+}
+
+export async function deleteDiscount(id: string): Promise<boolean> {
+  const token = localStorage.getItem("accessToken");
+  const res = await api.delete(`/Discounts/${id}`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+  });
+  return !!res.data?.isSuccess;
+}
+
