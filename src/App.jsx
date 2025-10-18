@@ -73,13 +73,15 @@ function App() {
 
             <Route path='/profile-test' element={<Profile />} />
             <Route path='/my-weekly-package' element={<MyWeeklyPackage />} />
-
             <Route path='/ai-menu' element={
               <PrivateRoute>
                 <AiMenu />
               </PrivateRoute>
             } />
 
+            <Route path='/ai-menu-test' element={
+                <AiMenu />
+            } />
             <Route path='/fruit-selection' element={<FruitSelection />} />
             <Route path='/today-menu' element={<TodayMenu />} />
             <Route path='/finish-giftbox' element={<FinishGiftBox />} />

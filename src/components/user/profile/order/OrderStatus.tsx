@@ -1,43 +1,19 @@
 import { useEffect, useState } from "react";
 import OrderList from "./OrderList";
 import "../styles/Order.css";
-import { getOrder } from "../../../../router/orderApi";
-import { transformApiOrders } from "../../../../mappers/OrderMapper";
+import { Order } from "./Order";
 
-export type Order = {
-  id: string;  // UUID from API
-  name: string;
-  date: string;
-  qty: number;
-  price: number;
-  status: "cho_xac_nhan" | "dang_giao" | "da_giao" | "da_huy";
+
+type Props = {
+  orders: Order[];
+  onCancel: (id: string) => void;
 };
 
-export default function OrderStatus() {
-  const [orders, setOrders] = useState<Order[]>([]);
+export default function OrderStatus({ orders, onCancel }: Props) {
   const [filter, setFilter] = useState<"all" | Order["status"]>("all");
 
-  useEffect(() => {
-    async function fetchOrders() {
-      try {
-        const res = await getOrder();
-        if (res.isSuccess) {
-          setOrders(transformApiOrders(res.data));
-        }
-      } catch (err) {
-        console.error("Failed to fetch orders", err);
-      }
-    }
-    fetchOrders();
-  }, []);
 
-  const handleCancelOrder = (id: string) => {
-    setOrders(prev =>
-      prev.map(order =>
-        order.id === id ? { ...order, status: "da_huy" } : order
-      )
-    );
-  };
+
 
   const filteredOrders =
     filter === "all" ? orders : orders.filter(order => order.status === filter);
@@ -77,7 +53,7 @@ export default function OrderStatus() {
         </button>
       </div>
 
-      <OrderList orders={filteredOrders} onCancel={handleCancelOrder} />
+      <OrderList orders={filteredOrders} onCancel={onCancel} />
     </div>
   );
 }

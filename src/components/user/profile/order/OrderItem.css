@@ -51,6 +51,7 @@
   font-weight: bold;
   color: #27600b;
   margin-bottom: 0.5rem;
+  background-color: transparent;
 }
 
 .order-actions {
@@ -113,4 +114,8 @@
   display: flex;
   justify-content: center;
   gap: 1rem;
+}
+
+.order-review {
+  border-top: none;
 }

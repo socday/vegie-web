@@ -85,3 +85,7 @@ export async function checkAuth() {
   }
 }
 
+  export async function forgotPassword(email: string): Promise<any> {
+    
+  }
+

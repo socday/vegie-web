@@ -1,0 +1,67 @@
+.profile-subscription {
+    width: 90%;
+    height: 375px;
+    background-color: white;
+    margin: 30px 0 30px 0;
+    border-radius: 41px;
+    display:flex;
+    flex-direction: row;
+}
+
+.profile-subscription-left {
+    width:40%;
+    padding: 20px;
+}
+
+.profile-subscription-left input {
+    margin-top: 1rem;
+    width:300px;
+    background-color: #27600B;
+    border:none;
+    color: white;
+    font-size: 0.875rem;
+}
+
+.profile-subscription-left input::placeholder {
+    color: white;
+    opacity: 1;
+}
+
+.profile-subscription-right {
+    width:60%;
+}
+
+.profile-subscription-right .form-fields {
+    gap: 0.75rem;
+    margin:0;
+    padding:0;
+    margin-top: 2.5rem;
+    width: 100%;
+}
+
+
+.profile-subscription-right .form-fields input{
+    width:80%;
+    padding: 1rem;
+    margin-left: auto;
+    margin-right: 1.5rem;
+}
+
+.ps-image {
+    width: 300px;
+    height: 255px;
+    background-color: #27600B;
+    border-radius: 41px;
+}
+
+.orders .profile-form-actions {
+    margin:0;    
+    gap: 1rem;
+    margin-left: auto;
+    margin-right: 1rem;
+    margin-bottom: 3rem;
+}
+
+.orders .profile-form-actions button{
+    border:none;
+}

@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { Order } from "./OrderStatus";
 import "../styles/Order.css";
 import "./OrderItem.css";
+import { Order } from "./Order";
 
 type Props = {
     order: Order;
-    onCancel: (id: string) => void; 
+    onCancel?: (id: string) => void; 
+    review?: boolean;
 };
 
-export default function OrderItem({ order, onCancel }: Props) {
+export default function OrderItem({ order, onCancel, review }: Props) {
   const [showPopup, setShowPopup] = useState(false);
 
   const statusLabel: Record<Order["status"], string> = {
@@ -23,6 +24,10 @@ export default function OrderItem({ order, onCancel }: Props) {
   };
 
   const handleConfirmCancel = () => {
+    if (!onCancel) {
+      console.warn("onCancel function is not provided");
+      return;
+    }
     onCancel(order.id);
     setShowPopup(false);
   };
@@ -31,9 +36,13 @@ export default function OrderItem({ order, onCancel }: Props) {
     setShowPopup(false);
   };
 
+  const handleReviewClick = () => {
+    alert(`Chức năng đánh giá cho đơn hàng "${order.name}" chưa được triển khai.`);
+  }
+  
   return (
     <>
-      <div className="order-item">
+      <div className={`order-item ${review ? 'order-review' : ''}`}>
         <div className="order-left">
           <div className="product-image"></div>
           <div className="product-info">
@@ -44,9 +53,18 @@ export default function OrderItem({ order, onCancel }: Props) {
         </div>
 
         <div className="order-right">
-          <div className="order-price">
+          {review ? (
+            <>
+            <button className="order-price fancy-btn" onClick={handleReviewClick}>
+              <span>Đánh giá</span>
+            </button>
+            </>
+          )
+          :(
+            <div className="order-price">
             <span>Giá tiền: {order.price.toLocaleString()} đ</span>
-          </div>
+            </div>
+          )}
           <div className="order-actions">
             {order.status === "cho_xac_nhan" ? (
               <>

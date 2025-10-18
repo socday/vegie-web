@@ -1,0 +1,29 @@
+.profile-personal-health-form {
+    width:80%;
+}
+
+.profile-personal-health-form h2{
+    margin-top: 3rem;
+    font-size: 2rem;
+    font-weight: 600;
+}
+.profile-personal-health-form .form-fields {
+    gap: 0.75rem;
+    margin:0;
+    padding:0;
+    width: 100%;
+}
+ 
+.profile-personal-health-form .form-fields input{
+    height: 35px;
+}
+
+.profile-personal-health-form .profile-form-actions{
+    width:fit-content;
+    margin-left: auto;
+    margin-bottom: 3rem;
+    margin-top: 4rem;
+    gap:2rem;
+    margin-right: 0;
+    padding-right: 0;
+}

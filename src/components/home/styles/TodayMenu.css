@@ -1,0 +1,29 @@
+.today-menu-page {
+    width:100%;
+    min-height: 100vh;
+}
+
+.today-menu-container {
+    margin-left: auto;
+    width: 60%;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4rem;
+}
+
+.today-menu-word span {
+    font-size: 1.2rem;
+    color: #27600B;
+    margin-bottom: 1rem;
+}
+
+.today-menu-word {
+    width:fit-content;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+}
+
+.today-menu-word h2 {
+    
+}

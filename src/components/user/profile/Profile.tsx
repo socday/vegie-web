@@ -4,6 +4,9 @@ import ProfileChangePassword from "./profile/ProfileChangePassword";
 import ProfileSidebar from "./layout/ProfileSidebar";
 import "./styles/Profile.css"
 import Orders from "./order/Order";
+import ReviewOrderForm from "./order/ReviewOrderForm";
+import Subscription from "./subscription/Subscription";
+import PersonalHealth from "./personal-health/PersonalHealth";
 
 export default function Profile() {
   const [section, setSection] = useState("profile");
@@ -23,11 +26,17 @@ export default function Profile() {
         {section === "orders" && (
           <Orders/>
         )}
-        {section === "services" && <div>Đây là Gói dịch vụ</div>}
+        {section === "services" && (
+          <Subscription/>
+        )}
         {section === "groups" && <div>Đây là Đơn nhóm</div>}
-        {section === "health" && <div>Đây là Phiếu sức khỏe</div>}
+        {section === "health" && 
+          <PersonalHealth/>}
         {section === "change-password" && (
           <ProfileChangePassword onCancel={() => setSection("profile")} />
+        )}
+        {section === "review-order-form" && (
+          <ReviewOrderForm />
         )}
       </div>
     </div>

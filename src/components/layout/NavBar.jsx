@@ -43,15 +43,10 @@ const NavBar = () => {
                         {/* 5. Dropdown icons */}
                         <ul className={`nav-icons ${isOpen ? "open" : ""}`}>
                             <li>
-                            {isLoggedIn ? (
                                 <NavLink to="/profile" title="Hồ sơ">
                                 <FiUser />
                                 </NavLink>
-                            ) : (
-                                <NavLink to="/dang-nhap" title="Đăng nhập">
-                                <FiUser />
-                                </NavLink>
-                            )}
+
                             </li>
                                 <li><NavLink to="/gio-hang"><FiShoppingCart /></NavLink></li>
                             <li><NavLink to="/thong-bao"><FiBell /></NavLink></li>
