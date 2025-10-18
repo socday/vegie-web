@@ -41,15 +41,51 @@ export async function checkAuth() {
   }
 
   try {
-    // Try with current token
+    // Try with current token first
     const response = await api.get("/Auth/current-user", {
       headers: { Authorization: `Bearer ${token}` },
     });
-    if (!response.data.isSuccess){
+    
+    if (response.data.isSuccess) {
+      // Token is still valid, return success
+      return {
+        isAuthenticated: true,
+        user: response.data,
+        token,
+      };
+    } else {
+      // Token is invalid, try to refresh
+      if (refreshToken) {
+        try {
+          console.log("DANG REFRESH TOKEN");
+          const refreshRes = await api.post(
+            "/Auth/refresh-token",
+            { refreshToken }, 
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+
+          if (refreshRes.data?.isSuccess) {
+            const newToken = refreshRes.data.data.accessToken;
+            localStorage.setItem("accessToken", newToken);
+            console.log("REFRESH SUCCESS");
+            return {
+              isAuthenticated: true,
+              user: refreshRes.data,
+              token: newToken,
+            };
+          }
+        } catch (refreshError) {
+          console.error("Token refresh failed:", refreshError);
+        }
+      }
+      
+      // Both current token and refresh failed
       localStorage.removeItem("accessToken");
-      console.log(response);
+      localStorage.removeItem("refreshToken");
       return { isAuthenticated: false, user: null, token: null };
     }
+  } catch (error: any) {
+    // Network error or token expired, try refresh
     if (refreshToken) {
       try {
         console.log("DANG REFRESH TOKEN");
@@ -64,7 +100,7 @@ export async function checkAuth() {
           localStorage.setItem("accessToken", newToken);
           console.log("REFRESH SUCCESS");
           return {
-            isAuthenticated: refreshRes.status === 200,
+            isAuthenticated: true,
             user: refreshRes.data,
             token: newToken,
           };
@@ -73,13 +109,9 @@ export async function checkAuth() {
         console.error("Token refresh failed:", refreshError);
       }
     }
-    return {
-      isAuthenticated: response.status === 200,
-      user: response.data,
-      token,
-    };
-  } catch (error: any) {
+    
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
     console.error("Auth check failed:", error);
     return { isAuthenticated: false, user: null, token: null };
   }

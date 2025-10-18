@@ -7,5 +7,13 @@ export default defineConfig({
   base: '/',
   server: {
     open: '/vegie-care', // auto open this path
+    proxy: {
+      '/api': {
+        target: 'https://exe-be-qu8u.onrender.com',
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/api/, '/api')
+      }
+    }
   },
 });

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
@@ -19,6 +19,11 @@ import ScrollToTop from "./components/notifications/ScrollToTop"
 import Payment from './components/user/order/payment/Payment'
 import Profile from './components/user/profile/Profile'
 import PrivateRoute from './router/PrivateRoute'
+import AdminShell from './components/admin/AdminShell'
+import DashboardPage from './components/admin/pages/DashboardPage'
+import OrdersPage from './components/admin/pages/OrdersPage'
+import RevenuePage from './components/admin/pages/RevenuePage'
+import DiscountsPage from './components/admin/pages/DiscountsPage'
 import Box3D from './components/3d/Box3D'
 import MyWeeklyPackage from './components/home/WeeklyPackage'
 import AiMenu from './components/home/AiMenu'
@@ -31,25 +36,27 @@ import ViewComboSectionWrapper from './components/home/ViewComboSectionWrapper'
 import UserNotification from './components/notifications/UserNotification.tsx'
 
 function App() {
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const threshold = 160
-      if (
-        window.outerWidth - window.innerWidth > threshold ||
-        window.outerHeight - window.innerHeight > threshold
-      ) {
-        alert("DevTools detected. Action not allowed.")
-      }
-    }, 1000)
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     const threshold = 160
+  //     if (
+  //       window.outerWidth - window.innerWidth > threshold ||
+  //       window.outerHeight - window.innerHeight > threshold
+  //     ) {
+  //       alert("DevTools detected. Action not allowed.")
+  //     }
+  //   }, 1000)
 
-    return () => clearInterval(interval)
-  }, [])
+  //   return () => clearInterval(interval)
+  // }, [])
+
+  const isAdminRoute = typeof window !== 'undefined' && window.location.pathname.startsWith('/admin')
 
   return (
     <>
       <main>
         <Router>
-          <NavBar />
+          {isAdminRoute ? null : <NavBar />}
           <ScrollToTop />
           <Routes>
             <Route path='/' element={<Home />} />
@@ -112,8 +119,19 @@ function App() {
                 <Payment />
               </PrivateRoute>
             } />
+
+            <Route path='/admin' element={<AdminShell />} >
+              <Route index element={<DashboardPage />} />
+              <Route path='orders' element={<OrdersPage />} />
+              <Route path='revenue' element={<RevenuePage />} />
+              <Route path='products' element={<div />} />
+              <Route path='customers' element={<div />} />
+              <Route path='coupons' element={<DiscountsPage />} />
+              <Route path='blog' element={<div />} />
+              <Route path='payments' element={<div />} />
+            </Route>
           </Routes>
-          <Footer />
+          {isAdminRoute ? null : <Footer />}
         </Router>
       </main>
     </>
