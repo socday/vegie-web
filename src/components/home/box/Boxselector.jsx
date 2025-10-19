@@ -35,7 +35,7 @@ export default function BoxSelector() {
             color: "#27600B",
           }}
         >
-          Được cung cấp thực đơn AI kèm Chat với bé cừu AI dinh dưỡng về các thông tin thực phẩm rau củ quả
+          Được cung cấp thực đơn AI <br/>Chat với bé cừu AI dinh dưỡng về các thông tin thực phẩm rau củ quả
         </span>
       </button>
       <button className="giftbox-btn" onClick={handleGiftBoxClick}>
@@ -49,7 +49,7 @@ export default function BoxSelector() {
         className="middle-text"
           style={{  color: "white" }}
         >
-          Trọn Vị Ăn
+          Trọn Vị An
         </span>
         <span className="small-text"
           style={{ color: "white",}}

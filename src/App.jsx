@@ -34,6 +34,7 @@ import TodayMenu from './components/home/TodayMenu'
 import FinishGiftBox from './components/3d/FinishGiftBox'
 import ViewComboSectionWrapper from './components/home/ViewComboSectionWrapper'
 import UserNotification from './components/notifications/UserNotification.tsx'
+import FooterMobile from './components/layout/FooterMobile.tsx'
 
 function App() {
   // useEffect(() => {
@@ -132,6 +133,7 @@ function App() {
             </Route>
           </Routes>
           {isAdminRoute ? null : <Footer />}
+          <FooterMobile />
         </Router>
       </main>
     </>

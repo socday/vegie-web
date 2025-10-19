@@ -2,7 +2,6 @@
     display:flex;
     width: 100%;
     min-height: 100vh;
-   
     justify-content: center;
 }
 
@@ -89,4 +88,40 @@ text-decoration: none;;
 .circle-btn:hover span{
   color:   white;
   text-decoration: none;
+}
+
+@media screen and (max-width: 768px) {
+  .ai-menu-container {
+    width: 90%;
+    height: 160px;
+    margin-top: 5vh;
+    margin-bottom: 10vh;
+    border-radius: 13px;
+  }
+
+  .ai-menu-word h2{
+    margin-top: 2rem;
+    font-size: 6rem;
+    line-height: 0.8;
+  }
+
+  .ai-menu-background {
+    width: 100%;
+    top: 5%;
+    height: 40%;
+  }
+
+  .ai-menu-word a{
+    width: 50px;
+    height: 50px;
+    border: 2px solid #91CF43;
+  }
+
+  .ai-menu-word a span{
+    font-size: 2rem;
+  }
+
+  .ai-menu-word span{
+    font-size: 1rem;
+  }
 }

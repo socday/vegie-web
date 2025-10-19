@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import mascotImage from '../../assets/mascot.png';
+import mascotImage from '../../assets/mascot1.png';
 import brandLogo from '../../assets/logo-brand.png';
 import { useNavigate } from 'react-router-dom';
 import './styles/Home.css';
@@ -32,8 +32,8 @@ const tabsData = [
   }
 ];
 const boxesData = [
-  { id: 1, number: '01', title: 'Blind Box', description: 'Mô tả sản phẩm' },
-  { id: 2, number: '02', title: 'Gift Box', description: 'Mô tả sản phẩm' },
+  { id: 1, number: '01', title: 'Món Tròn Ngẫu Nhiên', description: 'Bất ngờ lành mạnh đang chờ bạn khám phá mỗi tuần!' },
+  { id: 2, number: '02', title: 'Trọn Vị An', description: 'Rau củ tùy duyên - Ưu phiền tan biến' },
 ];
 
 export default function Home() {
@@ -61,7 +61,7 @@ export default function Home() {
             <img
             src={mascotImage}
             alt="Linh vật Veggie Care"
-            className="mascot-image"
+            className="mascot-home-image"
             />
         </section>
       
@@ -117,7 +117,7 @@ export default function Home() {
             {/* Lưới chứa các card */}
             <div className="box-grid">
               {boxesData.map((box) => (
-              <div key={box.id} className="product-box-card">
+              <div key={box.id} className={`product-box-card ${box.id === 1 ? "product-box1" : ""}`}>
                 <div className="box-number">{box.number}</div>
                 {/* Overlay image (hidden until hover) */}
                 <img src="/images/overlay-icon.png" alt="" className="box-overlay-img" />

@@ -12,18 +12,31 @@ export default function PrivateRoute({ children }: Props) {
   const location = useLocation();
 
   useEffect(() => {
-    checkAuth().then((result) => {
-      setAuthenticated(result.isAuthenticated);
-      setLoading(false);
-    });
+    const verifyAuth = async () => {
+      try {
+        const result = await checkAuth();
+        setAuthenticated(result.isAuthenticated);
+        if (!result.isAuthenticated) {
+          alert("Vui lòng đăng nhập để tiếp tục!");
+        }
+      } catch (err) {
+        console.error("Auth check failed:", err);
+        setAuthenticated(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    verifyAuth();
   }, []);
 
   if (loading) {
-    // 🚨 instead of showing "nothing", keep user on the previous page
-    return null;
+    return <div>Đang kiểm tra đăng nhập...</div>;
   }
 
-  return authenticated
-    ? children
-    : <Navigate to="/dang-nhap" replace state={{ from: location }} />;
+  return authenticated ? (
+    children
+  ) : (
+    <Navigate to="/dang-nhap" replace state={{ from: location }} />
+  );
 }

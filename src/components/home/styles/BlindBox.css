@@ -268,4 +268,112 @@
     width: 120px;
     height: 40px;
   }
+
+  .blindbox-container .title {
+    display:none;
+  }
+
+  .blindbox-container {
+    background-color: transparent;
+    background-image: none;
+    width:100%;
+    background-color: aliceblue;
+    margin:0; 
+    padding:0;
+    padding-left: 0;
+    justify-content: start;
+
+    border-radius: 0;
+  }
+
+  .button-container {
+    width: 100%;
+    margin:0;
+    padding:0;
+    height: fit-content;
+    background-color: aquamarine;
+    overflow: visible;
+    gap:0;
+  }
+  .blindbox-container span {
+    color:#27600B;
+  }
+
+  .blindbox-container .left-section {
+    align-items: left;
+    display:flex;
+    width: 100%;
+    text-align: left;
+    overflow: visible;
+    padding:0;
+  }
+
+
+  .blindbox-container .right-section {
+    width: 100%;
+    flex-direction: row;
+    height: fit-content;
+  }
+
+  .blindbox-container .right-section a,
+  .blindbox-container .right-section button{
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    height: fit-content;
+    flex:none;
+    width: fit-content;
+  }
+  .blindbox-container .right-section a span,
+  .blindbox-container .right-section button span{
+    font-size: 0.8rem;
+  }
+
+.blindbox-container {
+  position: relative;
+  padding: 2rem;
+  overflow: hidden; /* ensures ::after background doesn't leak out */
+}
+
+.blindbox-container::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 75%;
+  transform: translateX(-50%);
+  width: 23.3rem;
+  height: 20.3rem;
+  background: url('../../../assets/images/blind-box-object.png') center/contain no-repeat;
+  z-index: 0; /* put it behind */
+}
+
+.controls {
+  padding:0;
+  margin:0
+}
+  .description {
+    margin:0;
+  }
+  .description span {
+    font-size: 0.7rem;
+  }
+
+  .quantity-control {
+    height: 30px;
+  }
+
+  .quantity-control button {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+  
+  .price-btn {
+    width: 100px;
+    height: 30px;
+    font-size: 1rem;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
 }

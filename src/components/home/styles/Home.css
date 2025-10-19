@@ -10,6 +10,7 @@
     width: 100%;
     align-items: center;
 }
+
 .mascot-section {
     display: flex;
     justify-content: center;
@@ -18,7 +19,7 @@
     padding-bottom: 5rem;
 }
 
-.mascot-image {
+.mascot-home-image {
     max-width: 100%;
     max-height: 450px;
     height: auto;
@@ -68,7 +69,7 @@
     background-color: var(--primary-green, #91CF43);
     color: #368A0D;
     border-radius: 50px;
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: 650;
     cursor: pointer;
     text-align: center;
@@ -419,4 +420,64 @@
 .product-box-card:hover .box-overlay-img {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1);
+}
+
+@media screen and (max-width: 787px) {
+    .intro-brand {
+        display:none;
+    }
+
+    .intro-actions {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .action-button {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .action-button {
+        width: 250px;
+    }
+
+    .ai-menu-section {
+        display:none;
+    }
+
+    .divider {
+        display: none;
+    }
+
+    .box-grid {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .product-box-card {
+        width:300px;
+        height: 325px;
+        padding: 3rem;
+    }
+
+    .product-box-card .box-number {
+        font-size: 7rem;
+    }
+
+    .product-box-card .box-title {
+        font-size: 1.75rem;
+    }
+    
+    .product-box1 .box-description{
+        width:70%;
+    }
+
+    .box-description {
+        font-size: 1.1rem;
+    }
+
 }

@@ -13,6 +13,7 @@
   height: 5.125rem;
   position: sticky;
   top: 0;
+  left: 0;
   z-index: 1000;
   background-color: #FFFFFF;
    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
@@ -230,8 +231,19 @@
   }
 }
 
+@media (max-width: 600px) {
+  .nav-links {
+    margin-right: 3rem;
+  }
 
-/* Active state for both nav-links and nav-icons */
+  .nav-actions {
+  }
+  .navbar-logo {
+    display: none;
+  }
+  
 
-
-/* Expand search-form on hover or when focused */
+  .search-form {
+      height: 60%;
+  }
+}

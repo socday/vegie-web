@@ -9,9 +9,14 @@ import logo from '../../assets/logo.png'; // **Đảm bảo đường dẫn này
 
 // Import file CSS (chúng ta sẽ tạo ở bước tiếp theo)
 import '../../css/Footer.css';
+import { useMediaQuery } from "react-responsive";
 
 export default function Footer() {
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const isDesktop = useMediaQuery({ minWidth: 769 });
   return (
+      <>
+    {isDesktop &&
     <footer className="site-footer">
       {/* Phần chính màu xanh nhạt */}
       <div className="footer-main">
@@ -50,5 +55,8 @@ export default function Footer() {
         <p>VEGIE CARE</p>
       </div>
     </footer>
+    }
+    {isMobile && <footer className="site-footer">ád</footer>}
+    </>
   );
 }

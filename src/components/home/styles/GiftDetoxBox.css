@@ -65,3 +65,29 @@
 .inner-button:hover {
   background-color: #b8d9f9;
 }
+
+@media screen and (max-width:600px) {
+  .detox-btn, .giftbox-btn {
+    width: 400px;
+    height: 150px;
+    background-size: contain; /* Đảm bảo ảnh vừa với button */
+    border-radius: 18px;
+  }
+  .large-text {
+    margin:0;
+    padding:0;
+    margin-top: 2rem;
+    font-size: 68px;
+    line-height: 0.5;
+
+  }
+  .middle-text {
+    font-size: 14px;
+    margin:0;
+
+  }
+  
+  .small-text{
+    font-size: 9.5px;
+  }
+}

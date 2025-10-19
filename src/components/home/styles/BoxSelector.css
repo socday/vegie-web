@@ -49,3 +49,31 @@
   box-sizing: border-box;
 }
 
+@media screen and (max-width: 600px) {
+  .button-container {
+    min-height: 70vh;
+  }
+  .blindbox-btn {
+    width: 400px;
+    height: 150px;
+    border-radius: 18px;
+    background-size: contain; /* Đảm bảo ảnh vừa với button */
+  }
+  .large-text {
+    font-size: 80px;
+    margin-top: -20px;
+  }
+  .middle-text {
+    font-size: 20px;
+  }
+  .small-text{
+    font-size: 14px;
+  }
+
+  .giftbox-btn {
+    width: 400px;
+    height: 150px;
+    background-size: contain; /* Đảm bảo ảnh vừa với button */
+  }
+  
+}

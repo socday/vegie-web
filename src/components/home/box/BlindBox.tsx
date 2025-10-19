@@ -38,6 +38,8 @@ export default function BlindBox() {
       console.error("Failed to update quantity:", err);
     }
     };
+  
+  
   return (
     <div className="button-container">
       <div className="blindbox-container">
@@ -52,7 +54,11 @@ export default function BlindBox() {
           </div>
 
           <div className="description">
-            <div className="description"> <span className="description-line">Combo của từ 5 - 6 loại rau củ quả</span> <span className="description-line">Phù hợp với khẩu phần ăn ít người từ 3 người trở lại</span> <span className="description-line">Đảm bảo cây đủ dinh dưỡng</span> <span className="description-line">Rau hàng tận vườn, từ nhà vườn</span> </div>
+            <div className="description"> 
+              <span className="description-line">Combo của từ 5 - 6 loại rau củ quả</span>
+             <span className="description-line">Phù hợp với khẩu phần ăn ít người từ 3 người trở lại</span> 
+             <span className="description-line">Đảm bảo cây đủ dinh dưỡng</span> 
+             <span className="description-line">Rau hàng tận vườn, từ nhà vườn</span> </div>
           </div>
 
           <div className="controls">
@@ -66,7 +72,9 @@ export default function BlindBox() {
               </button>
             </div>
             <button className="price-btn">
-              {(box.price * quantity).toLocaleString()} ₫
+              <span>
+                {(box.price * quantity).toLocaleString()} ₫
+                </span>
             </button>
           </div>
         </div>
