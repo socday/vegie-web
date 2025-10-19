@@ -244,6 +244,15 @@
   
 
   .search-form {
-      height: 60%;
+    height: 60%;
+    width: 65%;
+    padding: 0.25rem;
+  }
+  .search-form .search-input{
+    padding:0.5rem;
+    margin-left:0.5rem;
+  }
+  .search-form .search-input::placeholder{
+    font-size: 1rem;
   }
 }
