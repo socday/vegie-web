@@ -4,6 +4,7 @@ import "../../css/Register.css";
 import "../../index.css";
 import LoginRegisterForm from "./LoginRegisterForm";
 import { registerUser } from "../../router/authApi";
+import { useMediaQuery } from "react-responsive";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -83,8 +84,11 @@ const Register = () => {
     }
   };
 
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const isDesktop = useMediaQuery({ minWidth: 768 });
   return (
     <div className="register-page">
+      {isMobile && <h1 className="head1">Vegie</h1>}
       <div className="register-left-section">
         <div className="register-left-card">
           <h2 className="head2">Đăng ký</h2>
@@ -174,15 +178,20 @@ const Register = () => {
 
             {error && <p className="error">{error}</p>}
             {success && <p className="success">Đăng ký thành công!</p>}
-
+            <div className="form-actions">
             <button type="submit" className="d-btn d-btn-font" disabled={loading}>
               <span>{loading ? "Đang xử lý..." : "Tiếp tục"}</span>
             </button>
+            
+              <Link to="/dang-nhap" className="d-btn d-btn-font lr-link-btn">
+                <span>Đăng nhập</span>
+              </Link>
+            </div>
           </form>
         </div>
       </div>
 
-      <LoginRegisterForm mode="register" />
+      {isDesktop && <LoginRegisterForm mode="register" />}
     </div>
   );
 };

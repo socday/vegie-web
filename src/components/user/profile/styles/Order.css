@@ -193,3 +193,7 @@
     margin-bottom: 3rem;
     background-color: #91CF43;
 }
+
+@media screen and (max-width: 768px) {
+
+}

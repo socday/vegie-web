@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom"; // ✅ add useNavigate
 import "../../css/Login.css";
 import LoginRegisterForm from "./LoginRegisterForm.tsx";
 import { loginUser } from "../../router/authApi.ts";
+import { useMediaQuery } from 'react-responsive';
+
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -50,10 +52,13 @@ const Login = () => {
       setLoading(false);
     }
   };
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const isDesktop = useMediaQuery({ minWidth: 768 });
 
   return (
     <div className="login-page">
-      <LoginRegisterForm mode="login" />
+      {isDesktop && <LoginRegisterForm mode="login" />}
+      {isMobile && <h1 className="head1">Vegie</h1>}
       <div className="login-right-section">
         <div className="login-right-card">
           <div className="login-header">
@@ -89,6 +94,10 @@ const Login = () => {
               <button type="submit" className="d-btn-font d-btn" disabled={loading}>
                 {loading ?<span>Đang đăng nhập... </span> : <span>Đăng nhập</span>}
               </button>
+
+               <Link to="/dang-ky" className="d-btn d-btn-font lr-link-btn">
+                 <span>Đăng ký</span>
+               </Link>
               <Link to="/khoi-phuc-mat-khau" className="d-btn-font d-btn">
                 <span>Quên mật khẩu</span>
               </Link>

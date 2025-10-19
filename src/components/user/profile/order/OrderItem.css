@@ -119,3 +119,50 @@
 .order-review {
   border-top: none;
 }
+
+@media screen  and (max-width: 768px) {
+  .order-item {
+  }
+  p,
+  span {
+    font-size: 0.75rem;
+  }
+  .order-left, .order-right {
+  }
+
+  .order-right {
+    align-items: flex-start;
+    margin-top: 1rem;
+  }
+
+  .order-actions {
+    justify-content: flex-start;
+  }
+
+  .product-image {
+    margin: 1rem 0 1rem 1rem;
+    width:35px;
+    height:35px;
+  }
+  
+  .order-left {
+    width:50%;
+  }
+
+  
+  .order-right {
+    width:50%;
+    padding-right: 0.5rem;
+  }
+  .order-right button {
+    padding: 0.25rem 0.5rem;
+  }
+
+  .order-left h3 {
+    margin:0;
+  }
+
+  .order-item {
+    margin-right: 0;
+  }
+}

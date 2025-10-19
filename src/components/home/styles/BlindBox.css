@@ -277,30 +277,30 @@
     background-color: transparent;
     background-image: none;
     width:100%;
-    background-color: aliceblue;
     margin:0; 
     padding:0;
     padding-left: 0;
     justify-content: start;
-
+    min-height: none;
     border-radius: 0;
   }
 
-  .button-container {
+  .bb-button-container {
     width: 100%;
     margin:0;
     padding:0;
     height: fit-content;
-    background-color: aquamarine;
     overflow: visible;
     gap:0;
+    justify-content: baseline;
+    align-items: baseline;
+    min-height: none;
   }
   .blindbox-container span {
     color:#27600B;
   }
 
   .blindbox-container .left-section {
-    align-items: left;
     display:flex;
     width: 100%;
     text-align: left;
@@ -376,4 +376,5 @@
     align-items: center;
     justify-content: center;
   }
+
 }

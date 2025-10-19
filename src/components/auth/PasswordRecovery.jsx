@@ -12,7 +12,6 @@ const PasswordRecovery = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Navigate to the success page when the form is submitted
     navigate('/stage-notification');
   };
 

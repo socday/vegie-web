@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../styles/Order.css";
 import "./OrderItem.css";
 import { Order } from "./Order";
+import { useMediaQuery } from "react-responsive";
 
 type Props = {
     order: Order;
@@ -39,7 +40,8 @@ export default function OrderItem({ order, onCancel, review }: Props) {
   const handleReviewClick = () => {
     alert(`Chức năng đánh giá cho đơn hàng "${order.name}" chưa được triển khai.`);
   }
-  
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+  const isDesktop = useMediaQuery({ query: '(min-width: 768px)' }); 
   return (
     <>
       <div className={`order-item ${review ? 'order-review' : ''}`}>
@@ -47,7 +49,13 @@ export default function OrderItem({ order, onCancel, review }: Props) {
           <div className="product-image"></div>
           <div className="product-info">
             <h3>{order.name}</h3>
+            {isDesktop && <>
             <p>Ngày đặt hàng: {order.date}</p>
+            </>}
+
+            {isMobile && <>
+            <p>Ngày đặt hàng:<br/>{order.date}</p>
+            </>}
             <p>Số lượng: {order.qty}</p>
           </div>
         </div>

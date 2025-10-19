@@ -75,8 +75,12 @@
     flex-direction: column;
   }
   
+  .login-page {
+    min-height: auto;
+  }
   .login-right-section {
     padding: 1.5rem;
+    margin:0;
   }
   
   .veggie-logo h1 {
@@ -86,4 +90,13 @@
   .mascot-image {
     width: 150px;
   }
+}
+
+.login-page .head1 {
+  font-size: 12.8rem;
+  text-align: center;
+}
+
+.login-page .lr-link-btn {
+  margin:0;
 }

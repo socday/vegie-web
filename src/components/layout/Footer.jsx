@@ -56,7 +56,7 @@ export default function Footer() {
       </div>
     </footer>
     }
-    {isMobile && <footer className="site-footer">ád</footer>}
+    {isMobile && <footer className="site-footer"></footer>}
     </>
   );
 }

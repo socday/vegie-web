@@ -41,7 +41,7 @@ export default function BlindBox() {
   
   
   return (
-    <div className="button-container">
+    <div className="bb-button-container">
       <div className="blindbox-container">
         {/* Left Section */}
         <div className="left-section">

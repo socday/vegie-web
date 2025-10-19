@@ -27,3 +27,39 @@
 .today-menu-word h2 {
     
 }
+
+@media screen and (max-width: 768px) {
+    .today-menu-page {
+        justify-content: center;
+        display: flex;
+    }
+    .today-menu-container {
+        width: 90%;
+        min-height: 120px;
+        max-height: fit-content;
+        margin-left: 0;
+        padding: 1rem 0 0 1rem;
+        border-radius: 12px;
+        background-color: #91cf43;
+    }
+
+    .head2 {
+        color: white;
+    }
+    
+    p {
+        color: white;
+    }
+    .head3 {
+        color: white;
+        border-bottom: 3px solid white;
+    }
+    .today-menu-word {
+        padding: 0.5rem;
+        border-radius: 10px;
+    }
+
+    .today-menu-word span {
+        font-size: 1rem;
+    }
+}

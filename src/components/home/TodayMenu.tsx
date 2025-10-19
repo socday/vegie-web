@@ -49,7 +49,7 @@ return (
           <p>Không có công thức nào được tìm thấy.</p>
         ) : (
           <>
-            <h3>{recipe.dishName}</h3>
+            <h3 className="head3">{recipe.dishName}</h3>
             <p>{recipe.description}</p>
             <p>Nguyên liệu: {recipe.ingredients.join(", ")}</p>
             <p>Dự tính thời gian: {recipe.estimatedCookingTime}</p>

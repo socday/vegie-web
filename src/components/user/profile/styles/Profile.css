@@ -205,3 +205,97 @@
   width: 100%;
 }
 
+@media (max-width: 767px) {
+  .profile-page {
+    flex-direction: column;
+  }
+
+  .profile-sidebar {
+    border-right: none;
+  }
+
+  .profile-information {
+    padding: 1rem;
+    display:flex;
+    width:90%;
+    flex-direction: column;
+  }
+
+  .profile-page {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .back-btn {
+    border: none;
+    background: none;
+    color: #27600B;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    margin-left: auto;
+  }
+
+  .profile-form-show .avatar {
+    width: 120px;
+    height: 120px;
+  }
+
+  .profile-mobile-display {
+    display:flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  } 
+
+  .p-mobile-avatar {
+    display:flex;
+    gap: 1rem;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .p-mobile-avatar button {
+    width:80%;
+  }
+  
+  .profile-row {
+    flex-direction: column;
+    width: 100%;
+    gap:0;
+  }
+
+  .profile-mobile-display input{
+    width: 100%;
+  }
+  .profile-form-show {
+    padding:0;
+  }
+
+  .form-fields {
+    margin:0;
+  }
+
+  .profile-form input {
+    width: 100%;
+    flex:1;
+  }
+
+  .form-fields {
+    width: 100%;
+  }
+
+  .form-password-fields {
+    margin-left: 0;
+  }
+
+  .profile-form h2 {
+    margin:1rem 0 2rem 0;
+  }
+}
+
+
+
+
