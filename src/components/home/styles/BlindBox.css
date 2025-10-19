@@ -29,6 +29,8 @@
   gap: 40px;
   font-family: Arial, sans-serif;
   justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .blindbox-container::after {
@@ -292,9 +294,10 @@
     height: fit-content;
     overflow: visible;
     gap:0;
-    justify-content: baseline;
-    align-items: baseline;
+    justify-content: center;
+    align-items: center;
     min-height: none;
+
   }
   .blindbox-container span {
     color:#27600B;

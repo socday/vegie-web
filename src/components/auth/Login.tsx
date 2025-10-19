@@ -94,10 +94,12 @@ const Login = () => {
               <button type="submit" className="d-btn-font d-btn" disabled={loading}>
                 {loading ?<span>Đang đăng nhập... </span> : <span>Đăng nhập</span>}
               </button>
-
+              {isMobile &&
+              <>
                <Link to="/dang-ky" className="d-btn d-btn-font lr-link-btn">
                  <span>Đăng ký</span>
                </Link>
+              </>}
               <Link to="/khoi-phuc-mat-khau" className="d-btn-font d-btn">
                 <span>Quên mật khẩu</span>
               </Link>

@@ -182,10 +182,11 @@ const Register = () => {
             <button type="submit" className="d-btn d-btn-font" disabled={loading}>
               <span>{loading ? "Đang xử lý..." : "Tiếp tục"}</span>
             </button>
-            
+            {isMobile && <>
               <Link to="/dang-nhap" className="d-btn d-btn-font lr-link-btn">
                 <span>Đăng nhập</span>
               </Link>
+            </>}
             </div>
           </form>
         </div>
