@@ -196,16 +196,6 @@ export default function DiscountsPage(){
         <div className="discounts-divider" />
 
         <div className="discounts-section">
-          <div className="discounts-section-title">Điều kiện áp dụng</div>
-          <label className="discounts-check">
-            <input type="checkbox" checked={newCustomersOnly} onChange={e=>setNewCustomersOnly(e.target.checked)} />
-            <span>Chỉ áp dụng cho khách hàng mới</span>
-          </label>
-        </div>
-
-        <div className="discounts-divider" />
-
-        <div className="discounts-section">
           <div className="discounts-section-title">Thời gian áp dụng</div>
           <div className="discounts-dates-grid">
             <div className="discounts-field">
@@ -218,7 +208,7 @@ export default function DiscountsPage(){
             </div>
           </div>
         </div>
-
+{/* 
         <div className="discounts-divider" />
 
         <div className="discounts-section">
@@ -231,7 +221,7 @@ export default function DiscountsPage(){
 
         <div className="discounts-actions">
           {selected && <button className="btn sm hidden" onClick={()=>handleDelete(selected.id)}>Xóa</button>}
-        </div>
+        </div> */}
       </div>
     </div>
   )

@@ -1,4 +1,5 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react'
+import { updateOrdersStatus } from '../../../router/orderApi'
 import { useOutletContext } from 'react-router-dom'
 import { getAllOrders, getAllBoxTypes, getStatistics } from '../../../router/adminApi'
 
@@ -62,8 +63,17 @@ export default function DashboardPage(){
   }, [contextOrders, contextBoxTypes, contextCurrentStats, contextPrevStats])
 
   const [activeBoard, setActiveBoard] = useState('orders')
-  const [rangeDays] = useState(7)
+  // const [rangeDays] = useState(7)
   const [revenueFilter, setRevenueFilter] = useState('current-month')
+  const [page, setPage] = useState(1)
+  const pageSize = 10
+  const [selected, setSelected] = useState(null)
+  const [statusFilter, setStatusFilter] = useState('all')
+  const [codeQuery, setCodeQuery] = useState('')
+  const [nameQuery, setNameQuery] = useState('')
+  const [dateQuery, setDateQuery] = useState('')
+  const [newStatus, setNewStatus] = useState('Pending')
+  const [updating, setUpdating] = useState(false)
 
   const boxNameById = useMemo(() => {
     const map = new Map()
@@ -71,71 +81,122 @@ export default function DashboardPage(){
     return (id) => map.get(id) || 'Unknown'
   }, [boxTypes])
 
+  // Vietnamese translations for statuses/methods
+  const viOrderStatus = (s = '') => ({
+    Cart: 'Giỏ hàng',
+    Pending: 'Đang chờ',
+    Processing: 'Đang xử lý',
+    Completed: 'Hoàn thành',
+    Cancelled: 'Đã hủy',
+  })[s] || s
+  const viPaymentMethod = (s = '') => ({
+    VNPay: 'VNPay',
+    CashOnDelivery: 'Thanh toán khi nhận hàng',
+    PayOS: 'PayOS',
+  })[s] || s
+  const viPaymentStatus = (s = '') => ({
+    Pending: 'Chờ thanh toán',
+    Paid: 'Đã thanh toán',
+    Failed: 'Thất bại',
+  })[s] || s
+
+  // Map order status text to backend enum number
+  const statusToNumber = (s = '') => {
+    const x = String(s)
+    switch (x) {
+      case 'Cart': return 0
+      case 'Pending': return 1
+      case 'Processing': return 2
+      case 'Completed': return 3
+      case 'Cancelled': return 4
+      default: return 1
+    }
+  }
+
+  useEffect(() => {
+    if (selected?.status) {
+      setNewStatus(selected.status)
+    }
+  }, [selected])
+
+  async function handleUpdateStatus() {
+    if (!selected) return
+    if (newStatus === selected.status) return
+    try {
+      setUpdating(true)
+      await updateOrdersStatus({ orderIds: [selected.id], status: statusToNumber(newStatus) })
+      // update local state
+      setOrders(prev => prev.map(o => o.id === selected.id ? { ...o, status: newStatus } : o))
+      setSelected(prev => prev ? { ...prev, status: newStatus } : prev)
+    } catch (e) {
+      console.error('Update status failed', e)
+    } finally {
+      setUpdating(false)
+    }
+  }
+
   function getOrderDate(o){
-    return new Date(o.createdAt ?? o.createAt ?? o.updateAt ?? Date.now())
+    return new Date(o.orderDate ?? o.createdAt ?? o.createAt ?? o.updateAt ?? Date.now())
   }
 
-  function getOrderTotal(o){
-    if (typeof o.finalPrice === 'number' && o.finalPrice > 0) return o.finalPrice
-    if (typeof o.totalPrice === 'number' && o.totalPrice > 0) return o.totalPrice
-    if (Array.isArray(o.details)){
-      return o.details.reduce((s,d)=> s + (d.quantity||0) * (d.unitPrice||0), 0)
-    }
-    return 0
+  
+
+  // Priorities: Pending > Delivering/Processing > Completed > Cancelled
+  const statusRank = (s = '') => {
+    const x = String(s).toLowerCase()
+    if (x.includes('pending')) return 3
+    if (x.includes('processing') || x.includes('shipping') || x.includes('deliver')) return 2
+    if (x.includes('completed')) return 1
+    if (x.includes('cancel')) return 0
+    return 1
   }
 
-  const revenueModel = useMemo(() => {
-    const now = new Date()
-    const start = new Date(now)
-    start.setDate(start.getDate() - (rangeDays - 1))
-
-    const prevStart = new Date(start)
-    prevStart.setDate(prevStart.getDate() - rangeDays)
-    const prevEnd = new Date(start)
-    prevEnd.setDate(prevEnd.getDate() - 1)
-
-    const buckets = []
-    for (let i = 0; i < rangeDays; i++) {
-      const d = new Date(start)
-      d.setDate(start.getDate() + i)
-      const key = d.toISOString().slice(0,10)
-      buckets.push({ key, date: d, total: 0 })
+  const sortedOrders = useMemo(() => {
+    let arr = Array.isArray(orders) ? [...orders] : []
+    // Filter by status
+    if (statusFilter !== 'all') {
+      arr = arr.filter(o => String(o.status) === statusFilter)
     }
-
-    const inRange = orders.filter(o => {
-      const d = getOrderDate(o)
-      return d >= start && d <= now
+    // Filter by code (order id contains)
+    if (codeQuery.trim()) {
+      const q = codeQuery.trim().toLowerCase()
+      arr = arr.filter(o => String(o.id).toLowerCase().includes(q))
+    }
+    // Filter by name (any box name contains)
+    if (nameQuery.trim()) {
+      const q = nameQuery.trim().toLowerCase()
+      arr = arr.filter(o => (o.details||[]).some(d => boxNameById(d.boxTypeId).toLowerCase().includes(q)))
+    }
+    // Filter by date (DD/MM/YY)
+    if (dateQuery.trim()) {
+      const [dd, mm, yy] = dateQuery.split(/[-./]/)
+      if (dd && mm && yy) {
+        const year = Number(yy.length === 2 ? `20${yy}` : yy)
+        const month = Number(mm) - 1
+        const day = Number(dd)
+        const start = new Date(year, month, day)
+        const end = new Date(year, month, day, 23, 59, 59, 999)
+        arr = arr.filter(o => {
+          const d = getOrderDate(o)
+          return d >= start && d <= end
+        })
+      }
+    }
+    arr.sort((a, b) => {
+      const ra = statusRank(a.status)
+      const rb = statusRank(b.status)
+      if (ra !== rb) return rb - ra // higher rank first
+      // oldest first within same rank
+      return getOrderDate(a) - getOrderDate(b)
     })
-    const inPrevRange = orders.filter(o => {
-      const d = getOrderDate(o)
-      return d >= prevStart && d <= prevEnd
-    })
+    return arr
+  }, [orders, statusFilter, codeQuery, nameQuery, dateQuery, boxNameById])
 
-    let total = 0
-    inRange.forEach(o => {
-      const d = getOrderDate(o)
-      const key = d.toISOString().slice(0,10)
-      const b = buckets.find(x => x.key === key)
-      const t = getOrderTotal(o)
-      total += t
-      if (b) b.total += t
-    })
-
-    const prevTotal = inPrevRange.reduce((s,o)=> s + getOrderTotal(o), 0)
-    const delta = prevTotal === 0 ? 100 : ((total - prevTotal) / prevTotal) * 100
-
-    const boxMap = new Map()
-    inRange.forEach(o => {
-      (o.details||[]).forEach(d => {
-        const name = boxNameById(d.boxTypeId)
-        const add = (d.quantity||0) * (d.unitPrice||0)
-        boxMap.set(name, (boxMap.get(name)||0) + add)
-      })
-    })
-    const boxRows = Array.from(boxMap.entries()).sort((a,b)=> b[1]-a[1])
-    const max = Math.max(1, ...buckets.map(b => b.total))
-    return { buckets, total, delta, max, boxRows }
-  }, [orders, boxNameById, rangeDays])
+  const totalPages = Math.max(1, Math.ceil(sortedOrders.length / pageSize))
+  const pagedOrders = useMemo(() => {
+    const start = (page - 1) * pageSize
+    return sortedOrders.slice(start, start + pageSize)
+  }, [sortedOrders, page])
 
   // Tính toán phần trăm thay đổi cho KPI
   const calculatePercentageChange = (current, previous) => {
@@ -194,44 +255,112 @@ export default function DashboardPage(){
       {activeBoard === 'orders' && (
         <section className="board orders-board">
           <div className="filter-row">
-            <div className="btn-group">
+            {/* <div className="btn-group">
               <button className="btn sm primary">Đơn lẻ</button>
               <button className="btn sm">Đơn nhóm</button>
-            </div>
+            </div> */}
             <div className="input-group">
-              <input placeholder="Mã đơn hàng" />
-              <input placeholder="Tên khách hàng" />
-              <input placeholder="DD/MM/YY" />
-              <select>
-                <option>Loại đơn hàng</option>
-                <option>Đơn lẻ</option>
-                <option>Đơn nhóm</option>
-              </select>
+              <input placeholder="Mã đơn hàng" value={codeQuery} onChange={(e)=>{ setPage(1); setCodeQuery(e.target.value) }} />
+              <input placeholder="Tên sản phẩm" value={nameQuery} onChange={(e)=>{ setPage(1); setNameQuery(e.target.value) }} />
+              <input placeholder="DD/MM/YY" value={dateQuery} onChange={(e)=>{ setPage(1); setDateQuery(e.target.value) }} />
             </div>
           </div>
-          <div className="table">
-            <div className="row header">
-              <div>Mã đơn</div>
-              <div>Tên</div>
-              <div>Loại đơn</div>
-              <div>Ngày</div>
-              <div>Giá</div>
-              <div>Trạng thái</div>
+          <div className="status-filter" style={{ display: 'flex', gap: 8, margin: '8px 0 12px' }}>
+            {[
+              { key: 'all', label: 'Tất cả' },
+              { key: 'Pending', label: 'Đang chờ' },
+              { key: 'Processing', label: 'Đang xử lý' },
+              { key: 'Completed', label: 'Hoàn thành' },
+              { key: 'Cancelled', label: 'Đã hủy' },
+              { key: 'Cart', label: 'Giỏ hàng' },
+            ].map(({ key, label }) => (
+              <button
+                key={key}
+                className={`btn sm ${statusFilter === key ? 'primary' : ''}`}
+                onClick={() => { setPage(1); setStatusFilter(key) }}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 500px', gap: 16 }}>
+            <div className="table">
+              <div className="row header" style={{ height: 50, minHeight: 50, alignItems: 'center' }}>
+                <div>Mã đơn</div>
+                <div>Tên</div>
+                <div>Số lượng</div>
+                <div>Ngày đặt hàng</div>
+                <div>Giá</div>
+                <div>Trạng thái</div>
+              </div>
+              <div className="table-body" style={{ height: 550, minHeight: 550}}>
+                {pagedOrders.map((o) => {
+                  const qty = o.details?.reduce((s, d) => s + d.quantity, 0) || 0
+                  const names = o.details?.map((d) => boxNameById(d.boxTypeId)).join(', ')
+                  return (
+                    <div className={`row ${selected?.id === o.id ? 'active' : ''}`} key={o.id} onClick={() => setSelected(o)} style={{ cursor: 'pointer', height: 50, minHeight: 50, alignItems: 'center' }}>
+                      <div>{`#${o.id.slice(0, 6)}`}</div>
+                      <div>{names}</div>
+                      <div>{qty}</div>
+                      <div>{getOrderDate(o).toLocaleString('vi-VN')}</div>
+                      <div>{(o.finalPrice ?? o.totalPrice).toLocaleString('vi-VN')} VND</div>
+                      <div>{viOrderStatus(o.status)}</div>
+                    </div>
+                  )
+                })}
+              </div>
             </div>
-            {orders.map((o) => {
-              const qty = o.details?.reduce((s, d) => s + d.quantity, 0) || 0
-              const names = o.details?.map((d) => boxNameById(d.boxTypeId)).join(', ')
-              return (
-                <div className="row" key={o.id}>
-                  <div>{`#${o.id.slice(0, 6)}`}</div>
-                  <div>{names}</div>
-                  <div>{qty}</div>
-                  <div>{(o.finalPrice ?? o.totalPrice).toLocaleString('vi-VN')} VND</div>
-                  <div>{o.discountCode ?? '-'}</div>
-                  <div>{o.status}</div>
+
+            <aside className="order-detail" style={{ border: '1px solid #eee', borderRadius: 8, padding: 12 }}>
+              {!selected && (
+                <div style={{ color: '#888' }}>Chọn một đơn để xem chi tiết</div>
+              )}
+              {selected && (
+                <div className="detail-body" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  <div style={{ fontWeight: 600 }}>{`#${selected.id.slice(0,6)}`} · {viOrderStatus(selected.status)}</div>
+                  <div><b>Ngày:</b> {getOrderDate(selected).toLocaleString('vi-VN')}</div>
+                  <div><b>Thanh toán:</b> {viPaymentMethod(selected.paymentMethod) ?? '-'} ({viPaymentStatus(selected.paymentStatus) ?? '-'})</div>
+                  <div><b>Giảm giá:</b> {selected.discountCode ?? '-'}</div>
+                  <div><b>Tổng:</b> {(selected.totalPrice || 0).toLocaleString('vi-VN')} VND</div>
+                  <div><b>Thanh toán cuối:</b> {(selected.finalPrice || selected.totalPrice || 0).toLocaleString('vi-VN')} VND</div>
+                  <div style={{ marginTop: 8, fontWeight: 600 }}>Sản phẩm</div>
+                  <div className="table">
+                    <div className="row header">
+                      <div>Tên</div>
+                      <div>SL</div>
+                      <div>Đơn giá</div>
+                    </div>
+                    {(selected.details || []).map((d, idx) => (
+                      <div className="row" key={idx}>
+                        <div>{boxNameById(d.boxTypeId)}</div>
+                        <div>{d.quantity}</div>
+                        <div>{(d.unitPrice||0).toLocaleString('vi-VN')} VND</div>
+                      </div>
+                    ))}
+                  </div>
+                  {selected.status !== 'Completed' && selected.status !== 'Cancelled' && (
+                    <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 8 }}>
+                      <select value={newStatus} onChange={(e)=> setNewStatus(e.target.value)}>
+                        <option value="Pending">Đang chờ</option>
+                        <option value="Processing">Đang xử lý</option>
+                        <option value="Completed">Hoàn thành</option>
+                        <option value="Cancelled">Đã hủy</option>
+                      </select>
+                      <button className={`btn sm ${newStatus !== selected.status ? 'primary' : ''}`} disabled={updating || newStatus === selected.status} onClick={handleUpdateStatus}>
+                        {updating ? 'Đang cập nhật...' : 'Cập nhật trạng thái'}
+                      </button>
+                    </div>
+                  )}
                 </div>
-              )
-            })}
+              )}
+            </aside>
+          </div>
+          <div className="pagination" style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 12 }}>
+            <button className="btn sm" disabled={page <= 1} onClick={() => setPage(p => Math.max(1, p - 1))}>Trước</button>
+            <span style={{ alignSelf: 'center' }}>
+              {page} / {totalPages}
+            </span>
+            <button className="btn sm" disabled={page >= totalPages} onClick={() => setPage(p => Math.min(totalPages, p + 1))}>Sau</button>
           </div>
         </section>
       )}

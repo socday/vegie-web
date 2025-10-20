@@ -1,3 +1,4 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import mascotImage from "../../assets/images/mascot-normal-mouth.png";
 import "../../css/LoginRegisterForm.css" 

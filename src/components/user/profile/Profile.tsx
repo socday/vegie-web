@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import React from "react";
 import ProfileForm from "./profile/ProfileForm";
 import ProfileChangePassword from "./profile/ProfileChangePassword";
 import ProfileSidebar from "./layout/ProfileSidebar";
@@ -22,6 +23,7 @@ export default function Profile() {
       setSection("sidebar");
     }
   }, [isMobile]);
+  
   return (
     <div className="profile-page">
       {isDesktop && (

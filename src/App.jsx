@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom'
 import Home from './components/home/Home'
 import Login from './components/auth/Login'
 import NavBar from './components/layout/NavBar'
@@ -36,6 +36,110 @@ import ViewComboSectionWrapper from './components/home/ViewComboSectionWrapper'
 import UserNotification from './components/notifications/UserNotification.tsx'
 import FooterMobile from './components/layout/FooterMobile.tsx'
 
+function AppContent() {
+  const location = useLocation()
+  const [authTick, setAuthTick] = useState(0)
+  const isAdminRoute = location.pathname.startsWith('/admin')
+
+  useEffect(() => {
+    const onStorage = (e) => {
+      if (e.key === 'accessToken' || e.key === 'refreshToken') {
+        setAuthTick((t) => t + 1)
+      }
+    }
+    window.addEventListener('storage', onStorage)
+    return () => window.removeEventListener('storage', onStorage)
+  }, [])
+
+  // Trigger rerender when tokens change in same tab
+  useEffect(() => {
+    const onAuthEvent = () => setAuthTick((t) => t + 1)
+    window.addEventListener('auth-change', onAuthEvent)
+    return () => window.removeEventListener('auth-change', onAuthEvent)
+  }, [])
+
+  return (
+    <>
+      {isAdminRoute ? null : <NavBar key={`nav-${authTick}`} />}
+      <ScrollToTop />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/vegie-care' element={<Home />} />
+        <Route path='/gioi-thieu' element={<Home />} />
+        <Route path='/dang-nhap' element={<Login />} />
+        <Route path='/khoi-phuc-mat-khau' element={<PasswordRecovery />} />
+        <Route path='/stage-notification' element={<StageNotification />} />
+        <Route path='/dang-ky' element={<Register />} />
+        <Route path='/san-pham' element={<BoxSelector />} />
+        <Route path='/custom-box' element={<GiftDetoxBox />} />
+        <Route path='/retail-package' element={<RetailPackage />} />
+        <Route path='/weekly-package' element={<WeeklyPackage />} />
+        <Route path='/blind-box' element={<BlindBox />} />
+
+        <Route path='/box-3d' element={
+          <PrivateRoute>
+            <Box3D />
+          </PrivateRoute>
+        } />
+
+        <Route path='/profile-test' element={<Profile />} />
+        <Route path='/my-weekly-package' element={<MyWeeklyPackage />} />
+        <Route path='/ai-menu' element={
+          <PrivateRoute>
+            <AiMenu />
+          </PrivateRoute>
+        } />
+
+        <Route path='/ai-menu-test' element={
+            <AiMenu />
+        } />
+        <Route path='/fruit-selection' element={<FruitSelection />} />
+        <Route path='/today-menu' element={<TodayMenu />} />
+        <Route path='/finish-giftbox' element={<FinishGiftBox />} />
+        <Route path='/letters' element={<Letters />} />
+        <Route path='/gift-preview' element={<GiftPreview />} />
+        <Route path="/combo/:type" element={<ViewComboSectionWrapper />} />
+
+        <Route path="/thong-bao" element={
+          <PrivateRoute>
+            <UserNotification />
+          </PrivateRoute>
+        } />
+
+        <Route path="/profile" element={
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        } />
+
+        <Route path="/gio-hang" element={
+          <PrivateRoute>
+            <Cart />
+          </PrivateRoute>
+        } />
+
+        <Route path="/thanh-toan" element={
+          <PrivateRoute>
+            <Payment />
+          </PrivateRoute>
+        } />
+
+        <Route path='/admin' element={<AdminShell />} >
+          <Route index element={<DashboardPage />} />
+          <Route path='orders' element={<OrdersPage />} />
+          <Route path='products' element={<div />} />
+          <Route path='customers' element={<div />} />
+          <Route path='coupons' element={<DiscountsPage />} />
+          <Route path='blog' element={<div />} />
+          <Route path='payments' element={<div />} />
+        </Route>
+      </Routes>
+      {isAdminRoute ? null : <Footer key={`footer-${authTick}`} />}
+      <FooterMobile />
+    </>
+  )
+}
+
 function App() {
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -51,89 +155,11 @@ function App() {
   //   return () => clearInterval(interval)
   // }, [])
 
-  const isAdminRoute = typeof window !== 'undefined' && window.location.pathname.startsWith('/admin')
-
   return (
     <>
       <main>
         <Router>
-          {isAdminRoute ? null : <NavBar />}
-          <ScrollToTop />
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/vegie-care' element={<Home />} />
-            <Route path='/gioi-thieu' element={<Home />} />
-            <Route path='/dang-nhap' element={<Login />} />
-            <Route path='/khoi-phuc-mat-khau' element={<PasswordRecovery />} />
-            <Route path='/stage-notification' element={<StageNotification />} />
-            <Route path='/dang-ky' element={<Register />} />
-            <Route path='/san-pham' element={<BoxSelector />} />
-            <Route path='/custom-box' element={<GiftDetoxBox />} />
-            <Route path='/retail-package' element={<RetailPackage />} />
-            <Route path='/weekly-package' element={<WeeklyPackage />} />
-            <Route path='/blind-box' element={<BlindBox />} />
-
-            <Route path='/box-3d' element={
-              <PrivateRoute>
-                <Box3D />
-              </PrivateRoute>
-            } />
-
-            <Route path='/profile-test' element={<Profile />} />
-            <Route path='/my-weekly-package' element={<MyWeeklyPackage />} />
-            <Route path='/ai-menu' element={
-              <PrivateRoute>
-                <AiMenu />
-              </PrivateRoute>
-            } />
-
-            <Route path='/ai-menu-test' element={
-                <AiMenu />
-            } />
-            <Route path='/fruit-selection' element={<FruitSelection />} />
-            <Route path='/today-menu' element={<TodayMenu />} />
-            <Route path='/finish-giftbox' element={<FinishGiftBox />} />
-            <Route path='/letters' element={<Letters />} />
-            <Route path='/gift-preview' element={<GiftPreview />} />
-            <Route path="/combo/:type" element={<ViewComboSectionWrapper />} />
-
-            <Route path="/thong-bao" element={
-              <PrivateRoute>
-                <UserNotification />
-              </PrivateRoute>
-            } />
-
-            <Route path="/profile" element={
-              <PrivateRoute>
-                <Profile />
-              </PrivateRoute>
-            } />
-
-            <Route path="/gio-hang" element={
-              <PrivateRoute>
-                <Cart />
-              </PrivateRoute>
-            } />
-
-            <Route path="/thanh-toan" element={
-              <PrivateRoute>
-                <Payment />
-              </PrivateRoute>
-            } />
-
-            <Route path='/admin' element={<AdminShell />} >
-              <Route index element={<DashboardPage />} />
-              <Route path='orders' element={<OrdersPage />} />
-              <Route path='revenue' element={<RevenuePage />} />
-              <Route path='products' element={<div />} />
-              <Route path='customers' element={<div />} />
-              <Route path='coupons' element={<DiscountsPage />} />
-              <Route path='blog' element={<div />} />
-              <Route path='payments' element={<div />} />
-            </Route>
-          </Routes>
-          {isAdminRoute ? null : <Footer />}
-          <FooterMobile />
+          <AppContent />
         </Router>
       </main>
     </>
