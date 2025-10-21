@@ -6,7 +6,7 @@ Fruit Selection Page - Theo Figma
 }
 
 .fruit-selection-page {
-  min-height: 100vh;
+  min-height: 40vh;
   background-color: #ffffff;
   position: relative;
   padding: 0;
@@ -28,7 +28,8 @@ Fruit Selection Page - Theo Figma
 }
 
 .fruit-selection-right {
-  margin-top: 1%;
+  margin-top: 7%;
+  padding-right: 6%;
   width:50%;
 }
 
