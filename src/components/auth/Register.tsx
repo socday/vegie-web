@@ -6,8 +6,14 @@ import "../../index.css";
 import LoginRegisterForm from "./LoginRegisterForm";
 import { registerUser } from "../../router/authApi";
 import { useMediaQuery } from "react-responsive";
+import StageNotification from "../notifications/StageNotification";
+import StageNotificationWrapper from "../notifications/StageNotificationWrapper";
+import { useNavigate } from "react-router-dom";
 
-const Register = () => {
+
+const Register = () => { 
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     fullName: "",
     phoneNumber: "",
@@ -77,6 +83,7 @@ const Register = () => {
       } else {
         setSuccess(true);
         console.log("Đăng ký thành công:", res);
+        navigate("/notification/register-success");
       }
     } catch (err: any) {
       setError(err.response?.data?.message || "Đăng ký thất bại");

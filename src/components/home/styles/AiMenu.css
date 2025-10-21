@@ -1,7 +1,7 @@
 .ai-menu-page {
     display:flex;
     width: 100%;
-    min-height: 100vh;
+    min-height: 140vh;
     justify-content: center;
 }
 
@@ -10,8 +10,8 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    background-image: url('/src/assets/images/ai-menu-object.png');
+    height: 150%;
+    background-image: url('/src/assets/images/ai-menu-object1.png');
     background-size: cover;
     background-position: center top; /* top of image visible */
     z-index: 1; 
@@ -91,7 +91,7 @@ text-decoration: none;;
 }
 
 @media screen and (max-width: 768px) {
-  .ai-menu-container {
+  .ai-menu-page-container {
     width: 90%;
     height: 160px;
     margin-top: 5vh;

@@ -32,12 +32,12 @@ api.interceptors.request.use((config) => {
 // Log all responses
 api.interceptors.response.use(
    (response) => {
-    // console.log("Response:", {
-    //   status: response.status,
-    //   headers: response.headers,
-    //   data: response.data,
-    // });
-    // console.log("DATA LA", response.data);
+    console.log("Response:", {
+      status: response.status,
+      headers: response.headers,
+      data: response.data,
+    });
+    console.log("DATA LA", response.data);
     return response;
   },
   (error) => {
