@@ -38,7 +38,7 @@ export default function Profile() {
             )}
             {section === "orders" && <Orders />}
             {section === "services" && <Subscription />}
-            {section === "groups" && <div>Đây là Đơn nhóm</div>}
+            {/* {section === "groups" && <div>Đây là Đơn nhóm</div>} */}
             {section === "health" && <PersonalHealth />}
             {section === "change-password" && (
               <ProfileChangePassword onCancel={() => setSection("profile")} />
@@ -67,7 +67,7 @@ export default function Profile() {
               )}
               {section === "orders" && <Orders />}
               {section === "services" && <Subscription />}
-              {section === "groups" && <div>Đây là Đơn nhóm</div>}
+              {/* {section === "groups" && <div>Đây là Đơn nhóm</div>} */}
               {section === "health" && <PersonalHealth />}
               {section === "change-password" && (
                 <ProfileChangePassword onCancel={() => setSection("profile")} />

@@ -34,6 +34,7 @@ import FinishGiftBox from './components/3d/FinishGiftBox'
 import ViewComboSectionWrapper from './components/home/ViewComboSectionWrapper'
 import UserNotification from './components/notifications/UserNotification.tsx'
 import FooterMobile from './components/layout/FooterMobile.tsx'
+import StageNotificationWrapper from './components/notifications/StageNotificationWrapper.tsx'
 
 function AppContent() {
   const location = useLocation()
@@ -98,7 +99,7 @@ function AppContent() {
         <Route path='/letters' element={<Letters />} />
         <Route path='/gift-preview' element={<GiftPreview />} />
         <Route path="/combo/:type" element={<ViewComboSectionWrapper />} />
-
+        <Route path="/noti/:type" element={<StageNotificationWrapper />} />
         <Route path="/thong-bao" element={
           <PrivateRoute>
             <UserNotification />
