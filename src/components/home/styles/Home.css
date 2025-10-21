@@ -26,6 +26,12 @@
   object-fit: contain;
 }
 
+.normal-spacing {
+    content: "";
+    display: block;
+    height: 200px;
+}
+
 .hero-section {
     display: flex;
     justify-content: center;
