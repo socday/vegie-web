@@ -14,9 +14,11 @@ import monTronBack from '../../assets/images/Homepage/MonTronNgauNhienBack.png';
 import monTronFront from '../../assets/images/Homepage/MonTronNgauNhienFront.png';
 import tronViAnBack from '../../assets/images/Homepage/TronViAnBack.png';
 import tronViAnFront from '../../assets/images/Homepage/TronViAnFront.png';
+import mascot1 from '../../assets/mascot1.png';
 import { useNavigate } from 'react-router-dom';
 import './styles/Home.css';
 import ComboSection from './ComboSection';
+import { useMediaQuery } from 'react-responsive';
 
 
 // Dữ liệu vẫn giữ nguyên, rất tiện lợi
@@ -53,6 +55,8 @@ export default function Home() {
   const [isAiMenuOpen, setIsAiMenuOpen] = useState(false);
   const [isHeroHovered, setIsHeroHovered] = useState(false);
   const [hoveredBox, setHoveredBox] = useState(null);
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+  const isDesktop = useMediaQuery({ query: '(min-width: 769px)' });
 
   return (
     <>
@@ -94,6 +98,8 @@ export default function Home() {
       
       <div className="home-page-container">
         <section className='hero-section'>
+          {isDesktop && 
+          <>
           <div 
             className={`hero-wrapper ${isHeroHovered ? 'hovered' : ''}`}
             onMouseEnter={() => setIsHeroHovered(true)}
@@ -156,6 +162,13 @@ export default function Home() {
               <button className="detox-box-button">Detox Box</button>
             </div>
           </div>
+          </>}
+          {isMobile &&
+          <>
+          <div className='mascot-mainpage-image'>
+            <img src={mascot1} alt="Vegie Care Logo" className="brand-logo-mainpage" />
+          </div>
+          </>}
         </section>
       
         <section className='intro-section'>
@@ -254,33 +267,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="voucher-section">
-          <div className="voucher-container">
-            {/* Cột bên trái (40%) */}
-            <div className="voucher-info">
-              <h2 className="voucher-title">
-                Các Ưu Đãi Trong Tuần <br />
-                Giành Cho Bạn
-              </h2>
-              <ul className="voucher-list">
-                <li>Miễn phí vận chuyển cho đơn hàng đầu tiên</li>
-                <li>Miễn phí ship nội thành với đơn hàng đặt trước 17h mỗi ngày</li>
-                <li>Miễn phí vận chuyển cả tuần khi mua gói theo tuần</li>
-              </ul>
-            </div>
-
-            {/* Cột bên phải (60%) */}
-            <div className="voucher-display">
-              <div className="voucher-card-row">
-                <div className="voucher-card small"></div>
-                <div className="voucher-card small"></div>
-              </div>
-              <div className="voucher-card medium">GIẢM 10% PHÍ VẬN CHUYỂN</div>
-              <div className="voucher-card large">VOUCHER GIẢM GIÁ 20%</div>
-              <button className="voucher-details-button">Xem chi tiết</button>
-            </div>
-          </div>
-        </section>
+     
       </div>
     </>
   );
