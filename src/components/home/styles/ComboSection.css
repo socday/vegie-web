@@ -122,3 +122,24 @@
     font-size: 3.75rem;
     color: #91CF43;
 }
+
+@media screen and (max-width:500px) {
+  .combo-title {
+    display:none;
+  }
+
+  .combo-packages {
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0 3rem 0 3rem;
+  }
+  .combo-container{
+    align-items: center;
+    justify-content: center;
+  }
+
+  .combo-section {
+    margin: 0;
+  }
+}

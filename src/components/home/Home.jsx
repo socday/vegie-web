@@ -15,7 +15,7 @@ import monTronFront from '../../assets/images/Homepage/MonTronNgauNhienFront.png
 import tronViAnBack from '../../assets/images/Homepage/TronViAnBack.png';
 import tronViAnFront from '../../assets/images/Homepage/TronViAnFront.png';
 import { useNavigate } from 'react-router-dom';
-import './styles/home.css';
+import './styles/Home.css';
 import ComboSection from './ComboSection';
 
 

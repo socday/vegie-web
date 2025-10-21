@@ -23,6 +23,7 @@
     padding-top: 6rem;
     padding-bottom: 5rem;
     width: 100%;
+    margin: 4rem 0 4rem 0;
 }
 
 .hero-wrapper {
@@ -592,6 +593,7 @@
     width: 100%;
     padding-top: 5rem;
     padding: 8rem 0;
+    margin-top: 4rem;
 }
 .ai-menu-container {
     position: relative;
@@ -1068,4 +1070,63 @@
 }
 .voucher-details-button:hover {
     transform: scale(1.05);
+}
+
+@media screen and (max-width: 787px) {
+    .intro-brand {
+        display:none;
+    }
+
+    .intro-actions {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .action-button {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .action-button {
+        width: 250px;
+    }
+
+    .ai-menu-section {
+        display:none;
+    }
+
+    .divider {
+        display: none;
+    }
+
+    .box-grid {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .product-box-card {
+        width:300px;
+        height: 325px;
+        padding: 3rem;
+    }
+
+    .product-box-card .box-number {
+        font-size: 7rem;
+    }
+
+    .product-box-card .box-title {
+        font-size: 1.75rem;
+    }
+    
+    .product-box1 .box-description{
+        width:70%;
+    }
+
+    .box-description {
+        font-size: 1.1rem;
+    }
 }
