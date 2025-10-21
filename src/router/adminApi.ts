@@ -80,7 +80,10 @@ export async function getStatistics(startDate: string, endDate: string): Promise
   });
   
   
-  if (res.data?.isSuccess) return res.data.data as StatisticsResponse;
+  if (res.data?.isSuccess) {
+    console.log(res.data.data)
+    return res.data.data as StatisticsResponse
+  };
   return null;
 }
 
