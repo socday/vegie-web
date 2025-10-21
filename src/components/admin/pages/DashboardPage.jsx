@@ -272,7 +272,6 @@ export default function DashboardPage(){
               { key: 'Processing', label: 'Đang xử lý' },
               { key: 'Completed', label: 'Hoàn thành' },
               { key: 'Cancelled', label: 'Đã hủy' },
-              { key: 'Cart', label: 'Giỏ hàng' },
             ].map(({ key, label }) => (
               <button
                 key={key}
