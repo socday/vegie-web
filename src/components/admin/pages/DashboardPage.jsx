@@ -141,16 +141,6 @@ export default function DashboardPage(){
 
   
 
-  // Priorities: Pending > Delivering/Processing > Completed > Cancelled
-  const statusRank = (s = '') => {
-    const x = String(s).toLowerCase()
-    if (x.includes('pending')) return 3
-    if (x.includes('processing') || x.includes('shipping') || x.includes('deliver')) return 2
-    if (x.includes('completed')) return 1
-    if (x.includes('cancel')) return 0
-    return 1
-  }
-
   const sortedOrders = useMemo(() => {
     let arr = Array.isArray(orders) ? [...orders] : []
     // Filter by status
@@ -182,13 +172,6 @@ export default function DashboardPage(){
         })
       }
     }
-    arr.sort((a, b) => {
-      const ra = statusRank(a.status)
-      const rb = statusRank(b.status)
-      if (ra !== rb) return rb - ra // higher rank first
-      // oldest first within same rank
-      return getOrderDate(a) - getOrderDate(b)
-    })
     return arr
   }, [orders, statusFilter, codeQuery, nameQuery, dateQuery, boxNameById])
 
@@ -255,10 +238,6 @@ export default function DashboardPage(){
       {activeBoard === 'orders' && (
         <section className="board orders-board">
           <div className="filter-row">
-            {/* <div className="btn-group">
-              <button className="btn sm primary">Đơn lẻ</button>
-              <button className="btn sm">Đơn nhóm</button>
-            </div> */}
             <div className="input-group">
               <input placeholder="Mã đơn hàng" value={codeQuery} onChange={(e)=>{ setPage(1); setCodeQuery(e.target.value) }} />
               <input placeholder="Tên sản phẩm" value={nameQuery} onChange={(e)=>{ setPage(1); setNameQuery(e.target.value) }} />
@@ -272,7 +251,6 @@ export default function DashboardPage(){
               { key: 'Processing', label: 'Đang xử lý' },
               { key: 'Completed', label: 'Hoàn thành' },
               { key: 'Cancelled', label: 'Đã hủy' },
-              { key: 'Cart', label: 'Giỏ hàng' },
             ].map(({ key, label }) => (
               <button
                 key={key}
@@ -440,8 +418,8 @@ export default function DashboardPage(){
                  const minRevenue = Math.min(...data.map(r => r.revenue))
                  const revenueRange = maxRevenue - minRevenue
                  
-                 // Sort data by date
-                 const sortedData = [...data].sort((a, b) => new Date(a.date) - new Date(b.date))
+                // Keep backend order
+                const sortedData = data
                  
                  // Calculate SVG dimensions
                  const width = 600
@@ -626,8 +604,8 @@ export default function DashboardPage(){
                 const minRevenue = Math.min(...data.map(r => r.revenue))
                 const revenueRange = maxRevenue - minRevenue
                 
-                // Sort data by date
-                const sortedData = [...data].sort((a, b) => new Date(a.date) - new Date(b.date))
+                // Keep backend order
+                const sortedData = data
                 
                 // Calculate SVG dimensions
                 const width = 600
