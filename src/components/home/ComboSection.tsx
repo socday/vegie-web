@@ -1,6 +1,6 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./styles/ComboSection.css";
-import ViewComboSection from "./ViewComboSection";
 
 export default function ComboSection() {
   const navigate = useNavigate();
@@ -16,20 +16,20 @@ export default function ComboSection() {
         <div className="combo-packages">
           {/* First card */}
           <div
-            className="combo-package-card"
-            onClick={() => navigate("/combo/single")}
+            className="package-card"
+            onClick={() => navigate("/weekly-package")}
             style={{ cursor: "pointer" }}
           >
             <div className="package-front">
               <div className="package-title">
-                <span className="package-line">Gói</span>
-                <span className="package-line">mua lẻ</span>
+                <span className="package-line-1">Gói</span>
+                <span className="package-line-2">mua lẻ</span>
               </div>
             </div>
             <div className="package-back">
               <div className="package-title">
-                <span className="package-line">Ăn</span>
-                <span className="package-line">An Lành</span>
+                <span className="package-line-1">Ăn</span>
+                <span className="package-line-2">An Lành</span>
               </div>
               <div className="package-description">
                 Quà Tươi Xanh - Nấu Nhanh Ăn Lành
@@ -38,11 +38,10 @@ export default function ComboSection() {
           </div>
 
           {/* Second card */}
-           
           <div
-          className="combo-package-card"
-          onClick={() => navigate("/combo/week")}
-          style={{ cursor: "pointer" }}
+            className="package-card"
+            onClick={() => navigate("/monthly-package")}
+            style={{ cursor: "pointer" }}
           >
             <div className="package-front">
               <div className="package-title">

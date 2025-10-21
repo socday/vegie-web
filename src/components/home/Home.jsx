@@ -1,9 +1,21 @@
 import React, { useState } from 'react';
 
-import mascotImage from '../../assets/mascot1.png';
+import mascotSmile from '../../assets/images/mascot-smile.png';
 import brandLogo from '../../assets/logo-brand.png';
+import vegeBefore from '../../assets/images/Homepage/VegeBefore.png';
+import vegeAfter from '../../assets/images/Homepage/VegeAfter.png';
+import stars from '../../assets/images/Homepage/Stars.png';
+import sheep from '../../assets/images/Homepage/Sheep.png';
+import mouthBefore from '../../assets/images/Homepage/MouthBefore.png';
+import mouthAfter from '../../assets/images/Homepage/MouthAfter.png';
+import rightFoot from '../../assets/images/Homepage/RightFoot.png';
+import rightHand from '../../assets/images/Homepage/RightHand.png';
+import monTronBack from '../../assets/images/Homepage/MonTronNgauNhienBack.png';
+import monTronFront from '../../assets/images/Homepage/MonTronNgauNhienFront.png';
+import tronViAnBack from '../../assets/images/Homepage/TronViAnBack.png';
+import tronViAnFront from '../../assets/images/Homepage/TronViAnFront.png';
 import { useNavigate } from 'react-router-dom';
-import './styles/Home.css';
+import './styles/home.css';
 import ComboSection from './ComboSection';
 
 
@@ -12,7 +24,7 @@ const tabsData = [
   {
     id: 'tam-nhin',
     title: 'TẦM NHÌN',
-    content: 'Chúng tôi không chỉ là một nền tảng bán rau củ quả. Chúng tôi là người bạn đồng hành, là cánh tay phải giúp bạn có được những bữa ăn xanh, lành và đủ đầy, mà không cần mất quá nhiều thời gian hay suy nghĩ.',
+    content: 'Chúng tôi không chỉ là một nền tảng bán rau củ quả. Chúng tôi là người bạn đồng hành, là cánh tay phải giúp bạn có được những bữa ăn xanh, lành và đủ đầy, mà không cần mất quá nhiều thời gian hay suy nghĩ.'
   },
   {
     id: 'su-menh',
@@ -33,41 +45,123 @@ const tabsData = [
 ];
 const boxesData = [
   { id: 1, number: '01', title: 'Món Tròn Ngẫu Nhiên', description: 'Bất ngờ lành mạnh đang chờ bạn khám phá mỗi tuần!' },
-  { id: 2, number: '02', title: 'Trọn Vị An', description: 'Rau củ tùy duyên - Ưu phiền tan biến' },
+  { id: 2, number: '02', title: 'Trọn Vị An', description: 'Rau củ tùy duyên - Ưu phiền tan biến' }
 ];
 
 export default function Home() {
-  const navigate = useNavigate(); // <-- đây là chỗ thiếu
+  const navigate = useNavigate();
   const [isAiMenuOpen, setIsAiMenuOpen] = useState(false);
-
-  // State ban đầu thành `null` để không có tab nào mở
-  const [openTabId, setOpenTabId] = useState(null);
-
-  // Tạo một hàm xử lý click để logic phức tạp hơn
-  const handleToggleTab = (tabId) => {
-    // Nếu click vào tab đang mở, hãy đóng nó lại (set về null)
-    if (openTabId === tabId) {
-      setOpenTabId(null);
-    } else {
-      // Nếu click vào tab khác, hãy mở nó ra
-      setOpenTabId(tabId);
-    }
-  };
+  const [isHeroHovered, setIsHeroHovered] = useState(false);
+  const [hoveredBox, setHoveredBox] = useState(null);
 
   return (
     <>
-      <div className="home-page-container">
-        <section className='mascot-section'>
-            <img
-            src={mascotImage}
-            alt="Linh vật Veggie Care"
-            className="mascot-home-image"
+      {/* SVG Filter cho noise effect */}
+      <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+        <defs>
+          <filter id="noise-filter">
+            <feTurbulence 
+              type="fractalNoise" 
+              baseFrequency="0.9" 
+              numOctaves="4" 
+              result="noise"
             />
+            <feDisplacementMap 
+              in="SourceGraphic" 
+              in2="noise" 
+              scale="3" 
+              xChannelSelector="R" 
+              yChannelSelector="G"
+            />
+          </filter>
+          <filter id="noise-border">
+            <feTurbulence 
+              type="fractalNoise" 
+              baseFrequency="0.05" 
+              numOctaves="2" 
+              result="noise"
+            />
+            <feDisplacementMap 
+              in="SourceGraphic" 
+              in2="noise" 
+              scale="0" 
+              xChannelSelector="R" 
+              yChannelSelector="G"
+            />
+          </filter>
+        </defs>
+      </svg>
+      
+      <div className="home-page-container">
+        <section className='hero-section'>
+          <div 
+            className={`hero-wrapper ${isHeroHovered ? 'hovered' : ''}`}
+            onMouseEnter={() => setIsHeroHovered(true)}
+            onMouseLeave={() => setIsHeroHovered(false)}
+          >
+            <img
+              src={vegeBefore}
+              alt="Vegie Before"
+              className="hero-image hero-image-before"
+            />
+            <img
+              src={vegeAfter}
+              alt="Vegie After"
+              className="hero-image hero-image-after"
+            />
+            <img
+              src={stars}
+              alt="Stars"
+              className="hero-image hero-image-stars"
+            />
+            
+            <div className="sheep-overlay-group">
+              <img
+                src={mouthBefore}
+                alt="Mouth Before"
+                className="mouth-image mouth-before"
+              />
+              <img
+                src={mouthAfter}
+                alt="Mouth After"
+                className="mouth-image mouth-after"
+              />
+              <img
+                src={sheep}
+                alt="Sheep"
+                className="sheep-image"
+              />
+              <img
+                src={rightFoot}
+                alt="Right Foot"
+                className="sheep-accessory sheep-foot"
+              />
+              <img
+                src={rightHand}
+                alt="Right Hand"
+                className="sheep-accessory sheep-hand"
+              />
+              <img
+                src={rightFoot}
+                alt="Left Foot"
+                className="sheep-accessory sheep-foot-left"
+              />
+              <img
+                src={rightHand}
+                alt="Left Hand"
+                className="sheep-accessory sheep-hand-left"
+              />
+              <button className="gift-box-button">Gift Box</button>
+              <button className="blind-box-button">Blind Box</button>
+              <button className="detox-box-button">Detox Box</button>
+            </div>
+          </div>
         </section>
       
         <section className='intro-section'>
             <div className="intro-container">
                 <div className="intro-brand">
+                  <img src={mascotSmile} alt="Mascot Vegie Care" className="mascot-intro" />
                   <h1 className="head1">
                     Vegie
                     Care</h1>
@@ -83,9 +177,8 @@ export default function Home() {
               </div> 
             </div>
         </section>
-        <div className="divider"></div>
         <section className='ai-menu-section'>
-            <div className="ai-menu-home-container">
+            <div className="ai-menu-container">
                 <div className={`ai-menu-wrapper ${isAiMenuOpen ? 'open' : ''}`}
                     onMouseEnter={() => setIsAiMenuOpen(true)}
                     onMouseLeave={() => setIsAiMenuOpen(false)}
@@ -116,19 +209,75 @@ export default function Home() {
 
             {/* Lưới chứa các card */}
             <div className="box-grid">
-              {boxesData.map((box) => (
-              <div key={box.id} className={`product-box-card ${box.id === 1 ? "product-box1" : ""}`}>
-                <div className="box-number">{box.number}</div>
-                {/* Overlay image (hidden until hover) */}
-                <img src="/images/overlay-icon.png" alt="" className="box-overlay-img" />
+              {boxesData.map((box) => {
+                const isHovered = hoveredBox === box.id;
+                const getBackgroundImage = () => {
+                  if (box.id === 1) return monTronBack;
+                  if (box.id === 2) return tronViAnBack;
+                  return null;
+                };
+                const getFrontImage = () => {
+                  if (box.id === 1) return monTronFront;
+                  if (box.id === 2) return tronViAnFront;
+                  return null;
+                };
 
-                <div className="box-content">
-                  <h3 className="box-title">{box.title}</h3>
-                  <p className="box-description">{box.description}</p>
-                  <button className="box-details-button">Xem chi tiết</button>
-                </div>
+                return (
+                  <div 
+                    key={box.id} 
+                    className={`product-box-card ${isHovered ? 'hovered' : ''}`}
+                    onMouseEnter={() => setHoveredBox(box.id)}
+                    onMouseLeave={() => setHoveredBox(null)}
+                  >
+                    {/* Background image - ẩn ban đầu, hiện khi hover */}
+                    <div 
+                      className="box-background-image"
+                      style={{ backgroundImage: `url(${getBackgroundImage()})` }}
+                    />
+                    
+                    {/* Front image - trượt từ dưới lên */}
+                    <img 
+                      src={getFrontImage()} 
+                      alt={box.title}
+                      className="box-front-image"
+                    />
+
+                    <div className="box-number">{box.number}</div>
+                    <div className="box-content">
+                      <h3 className="box-title">{box.title}</h3>
+                      <p className="box-description">{box.description}</p>
+                      <button className="box-details-button">Xem chi tiết</button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+        <section className="voucher-section">
+          <div className="voucher-container">
+            {/* Cột bên trái (40%) */}
+            <div className="voucher-info">
+              <h2 className="voucher-title">
+                Các Ưu Đãi Trong Tuần <br />
+                Giành Cho Bạn
+              </h2>
+              <ul className="voucher-list">
+                <li>Miễn phí vận chuyển cho đơn hàng đầu tiên</li>
+                <li>Miễn phí ship nội thành với đơn hàng đặt trước 17h mỗi ngày</li>
+                <li>Miễn phí vận chuyển cả tuần khi mua gói theo tuần</li>
+              </ul>
+            </div>
+
+            {/* Cột bên phải (60%) */}
+            <div className="voucher-display">
+              <div className="voucher-card-row">
+                <div className="voucher-card small"></div>
+                <div className="voucher-card small"></div>
               </div>
-              ))}
+              <div className="voucher-card medium">GIẢM 10% PHÍ VẬN CHUYỂN</div>
+              <div className="voucher-card large">VOUCHER GIẢM GIÁ 20%</div>
+              <button className="voucher-details-button">Xem chi tiết</button>
             </div>
           </div>
         </section>

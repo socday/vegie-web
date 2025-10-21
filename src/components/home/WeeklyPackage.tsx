@@ -4,7 +4,7 @@ import "./styles/WeeklyPackage.css";
 export default function MyWeeklyPackage()   {
   return (
     <div className="main-page">
-      <div className="package-card">
+      <div className="weekly-package-card">
         {/* Left Section */}
         <div className="package-left">
           <h2>Gói theo tuần</h2>
