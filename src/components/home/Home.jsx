@@ -95,8 +95,7 @@ export default function Home() {
           </filter>
         </defs>
       </svg>
-      <div className='normal-spacing'>
-        </div> 
+      <div className='normal-spacing'></div> 
       <div className="home-page-container">
         <section className='hero-section'>
           {isDesktop && 
@@ -172,6 +171,7 @@ export default function Home() {
           </>}
         </section>
       
+      <div className='normal-spacing'></div> 
         <section className='intro-section'>
             <div className="intro-container">
                 <div className="intro-brand">

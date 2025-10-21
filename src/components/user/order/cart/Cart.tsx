@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { cartCheckout, getCart, updateCartItem } from "../../../../router/cartApi";
 import { CartResponse, Item } from "../../../../router/types/cartResponse";
 import CartCheckout from "./CartCheckout";
+import WaveText from "../../../lazy/WaveText";
 
 export default function Cart() {
   const [items, setItems] = useState<Item[]>([]);
@@ -51,10 +52,14 @@ export default function Cart() {
     <div className="cart">
       <div className="cart-item-page">
         <h2 className="head2">Giỏ hàng</h2>
-
-        {items.length === 0 ? (
-          <p>Giỏ hàng bạn chưa có gì cả. <br /> Ngại ngần gì chưa mua?</p>
-        ) : (
+          {loading ? (
+            <WaveText text="Đang tải giỏ hàng..." />
+          ) : items.length === 0 ? (
+            <p>
+              Giỏ hàng bạn chưa có gì cả. <br />
+              Ngại ngần gì chưa mua?
+            </p>
+          ) : (
           items.map(item => (
             <CartItem
               key={item.id}

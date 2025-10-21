@@ -17,7 +17,13 @@
     color: #27600B;
     margin-bottom: 1rem;
 }
-
+    ul,
+    p,
+    h3,
+    div,
+    li {
+        color: #27600B;
+    }
 .today-menu-word {
     width:fit-content;
     padding: 0.5rem 1rem;
@@ -47,8 +53,12 @@
         color: white;
     }
     
+    ul,
+    li {
+        color: #27600B;
+    }
     p {
-        color: white;
+        color: #27600B;
     }
     .head3 {
         color: white;

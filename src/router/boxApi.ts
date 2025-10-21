@@ -3,8 +3,14 @@ import { BlindBoxAIResponse, Recipe } from "./types/boxResponse";
 
 export async function getBoxTypeName(id: string): Promise<string> {
 
+  const token = localStorage.getItem("accessToken");
   try {
-    const res = await api.get(`/BoxTypes/${id}`);
+    const res = await api.get(`/BoxTypes/${id}`,{
+      headers: { 
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}` 
+      },
+    });
     return res.data.data?.name ?? "Unknown Box";
   } catch (err: any) {
     if (err.response?.status === 404) {

@@ -1,0 +1,47 @@
+/* WaveText.css */
+.wave-text {
+  display: inline-block;
+  line-height: 1;
+  font-weight: 600; /* adjust as needed */
+  letter-spacing: 0.02em;
+  white-space: pre; /* preserve spaces */
+}
+
+.wave-text-container {
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+/* Each character container */
+.wave-char {
+  display: inline-block;
+  transform: translateY(0);
+  /* use CSS variables for control; fallback values provided */
+  animation-name: waveY;
+  animation-duration: var(--wave-duration, 1.2s);
+  animation-timing-function: cubic-bezier(.2,.9,.3,.95);
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+/* Keyframes: simple up-and-down wave */
+@keyframes waveY {
+  0%, 100% { transform: translateY(0); }
+  50%     { transform: translateY(calc(var(--wave-amplitude, 8px) * -1)); }
+}
+
+/* Make punctuation/dots move slightly less (optional) */
+.wave-char[aria-hidden="true"] {
+  animation-duration: calc(var(--wave-duration, 1.2s) * 0.9);
+  opacity: 0.95;
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .wave-char {
+    animation: none;
+  }
+}
