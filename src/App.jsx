@@ -75,23 +75,17 @@ function AppContent() {
         <Route path='/retail-package' element={<RetailPackage />} />
         <Route path='/weekly-package' element={<WeeklyPackage />} />
         <Route path='/blind-box' element={<BlindBox />} />
-
         <Route path='/box-3d' element={
           <PrivateRoute>
             <Box3D />
           </PrivateRoute>
         } />
-
         <Route path='/profile-test' element={<Profile />} />
         <Route path='/my-weekly-package' element={<MyWeeklyPackage />} />
         <Route path='/ai-menu' element={
           <PrivateRoute>
             <AiMenu />
           </PrivateRoute>
-        } />
-
-        <Route path='/ai-menu-test' element={
-            <AiMenu />
         } />
         <Route path='/fruit-selection' element={<FruitSelection />} />
         <Route path='/today-menu' element={<TodayMenu />} />
@@ -105,25 +99,21 @@ function AppContent() {
             <UserNotification />
           </PrivateRoute>
         } />
-
         <Route path="/profile" element={
           <PrivateRoute>
             <Profile />
           </PrivateRoute>
         } />
-
         <Route path="/gio-hang" element={
           <PrivateRoute>
             <Cart />
           </PrivateRoute>
         } />
-
         <Route path="/thanh-toan" element={
           <PrivateRoute>
             <Payment />
           </PrivateRoute>
         } />
-
         <Route path='/admin' element={<AdminShell />} >
           <Route index element={<DashboardPage />} />
           <Route path='orders' element={<OrdersPage />} />

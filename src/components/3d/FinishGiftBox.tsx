@@ -4,7 +4,7 @@ import "../../css/FruitSelection.css";
 import "./styles/letters.css";
 import "./styles/FinishGiftBox.css";
 // Import all images statically
-
+import {giftbox} from "../../assets/images/mascot-giftbox-01.png";
 export default function FinishGiftBox() {
   const navigate = useNavigate();
 
@@ -46,6 +46,7 @@ export default function FinishGiftBox() {
         {/* RIGHT SIDE */}
         <div className="fnb-right">
           <div className="fnb-display-area">
+            <img src="../../assets/images/mascot-giftbox-01.png" alt="Mascot Gift Box" className="mascot-giftbox-image" />
           </div>
         </div>
       </div>

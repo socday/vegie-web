@@ -35,4 +35,10 @@
     border: 1px solid #91CF43;
     border-radius: 32px 0 0 32px;
     background-color: #91CF43;
+    background-image: url("../../../assets/images/mascot-giftbox-01.png");
+  background-size: cover;        /* makes the image cover entire element */
+  background-position: center;   /* centers the image */
+  background-repeat: no-repeat; 
+  background-size: 150%; 
+    background-position: left center;
 }

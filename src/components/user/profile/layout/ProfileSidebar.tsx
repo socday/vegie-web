@@ -10,7 +10,7 @@ export default function ProfileSidebar({ onSelect, activeSection }: SidebarProps
     { key: "profile", label: "Thông tin cá nhân" },
     { key: "orders", label: "Đơn hàng" },
     { key: "services", label: "Gói dịch vụ" },
-    { key: "groups", label: "Đơn nhóm" },
+    // { key: "groups", label: "Đơn nhóm" },
     { key: "health", label: "Phiếu sức khỏe" },
 
   ];
