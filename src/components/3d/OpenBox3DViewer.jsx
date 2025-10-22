@@ -71,24 +71,25 @@ function OpenBox2({ position, rotation, onLoaded }) {
   );
 }
 
-// Component để fit camera - sửa để camera nhìn xa ra
+// Component để fit camera - điều chỉnh để nhìn mặt bên phải và bên trong hộp
 function FitCameraToObject({ object3D }) {
   const { camera } = useThree();
-  
   React.useEffect(() => {
     if (object3D) {
       const box = new Box3().setFromObject(object3D);
       const sphere = new Sphere();
       box.getBoundingSphere(sphere);
       
-      // Camera ở xa hơn để nhìn toàn bộ hộp
-      const distance = sphere.radius * 4; // Tăng từ 2.5 lên 4
-      camera.position.set(0, sphere.radius * 1.2, distance); // Phía trước hộp, cao hơn
-      camera.lookAt(0, 0, 0);
-      
-      console.log(' Camera positioned at:', camera.position);
-      console.log(' Box sphere radius:', sphere.radius);
-      console.log(' Camera distance:', distance);
+      // Camera gần hộp hơn và nhìn mặt bên phải
+      const distance = sphere.radius * 1.3; // Giảm từ 4 xuống 1.5 để gần hơn
+    
+      // Đặt camera ở mặt bên phải của hộp và cao hơn để nhìn bên trong
+      camera.position.set(
+        distance,           // X: mặt bên phải của hộp
+        sphere.radius * 2, // Y: cao hơn để nhìn xuống bên trong hộp
+        sphere.radius * 0.7  // Z: hơi lùi về phía sau một chút
+      );
+      camera.lookAt(0, 0, 0); // Nhìn vào trung tâm hộp
     }
   }, [object3D, camera]);
 
@@ -148,7 +149,7 @@ function OpenBox3DViewer({ currentBox, fruitAnimation, removeFruit }) {
     <ErrorBoundary currentBox={currentBox}>
       <div className="box3d-viewer">
         <Canvas
-          camera={{ position: [0, 2, 6], fov: 50 }}
+          camera={{ position: [2, 1.5, 1], fov: 50 }}
           style={{ width: '100%', height: '100%' }}
         >
           <ambientLight intensity={0.6} />

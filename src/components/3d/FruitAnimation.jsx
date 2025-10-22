@@ -22,7 +22,8 @@ function FallingFruit({ fruitType, position, onComplete }) {
     if (!isFalling || !meshRef.current) return;
     
     // Gravity effect - chậm hơn để dễ quan sát
-    const gravity = 0.005;
+    // 🔧 ĐIỀU CHỈNH TỐC ĐỘ RƠI: Thay đổi giá trị này để làm trái cây rơi nhanh/chậm hơn
+    const gravity = 0.0005;
     velocityRef.current.y -= gravity;
     
     // Update position
@@ -39,6 +40,7 @@ function FallingFruit({ fruitType, position, onComplete }) {
     }
     
     // Check if reached inside the box (y < 0.5) - rơi vào đáy hộp thực
+    // 🔧 ĐIỀU CHỈNH ĐIỂM DỪNG: Thay đổi giá trị này để trái cây dừng ở độ cao khác nhau trong hộp
     if (meshRef.current.position.y < 0.5) {
       console.log(` ${fruitType} reached inside box, stopping animation`);
       setIsFalling(false);
@@ -50,8 +52,10 @@ function FallingFruit({ fruitType, position, onComplete }) {
     <group ref={meshRef}>
       <FruitModel 
         fruitType={fruitType}
-        position={[0, 0, 0]}
-        scale={[15, 15, 15]}
+        position={[-5, 0, -25]}
+        // 🔧 ĐIỀU CHỈNH KÍCH THƯỚC TRÁI CÂY: Thay đổi giá trị [15, 15, 15] để làm trái cây to/nhỏ hơn
+        scale={[20, 20, 20]}
+        rotation={[5, 5, 5]}
       />
     </group>
   );
@@ -116,16 +120,20 @@ function FruitAnimation({ fruitType, isActive, onComplete, removeFruit }) {
       const sameTypeCount = fruits.filter(f => f.fruitType === fruitType).length;
       
       // Tính toán vị trí - tất cả nằm ngang theo chiều dài hộp
+      // 🔧 ĐIỀU CHỈNH KÍCH THƯỚC VÙNG ĐẶT TRÁI CÂY: Thay đổi 0.7 để trái cây gần/xa mép hộp hơn
       const boxWidth = boxDimensions.width * 0.7;  // Thu nhỏ 30% để chắc chắn trong hộp
       const boxDepth = boxDimensions.depth * 0.7;   // Thu nhỏ 30%
       
       // Vị trí X: chia đều theo chiều ngang của hộp
+      // 🔧 ĐIỀU CHỈNH VỊ TRÍ NGANG: Thay đổi công thức này để sắp xếp trái cây khác nhau
       const x = -boxWidth/2 + (fruitIndex + 0.5) * (boxWidth / 4);
       
       // Vị trí Z: TẤT CẢ CÙNG MỘT HÀNG (giữa hộp)
+      // 🔧 ĐIỀU CHỈNH VỊ TRÍ SÂU: Thay đổi giá trị này để trái cây ở phía trước/sau hộp
       const z = 0; // Tất cả ở giữa hộp
       
       // Vị trí Y: cao hơn để rơi vào hộp
+      // 🔧 ĐIỀU CHỈNH ĐỘ CAO BAN ĐẦU: Thay đổi giá trị này để trái cây bắt đầu rơi từ cao/thấp hơn
       const y = 1.5;
       
       const startPosition = new THREE.Vector3(x, y, z);
