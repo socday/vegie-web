@@ -10,8 +10,10 @@ import logo from '../../assets/logo.png'; // **Đảm bảo đường dẫn này
 // Import file CSS (chúng ta sẽ tạo ở bước tiếp theo)
 import '../../css/Footer.css';
 import { useMediaQuery } from "react-responsive";
+import { useNavigate} from 'react-router-dom';
 
 export default function Footer() {
+  const navigate = useNavigate();
   const isMobile = useMediaQuery({ maxWidth: 768 });
   const isDesktop = useMediaQuery({ minWidth: 769 });
   return (
@@ -27,7 +29,7 @@ export default function Footer() {
             <p>Đăng ký thông tin để nhận ngay </p> <p> những ưu đãi từ Vegie nhé!</p>
             <form className="newsletter-form">
               <input type="email" placeholder="Email" className="newsletter-input" />
-              <button type="submit" className="newsletter-button">Đăng ký</button>
+              <button onClick={()=> navigate("/dang-ky")} type="submit" className="newsletter-button">Đăng ký</button>
             </form>
           </div>
 

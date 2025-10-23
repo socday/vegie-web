@@ -80,11 +80,14 @@ const Register = () => {
 
       if (res.isSuccess === false) {
         setError(res.message || "Đăng ký thất bại");
-      } else {
+      } else if (res.isSuccess === true) {
         setSuccess(true);
         console.log("Đăng ký thành công:", res);
-        navigate("/notification/register-success");
-      }
+        navigate("/noti/register-success");
+        }
+        else {
+          setError("Đăng ký thất bại liên hệ quản trị viên");
+        }
     } catch (err: any) {
       setError(err.response?.data?.message || "Đăng ký thất bại");
     } finally {

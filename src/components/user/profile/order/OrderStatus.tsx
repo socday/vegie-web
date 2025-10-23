@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import OrderList from "./OrderList";
 import "../styles/Order.css";
-import { Order } from "./Order";
+import { Order } from "../../../../context/OrderContext";
 
 
-type Props = {
+type OrderStatusProps = {
   orders: Order[];
   onCancel: (id: string) => void;
+  onSwitchTab: (tab: "status" | "review" | "favorite", id?: string) => void;
 };
-
-export default function OrderStatus({ orders, onCancel }: Props) {
+export default function OrderStatus({ orders, onCancel, onSwitchTab }: OrderStatusProps) {
   const [filter, setFilter] = useState<"all" | Order["status"]>("all");
 
 
@@ -53,7 +53,8 @@ export default function OrderStatus({ orders, onCancel }: Props) {
         </button>
       </div>
 
-      <OrderList orders={filteredOrders} onCancel={onCancel} />
+      <OrderList orders={filteredOrders} onCancel={onCancel} onSwitchTab={onSwitchTab} />
+
     </div>
   );
 }

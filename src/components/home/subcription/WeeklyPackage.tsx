@@ -1,5 +1,5 @@
 import React from "react";
-import "./styles/WeeklyPackage.css";
+import "../styles/WeeklyPackage.css";
 
 export default function MyWeeklyPackage()   {
   return (

@@ -9,7 +9,7 @@ const API_URL = "https://exe-be-qu8u.onrender.com/api";
 
 export const api = axios.create({
   baseURL: API_URL,   
-  timeout: 5000,     // optional: 10s timeout
+  timeout: 15000,     // optional: 10s timeout
 });
 
 // Log all requests

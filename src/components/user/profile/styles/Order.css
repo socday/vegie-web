@@ -194,6 +194,20 @@
     background-color: #91CF43;
 }
 
+.order-review-layout {
+    display: flex;
+    align-items:baseline;
+    margin-bottom: 5rem;
+    flex-direction: column;
+    gap: 1rem;
+    width: calc(100% - 1rem);
+}
+
+.order-review-layout .full-width{
+    margin: 0;
+
+}
+
 @media screen and (max-width: 768px) {
 
 }

@@ -1,80 +1,78 @@
-import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import OrderStatus from "./OrderStatus";
-import "../styles/Order.css"
 import ReviewOrder from "./ReviewOrder";
-import { getOrder } from "../../../../router/orderApi";
-import { transformApiOrders } from "../../../../mappers/OrderMapper";
+import ReviewOrderForm from "./ReviewOrderForm";
+import "../styles/Order.css";
+import { useOrders } from "../../../../context/OrderContext";
+import { useEffect } from "react";
 
-export type Order = {
-  id: string;  // UUID from API
-  name: string;
-  date: string;
-  qty: number;
-  price: number;
-  status: "cho_xac_nhan" | "dang_giao" | "da_giao" | "da_huy";
+export default function Order() {
+  const { orders, refreshOrders } = useOrders();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const currentTab = (searchParams.get("tab") as "status" | "review" | "favorite") || "status";
+  const orderId = searchParams.get("id");
+
+const handleTabChange = (tab: "status" | "review" | "favorite", id?: string) => {
+  const params: Record<string, string> = {
+    section: "orders", // <── Always include this
+    tab,
+  };
+  if (id) params.id = id;
+  setSearchParams(params);
 };
 
-export default function Orders() {
-  const [activeTab, setActiveTab] = useState<"status" | "review" | "favorite">("status");
-
-  const handleSwitchTab = (tab: "status" | "review" | "favorite") => {
-  setActiveTab(tab);
-  };
-
-  const [orders, setOrders] = useState<Order[]>([]);
-
   useEffect(() => {
-    async function fetchOrders() {
-      try {
-        const res = await getOrder();
-        if (res.isSuccess) {
-          setOrders(transformApiOrders(res.data));
-        }
-      } catch (err) {
-        console.error("Failed to fetch orders", err);
-      }
-    }
-    fetchOrders();
-  }, []);
+    if (orders.length === 0) refreshOrders();
+  }, [orders]);
 
   const handleCancelOrder = (id: string) => {
-    setOrders(prev =>
-      prev.map(order =>
-        order.id === id ? { ...order, status: "da_huy" } : order
-      )
-    );
+    // Optional: update cached orders here if needed
   };
+
+  // 💡 CONDITIONAL RENDER LOGIC
+  // 1️⃣ If tab=review and id exists → show ReviewOrderForm
+  // 2️⃣ Else → normal tab layout
+  if (currentTab === "review" && orderId) {
+    return (
+      <div className="orders">
+        <ReviewOrderForm orderId={orderId} />
+      </div>
+    );
+  }
 
   return (
     <div className="orders">
+      {/* only show tabs if NOT inside review form */}
       <div className="orders__tabs">
-        <button 
-          className={`fancy-btn ${activeTab === "status" ? "active " : ""}`} 
-          onClick={() => setActiveTab("status")}
+        <button
+          className={`fancy-btn ${currentTab === "status" ? "active" : ""}`}
+          onClick={() => handleTabChange("status")}
         >
-          <span>
-            Trạng thái đơn hàng</span>
+          <span>Trạng thái đơn hàng</span>
         </button>
-        <button 
-          className={`fancy-btn ${activeTab === "review" ? "active " : ""}`} 
-          onClick={() => setActiveTab("review")}
+        <button
+          className={`fancy-btn ${currentTab === "review" ? "active" : ""}`}
+          onClick={() => handleTabChange("review")}
         >
-         <span>
-            Đánh giá</span> 
+          <span>Đánh giá</span>
         </button>
-        {/* <button 
-          className={`fancy-btn ${activeTab === "favorite" ? "active " : ""}`} 
-          onClick={() => setActiveTab("favorite")}
-        >
-          <span>    
-            Yêu thích</span>
-        </button> */}
       </div>
 
       <div className="orders__content">
-        {activeTab === "status" && <OrderStatus orders={orders} onCancel={handleCancelOrder} onSwitchTab={handleSwitchTab} />}
-        {activeTab === "review" && <ReviewOrder orders={orders} onSwitchTab={handleSwitchTab} />}
-        {/* {activeTab === "favorite" && <div>Yêu thích</div>} */}
+        {currentTab === "status" && (
+          <OrderStatus
+            orders={orders}
+            onCancel={handleCancelOrder}
+            onSwitchTab={handleTabChange}
+          />
+        )}
+        {currentTab === "review" && !orderId && (
+          <ReviewOrder
+            orders={orders}
+            onSwitchTab={handleTabChange}
+          />
+        )}
       </div>
     </div>
   );

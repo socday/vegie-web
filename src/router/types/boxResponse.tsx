@@ -5,6 +5,7 @@ export type Box = {
     price: number;
 }
 
+
 export type Recipe = {
     id: string;
     dishName: string;

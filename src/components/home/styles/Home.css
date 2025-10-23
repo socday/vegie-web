@@ -36,18 +36,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 6rem;
-    padding-bottom: 5rem;
     width: 100%;
-    margin: 4rem 0 4rem 0;
+    margin: 3.5rem 0 4rem 0;
 }
 
 .hero-wrapper {
     position: relative;
-    width: 644px;
-    height: 524px;
+    width: 544px;
+    height: 424px;
     background-color: #27600B;
     border-radius: 50px;
+    transform: scale(0.9);
     overflow: visible;
     transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
                 border-radius 0.8s ease;
@@ -413,7 +412,15 @@
     transform: scaleX(-1) rotate(-60deg);
 }
 
-/* Responsive cho mobile */
+@media screen and (max-width:1200px) {
+    .hero-image-stars{
+        width: 1000px;
+        height: 562px;
+    }
+    .intro-brand .head1{
+        font-size: 14rem;
+    }
+}
 @media (max-width: 768px) {
     .hero-wrapper {
         width: 90%;
@@ -553,7 +560,7 @@
     background-color: var(--primary-green, #91CF43);
     color: #368A0D;
     border-radius: 50px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 450;
     line-height: 1.6;
     font-family: 'Inter', sans-serif;

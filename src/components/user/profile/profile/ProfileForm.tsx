@@ -1,6 +1,8 @@
+import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import "../styles/Profile.css";
-import { is } from "@react-three/fiber/dist/declarations/src/core/utils";
+import { Customer } from "../../../../router/types/authResponse";
+import { getCustomer, updateCustomer } from "../../../../router/authApi";
 
 type ProfileFormProps = {
   onChangePassword: () => void;
@@ -9,64 +11,164 @@ type ProfileFormProps = {
 export default function ProfileForm({ onChangePassword }: ProfileFormProps) {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const isDesktop = useMediaQuery({ minWidth: 768 });
+
+  const [customer, setCustomer] = useState<Customer | null>(null);
+  const [originalCustomer, setOriginalCustomer] = useState<Customer | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch customer info on mount
+useEffect(() => {
+  const fetchCustomer = async () => {
+    try {
+      setLoading(true);
+      const response = await getCustomer();
+
+      // If response.data holds the actual customer
+      const user = response.data ?? response;
+
+      const mappedCustomer: Customer = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        fullName: user.firstName, // use firstName as fullName
+        email: user.email,
+        phone: user.phone,
+        address: user.address,
+        imgURL: user.imgURL,
+      };
+
+      setCustomer(mappedCustomer);
+      setOriginalCustomer(mappedCustomer);
+    } catch (error) {
+      console.error("Failed to fetch customer:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchCustomer();
+}, []);
+
+  // Handle input change
+  const handleChange = (field: keyof Customer, value: string) => {
+    setCustomer((prev) => (prev ? { ...prev, [field]: value } : prev));
+  };
+
+  // Save to API
+  const handleSave = async () => {
+    if (!customer) return;
+    try {
+      const payload = {
+        firstName: customer.fullName, // full name mapped
+        lastName: "",
+        phoneNumber: customer.phone,
+        gender: 0,
+        address: customer.address,
+        imgURL: customer.imgURL || "",
+      };
+
+      const updated = await updateCustomer(payload);
+      setCustomer(updated);
+      setOriginalCustomer(updated);
+      alert("Cập nhật thành công!");
+    } catch (err) {
+      console.error("Update failed:", err);
+      alert("Cập nhật thất bại!");
+    }
+  };
+
+  // Cancel edits
+  const handleCancel = () => {
+    setCustomer(originalCustomer);
+  };
+
+  if (loading || !customer) return <div>Đang tải...</div>;
+
+  // Shared form fields
+  const renderFormFields = () => (
+    <>
+      <input
+        placeholder="Tên người dùng"
+        className="full-width"
+        value={customer.fullName}
+        onChange={(e) => handleChange("fullName", e.target.value)}
+      />
+
+      <div className="profile-layout">
+        <input
+          placeholder="Số điện thoại"
+          className="p1"
+          value={customer.phone}
+          onChange={(e) => handleChange("phone", e.target.value)}
+        />
+        <input placeholder="Dd/mm/yy" className="p2" disabled />
+      </div>
+
+      <input
+        placeholder="Email"
+        className="full-width"
+        value={customer.email}
+        readOnly
+      />
+
+      <input
+        placeholder="Địa chỉ"
+        className="full-width"
+        value={customer.address}
+        onChange={(e) => handleChange("address", e.target.value)}
+      />
+    </>
+  );
+
   return (
     <div className="profile-form">
       <h2>Thông tin cá nhân</h2>
+
       <div className="profile-form-show">
-        {isDesktop &&
-        <>
-        <div className="profile-row">
-          <div className="avatar"></div>
-          <button className="d-btn d-btn-font"><span>Tải ảnh lên </span></button>
-        </div>
-
-        <div className="form-fields">
-          <div className="profile-layout">
-          <input placeholder="Họ" className="p1"/>
-          <input placeholder="Tên" className="p2"/>
-          </div>
-
-          <div className="profile-layout">
-          <input placeholder="Số điện thoại" className="p1"/>
-          <input placeholder="Dd/mm/yy" className="p2"/>
-          </div>
-
-          <input placeholder="Email" className="full-width" />
-          <input placeholder="Địa chỉ" className="full-width" />
-        </div>
+        {isDesktop && (
+          <>
+            <div className="profile-row">
+              <div className="avatar">
+                {customer.imgURL && <img src={customer.imgURL} alt="Avatar" />}
+              </div>
+              <button className="d-btn d-btn-font">
+                <span>Tải ảnh lên</span>
+              </button>
+            </div>
+            <div className="form-fields">{renderFormFields()}</div>
           </>
-          } 
+        )}
       </div>
+
       <div className="profile-form-show">
-        {isMobile && <>
-        <div className="profile-row">
-          <div className="profile-mobile-display">
-            <div className="p-mobile-avatar">
-              <div className="avatar"></div>
-              <button className="d-btn d-btn-font"><span>Tải ảnh lên</span></button>
+        {isMobile && (
+          <>
+            <div className="profile-row">
+              <div className="profile-mobile-display">
+                <div className="p-mobile-avatar">
+                  <div className="avatar">
+                    {customer.imgURL && <img src={customer.imgURL} alt="Avatar" />}
+                  </div>
+                  <button className="d-btn d-btn-font">
+                    <span>Tải ảnh lên</span>
+                  </button>
+                </div>
+                <div className="form-fields">{renderFormFields()}</div>
+              </div>
             </div>
-
-            <div className="form-fields">
-              <input placeholder="Họ" className="p1" />
-              <input placeholder="Tên" className="p2" />
-              <input placeholder="Số điện thoại" className="p1" />
-              <input placeholder="Dd/mm/yy" className="p2" />
-            </div>
-          </div>
-
-          <div className="form-fields">
-            <input placeholder="Email" className="full-width" />
-            <input placeholder="Địa chỉ" className="full-width" />
-          </div>
-        </div>
-        </>}
+          </>
+        )}
       </div>
+
       <div className="profile-form-actions">
-        <button className="d-btn d-btn-font" onClick={onChangePassword}><span>Tạo mật khẩu mới</span></button>
-        <button className="d-btn d-btn-font"><span>Lưu</span></button>
-        <button className="d-btn d-btn-font"><span>Hủy</span></button>
+        <button className="d-btn d-btn-font" onClick={onChangePassword}>
+          <span>Tạo mật khẩu mới</span>
+        </button>
+        <button className="d-btn d-btn-font" onClick={handleSave}>
+          <span>Lưu</span>
+        </button>
+        <button className="d-btn d-btn-font" onClick={handleCancel}>
+          <span>Hủy</span>
+        </button>
       </div>
     </div>
   );
 }
-

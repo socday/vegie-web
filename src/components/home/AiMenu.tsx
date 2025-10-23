@@ -6,7 +6,7 @@ export default function AiMenu () {
             <div className="ai-menu-page-container">
                 <div className="ai-menu-word">
                     <h2>AI Menu</h2>
-                    <span>Hãy đoán xem hôm nay </span> <span>chúng ta có gì nào?<br/></span>
+                    <span>Hãy đoán xem hôm nay chúng ta có gì nào?<br/></span>
                     <a href="/today-menu" className="circle-btn">
                     <span>?</span></a>
                 </div>

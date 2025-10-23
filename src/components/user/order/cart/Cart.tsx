@@ -31,12 +31,12 @@ export default function Cart() {
  
   const handleQuantityChange = async (id: string, newQty: number) => {  if (!userId) return ("Ko lay duoc userid");
   try {
-    newQty = 1;
+    const newQtyFake = 1;
     console.log("Updating item:", id, "to quantity:", newQty, "name", items.find(i => i.id === id)?.name);
-    await updateCartItem(userId, id, newQty);
-    setItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, initialQuantity: newQty } : item
+    await updateCartItem(userId, id, newQtyFake);
+    setItems(prev =>
+      prev.map(item =>
+        item.id === id ? { ...item, quantity: newQty } : item // use "quantity", not "initialQuantity"
       )
     );
   } catch (err) {
@@ -77,10 +77,9 @@ export default function Cart() {
 
       <div className="cart-checkout-page">
         <CartCheckout
-  items={items}
-  mode="checkout"
-/>
-
+          items={items}
+          mode="checkout"
+        />
       </div>
     </div>
   );

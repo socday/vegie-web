@@ -40,6 +40,7 @@
 
 .divider {
   width: 2px;
+  height: 100%;
   background-color: white;
 }
 
@@ -63,7 +64,6 @@
 }
 
 .section-title {
-  margin-top: 1rem;
   margin-bottom: 0.3rem;
   color: white;
   font-size: 0.875rem;
@@ -74,7 +74,7 @@ ul {
   list-style-type: disc;
   padding-left: 1.5rem;
   margin-top: 0.3rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
 }
 
 li {

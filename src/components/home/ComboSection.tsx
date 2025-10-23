@@ -17,7 +17,7 @@ export default function ComboSection() {
           {/* First card */}
           <div
             className="package-card"
-            onClick={() => navigate("/weekly-package")}
+            onClick={() => navigate("/combo/single")}
             style={{ cursor: "pointer" }}
           >
             <div className="package-front">
@@ -36,11 +36,10 @@ export default function ComboSection() {
               </div>
             </div>
           </div>
-
           {/* Second card */}
           <div
             className="package-card"
-            onClick={() => navigate("/monthly-package")}
+            onClick={() => navigate("/combo/weekly")}
             style={{ cursor: "pointer" }}
           >
             <div className="package-front">

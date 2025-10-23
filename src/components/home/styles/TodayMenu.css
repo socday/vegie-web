@@ -4,8 +4,8 @@
 }
 
 .today-menu-container {
-    margin-left: auto;
-    width: 60%;
+    margin-left: 10%;
+    width: 100%;
     margin-top: 2rem;
     display: flex;
     flex-direction: column;
@@ -13,15 +13,39 @@
 }
 
 .today-menu-word span {
+    font-weight: 600;
+}
+
+.today-menu-word-cooking p{
+    margin-bottom: 0;
+}
+.today-menu-word-form {
+    display: flex;
+    flex-direction: row;
+    width:100%;
+    gap: 20%;
+}
+
+
+.today-menu-word-cooking,
+.today-menu-word-ingredient {
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+}
+.today-menu-word span {
     font-size: 1.2rem;
     color: #27600B;
     margin-bottom: 1rem;
 }
-    ul,
-    p,
-    h3,
-    div,
-    li {
+.today-menu-word-cooking span{
+    margin:0;
+}
+.today-menu-word ul,
+.today-menu-word    p,
+    .today-menu-word h3,
+    .today-menu-word div,
+    .today-menu-word li {
         color: #27600B;
     }
 .today-menu-word {

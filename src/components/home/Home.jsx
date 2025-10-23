@@ -95,7 +95,6 @@ export default function Home() {
           </filter>
         </defs>
       </svg>
-      <div className='normal-spacing'></div> 
       <div className="home-page-container">
         <section className='hero-section'>
           {isDesktop && 
@@ -157,9 +156,9 @@ export default function Home() {
                 alt="Left Hand"
                 className="sheep-accessory sheep-hand-left"
               />
-              <button className="gift-box-button">Gift Box</button>
-              <button className="blind-box-button">Blind Box</button>
-              <button className="detox-box-button">Detox Box</button>
+              <button  onClick={() => navigate("/fruit-selection")} className="gift-box-button">Gift Box</button>
+              <button  onClick={() => navigate("/blind-box")} className="blind-box-button">Blind Box</button>
+              <button  onClick={() => navigate("/ai-menu")} className="detox-box-button">Ai Menu</button>
             </div>
           </div>
           </>}

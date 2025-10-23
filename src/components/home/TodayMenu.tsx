@@ -45,9 +45,6 @@ export default function TodayMenu() {
       <div className="today-menu-container">
         <div className="today-menu-word">
           <h2 className="head2">Thực đơn hôm nay</h2>
-          <span>Chúng ta có gì nào?<br /></span>
-
-
           {loading ? (
             <p>Đang tải thực đơn hôm nay...</p>
           ) : error ? (
@@ -58,28 +55,35 @@ export default function TodayMenu() {
             <>
               <h3>{recipe.dishName}</h3>
               <p>{recipe.description}</p>
-              <div>
-                Nguyên liệu:
-                <ul style={{ listStyleType: "none"}}>
-                    {recipe.ingredients.map((item, index) => (
-                    <li key={index} >
-                       - {item}
-                    </li>
-                    ))}
-                </ul>
+              <div className="today-menu-word-form">
+
+                <div className="today-menu-word-ingredients">
+                  <span>Nguyên liệu:
+                    </span>
+                  <ul style={{ listStyleType: "none"}}>
+                      {recipe.ingredients.map((item, index) => (
+                      <li key={index} >
+                        - {item}
+                      </li>
+                      ))}
+                  </ul>
                 </div>
-                <div>
-                Hướng dẫn vào bếp:
-                <ul style={{ listStyleType: "none"}}>
-                    {recipe.instructions.map((item, index) => (
-                    <li key={index} >
-                       - {item}
-                    </li>
-                    ))}
-                </ul>
+                <div className="today-menu-word-cooking">
+                  <span>
+                    Hướng dẫn vào bếp:</span>
+                  <ul style={{ listStyleType: "none"}}>
+                      {recipe.instructions.map((item, index) => (
+                      <li key={index} >
+                        - {item}
+                      </li>
+                      ))}
+                  </ul>
+                </div>
+
               </div>
-              <p>Dự tính thời gian: {recipe.estimatedCookingTime}</p>
-              <p>Mẹo vào bếp: {recipe.cookingTips}</p>
+              <p className="today-menu-estimated"> <span>
+                Dự tính thời gian:</span> {recipe.estimatedCookingTime}</p>
+              <p><span>Mẹo vào bếp:</span> {recipe.cookingTips}</p>
               {/* <img
                 src={recipe.imageUrl}
                 alt={recipe.dishName}

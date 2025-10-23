@@ -34,6 +34,7 @@ export default function BlindBox() {
           item.id === id ? { ...item, initialQuantity: newQty } : item
         )
       );
+      alert(`Mua thành công ${box.name} x ${newQty}`);
     } catch (err) {
       console.error("Failed to update quantity:", err);
     }

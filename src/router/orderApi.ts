@@ -1,6 +1,6 @@
 // api/orderApi.ts
 import { api } from "./api"; 
-import { CreateOrderRequest, CreateOrderResponse, Order, OrderResponse, UpdateOrderStatusRequest, UpdateOrderStatusResponse } from "./types/orderResponse";
+import { CreateOrderRequest, CreateOrderResponse, Order, OrderResponse, PaymentLinkResponse, UpdateOrderStatusRequest, UpdateOrderStatusResponse } from "./types/orderResponse";
 
 export async function getOrder(): Promise<OrderResponse> {
   const token = localStorage.getItem("accessToken");
@@ -103,4 +103,25 @@ export async function updateOrdersStatus(payload: UpdateOrderStatusRequest): Pro
   });
 
   return res.data;
+}
+
+export async function getPaymentLink(orderId: string): Promise<PaymentLinkResponse> {
+  const token = localStorage.getItem("accessToken");
+  try {
+    const response = await fetch(`/api/Orders/${orderId}/payos/payment-link`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const result: PaymentLinkResponse = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Error fetching payment link:", error);
+    throw error;
+  }
 }

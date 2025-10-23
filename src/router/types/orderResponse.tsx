@@ -6,6 +6,15 @@ export type OrderDetail = {
   unitPrice: number;
 };
 
+
+export type ReviewOrder = {
+  orderId: string;
+  serviceQualityRating: number;
+  productQualityRating: number;
+  content: string;
+};
+
+
 export type Order = {
   id: string;
   userId: string;
@@ -59,3 +68,17 @@ export type UpdateOrderStatusResponse = {
   message: string;
   exception: string | null;
 };
+
+export interface PaymentLinkResponse {
+  isSuccess: boolean;
+  data: {
+    paymentLinkId: string;
+    paymentUrl: string;
+    amount: number;
+    description: string;
+    orderCode: number;
+    status: string;
+  };
+  message: string;
+  exception: string | null;
+}

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../cart/styles/CartSummary.css";
 
 type CartItem = {
@@ -11,11 +12,33 @@ type CartItem = {
 type CartSummaryProps = {
   items: CartItem[];
   mode: "checkout" | "payment";
-  onCheckout?: (discountCode: string) => void;  // Make it optional with ?
+  onCheckout?: (discountCode: string) => void;
 };
 
 export default function CartCheckout({ items, mode, onCheckout }: CartSummaryProps) {
   const [discountCode, setDiscountCode] = useState("");
+  const navigate = useNavigate();
+  const isEmpty = items.length === 0;
+  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  const handleGoToPayment = () => {
+    if (isEmpty) {
+      alert("Giỏ hàng trống, vui lòng thêm sản phẩm trước khi tiếp tục.");
+      return;
+    }
+
+    // ✅ Store items in both navigation state and localStorage (for refresh safety)
+    localStorage.setItem("tempCart", JSON.stringify(items));
+    navigate("/thanh-toan", { state: { passedCart: items } });
+  };
+
+  const handleCheckoutClick = () => {
+    if (isEmpty) {
+      alert("Giỏ hàng trống, vui lòng thêm sản phẩm trước khi tiếp tục.");
+      return;
+    }
+    onCheckout?.(discountCode);
+  };
 
   return (
     <div className="cart-summary">
@@ -25,14 +48,12 @@ export default function CartCheckout({ items, mode, onCheckout }: CartSummaryPro
           <span>{item.price * item.quantity}</span>
         </div>
       ))}
-      
-      {mode === "payment" && (
-        <div className="cart-shipping cart-summary__row"></div>
-      )}
+
+      {mode === "payment" && <div className="cart-shipping cart-summary__row"></div>}
 
       <div className="cart-summary__row cart-summary__total">
         <span>Tổng</span>
-        <span>{items.reduce((sum, item) => sum + item.price * item.quantity, 0)}</span>
+        <span>{total}</span>
       </div>
 
       <div className="cart-summary__form">
@@ -47,12 +68,12 @@ export default function CartCheckout({ items, mode, onCheckout }: CartSummaryPro
             <span>Áp dụng</span>
           </button>
         </div>
-        
+
         {mode === "checkout" ? (
           <>
-            <a href="/thanh-toan" className="d-btn d-btn-font">
+            <button onClick={handleGoToPayment} className="d-btn d-btn-font">
               <span>Tiếp tục</span>
-            </a>
+            </button>
             <div className="cart-summary__or">
               <span>hoặc</span>
             </div>
@@ -62,8 +83,9 @@ export default function CartCheckout({ items, mode, onCheckout }: CartSummaryPro
           </>
         ) : (
           <>
-            <button 
-              onClick={() => onCheckout?.(discountCode)}  // Use optional chaining
+            <button
+              onClick={handleCheckoutClick}
+              disabled={isEmpty}
               className="d-btn d-btn-font"
             >
               <span>Tiếp tục</span>

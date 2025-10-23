@@ -3,11 +3,11 @@ import "../styles/Order.css";
 import OrderList from "./OrderList";
 import { getOrder } from "../../../../router/orderApi";
 import { transformApiOrders } from "../../../../mappers/OrderMapper";
-import { Order } from "./Order";
+import { Order } from "../../../../context/OrderContext";
 
 type Props = {
     orders: Order[];
-      onSwitchTab: (tab: "status" | "review" | "favorite") => void;
+    onSwitchTab: (tab: "status" | "review" | "favorite") => void;
 }
 export default function ReviewOrder({ orders, onSwitchTab }: Props) {
 
@@ -16,7 +16,7 @@ export default function ReviewOrder({ orders, onSwitchTab }: Props) {
         filter === "all" ? orders : orders.filter(order => order.status === filter);
     return (
         <div className="orders-list-items">
-            <OrderList orders={filteredOrders} review={true} />
+            <OrderList orders={filteredOrders} onSwitchTab={onSwitchTab} review={true} />
         </div>
     )
 }
