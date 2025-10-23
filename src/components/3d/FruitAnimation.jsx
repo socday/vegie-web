@@ -4,13 +4,13 @@ import { Box3 } from 'three';
 import * as THREE from 'three';
 import FruitModel from './fruits/FruitModel';
 
-// Component cho từng trái cây rơi - sử dụng FruitModel
-function FallingFruit({ fruitType, position, onComplete }) {
+// Component cho từng trái cây rơi - sử dụng FruitModel với quantity
+function FallingFruit({ fruitType, position, onComplete, quantity = 1 }) {
   const meshRef = useRef();
   const velocityRef = useRef(new THREE.Vector3(0, 0, 0));
   const [isFalling, setIsFalling] = useState(true);
   
-  console.log(' FallingFruit created for:', fruitType, 'at position:', position);
+  console.log(' FallingFruit created for:', fruitType, 'quantity:', quantity, 'at position:', position);
   
   useEffect(() => {
     if (meshRef.current) {
@@ -31,7 +31,7 @@ function FallingFruit({ fruitType, position, onComplete }) {
     
     // Debug position every 30 frames
     if (Math.floor(Date.now() / 100) % 3 === 0) {
-      console.log(` ${fruitType} position:`, {
+      console.log(` ${fruitType} (qty:${quantity}) position:`, {
         x: meshRef.current.position.x.toFixed(3),
         y: meshRef.current.position.y.toFixed(3),
         z: meshRef.current.position.z.toFixed(3),
@@ -42,7 +42,7 @@ function FallingFruit({ fruitType, position, onComplete }) {
     // Check if reached inside the box (y < 0.5) - rơi vào đáy hộp thực
     // 🔧 ĐIỀU CHỈNH ĐIỂM DỪNG: Thay đổi giá trị này để trái cây dừng ở độ cao khác nhau trong hộp
     if (meshRef.current.position.y < 0.5) {
-      console.log(` ${fruitType} reached inside box, stopping animation`);
+      console.log(` ${fruitType} (qty:${quantity}) reached inside box, stopping animation`);
       setIsFalling(false);
       // KHÔNG gọi onComplete - để trái cây tồn tại trong hộp
     }
@@ -52,6 +52,7 @@ function FallingFruit({ fruitType, position, onComplete }) {
     <group ref={meshRef}>
       <FruitModel 
         fruitType={fruitType}
+        quantity={quantity}
         position={[-5, 0, -25]}
         // 🔧 ĐIỀU CHỈNH KÍCH THƯỚC TRÁI CÂY: Thay đổi giá trị [15, 15, 15] để làm trái cây to/nhỏ hơn
         scale={[20, 20, 20]}
@@ -95,11 +96,11 @@ function BoxSizeCalculator({ onBoxSizeCalculated }) {
 }
 
 // Component chính cho animation trái cây - sử dụng BoxSizeCalculator để tính grid
-function FruitAnimation({ fruitType, isActive, onComplete, removeFruit }) {
+function FruitAnimation({ fruitType, isActive, onComplete, removeFruit, selectedFruits }) {
   const [fruits, setFruits] = useState([]);
   const [boxDimensions, setBoxDimensions] = useState({ width: 0.8, depth: 0.6 });
   
-  console.log(' FruitAnimation render:', { fruitType, isActive, fruitsCount: fruits.length });
+  console.log(' FruitAnimation render:', { fruitType, isActive, fruitsCount: fruits.length, selectedFruits });
   
   // Callback để nhận kích thước hộp thực
   const handleBoxSizeCalculated = (dimensions) => {
@@ -108,16 +109,19 @@ function FruitAnimation({ fruitType, isActive, onComplete, removeFruit }) {
   };
   
   useEffect(() => {
-    console.log(' FruitAnimation useEffect:', { fruitType, isActive });
-    if (isActive && fruitType) {
-      console.log(' Creating new fruit animation for:', fruitType);
+    console.log(' FruitAnimation useEffect:', { fruitType, isActive, selectedFruits });
+    if (isActive && fruitType && selectedFruits) {
+      console.log(' Creating fruit animations for:', fruitType, 'with quantity:', selectedFruits[fruitType]);
       
       // Sắp xếp tất cả trái cây nằm ngang theo chiều dài hộp (cùng một hàng)
       const fruitOrder = ['Cà rốt', 'Súp lơ', 'Bắp', 'Cà chua'];
       const fruitIndex = fruitOrder.indexOf(fruitType);
       
-      // Đếm số trái cây cùng loại hiện có
-      const sameTypeCount = fruits.filter(f => f.fruitType === fruitType).length;
+      // Lấy số lượng hiện tại của loại trái cây này (đã được cập nhật)
+      const currentQuantity = selectedFruits[fruitType] || 0;
+      
+      // Tính quantity cho trái cây mới (số lượng vừa được thêm)
+      const newFruitQuantity = currentQuantity;
       
       // Tính toán vị trí - tất cả nằm ngang theo chiều dài hộp
       // 🔧 ĐIỀU CHỈNH KÍCH THƯỚC VÙNG ĐẶT TRÁI CÂY: Thay đổi 0.7 để trái cây gần/xa mép hộp hơn
@@ -141,40 +145,109 @@ function FruitAnimation({ fruitType, isActive, onComplete, removeFruit }) {
       console.log(' Fruit positioning:', {
         fruitType,
         fruitIndex,
-        sameTypeCount,
+        currentQuantity,
+        newFruitQuantity,
         boxWidth: boxWidth.toFixed(3),
         boxDepth: boxDepth.toFixed(3),
         x: x.toFixed(3),
         y: y.toFixed(3),
         z: z.toFixed(3),
         position: startPosition,
-        layout: `Single row layout: ${fruitType} at position ${fruitIndex}`
+        layout: `Single row layout: ${fruitType} at position ${fruitIndex} with quantity ${newFruitQuantity}`
       });
       
-      // Thêm trái cây mới vào danh sách
-      const newFruit = {
-        id: Date.now(),
-        fruitType,
-        position: startPosition,
-        isFalling: true
-      };
+      // Kiểm tra xem đã có trái cây với quantity này chưa
+      const existingFruit = fruits.find(f => 
+        f.fruitType === fruitType && f.quantity === newFruitQuantity
+      );
       
+      if (!existingFruit) {
+        // Tạo trái cây mới với quantity tương ứng
+        const newFruit = {
+          id: Date.now(),
+          fruitType,
+          quantity: newFruitQuantity,
+          position: startPosition,
+          isFalling: true
+        };
+        
+        setFruits(prev => {
+          console.log(' Adding fruit to list:', newFruit);
+          return [...prev, newFruit];
+        });
+      } else {
+        console.log(' Fruit with quantity', newFruitQuantity, 'already exists, skipping creation');
+      }
+    }
+  }, [isActive, fruitType, boxDimensions, selectedFruits, fruits]);
+  
+  // Effect để sync trái cây với selectedFruits (hiển thị tất cả trái cây từ 1 đến số lượng đã chọn)
+  useEffect(() => {
+    if (selectedFruits) {
+      console.log(' Syncing fruits with selectedFruits:', selectedFruits);
+      
+      // Tạo danh sách trái cây cần có
+      const requiredFruits = [];
+      
+      Object.entries(selectedFruits).forEach(([fruitType, quantity]) => {
+        if (quantity > 0) {
+          // Tạo trái cây từ 1 đến quantity
+          for (let i = 1; i <= quantity; i++) {
+            requiredFruits.push({
+              fruitType,
+              quantity: i,
+              id: `${fruitType}_${i}`,
+              position: new THREE.Vector3(0, 1.5, 0), // Position sẽ được tính lại
+              isFalling: false
+            });
+          }
+        }
+      });
+      
+      // Cập nhật danh sách trái cây
       setFruits(prev => {
-        console.log(' Adding fruit to list:', newFruit);
-        return [...prev, newFruit];
+        // Xóa tất cả trái cây cũ
+        const newFruits = [];
+        
+        // Thêm trái cây mới
+        requiredFruits.forEach(requiredFruit => {
+          const existingFruit = prev.find(f => 
+            f.fruitType === requiredFruit.fruitType && f.quantity === requiredFruit.quantity
+          );
+          
+          if (existingFruit) {
+            // Giữ nguyên trái cây đã có
+            newFruits.push(existingFruit);
+          } else {
+            // Tạo trái cây mới
+            const fruitOrder = ['Cà rốt', 'Súp lơ', 'Bắp', 'Cà chua'];
+            const fruitIndex = fruitOrder.indexOf(requiredFruit.fruitType);
+            
+            const boxWidth = boxDimensions.width * 0.7;
+            const x = -boxWidth/2 + (fruitIndex + 0.5) * (boxWidth / 4);
+            const z = 0;
+            const y = 1.5;
+            
+            newFruits.push({
+              ...requiredFruit,
+              id: Date.now() + Math.random(),
+              position: new THREE.Vector3(x, y, z),
+              isFalling: true
+            });
+          }
+        });
+        
+        console.log(' Synced fruits:', newFruits.map(f => `${f.fruitType} ${f.quantity}`));
+        return newFruits;
       });
     }
-  }, [isActive, fruitType, boxDimensions]);
+  }, [selectedFruits, boxDimensions]);
   
-  // Effect để xử lý remove fruit
+  // Effect để xử lý remove fruit (đơn giản hóa vì đã có sync effect)
   useEffect(() => {
     if (removeFruit && removeFruit.fruitType) {
-      console.log(' Removing fruit:', removeFruit.fruitType);
-      setFruits(prev => {
-        const filtered = prev.filter(fruit => fruit.fruitType !== removeFruit.fruitType);
-        console.log(' Remaining fruits:', filtered.length);
-        return filtered;
-      });
+      console.log(' Remove fruit triggered:', removeFruit.fruitType, 'quantity:', removeFruit.quantity);
+      // Logic xóa sẽ được xử lý bởi sync effect ở trên
     }
   }, [removeFruit]);
   
@@ -198,6 +271,7 @@ function FruitAnimation({ fruitType, isActive, onComplete, removeFruit }) {
           <FallingFruit
             key={fruit.id}
             fruitType={fruit.fruitType}
+            quantity={fruit.quantity}
             position={fruit.position}
             onComplete={() => handleFruitComplete(fruit.id)}
           />

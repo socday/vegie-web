@@ -139,11 +139,12 @@ class ErrorBoundary extends React.Component {
 }
 
 // Component chính
-function OpenBox3DViewer({ currentBox, fruitAnimation, removeFruit }) {
+function OpenBox3DViewer({ currentBox, fruitAnimation, removeFruit, selectedFruits }) {
   const [obj3D, setObj3D] = useState(null);
   
-  // Debug: Log để kiểm tra currentBox
+  // Debug: Log để kiểm tra currentBox và selectedFruits
   console.log('OpenBox3DViewer received currentBox:', currentBox);
+  console.log('OpenBox3DViewer received selectedFruits:', selectedFruits);
 
   return (
     <ErrorBoundary currentBox={currentBox}>
@@ -175,6 +176,7 @@ function OpenBox3DViewer({ currentBox, fruitAnimation, removeFruit }) {
               isActive={fruitAnimation.isActive}
               onComplete={fruitAnimation.onComplete}
               removeFruit={removeFruit}
+              selectedFruits={selectedFruits}
             />
           )}
           

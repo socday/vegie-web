@@ -20,6 +20,7 @@ interface FruitAnimationState {
 
 interface RemoveFruitState {
   fruitType: string;
+  quantity: number;
 }
 
 export default function FruitSelection() {
@@ -48,7 +49,7 @@ export default function FruitSelection() {
     // --- NEW LOGIC: if below 0, trigger remove animation and reset to 0 ---
     if (newQuantity < 0) {
       console.log(`Removing all ${fruit} from box because quantity < 0`);
-      setRemoveFruit({ fruitType: fruit });
+      setRemoveFruit({ fruitType: fruit, quantity: prev[fruit] });
       setTimeout(() => setRemoveFruit(null), 100);
 
       // Reset to 0 to avoid negative count
@@ -57,7 +58,8 @@ export default function FruitSelection() {
 
     // --- Add fruit animation when increasing ---
     if (change > 0) {
-      console.log('Triggering fruit animation for:', fruit);
+      console.log('Triggering fruit animation for:', fruit, 'new quantity:', newQuantity);
+      // Tạo trái cây mới với quantity mới (không xóa trái cây cũ)
       setFruitAnimation({
         fruitType: fruit,
         isActive: true,
@@ -70,8 +72,8 @@ export default function FruitSelection() {
 
     // --- Remove fruit animation when decreasing normally ---
     if (change < 0 && newQuantity >= 0) {
-      console.log('Triggering single fruit removal for:', fruit);
-      setRemoveFruit({ fruitType: fruit });
+      console.log('Triggering single fruit removal for:', fruit, 'quantity:', prev[fruit]);
+      setRemoveFruit({ fruitType: fruit, quantity: prev[fruit] });
       setTimeout(() => setRemoveFruit(null), 100);
     }
 
@@ -136,6 +138,7 @@ export default function FruitSelection() {
                 currentBox={selectedBox}
                 fruitAnimation={fruitAnimation}
                 removeFruit={removeFruit}
+                selectedFruits={selectedFruits}
               />
             </div>
             <button className="continue-btn" onClick={handleContinue}>Tiếp tục</button>
