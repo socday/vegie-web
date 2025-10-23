@@ -64,6 +64,8 @@ function AppContent() {
     <>
       {isAdminRoute ? null : <NavBar key={`nav-${authTick}`} />}
       <ScrollToTop />
+      <OrderProvider>
+
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/vegie-care' element={<Home />} />
@@ -131,6 +133,7 @@ function AppContent() {
             <Route path='payments' element={<div />} />
           </Route>
         </Routes>
+      </OrderProvider>
       {isAdminRoute ? null : <Footer key={`footer-${authTick}`} />}
       <FooterMobile />
     </>

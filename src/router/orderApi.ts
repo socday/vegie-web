@@ -108,18 +108,18 @@ export async function updateOrdersStatus(payload: UpdateOrderStatusRequest): Pro
 export async function getPaymentLink(orderId: string): Promise<PaymentLinkResponse> {
   const token = localStorage.getItem("accessToken");
   try {
-    const response = await fetch(`/api/Orders/${orderId}/payos/payment-link`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-      },
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    const result: PaymentLinkResponse = await response.json();
-    return result;
+    const response = await api.post(
+      `/Orders/${orderId}/payos/payment-link`, // URL
+      {}, // no body payload
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
   } catch (error) {
     console.error("Error fetching payment link:", error);
     throw error;

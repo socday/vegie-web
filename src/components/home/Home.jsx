@@ -208,7 +208,7 @@ export default function Home() {
                       <p className="ai-menu-description">
                           Bạn là fan của món luộc thanh đạm, hay team mê món xào đậm đà? Chỉ cần vài bước khai báo nhanh (hoặc liên kết tài khoản với hành vi mua sắm), Vegie AI sẽ ghi nhớ “gu ăn” của bạn để gợi ý món phù hợp.
                       </p>
-                      <button className="ai-menu-details-button">Xem chi tiết</button>
+                      <button onClick={ () => navigate("/ai-menu")} className="ai-menu-details-button">Xem chi tiết</button>
                   </div>
                 </div>
             </div>

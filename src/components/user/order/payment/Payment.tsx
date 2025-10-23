@@ -48,8 +48,7 @@ const handleCheckout = async (discountCode: string) => {
         alert("Lỗi khi tạo liên kết thanh toán.");
       }
     } else {
-      // Default case: other payment method
-      // navigate("/noti/order-success");
+      navigate("/noti/order-success");
     }
 
   } catch (error) {
