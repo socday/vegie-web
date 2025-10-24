@@ -46,9 +46,6 @@ export default function Box3D() {
             </button>
           </div>
 
-          {/* ✅ Show selected fruits */}
-
-
           <button className="continue-btn" onClick={handleContinue}>
             Tiếp tục
           </button>
