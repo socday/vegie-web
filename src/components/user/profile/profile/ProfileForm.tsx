@@ -29,7 +29,7 @@ useEffect(() => {
       const mappedCustomer: Customer = {
         firstName: user.firstName,
         lastName: user.lastName,
-        fullName: user.firstName, // use firstName as fullName
+        fullName: user.fullName, 
         email: user.email,
         phone: user.phone,
         address: user.address,

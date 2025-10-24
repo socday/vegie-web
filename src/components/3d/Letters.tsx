@@ -1,26 +1,41 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../../css/FruitSelection.css";
 import "./styles/letters.css";
+
 // Import all images statically
 import letter1 from "../../assets/images/letter1.png";
 import letter2 from "../../assets/images/letter2.png";
 import letter3 from "../../assets/images/letter3.png";
 
+// Lookup object
 // Create a lookup object
-const letters = {
+const letters: Record<number, string> = {
   1: letter1,
   2: letter2,
   3: letter3,
 };
+// Define type for location state
+interface LettersLocationState {
+  selectedBox?: number;
+  selectedFruits: Record<string, number>;
+}
 
 export default function Letters() {
   const navigate = useNavigate();
+  const location = useLocation() as { state: LettersLocationState };
+
+  // Get passed state safely
+  const selectedBox = location.state?.selectedBox || 1;
+  const selectedFruits = location.state?.selectedFruits ;
+
+    console.log("Selected fruits:", selectedFruits);
+
   const [message, setMessage] = useState("");
   const [selectedImage, setSelectedImage] = useState(1); // default image 1
 
   // Handle text change
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
   };
 
@@ -32,11 +47,16 @@ export default function Letters() {
     }
 
     console.log("User message:", message);
-    navigate("/finish-giftbox", { state: { message, selectedImage } });
+    console.log("Selected box:", selectedBox);
+    console.log("Selected fruits:", selectedFruits);
+
+    navigate("/finish-giftbox", {
+      state: { message, selectedImage, selectedBox, selectedFruits },
+    });
   };
 
   // Handle number button click
-  const handleImageChange = (num) => {
+  const handleImageChange = (num: number) => {
     setSelectedImage(num);
   };
 
@@ -66,31 +86,32 @@ export default function Letters() {
             />
           </div>
 
-          {/* === New number buttons === */}
+          {/* === Number buttons === */}
           <div className="number-button-group">
             {[1, 2, 3].map((num) => (
               <button
                 key={num}
-                className={`number-btn ${
-                  selectedImage === num ? "active" : ""
-                }`}
+                className={`number-btn ${selectedImage === num ? "active" : ""}`}
                 onClick={() => handleImageChange(num)}
               >
                 {num}
               </button>
             ))}
-          </div>
+          </div>    
         </div>
 
         {/* RIGHT SIDE */}
         <div className="fruit-selection-right">
           <div className="letter-display-area">
             <img
-            src={letters[selectedImage]}
-            alt={`Letter Style ${selectedImage}`}
-            className="letter-preview-image"
+              src={letters[selectedImage]}
+              alt={`Letter Style ${selectedImage}`}
+              className="letter-preview-image"
             />
-            <button className="letter-continue-btn d-btn d-btn-font" onClick={handleContinue}>
+            <button
+              className="letter-continue-btn d-btn d-btn-font"
+              onClick={handleContinue}
+            >
               <span>Tiếp tục</span>
             </button>
           </div>

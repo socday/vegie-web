@@ -84,8 +84,12 @@ export default function FruitSelection() {
 
 
   const handleContinue = () => {
-    console.log('Selected fruits:', selectedFruits);
-    navigate('/box-3d');
+    const totalSelected = Object.values(selectedFruits).reduce((sum, qty) => sum + qty, 0);
+    if (totalSelected <= 0) {
+      alert("Bạn hãy chọn ít nhất 1 loại rau củ nhé");
+      return;
+    }
+    navigate('/box-3d', { state: { selectedFruits } });
   };
 
   return (

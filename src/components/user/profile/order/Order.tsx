@@ -5,7 +5,7 @@ import ReviewOrderForm from "./ReviewOrderForm";
 import "../styles/Order.css";
 import { useOrders } from "../../../../context/OrderContext";
 import { useEffect } from "react";
-import { updateOrdersStatus } from "../../../../router/orderApi";
+import { cancelOrder, updateOrdersStatus } from "../../../../router/orderApi";
 
 export default function Order() {
   const { orders, refreshOrders } = useOrders();
@@ -27,17 +27,14 @@ const handleTabChange = (tab: "status" | "review" | "favorite", id?: string) => 
     if (orders.length === 0) refreshOrders();
   }, [orders]);
 
-const handleCancelOrder = async (id: string) => {
-  const arr = new Array<string>(1); // creates [empty × 1]
-arr[0] = id;
-  try {
-    await updateOrdersStatus({
-      orderIds: arr, 
-      status: 4,     
-    });
-    console.log("Order cancelled successfully");
-  } catch (error) {
-    console.error("Failed to cancel order:", error);
+  const { cancelLocalOrder } = useOrders();
+
+  const handleCancelOrder = async (id: string) => {
+  const res = await cancelLocalOrder(id);
+  if (res.isSuccess) {
+    alert("Đơn hàng đã được hủy thành công.");
+  } else {
+    alert("Không thể hủy đơn hàng. Vui lòng thử lại.");
   }
 };
 

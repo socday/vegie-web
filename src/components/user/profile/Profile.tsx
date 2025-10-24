@@ -8,10 +8,12 @@ import Orders from "./order/Order";
 import Subscription from "./subscription/Subscription";
 import PersonalHealth from "./personal-health/PersonalHealth";
 import { useMediaQuery } from "react-responsive";
+import { useOrders } from "../../../context/OrderContext";
 
 export default function Profile() {
   const [searchParams, setSearchParams] = useSearchParams();
   const section = searchParams.get("section") || "profile";
+  const { refreshOrders } = useOrders();
 
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const isDesktop = useMediaQuery({ minWidth: 768 });
@@ -21,7 +23,6 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    // Ensure default section exists
     if (!searchParams.get("section")) {
       setSearchParams({ section: "profile" });
     }

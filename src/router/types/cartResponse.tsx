@@ -16,4 +16,7 @@ export type CartCheckOut = {
   paymentMethod: number;
   deliveryMethod: number;
   discountCode: string;
+  address: string;
+  deliveryTo: string;
+  phoneNumber: string;
 }

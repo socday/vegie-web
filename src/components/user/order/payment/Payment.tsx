@@ -10,7 +10,7 @@ import { getPaymentLink } from "../../../../router/orderApi";
 export default function Payment({ passedCart }: { passedCart?: Item[] }) {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
-  const [paymentMethod, setPaymentMethod] = useState<number>(2); // default 2 = VNPay
+  const [paymentMethod, setPaymentMethod] = useState<number>(2); 
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -27,16 +27,15 @@ const handleCheckout = async (discountCode: string) => {
       paymentMethod, // dynamically chosen by user
       deliveryMethod: 0,
       discountCode,
+      address:"",
+      deliveryTo: "",
+      phoneNumber: ""
     };
 
     const response = await cartCheckout(userId, checkoutData);
-    console.log("Checkout success:", response.data);
-    console.log("PAYMENT METHOD IS : ", paymentMethod);
     if (paymentMethod === 2 && response.data.data.id) {
       try {
-        console.log("DANG TAO LINK NE");
         const paymentRes = await getPaymentLink(response.data.data.id);
-        console.log("PAYMENT RES: ", paymentRes);
         if (paymentRes.isSuccess && paymentRes.data.paymentUrl) {
           // redirect to PayOS payment page
           window.location.href = paymentRes.data.paymentUrl;
@@ -44,7 +43,6 @@ const handleCheckout = async (discountCode: string) => {
           alert("Không thể tạo liên kết thanh toán.");
         }
       } catch (err) {
-        console.error("Failed to create payment link:", err);
         alert("Lỗi khi tạo liên kết thanh toán.");
       }
     } else {
