@@ -9,6 +9,7 @@ import Subscription from "./subscription/Subscription";
 import PersonalHealth from "./personal-health/PersonalHealth";
 import { useMediaQuery } from "react-responsive";
 import { useOrders } from "../../../context/OrderContext";
+import LogoutButton from "./logout/LogoutButton";
 
 export default function Profile() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -45,6 +46,7 @@ export default function Profile() {
             {section === "orders" && <Orders />}
             {section === "services" && <Subscription />}
             {section === "health" && <PersonalHealth />}
+            {section === "logout" && <LogoutButton />}
             {section === "change-password" && (
               <ProfileChangePassword
                 onCancel={() => handleChangeSection("profile")}
@@ -77,6 +79,7 @@ export default function Profile() {
               {section === "orders" && <Orders />}
               {section === "services" && <Subscription />}
               {section === "health" && <PersonalHealth />}
+            {section === "logout" && <LogoutButton />}
               {section === "change-password" && (
                 <ProfileChangePassword
                   onCancel={() => handleChangeSection("profile")}
