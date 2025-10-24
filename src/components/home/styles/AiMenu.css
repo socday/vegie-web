@@ -93,6 +93,11 @@ text-decoration: none;;
   color:   white;
   text-decoration: none;
 }
+@media screen and (min-width: 1800px) {
+  .ai-menu-word h2 {
+    margin-bottom :1rem;
+  }
+}
 
 @media screen and (max-width: 768px) {
   .ai-menu-page-container {

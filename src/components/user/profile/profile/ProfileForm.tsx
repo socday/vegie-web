@@ -92,15 +92,12 @@ useEffect(() => {
         onChange={(e) => handleChange("fullName", e.target.value)}
       />
 
-      <div className="profile-layout">
         <input
           placeholder="Số điện thoại"
-          className="p1"
+          className="full-width"
           value={customer.phone}
           onChange={(e) => handleChange("phone", e.target.value)}
         />
-        <input placeholder="Dd/mm/yy" className="p2" disabled />
-      </div>
 
       <input
         placeholder="Email"
