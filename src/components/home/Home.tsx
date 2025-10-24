@@ -61,10 +61,10 @@ export default function Home() {
   const handleNavigate = (id: number) => {
     switch (id) {
       case 1:
-        navigate("/san-pham");
+        navigate("/blind-box");
         break;
       case 2:
-        navigate("/san-pham");
+        navigate("/fruit-selection");
         break;
       default:
         navigate("/");
