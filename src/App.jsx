@@ -64,8 +64,11 @@ function AppContent() {
     <>
       {isAdminRoute ? null : <NavBar key={`nav-${authTick}`} />}
       <ScrollToTop />
+      <OrderProvider>
+
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/trang-chu' element={<Home />} />
           <Route path='/vegie-care' element={<Home />} />
           <Route path='/gioi-thieu' element={<Home />} />
           <Route path='/dang-nhap' element={<Login />} />
@@ -78,9 +81,7 @@ function AppContent() {
           <Route path='/weekly-package' element={<WeeklyPackage />} />
           <Route path='/blind-box' element={<BlindBox />} />
           <Route path='/box-3d' element={
-            <PrivateRoute>
               <Box3D />
-            </PrivateRoute>
           } />
           <Route path='/profile-test' element={<Profile />} />
           <Route path='/my-weekly-package' element={<MyWeeklyPackage />} />
@@ -131,6 +132,7 @@ function AppContent() {
             <Route path='payments' element={<div />} />
           </Route>
         </Routes>
+      </OrderProvider>
       {isAdminRoute ? null : <Footer key={`footer-${authTick}`} />}
       <FooterMobile />
     </>

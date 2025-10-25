@@ -48,6 +48,9 @@ export type CreateOrderRequest = {
   discountCode?: string | null;
   deliveryMethod: number;
   paymentMethod: number;
+  address: string;
+  deliveryTo: string;
+  phoneNumber: string;
 };
 
 export type CreateOrderResponse = {
@@ -81,4 +84,25 @@ export interface PaymentLinkResponse {
   };
   message: string;
   exception: string | null;
+}
+
+// types/giftBox.ts
+export interface CreateGiftBoxRequest {
+  userId: string;
+  vegetables: string[];
+  greetingMessage: string;
+  quantity: number;
+  discountCode?: string;
+  deliveryMethod: number;
+  paymentMethod: number;
+  address: string;
+  deliveryTo: string;
+  phoneNumber: string;
+}
+
+export interface CreateGiftBoxResponse {
+  isSuccess: boolean;
+  message: string;
+  data?: any;
+  exception?: string | null;
 }

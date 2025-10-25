@@ -91,6 +91,7 @@ input{
   max-width: 900px;
   overflow: visible;
   box-sizing: border-box;
+  color:#27600B;
 }
 
 input:hover{

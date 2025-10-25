@@ -10,10 +10,26 @@ export default function ProfileSidebar() {
     { key: "orders", label: "Đơn hàng" },
     { key: "services", label: "Gói dịch vụ" },
     { key: "health", label: "Phiếu sức khỏe" },
+    { key: "logout", label: "Đăng xuất" },
   ];
 
   const handleSelect = (key: string) => {
-    setSearchParams({ section: key });
+    if (key === "logout") {
+      handleLogout();
+    } else {
+      setSearchParams({ section: key });
+    }
+  };
+
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Bạn có chắc chắn muốn đăng xuất không?");
+    if (confirmLogout) {
+      localStorage.clear(); // Xoá toàn bộ dữ liệu trong localStorage
+      alert("Đăng xuất thành công!");
+      window.location.href = "/dang-nhap"; // Chuyển hướng về trang đăng nhập
+    } else {
+      alert("Huỷ đăng xuất.");
+    }
   };
 
   return (

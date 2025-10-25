@@ -45,7 +45,7 @@ export default function CartCheckout({ items, mode, onCheckout }: CartSummaryPro
       {items.map((item) => (
         <div key={item.id} className="cart-summary__row">
           <span className="cart-summary-name">{item.name}</span>
-          <span>{item.price * item.quantity}</span>
+          <span>{(item.price * item.quantity).toLocaleString()} đ</span>
         </div>
       ))}
 
@@ -53,7 +53,7 @@ export default function CartCheckout({ items, mode, onCheckout }: CartSummaryPro
 
       <div className="cart-summary__row cart-summary__total">
         <span>Tổng</span>
-        <span>{total}</span>
+        <span>{total.toLocaleString()} đ</span>
       </div>
 
       <div className="cart-summary__form">

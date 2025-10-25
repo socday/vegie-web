@@ -25,7 +25,7 @@
   background-color: #27600B; /* dark green background */
   color: #ffffff;
   border-radius: 3rem;
-  padding: 3rem;
+  padding: 2.8rem;
   gap: 3rem;
   
 }
@@ -38,6 +38,9 @@
   justify-content: center;
 }
 
+.view-combo-single-right {
+  flex: 1.2;
+}
 .divider {
   width: 2px;
   height: 100%;

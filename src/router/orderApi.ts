@@ -1,6 +1,6 @@
 // api/orderApi.ts
 import { api } from "./api"; 
-import { CreateOrderRequest, CreateOrderResponse, Order, OrderResponse, PaymentLinkResponse, UpdateOrderStatusRequest, UpdateOrderStatusResponse } from "./types/orderResponse";
+import { CreateGiftBoxRequest, CreateGiftBoxResponse, CreateOrderRequest, CreateOrderResponse, Order, OrderResponse, PaymentLinkResponse, UpdateOrderStatusRequest, UpdateOrderStatusResponse } from "./types/orderResponse";
 
 export async function getOrder(): Promise<OrderResponse> {
   const token = localStorage.getItem("accessToken");
@@ -20,7 +20,6 @@ export async function getOrder(): Promise<OrderResponse> {
   return res.data;
 }
 
-// GET /api/Orders (admin or global list)
 export async function getOrders(): Promise<OrderResponse> {
   const token = localStorage.getItem("accessToken");
   if (!token) {
@@ -108,20 +107,64 @@ export async function updateOrdersStatus(payload: UpdateOrderStatusRequest): Pro
 export async function getPaymentLink(orderId: string): Promise<PaymentLinkResponse> {
   const token = localStorage.getItem("accessToken");
   try {
-    const response = await fetch(`/api/Orders/${orderId}/payos/payment-link`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-      },
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    const result: PaymentLinkResponse = await response.json();
-    return result;
+    const response = await api.post(
+      `/Orders/${orderId}/payos/payment-link`, // URL
+      {}, // no body payload
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
   } catch (error) {
     console.error("Error fetching payment link:", error);
     throw error;
+  }
+}
+
+
+export async function createGiftBoxOrder(
+  vegetables: string[],
+  greetingMessage: string,
+  quantity: number
+): Promise<CreateGiftBoxResponse> {
+  const token = localStorage.getItem("accessToken");
+  const userId = localStorage.getItem("userId");
+
+  const payload: CreateGiftBoxRequest = {
+    userId: userId || "",
+    vegetables,
+    greetingMessage,
+    quantity,
+    discountCode: "",
+    deliveryMethod: 0,
+    paymentMethod: 0,
+    address: "",
+    deliveryTo: "",
+    phoneNumber: ""
+  };
+
+  try {
+    const response = await api.post<CreateGiftBoxResponse>(
+      "/api/GiftBox/create-order",
+      payload,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+    return response.data;
+  } catch (error: any) {
+    console.error("Create order failed:", error);
+    return {
+      isSuccess: false,
+      message: "Failed to create order",
+      exception: error.message
+    };
   }
 }

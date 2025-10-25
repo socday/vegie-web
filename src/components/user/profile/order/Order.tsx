@@ -5,6 +5,7 @@ import ReviewOrderForm from "./ReviewOrderForm";
 import "../styles/Order.css";
 import { useOrders } from "../../../../context/OrderContext";
 import { useEffect } from "react";
+import { cancelOrder, updateOrdersStatus } from "../../../../router/orderApi";
 
 export default function Order() {
   const { orders, refreshOrders } = useOrders();
@@ -26,13 +27,17 @@ const handleTabChange = (tab: "status" | "review" | "favorite", id?: string) => 
     if (orders.length === 0) refreshOrders();
   }, [orders]);
 
-  const handleCancelOrder = (id: string) => {
-    // Optional: update cached orders here if needed
-  };
+  const { cancelLocalOrder } = useOrders();
 
-  // 💡 CONDITIONAL RENDER LOGIC
-  // 1️⃣ If tab=review and id exists → show ReviewOrderForm
-  // 2️⃣ Else → normal tab layout
+  const handleCancelOrder = async (id: string) => {
+  const res = await cancelLocalOrder(id);
+  if (res.isSuccess) {
+    alert("Đơn hàng đã được hủy thành công.");
+  } else {
+    alert("Không thể hủy đơn hàng. Vui lòng thử lại.");
+  }
+};
+
   if (currentTab === "review" && orderId) {
     return (
       <div className="orders">
@@ -42,7 +47,7 @@ const handleTabChange = (tab: "status" | "review" | "favorite", id?: string) => 
   }
 
   return (
-    <div className="orders">
+    <div className="orders">  
       {/* only show tabs if NOT inside review form */}
       <div className="orders__tabs">
         <button

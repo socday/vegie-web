@@ -54,10 +54,22 @@ export default function Home() {
   const navigate = useNavigate();
   const [isAiMenuOpen, setIsAiMenuOpen] = useState(false);
   const [isHeroHovered, setIsHeroHovered] = useState(false);
-  const [hoveredBox, setHoveredBox] = useState(null);
+  const [hoveredBox, setHoveredBox] = useState<number | null>(null);
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
   const isDesktop = useMediaQuery({ query: '(min-width: 769px)' });
 
+  const handleNavigate = (id: number) => {
+    switch (id) {
+      case 1:
+        navigate("/blind-box");
+        break;
+      case 2:
+        navigate("/fruit-selection");
+        break;
+      default:
+        navigate("/");
+    }
+  };
   return (
     <>
       {/* SVG Filter cho noise effect */}
@@ -208,7 +220,7 @@ export default function Home() {
                       <p className="ai-menu-description">
                           Bạn là fan của món luộc thanh đạm, hay team mê món xào đậm đà? Chỉ cần vài bước khai báo nhanh (hoặc liên kết tài khoản với hành vi mua sắm), Vegie AI sẽ ghi nhớ “gu ăn” của bạn để gợi ý món phù hợp.
                       </p>
-                      <button className="ai-menu-details-button">Xem chi tiết</button>
+                      <button onClick={ () => navigate("/ai-menu")} className="ai-menu-details-button">Xem chi tiết</button>
                   </div>
                 </div>
             </div>
@@ -224,16 +236,18 @@ export default function Home() {
             <div className="box-grid">
               {boxesData.map((box) => {
                 const isHovered = hoveredBox === box.id;
-                const getBackgroundImage = () => {
-                  if (box.id === 1) return monTronBack;
-                  if (box.id === 2) return tronViAnBack;
-                  return null;
-                };
-                const getFrontImage = () => {
-                  if (box.id === 1) return monTronFront;
-                  if (box.id === 2) return tronViAnFront;
-                  return null;
-                };
+
+              const getBackgroundImage = (): string | undefined => {
+                if (box.id === 1) return monTronBack;
+                if (box.id === 2) return tronViAnBack;
+                return undefined;
+              };
+
+              const getFrontImage = (): string | undefined => {
+                if (box.id === 1) return monTronFront;
+                if (box.id === 2) return tronViAnFront;
+                return undefined;
+              };
 
                 return (
                   <div 
@@ -259,7 +273,8 @@ export default function Home() {
                     <div className="box-content">
                       <h3 className="box-title">{box.title}</h3>
                       <p className="box-description">{box.description}</p>
-                      <button className="box-details-button">Xem chi tiết</button>
+                      <button onClick={()=>handleNavigate(box.id)} className="box-details-button">Xem chi tiết</button>
+                      
                     </div>
                   </div>
                 );

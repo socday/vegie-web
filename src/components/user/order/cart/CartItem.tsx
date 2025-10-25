@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../cart/styles/Cart.css"
 import { removeCartItem, updateCartItem } from "../../../../router/cartApi";
+import BlindBoxImage from "../../../../assets/images/blind-box-object.png";
 type CartItemProps = {
   id: string;
   name: string;
@@ -46,12 +47,16 @@ const handleRemove = async () => {
       console.error("Failed to remove item:", err);
     }
   };
-
+  useEffect(() => {
+    if (image === "") {
+      image = BlindBoxImage; 
+    }
+  });
 
   return (
     <div className="cart-item">
-        <img src={image} alt={name} className="cart-image" />
         
+        <img src={image || BlindBoxImage} alt={name} className="cart-image" />
              <div className="cart-name-remove">
         <h3>{name}</h3>
         <button
@@ -68,7 +73,6 @@ const handleRemove = async () => {
               <span>{quantity}</span>
               <button onClick={increase} className="cart-quantity-button cart-increase-style">+</button>
           </div>
-          <p className="cart-item-price">${price}</p>
         </div>
 
     </div>

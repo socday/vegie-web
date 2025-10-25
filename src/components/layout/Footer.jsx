@@ -45,7 +45,7 @@ export default function Footer() {
             <p>Email: vegicare9@gmail.com</p>
             <p>Địa chỉ: Thành phố Hồ Chí Minh</p>
             <div className="social-icons">
-              <a href="#" aria-label="Facebook"><FaFacebook /></a>
+              <a href="https://www.facebook.com/profile.php?id=61577740254103" aria-label="Facebook"><FaFacebook /></a>
               <a href="#" aria-label="Zalo"><SiZalo /></a>
             </div>
           </div>
