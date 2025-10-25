@@ -129,7 +129,7 @@ export default function CartCheckout({ items, mode, onCheckout }: CartSummaryPro
 };
 
   useEffect(() => {
-  return () => {
+  const handleBeforeUnload = () => {
     localStorage.removeItem("discountCode");
     localStorage.removeItem("discountMessage");
     localStorage.removeItem("discountValue");
@@ -137,7 +137,16 @@ export default function CartCheckout({ items, mode, onCheckout }: CartSummaryPro
     localStorage.removeItem("finalTotal");
   };
 
-}, []);
+  window.addEventListener("beforeunload", handleBeforeUnload);
+
+  return () => {
+    // only clear if NOT going to /thanh-toan
+    if (!window.location.pathname.includes("thanh-toan")) {
+      handleBeforeUnload();
+    }
+    window.removeEventListener("beforeunload", handleBeforeUnload);
+  };
+}, []); 
 
 
   return (
