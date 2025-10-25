@@ -22,9 +22,9 @@ import PrivateRoute from './router/PrivateRoute'
 import AdminShell from './components/admin/AdminShell'
 import DashboardPage from './components/admin/pages/DashboardPage'
 import OrdersPage from './components/admin/pages/OrdersPage'
+import AIRecipesPage from './components/admin/pages/AIRecipesPage'
 import DiscountsPage from './components/admin/pages/DiscountsPage'
 import Box3D from './components/3d/Box3D'
-import MyWeeklyPackage from './components/home/subcription/WeeklyPackage.tsx'
 import AiMenu from './components/home/AiMenu'
 import FruitSelection from './components/3d/FruitSelection'
 import Letters from './components/3d/Letters'
@@ -84,7 +84,6 @@ function AppContent() {
               <Box3D />
           } />
           <Route path='/profile-test' element={<Profile />} />
-          <Route path='/my-weekly-package' element={<MyWeeklyPackage />} />
           <Route path='/today-menu' element={
             <PrivateRoute>
               <TodayMenu />
@@ -131,6 +130,7 @@ function AppContent() {
             <Route path='coupons' element={<DiscountsPage />} />
             <Route path='blog' element={<div />} />
             <Route path='payments' element={<div />} />
+                      <Route path='ai-recipes' element={<AIRecipesPage />} />
           </Route>
         </Routes>
       </OrderProvider>

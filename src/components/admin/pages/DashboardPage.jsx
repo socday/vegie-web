@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react'
-import { updateOrdersStatus } from '../../../router/orderApi'
 import { useOutletContext } from 'react-router-dom'
 import { getAllOrders, getAllBoxTypes, getStatistics } from '../../../router/adminApi'
+import OrdersBoard from '../sections/OrdersBoard'
 
 export default function DashboardPage(){
   const contextData = useOutletContext() || {}
@@ -65,138 +65,12 @@ export default function DashboardPage(){
   const [activeBoard, setActiveBoard] = useState('orders')
   // const [rangeDays] = useState(7)
   const [revenueFilter, setRevenueFilter] = useState('current-month')
-  const [page, setPage] = useState(1)
-  const pageSize = 10
-  const [selected, setSelected] = useState(null)
-  const [statusFilter, setStatusFilter] = useState('all')
-  const [codeQuery, setCodeQuery] = useState('')
-  const [nameQuery, setNameQuery] = useState('')
-  const [dateQuery, setDateQuery] = useState('')
-  const [newStatus, setNewStatus] = useState('Pending')
-  const [updating, setUpdating] = useState(false)
 
   const boxNameById = useMemo(() => {
     const map = new Map()
     boxTypes.forEach((b) => map.set(b.id, b.name))
     return (id) => map.get(id) || 'Unknown'
   }, [boxTypes])
-
-  // Vietnamese translations for statuses/methods
-  const viOrderStatus = (s = '') => ({
-    Cart: 'Giỏ hàng',
-    Pending: 'Đang chờ',
-    Processing: 'Đang xử lý',
-    Completed: 'Hoàn thành',
-    Cancelled: 'Đã hủy',
-  })[s] || s
-  const viPaymentMethod = (s = '') => ({
-    VNPay: 'VNPay',
-    CashOnDelivery: 'Thanh toán khi nhận hàng',
-    PayOS: 'PayOS',
-  })[s] || s
-  const viPaymentStatus = (s = '') => ({
-    Pending: 'Chờ thanh toán',
-    Paid: 'Đã thanh toán',
-    Failed: 'Thất bại',
-  })[s] || s
-
-  // Map order status text to backend enum number
-  const statusToNumber = (s = '') => {
-    const x = String(s)
-    switch (x) {
-      case 'Cart': return 0
-      case 'Pending': return 1
-      case 'Processing': return 2
-      case 'Completed': return 3
-      case 'Cancelled': return 4
-      default: return 1
-    }
-  }
-
-  useEffect(() => {
-    if (selected?.status) {
-      setNewStatus(selected.status)
-    }
-  }, [selected])
-
-  async function handleUpdateStatus() {
-    if (!selected) return
-    if (newStatus === selected.status) return
-    try {
-      setUpdating(true)
-      await updateOrdersStatus({ orderIds: [selected.id], status: statusToNumber(newStatus) })
-      // update local state
-      setOrders(prev => prev.map(o => o.id === selected.id ? { ...o, status: newStatus } : o))
-      setSelected(prev => prev ? { ...prev, status: newStatus } : prev)
-    } catch (e) {
-      console.error('Update status failed', e)
-    } finally {
-      setUpdating(false)
-    }
-  }
-
-  function getOrderDate(o){
-    return new Date(o.orderDate ?? o.createdAt ?? o.createAt ?? o.updateAt ?? Date.now())
-  }
-
-  
-
-  // Priorities: Pending > Delivering/Processing > Completed > Cancelled
-  const statusRank = (s = '') => {
-    const x = String(s).toLowerCase()
-    if (x.includes('pending')) return 3
-    if (x.includes('processing') || x.includes('shipping') || x.includes('deliver')) return 2
-    if (x.includes('completed')) return 1
-    if (x.includes('cancel')) return 0
-    return 1
-  }
-
-  const sortedOrders = useMemo(() => {
-    let arr = Array.isArray(orders) ? [...orders] : []
-    // Filter by status
-    if (statusFilter !== 'all') {
-      arr = arr.filter(o => String(o.status) === statusFilter)
-    }
-    // Filter by code (order id contains)
-    if (codeQuery.trim()) {
-      const q = codeQuery.trim().toLowerCase()
-      arr = arr.filter(o => String(o.id).toLowerCase().includes(q))
-    }
-    // Filter by name (any box name contains)
-    if (nameQuery.trim()) {
-      const q = nameQuery.trim().toLowerCase()
-      arr = arr.filter(o => (o.details||[]).some(d => boxNameById(d.boxTypeId).toLowerCase().includes(q)))
-    }
-    // Filter by date (DD/MM/YY)
-    if (dateQuery.trim()) {
-      const [dd, mm, yy] = dateQuery.split(/[-./]/)
-      if (dd && mm && yy) {
-        const year = Number(yy.length === 2 ? `20${yy}` : yy)
-        const month = Number(mm) - 1
-        const day = Number(dd)
-        const start = new Date(year, month, day)
-        const end = new Date(year, month, day, 23, 59, 59, 999)
-        arr = arr.filter(o => {
-          const d = getOrderDate(o)
-          return d >= start && d <= end
-        })
-      }
-    }
-    arr.sort((a, b) => {
-      const ra = statusRank(a.status)
-      const rb = statusRank(b.status)
-      if (ra !== rb) return rb - ra // higher rank first
-      // oldest first within same rank
-      return getOrderDate(a) - getOrderDate(b)
-    })
-    return arr
-  }, [orders, statusFilter, codeQuery, nameQuery, dateQuery, boxNameById])
-
-  const totalPages = Math.max(1, Math.ceil(sortedOrders.length / pageSize))
-  const pagedOrders = useMemo(() => {
-    const start = (page - 1) * pageSize
-    return sortedOrders.slice(start, start + pageSize)
-  }, [sortedOrders, page])
 
   // Tính toán phần trăm thay đổi cho KPI
   const calculatePercentageChange = (current, previous) => {
@@ -253,115 +127,43 @@ export default function DashboardPage(){
       </section>
 
       {activeBoard === 'orders' && (
-        <section className="board orders-board">
-          <div className="filter-row">
-            {/* <div className="btn-group">
-              <button className="btn sm primary">Đơn lẻ</button>
-              <button className="btn sm">Đơn nhóm</button>
-            </div> */}
-            <div className="input-group">
-              <input placeholder="Mã đơn hàng" value={codeQuery} onChange={(e)=>{ setPage(1); setCodeQuery(e.target.value) }} />
-              <input placeholder="Tên sản phẩm" value={nameQuery} onChange={(e)=>{ setPage(1); setNameQuery(e.target.value) }} />
-              <input placeholder="DD/MM/YY" value={dateQuery} onChange={(e)=>{ setPage(1); setDateQuery(e.target.value) }} />
-            </div>
-          </div>
-          <div className="status-filter" style={{ display: 'flex', gap: 8, margin: '8px 0 12px' }}>
-            {[
-              { key: 'all', label: 'Tất cả' },
-              { key: 'Pending', label: 'Đang chờ' },
-              { key: 'Processing', label: 'Đang xử lý' },
-              { key: 'Completed', label: 'Hoàn thành' },
-              { key: 'Cancelled', label: 'Đã hủy' },
-            ].map(({ key, label }) => (
-              <button
-                key={key}
-                className={`btn sm ${statusFilter === key ? 'primary' : ''}`}
-                onClick={() => { setPage(1); setStatusFilter(key) }}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 500px', gap: 16 }}>
-            <div className="table">
-              <div className="row header" style={{ height: 50, minHeight: 50, alignItems: 'center' }}>
-                <div>Mã đơn</div>
-                <div>Tên</div>
-                <div>Số lượng</div>
-                <div>Ngày đặt hàng</div>
-                <div>Giá</div>
-                <div>Trạng thái</div>
-              </div>
-              <div className="table-body" style={{ height: 550, minHeight: 550}}>
-                {pagedOrders.map((o) => {
-                  const qty = o.details?.reduce((s, d) => s + d.quantity, 0) || 0
-                  const names = o.details?.map((d) => boxNameById(d.boxTypeId)).join(', ')
-                  return (
-                    <div className={`row ${selected?.id === o.id ? 'active' : ''}`} key={o.id} onClick={() => setSelected(o)} style={{ cursor: 'pointer', height: 50, minHeight: 50, alignItems: 'center' }}>
-                      <div>{`#${o.id.slice(0, 6)}`}</div>
-                      <div>{names}</div>
-                      <div>{qty}</div>
-                      <div>{getOrderDate(o).toLocaleString('vi-VN')}</div>
-                      <div>{(o.finalPrice ?? o.totalPrice).toLocaleString('vi-VN')} VND</div>
-                      <div>{viOrderStatus(o.status)}</div>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
+        <OrdersBoard 
+          orders={orders} 
+          boxNameById={boxNameById} 
+          onRefresh={async () => {
+            try {
+              const now = new Date()
+              const currentYear = now.getFullYear()
+              const currentMonth = now.getMonth()
+              
+              const currentMonthStart = new Date(currentYear, currentMonth, 1)
+              const currentMonthEnd = new Date(currentYear, currentMonth + 1, 0)
+              const previousMonthStart = new Date(currentYear, currentMonth - 1, 1)
+              const previousMonthEnd = new Date(currentYear, currentMonth, 0)
+              
+              const formatDate = (date) => {
+                const y = date.getFullYear()
+                const m = String(date.getMonth() + 1).padStart(2, '0')
+                const d = String(date.getDate()).padStart(2, '0')
+                return `${y}-${m}-${d}`
+              }
 
-            <aside className="order-detail" style={{ border: '1px solid #eee', borderRadius: 8, padding: 12 }}>
-              {!selected && (
-                <div style={{ color: '#888' }}>Chọn một đơn để xem chi tiết</div>
-              )}
-              {selected && (
-                <div className="detail-body" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                  <div style={{ fontWeight: 600 }}>{`#${selected.id.slice(0,6)}`} · {viOrderStatus(selected.status)}</div>
-                  <div><b>Ngày:</b> {getOrderDate(selected).toLocaleString('vi-VN')}</div>
-                  <div><b>Thanh toán:</b> {viPaymentMethod(selected.paymentMethod) ?? '-'} ({viPaymentStatus(selected.paymentStatus) ?? '-'})</div>
-                  <div><b>Giảm giá:</b> {selected.discountCode ?? '-'}</div>
-                  <div><b>Tổng:</b> {(selected.totalPrice || 0).toLocaleString('vi-VN')} VND</div>
-                  <div><b>Thanh toán cuối:</b> {(selected.finalPrice || selected.totalPrice || 0).toLocaleString('vi-VN')} VND</div>
-                  <div style={{ marginTop: 8, fontWeight: 600 }}>Sản phẩm</div>
-                  <div className="table">
-                    <div className="row header">
-                      <div>Tên</div>
-                      <div>SL</div>
-                      <div>Đơn giá</div>
-                    </div>
-                    {(selected.details || []).map((d, idx) => (
-                      <div className="row" key={idx}>
-                        <div>{boxNameById(d.boxTypeId)}</div>
-                        <div>{d.quantity}</div>
-                        <div>{(d.unitPrice||0).toLocaleString('vi-VN')} VND</div>
-                      </div>
-                    ))}
-                  </div>
-                  {selected.status !== 'Completed' && selected.status !== 'Cancelled' && (
-                    <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 8 }}>
-                      <select value={newStatus} onChange={(e)=> setNewStatus(e.target.value)}>
-                        <option value="Pending">Đang chờ</option>
-                        <option value="Processing">Đang xử lý</option>
-                        <option value="Completed">Hoàn thành</option>
-                        <option value="Cancelled">Đã hủy</option>
-                      </select>
-                      <button className={`btn sm ${newStatus !== selected.status ? 'primary' : ''}`} disabled={updating || newStatus === selected.status} onClick={handleUpdateStatus}>
-                        {updating ? 'Đang cập nhật...' : 'Cập nhật trạng thái'}
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )}
-            </aside>
-          </div>
-          <div className="pagination" style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 12 }}>
-            <button className="btn sm" disabled={page <= 1} onClick={() => setPage(p => Math.max(1, p - 1))}>Trước</button>
-            <span style={{ alignSelf: 'center' }}>
-              {page} / {totalPages}
-            </span>
-            <button className="btn sm" disabled={page >= totalPages} onClick={() => setPage(p => Math.min(totalPages, p + 1))}>Sau</button>
-          </div>
-        </section>
+              const [ordersData, boxTypesData, currentStats, prevStats] = await Promise.all([
+                getAllOrders(),
+                getAllBoxTypes(),
+                getStatistics(formatDate(currentMonthStart), formatDate(currentMonthEnd)),
+                getStatistics(formatDate(previousMonthStart), formatDate(previousMonthEnd))
+              ])
+              setOrders(ordersData)
+              setBoxTypes(boxTypesData)
+              setCurrentMonthStats(currentStats)
+              setPreviousMonthStats(prevStats)
+            } catch (error) {
+              console.error('Failed to refresh data:', error)
+              throw error
+            }
+          }}
+        />
       )}
 
       {activeBoard === 'revenue' && (
@@ -439,8 +241,8 @@ export default function DashboardPage(){
                  const minRevenue = Math.min(...data.map(r => r.revenue))
                  const revenueRange = maxRevenue - minRevenue
                  
-                 // Sort data by date
-                 const sortedData = [...data].sort((a, b) => new Date(a.date) - new Date(b.date))
+                // Keep backend order
+                const sortedData = data
                  
                  // Calculate SVG dimensions
                  const width = 600
@@ -451,8 +253,16 @@ export default function DashboardPage(){
                  
                  // Calculate points for line
                  const points = sortedData.map((item, index) => {
-                   const x = padding + (index / (sortedData.length - 1)) * chartWidth
-                   const y = padding + chartHeight - ((item.revenue - minRevenue) / revenueRange) * chartHeight
+                   // Handle single data point case
+                   const x = sortedData.length === 1 
+                     ? padding + chartWidth / 2  // Center the single point
+                     : padding + (index / (sortedData.length - 1)) * chartWidth
+                   
+                   // Handle case where all revenues are the same (revenueRange = 0)
+                   const y = revenueRange === 0 
+                     ? padding + chartHeight / 2  // Center vertically when all values are same
+                     : padding + chartHeight - ((item.revenue - minRevenue) / revenueRange) * chartHeight
+                   
                    return { x, y, revenue: item.revenue, date: item.date }
                  })
                  
@@ -462,7 +272,9 @@ export default function DashboardPage(){
                  ).join(' ')
                  
                  // Create area path (for gradient fill)
-                 const areaPath = `${pathData} L ${points[points.length - 1].x} ${padding + chartHeight} L ${points[0].x} ${padding + chartHeight} Z`
+                 const areaPath = points.length === 1
+                   ? `M ${points[0].x} ${padding + chartHeight} L ${points[0].x} ${points[0].y} L ${points[0].x} ${padding + chartHeight} Z`
+                   : `${pathData} L ${points[points.length - 1].x} ${padding + chartHeight} L ${points[0].x} ${padding + chartHeight} Z`
                  
                  return (
                    <svg 
@@ -625,8 +437,8 @@ export default function DashboardPage(){
                 const minRevenue = Math.min(...data.map(r => r.revenue))
                 const revenueRange = maxRevenue - minRevenue
                 
-                // Sort data by date
-                const sortedData = [...data].sort((a, b) => new Date(a.date) - new Date(b.date))
+                // Keep backend order
+                const sortedData = data
                 
                 // Calculate SVG dimensions
                 const width = 600
@@ -635,20 +447,30 @@ export default function DashboardPage(){
                 const chartWidth = width - padding * 2
                 const chartHeight = height - padding * 2
                 
-                // Calculate points for line
-                const points = sortedData.map((item, index) => {
-                  const x = padding + (index / (sortedData.length - 1)) * chartWidth
-                  const y = padding + chartHeight - ((item.revenue - minRevenue) / revenueRange) * chartHeight
-                  return { x, y, revenue: item.revenue, date: item.date }
-                })
-                
-                // Create path for line
-                const pathData = points.map((point, index) => 
-                  `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`
-                ).join(' ')
-                
-                // Create area path (for gradient fill)
-                const areaPath = `${pathData} L ${points[points.length - 1].x} ${padding + chartHeight} L ${points[0].x} ${padding + chartHeight} Z`
+                 // Calculate points for line
+                 const points = sortedData.map((item, index) => {
+                   // Handle single data point case
+                   const x = sortedData.length === 1 
+                     ? padding + chartWidth / 2  // Center the single point
+                     : padding + (index / (sortedData.length - 1)) * chartWidth
+                   
+                   // Handle case where all revenues are the same (revenueRange = 0)
+                   const y = revenueRange === 0 
+                     ? padding + chartHeight / 2  // Center vertically when all values are same
+                     : padding + chartHeight - ((item.revenue - minRevenue) / revenueRange) * chartHeight
+                   
+                   return { x, y, revenue: item.revenue, date: item.date }
+                 })
+                 
+                 // Create path for line
+                 const pathData = points.map((point, index) => 
+                   `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`
+                 ).join(' ')
+                 
+                 // Create area path (for gradient fill)
+                 const areaPath = points.length === 1
+                   ? `M ${points[0].x} ${padding + chartHeight} L ${points[0].x} ${points[0].y} L ${points[0].x} ${padding + chartHeight} Z`
+                   : `${pathData} L ${points[points.length - 1].x} ${padding + chartHeight} L ${points[0].x} ${padding + chartHeight} Z`
                 
                  return (
                    <svg 

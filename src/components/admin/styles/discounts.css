@@ -279,4 +279,145 @@
   .hidden {
     display: none;
   }
+
+/* ========== DARK MODE ========== */
+body.admin-dark-mode .discounts-page {
+  background: #1a1a1a;
+  color: #e0e0e0;
+}
+
+body.admin-dark-mode .discounts-title {
+  color: #91CF43;
+}
+
+body.admin-dark-mode .discounts-create {
+  background: #2d2d2d;
+  border-color: #91CF43;
+  color: #91CF43;
+}
+
+body.admin-dark-mode .discounts-create:hover {
+  background: #91CF43;
+  color: white;
+}
+
+body.admin-dark-mode .discounts-table {
+  background: #2d2d2d;
+  border-color: #404040;
+}
+
+body.admin-dark-mode .discounts-table > .header.discount-row > div,
+body.admin-dark-mode .discounts-table > .discount-row > div {
+  background: #2d2d2d;
+  border-bottom-color: #404040;
+  color: #e0e0e0;
+}
+
+body.admin-dark-mode .discounts-table > .header.discount-row > div {
+  background: #404040;
+  border-bottom-color: #555;
+}
+
+body.admin-dark-mode .discounts-table > .discount-row:hover > div {
+  background: #404040;
+}
+
+body.admin-dark-mode .discounts-table > .discount-row.active > div {
+  background: #404040;
+  border-bottom-color: #555;
+}
+
+body.admin-dark-mode .discounts-pagination button {
+  background: #2d2d2d;
+  border-color: #91CF43;
+  color: #e0e0e0;
+}
+
+body.admin-dark-mode .discounts-pagination button:hover {
+  background: #91CF43;
+  color: white;
+}
+
+body.admin-dark-mode .discounts-editor {
+  background: #2d2d2d;
+  border-color: #404040;
+  color: #e0e0e0;
+}
+
+body.admin-dark-mode .discounts-editor-title {
+  color: #91CF43;
+}
+
+body.admin-dark-mode .discounts-section-title {
+  color: #91CF43;
+}
+
+body.admin-dark-mode .discounts-label {
+  color: #91CF43;
+}
+
+body.admin-dark-mode .discounts-editor input,
+body.admin-dark-mode .discounts-editor select {
+  background: #2d2d2d;
+  border-color: #555;
+  color: #e0e0e0;
+}
+
+body.admin-dark-mode .discounts-editor input:focus,
+body.admin-dark-mode .discounts-editor select:focus {
+  border-color: #91CF43;
+  outline: none;
+}
+
+body.admin-dark-mode .discounts-editor-header .btn.primary {
+  background: #2d2d2d;
+  border-color: #91CF43;
+  color: #91CF43;
+}
+
+body.admin-dark-mode .discounts-editor-header .btn.primary:hover {
+  background: #91CF43;
+  color: white;
+}
+
+body.admin-dark-mode .discounts-divider {
+  border-top-color: #404040;
+}
+
+body.admin-dark-mode .discounts-check input[type="checkbox"] {
+  background: #2d2d2d;
+  border-color: #91CF43;
+}
+
+body.admin-dark-mode .discounts-check input[type="checkbox"]:checked::after {
+  background: #91CF43;
+}
+
+body.admin-dark-mode .discounts-check span {
+  color: #e0e0e0;
+}
+
+body.admin-dark-mode .discounts-editor input::placeholder,
+body.admin-dark-mode .discounts-editor select::placeholder {
+  color: #91CF43;
+  opacity: 0.7;
+}
+
+body.admin-dark-mode .discounts-editor input::-webkit-input-placeholder,
+body.admin-dark-mode .discounts-editor select::-webkit-input-placeholder {
+  color: #91CF43;
+  opacity: 0.7;
+}
+
+body.admin-dark-mode .discounts-editor input::-moz-placeholder,
+body.admin-dark-mode .discounts-editor select::-moz-placeholder {
+  color: #91CF43;
+  opacity: 0.7;
+}
+
+body.admin-dark-mode .discounts-editor input:-ms-input-placeholder,
+body.admin-dark-mode .discounts-editor select:-ms-input-placeholder {
+  color: #91CF43;
+  opacity: 0.7;
+}
   

@@ -11,9 +11,19 @@ export interface OrderDTO {
   id: string;
   userId: string;
   status: string;
+  orderDate: string;
   totalPrice: number;
   finalPrice: number;
   discountCode: string | null;
+  address: string;
+  deliveryTo: string;
+  phoneNumber: string;
+  allergyNote: string | null;
+  preferenceNote: string | null;
+  paymentMethod: string;
+  paymentStatus: string;
+  payOSPaymentUrl: string | null;
+  payOSOrderCode: string | null;
   details: OrderDetailDTO[];
 }
 
@@ -23,6 +33,96 @@ export interface BoxTypeDTO {
   description: string;
   price: number;
   parentID: string;
+}
+
+export interface GenerateRecipeRequest {
+  ingredients: string[];
+  date: string;
+  dietaryPreferences: string;
+  cookingSkillLevel: string;
+}
+
+export interface RecipeData {
+  id: string;
+  dishName: string;
+  description: string;
+  ingredients: string[];
+  instructions: string[];
+  estimatedCookingTime: string;
+  cookingTips: string;
+  imageUrl: string;
+  date: string;
+  createdAt: string;
+}
+
+export interface GenerateRecipeResponse {
+  isSuccess: boolean;
+  data: RecipeData;
+  message: string;
+  exception: string | null;
+}
+
+export async function generateRecipe(payload: GenerateRecipeRequest): Promise<GenerateRecipeResponse> {
+  const token = localStorage.getItem("accessToken");
+  if (!token) {
+    throw new Error("User not authenticated");
+  }
+
+  const res = await api.post<GenerateRecipeResponse>("/admin/ai-recipes/generate", payload, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.data;
+}
+
+export interface DeleteRecipeResponse {
+  isSuccess: boolean;
+  message: string;
+  exception: string | null;
+}
+
+export async function deleteRecipe(recipeId: string): Promise<DeleteRecipeResponse> {
+  const token = localStorage.getItem("accessToken");
+  if (!token) {
+    throw new Error("User not authenticated");
+  }
+
+  const res = await api.delete<DeleteRecipeResponse>(`/api/Aimenu/recipes/${recipeId}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.data;
+}
+
+export interface MyRecipesResponse {
+  isSuccess: boolean;
+  data: {
+    items: RecipeData[];
+  };
+  message: string;
+  exception: string | null;
+}
+
+export async function getMyRecipes(): Promise<MyRecipesResponse> {
+  const token = localStorage.getItem("accessToken");
+  if (!token) {
+    throw new Error("User not authenticated");
+  }
+
+  const res = await api.get<MyRecipesResponse>("/AiMenu/my-recipes", {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.data;
 }
 
 export async function getAllOrders(): Promise<OrderDTO[]> {
