@@ -12,7 +12,6 @@ import Register from './components/auth/Register'
 import Cart from './components/user/order/cart/Cart'
 import BoxSelector from './components/home/box/Boxselector'
 import GiftDetoxBox from './components/home/box/GiftDetoxBox'
-import RetailPackage from './components/home/subcription/RetailPackage.tsx'
 import WeeklyPackage from './components/home/subcription/weeklypackage'
 import BlindBox from './components/home/box/BlindBox'
 import ScrollToTop from "./components/notifications/ScrollToTop"
@@ -38,6 +37,7 @@ import StageNotificationWrapper from './components/notifications/StageNotificati
 import ReviewOrderForm from './components/user/profile/order/ReviewOrderForm.tsx'
 import { OrderProvider } from './context/OrderContext.tsx'
 import PaymentNow from './components/user/order/payment/PaymentNow'
+import RetailPackage from './components/home/subcription/RetailPackage'
 
 function AppContent() {
   const location = useLocation()
@@ -79,7 +79,7 @@ function AppContent() {
           <Route path='/san-pham' element={<BoxSelector />} />
           <Route path='/custom-box' element={<GiftDetoxBox />} />
           <Route path='/thanh-toan-ngay' element={<PaymentNow />} />
-          <Route path='/retail-package' element={<RetailPackage />} />
+          <Route path='/retail-package' element={<RetailPackage/>} />
           <Route path='/weekly-package' element={<WeeklyPackage />} />
           <Route path='/blind-box' element={<BlindBox />} />
           <Route path='/box-3d' element={
