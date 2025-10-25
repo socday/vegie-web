@@ -1,6 +1,6 @@
 import { api } from "./api";
 import { getBoxTypeName } from "./boxApi";
-import { AddToCartRequest, AddToCartResponse, CartCheckOut, CartResponse, Item } from "./types/cartResponse";
+import { AddToCartRequest, AddToCartResponse, CartCheckOut, CartResponse, DiscountResponse, Item } from "./types/cartResponse";
 
 export async function getCart(): Promise<CartResponse> {
   const token = localStorage.getItem("accessToken");
@@ -81,4 +81,20 @@ export async function addToCart(payload: AddToCartRequest): Promise<AddToCartRes
   });
 
   return res.data;
+}
+
+
+export async function validateDiscountCode(code: string): Promise<DiscountResponse> {
+  try {
+    const response = await api.get(`/Discounts/validate/${code}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+
+    return response.data; // returns the JSON you showed
+  } catch (error: any) {
+    console.error("Error validating discount code:", error);
+    throw error;
+  }
 }

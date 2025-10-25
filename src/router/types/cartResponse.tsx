@@ -44,3 +44,20 @@ export interface PhieuSucKhoeResponse {
   allergy?: string;
   feeling?: string;
 }
+
+
+export interface DiscountResponse {
+  isSuccess: boolean;
+  data: {
+    id: string;
+    code: string;
+    description: string;
+    discountValue: number;
+    isPercentage: boolean;
+    startDate: string;
+    endDate: string;
+    isActive: boolean;
+  };
+  message: string;
+  exception: string | null;
+}
