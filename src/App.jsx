@@ -22,6 +22,7 @@ import PrivateRoute from './router/PrivateRoute'
 import AdminShell from './components/admin/AdminShell'
 import DashboardPage from './components/admin/pages/DashboardPage'
 import OrdersPage from './components/admin/pages/OrdersPage'
+import AIRecipesPage from './components/admin/pages/AIRecipesPage'
 import DiscountsPage from './components/admin/pages/DiscountsPage'
 import Box3D from './components/3d/Box3D'
 import MyWeeklyPackage from './components/home/WeeklyPackage'
@@ -131,6 +132,7 @@ function AppContent() {
           <Route path='coupons' element={<DiscountsPage />} />
           <Route path='blog' element={<div />} />
           <Route path='payments' element={<div />} />
+          <Route path='ai-recipes' element={<AIRecipesPage />} />
         </Route>
       </Routes>
       {isAdminRoute ? null : <Footer key={`footer-${authTick}`} />}

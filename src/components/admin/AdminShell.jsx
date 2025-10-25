@@ -10,6 +10,9 @@ export default function AdminShell() {
   const [boxTypes, setBoxTypes] = useState([])
   const [currentMonthStats, setCurrentMonthStats] = useState(null)
   const [previousMonthStats, setPreviousMonthStats] = useState(null)
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    return localStorage.getItem('adminDarkMode') === 'true'
+  })
   const didLoadData = useRef(false)
   const navigate = useNavigate()
 
@@ -25,11 +28,7 @@ export default function AdminShell() {
     }).catch(() => {})
   }, [])
 
-  useEffect(() => {
-    if (didLoadData.current) return
-    didLoadData.current = true
-    let ignore = false
-    
+  const loadData = async () => {
     // Tính toán ngày tháng hiện tại và tháng trước
     const now = new Date()
     const currentYear = now.getFullYear()
@@ -48,26 +47,73 @@ export default function AdminShell() {
       const d = String(date.getDate()).padStart(2, '0')
       return `${y}-${m}-${d}`
     }
-  
+
+    try {
+      const [o, b, currentStats, prevStats] = await Promise.all([
+        getAllOrders(), 
+        getAllBoxTypes(),
+        getStatistics(formatDate(currentMonthStart), formatDate(currentMonthEnd)),
+        getStatistics(formatDate(previousMonthStart), formatDate(previousMonthEnd))
+      ])
+      
+      setOrders(o)
+      setBoxTypes(b)
+      setCurrentMonthStats(currentStats)
+      setPreviousMonthStats(prevStats)
+    } catch (error) {
+      console.error("AdminShell API error:", error)
+    }
+  }
+
+  useEffect(() => {
+    if (didLoadData.current) return
+    didLoadData.current = true
     
-    Promise.all([
-      getAllOrders(), 
-      getAllBoxTypes(),
-      getStatistics(formatDate(currentMonthStart), formatDate(currentMonthEnd)),
-      getStatistics(formatDate(previousMonthStart), formatDate(previousMonthEnd))
-    ])
-      .then(([o, b, currentStats, prevStats]) => { 
-        if (!ignore){
-          setOrders(o); 
-          setBoxTypes(b)
-          setCurrentMonthStats(currentStats)
-          setPreviousMonthStats(prevStats)
-        }
-      })
-      .catch((error) => {
-        console.error("AdminShell API error:", error)
-      })
-    return () => { ignore = true }
+    loadData()
+  }, [])
+
+  // Listen for refresh events from child components
+  useEffect(() => {
+    const handleOrdersRefresh = (event) => {
+      const newOrders = event.detail
+      if (newOrders) {
+        setOrders(newOrders)
+      }
+    }
+
+    const handleBoxTypesRefresh = (event) => {
+      const newBoxTypes = event.detail
+      if (newBoxTypes) {
+        setBoxTypes(newBoxTypes)
+      }
+    }
+
+    const handleStatsRefresh = (event) => {
+      const { currentMonth, previousMonth } = event.detail
+      if (currentMonth) {
+        setCurrentMonthStats(currentMonth)
+      }
+      if (previousMonth) {
+        setPreviousMonthStats(previousMonth)
+      }
+    }
+
+    const handleOrdersUpdate = () => {
+      // Refetch all data when orders are updated
+      loadData()
+    }
+
+    window.addEventListener('orders-refresh', handleOrdersRefresh)
+    window.addEventListener('box-types-refresh', handleBoxTypesRefresh)
+    window.addEventListener('stats-refresh', handleStatsRefresh)
+    window.addEventListener('orders-updated', handleOrdersUpdate)
+    
+    return () => {
+      window.removeEventListener('orders-refresh', handleOrdersRefresh)
+      window.removeEventListener('box-types-refresh', handleBoxTypesRefresh)
+      window.removeEventListener('stats-refresh', handleStatsRefresh)
+      window.removeEventListener('orders-updated', handleOrdersUpdate)
+    }
   }, [])
 
   const handleLogout = () => {
@@ -75,6 +121,17 @@ export default function AdminShell() {
     localStorage.removeItem('refreshToken')
     navigate('/')
   }
+
+  const toggleDarkMode = () => {
+    const newMode = !isDarkMode
+    setIsDarkMode(newMode)
+    localStorage.setItem('adminDarkMode', newMode.toString())
+    document.body.classList.toggle('admin-dark-mode', newMode)
+  }
+
+  useEffect(() => {
+    document.body.classList.toggle('admin-dark-mode', isDarkMode)
+  }, [isDarkMode])
 
   const initials = `${(adminUser.firstName||'A')[0] ?? 'A'}${(adminUser.lastName||'D')[0] ?? 'D'}`
 
@@ -94,12 +151,17 @@ export default function AdminShell() {
           <NavLink to="/admin/products">Sản phẩm</NavLink>
           <NavLink to="/admin/customers">Khách hàng</NavLink>
           <NavLink to="/admin/orders">Đơn hàng</NavLink>
+          <NavLink to="/admin/ai-recipes">AI Recipes</NavLink>
           <NavLink to="/admin/coupons">Mã giảm giá</NavLink>
           <NavLink to="/admin/blog">Blog</NavLink>
           <NavLink to="/admin/payments">Thanh toán</NavLink>
         </nav>
 
+        
         <button onClick={handleLogout} className="btn btn-logout">Đăng xuất</button>
+        <button onClick={toggleDarkMode} className="btn btn-theme">
+          {isDarkMode ? '☀️' : '🌙'} {isDarkMode ? 'Sáng' : 'Tối'}
+        </button>
       </aside>
 
       <div className="admin-main">
