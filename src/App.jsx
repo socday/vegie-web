@@ -37,7 +37,7 @@ import StageNotificationWrapper from './components/notifications/StageNotificati
 import ReviewOrderForm from './components/user/profile/order/ReviewOrderForm.tsx'
 import { OrderProvider } from './context/OrderContext.tsx'
 import PaymentNow from './components/user/order/payment/PaymentNow'
-import RetailPackage from './components/home/subcription/RetailPackage'
+import RetailPackage from './components/home/subcription/retailpackage.tsx'
 
 function AppContent() {
   const location = useLocation()
