@@ -34,12 +34,14 @@ export default function CartCheckout({ items, mode, onCheckout, onPayment }: Car
     | undefined;
 
   const isFromRetail = retailState?.from === "retail-package";
-
+  const isFromWeekly = retailState?.from === "weekly-package";
   // ✅ Set total (hardcode if retail)
-  const total = isFromRetail
-    ? 150000
-    : items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
+  const total = isFromRetail
+  ? 150000
+  : isFromWeekly
+  ? 300000
+  : items.reduce((sum, item) => sum + item.price * item.quantity, 0);
   // ✅ State setup
   const [discountCode, setDiscountCode] = useState(localStorage.getItem("discountCode") || "");
   const [discountMessage, setDiscountMessage] = useState<string | null>(
@@ -141,19 +143,24 @@ export default function CartCheckout({ items, mode, onCheckout, onPayment }: Car
   // ✅ Render
   return (
     <div className="cart-summary">
-      {isFromRetail ? (
-        <div className="cart-summary__row">
-          <span className="cart-summary-name">Blind Box</span>
-          <span>{(150000).toLocaleString()} đ</span>
-        </div>
-      ) : (
-        items.map((item) => (
-          <div key={item.id} className="cart-summary__row">
-            <span className="cart-summary-name">{item.name}</span>
-            <span>{(item.price * item.quantity).toLocaleString()} đ</span>
-          </div>
-        ))
-      )}
+{isFromRetail ? (
+  <div className="cart-summary__row">
+    <span className="cart-summary-name">Gói mua lẻ (1 hộp)</span>
+    <span>{(150000).toLocaleString()} đ</span>
+  </div>
+) : isFromWeekly ? (
+  <div className="cart-summary__row">
+    <span className="cart-summary-name">Gói theo tuần (2 hộp)</span>
+    <span>{(300000).toLocaleString()} đ</span>
+  </div>
+) : (
+  items.map((item) => (
+    <div key={item.id} className="cart-summary__row">
+      <span className="cart-summary-name">{item.name}</span>
+      <span>{(item.price * item.quantity).toLocaleString()} đ</span>
+    </div>
+  ))
+)}
 
       {mode === "payment" && <div className="cart-shipping cart-summary__row"></div>}
 
@@ -203,7 +210,7 @@ export default function CartCheckout({ items, mode, onCheckout, onPayment }: Car
         ) : (
           <>
             <button
-              onClick={isFromRetail ? handlePayment : handleCheckoutClick}
+              onClick={isFromRetail || isFromWeekly? handlePayment : handleCheckoutClick}
               disabled={isEmpty}
               className="d-btn d-btn-font"
             >
