@@ -17,149 +17,143 @@ type CartSummaryProps = {
   onPayment?: () => void;
 };
 
-export default function CartCheckout({ items, mode, onCheckout }: CartSummaryProps) {
+export default function CartCheckout({ items, mode, onCheckout, onPayment }: CartSummaryProps) {
   const navigate = useNavigate();
   const isEmpty = items.length === 0;
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const location = useLocation();
 
-  const [discountCode, setDiscountCode] = useState(() => localStorage.getItem("discountCode") || "");
-  const [discountMessage, setDiscountMessage] = useState<string | null>(localStorage.getItem("discountMessage"));
-  const [discountValue, setDiscountValue] = useState<number>(Number(localStorage.getItem("discountValue") || 0));
-  const [isPercentage, setIsPercentage] = useState<boolean>(localStorage.getItem("isPercentage") === "true");
+  const retailState = location.state as
+    | {
+        from?: string;
+        allergy?: string;
+        feeling?: string;
+        blindBoxId?: string;
+        quantity?: number;
+        price?: number;
+      }
+    | undefined;
+
+  const isFromRetail = retailState?.from === "retail-package";
+
+  // ✅ Set total (hardcode if retail)
+  const total = isFromRetail
+    ? 150000
+    : items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  // ✅ State setup
+  const [discountCode, setDiscountCode] = useState(localStorage.getItem("discountCode") || "");
+  const [discountMessage, setDiscountMessage] = useState<string | null>(
+    localStorage.getItem("discountMessage")
+  );
+  const [discountValue, setDiscountValue] = useState<number>(
+    Number(localStorage.getItem("discountValue") || 0)
+  );
+  const [isPercentage, setIsPercentage] = useState<boolean>(
+    localStorage.getItem("isPercentage") === "true"
+  );
   const [finalTotal, setFinalTotal] = useState<number>(() => {
     const savedFinal = localStorage.getItem("finalTotal");
     return savedFinal ? Number(savedFinal) : total;
   });
-  const location = useLocation();
-  const retailState = location.state as
-  | {
-      from?: string;
-      allergy?: string;
-      feeling?: string;
-      blindBoxId?: string;
-      quantity?: number;
-      price?: number;
-    }
-  | undefined;
 
-    const isFromRetail = retailState?.from === "retail-package";
-
-    const handlePaymentImmediately = () => {
-    if (isEmpty) {
-      alert("Giỏ hàng trống, vui lòng thêm sản phẩm trước khi thanh toán.");
-      return;
-    }
-
-    console.log("Thanh toán ngay từ retail-package:", retailState);
-
-    navigate("/thanh-toan", {
-      state: {
-        ...retailState, // forward all info
-        passedCart: items, // also include current cart
-      },
-    });
-  };
+  // ✅ Handlers
   const handleGoToPayment = () => {
     if (isEmpty) {
       alert("Giỏ hàng trống, vui lòng thêm sản phẩm trước khi tiếp tục.");
       return;
     }
-
     localStorage.setItem("tempCart", JSON.stringify(items));
     navigate("/thanh-toan", { state: { passedCart: items } });
   };
 
   const handleCheckoutClick = () => {
-  if (isEmpty) {
-    alert("Giỏ hàng trống, vui lòng thêm sản phẩm trước khi tiếp tục.");
-    return;
-  }
-  const codeToSend = discountCode.trim() ? discountCode.trim() : "";
-  onCheckout?.(codeToSend);
-};
+    if (isEmpty) {
+      alert("Giỏ hàng trống, vui lòng thêm sản phẩm trước khi tiếp tục.");
+      return;
+    }
+    const codeToSend = discountCode.trim() || "";
+    onCheckout?.(codeToSend);
+  };
+
+  const handlePayment = () => {
+    onPayment?.();
+  };
+
+  const clearDiscountStorage = () => {
+    [
+      "discountCode",
+      "discountMessage",
+      "discountValue",
+      "isPercentage",
+      "finalTotal",
+    ].forEach((key) => localStorage.removeItem(key));
+  };
 
   const handleApplyDiscount = async () => {
-  if (!discountCode.trim()) {
-    alert("Vui lòng nhập mã giảm giá.");
-    return;
-  }
+    if (!discountCode.trim()) {
+      alert("Vui lòng nhập mã giảm giá.");
+      return;
+    }
 
-  try {
-    const res = await validateDiscountCode(discountCode.trim());
+    try {
+      const res = await validateDiscountCode(discountCode.trim());
+      setDiscountMessage(res.message);
 
-    setDiscountMessage(res.message);
+      if (res.isSuccess && res.data.isActive) {
+        const discount = res.data;
+        setDiscountValue(discount.discountValue);
+        setIsPercentage(discount.isPercentage);
 
-    if (res.isSuccess && res.data.isActive) {
-      const discount = res.data;
+        const newTotal = discount.isPercentage
+          ? total - (total * discount.discountValue) / 100
+          : Math.max(total - discount.discountValue, 0);
 
-      setDiscountValue(discount.discountValue);
-      setIsPercentage(discount.isPercentage);
-
-
-      if (discount.isPercentage) {
-        const newTotal = total - (total * discount.discountValue) / 100;
         setFinalTotal(newTotal);
+
         localStorage.setItem("discountCode", discount.code);
         localStorage.setItem("discountMessage", res.message);
         localStorage.setItem("discountValue", discount.discountValue.toString());
         localStorage.setItem("isPercentage", discount.isPercentage.toString());
         localStorage.setItem("finalTotal", newTotal.toString());
       } else {
-        const newTotal = Math.max(total - discount.discountValue, 0);
-        setFinalTotal(newTotal);
+        clearDiscountStorage();
+        setDiscountValue(0);
+        setFinalTotal(total);
       }
-    } else {
-      setDiscountValue(0);
-      setFinalTotal(total);
-      localStorage.removeItem("discountCode");
-      localStorage.removeItem("discountMessage");
-      localStorage.removeItem("discountValue");
-      localStorage.removeItem("isPercentage");
-      localStorage.removeItem("finalTotal");
+    } catch (error) {
+      console.error("Discount error:", error);
+      clearDiscountStorage();
+      setDiscountMessage("Có lỗi xảy ra khi áp dụng mã giảm giá.");
     }
-  } catch (error) {
-    localStorage.removeItem("discountCode");
-    localStorage.removeItem("discountMessage");
-    localStorage.removeItem("discountValue");
-    localStorage.removeItem("isPercentage");
-    localStorage.removeItem("finalTotal");
-    console.error(error);
-    setDiscountMessage("Có lỗi xảy ra khi áp dụng mã giảm giá.");
-  }
-};
+  };
 
+  // ✅ Cleanup on unload
   useEffect(() => {
-  const handleBeforeUnload = () => {
-    localStorage.removeItem("discountCode");
-    localStorage.removeItem("discountMessage");
-    localStorage.removeItem("discountValue");
-    localStorage.removeItem("isPercentage");
-    localStorage.removeItem("finalTotal");
-  };
+    const handleBeforeUnload = () => clearDiscountStorage();
 
-  window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      if (!window.location.pathname.includes("thanh-toan")) clearDiscountStorage();
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
-  return () => {
-    // only clear if NOT going to /thanh-toan
-    if (!window.location.pathname.includes("thanh-toan")) {
-      handleBeforeUnload();
-    }
-    window.removeEventListener("beforeunload", handleBeforeUnload);
-  };
-}, []); 
-
-
+  // ✅ Render
   return (
     <div className="cart-summary">
-      {isFromRetail &&  <>
-      </>
-      }
-      {items.map((item) => (
-        <div key={item.id} className="cart-summary__row">
-          <span className="cart-summary-name">{item.name}</span>
-          <span>{(item.price * item.quantity).toLocaleString()} đ</span>
+      {isFromRetail ? (
+        <div className="cart-summary__row">
+          <span className="cart-summary-name">Blind Box</span>
+          <span>{(150000).toLocaleString()} đ</span>
         </div>
-      ))}
+      ) : (
+        items.map((item) => (
+          <div key={item.id} className="cart-summary__row">
+            <span className="cart-summary-name">{item.name}</span>
+            <span>{(item.price * item.quantity).toLocaleString()} đ</span>
+          </div>
+        ))
+      )}
 
       {mode === "payment" && <div className="cart-shipping cart-summary__row"></div>}
 
@@ -179,7 +173,7 @@ export default function CartCheckout({ items, mode, onCheckout }: CartSummaryPro
           <span>Sau giảm giá</span>
           <span>{finalTotal.toLocaleString()} đ</span>
         </div>
-      )} 
+      )}
 
       <div className="cart-summary__form">
         <div className="cart-summary__discount">
@@ -209,7 +203,7 @@ export default function CartCheckout({ items, mode, onCheckout }: CartSummaryPro
         ) : (
           <>
             <button
-              onClick={isFromRetail ? handlePaymentImmediately : handleCheckoutClick}
+              onClick={isFromRetail ? handlePayment : handleCheckoutClick}
               disabled={isEmpty}
               className="d-btn d-btn-font"
             >
