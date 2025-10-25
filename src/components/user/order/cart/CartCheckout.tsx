@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../cart/styles/CartSummary.css";
 import { validateDiscountCode } from "../../../../router/cartApi";
 
@@ -14,6 +14,7 @@ type CartSummaryProps = {
   items: CartItem[];
   mode: "checkout" | "payment";
   onCheckout?: (discountCode: string) => void;
+  onPayment?: () => void;
 };
 
 export default function CartCheckout({ items, mode, onCheckout }: CartSummaryProps) {
@@ -29,7 +30,35 @@ export default function CartCheckout({ items, mode, onCheckout }: CartSummaryPro
     const savedFinal = localStorage.getItem("finalTotal");
     return savedFinal ? Number(savedFinal) : total;
   });
+  const location = useLocation();
+  const retailState = location.state as
+  | {
+      from?: string;
+      allergy?: string;
+      feeling?: string;
+      blindBoxId?: string;
+      quantity?: number;
+      price?: number;
+    }
+  | undefined;
 
+    const isFromRetail = retailState?.from === "retail-package";
+
+    const handlePaymentImmediately = () => {
+    if (isEmpty) {
+      alert("Giỏ hàng trống, vui lòng thêm sản phẩm trước khi thanh toán.");
+      return;
+    }
+
+    console.log("Thanh toán ngay từ retail-package:", retailState);
+
+    navigate("/thanh-toan", {
+      state: {
+        ...retailState, // forward all info
+        passedCart: items, // also include current cart
+      },
+    });
+  };
   const handleGoToPayment = () => {
     if (isEmpty) {
       alert("Giỏ hàng trống, vui lòng thêm sản phẩm trước khi tiếp tục.");
@@ -99,8 +128,23 @@ export default function CartCheckout({ items, mode, onCheckout }: CartSummaryPro
   }
 };
 
+  useEffect(() => {
+  return () => {
+    localStorage.removeItem("discountCode");
+    localStorage.removeItem("discountMessage");
+    localStorage.removeItem("discountValue");
+    localStorage.removeItem("isPercentage");
+    localStorage.removeItem("finalTotal");
+  };
+
+}, []);
+
+
   return (
     <div className="cart-summary">
+      {isFromRetail &&  <>
+      </>
+      }
       {items.map((item) => (
         <div key={item.id} className="cart-summary__row">
           <span className="cart-summary-name">{item.name}</span>
@@ -156,7 +200,7 @@ export default function CartCheckout({ items, mode, onCheckout }: CartSummaryPro
         ) : (
           <>
             <button
-              onClick={handleCheckoutClick}
+              onClick={isFromRetail ? handlePaymentImmediately : handleCheckoutClick}
               disabled={isEmpty}
               className="d-btn d-btn-font"
             >

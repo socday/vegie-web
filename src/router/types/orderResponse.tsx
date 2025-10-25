@@ -22,8 +22,8 @@ export type Order = {
   orderDate: string;
   finalPrice: number;
   discountCode: string | null;
-  paymentMethod?: string | null; // e.g. "VNPay" | "PayOS" | "CashOnDelivery"
-  paymentStatus?: string | null; // e.g. "Pending" | "Paid"
+  paymentMethod?: string | null; 
+  paymentStatus?: string | null; 
   payOSPaymentUrl?: string | null;
   payOSOrderCode?: string | null;
   details: OrderDetail[];
@@ -50,6 +50,8 @@ export type CreateOrderRequest = {
   address: string;
   deliveryTo: string;
   phoneNumber: string;
+  allergyNote: string;
+  preferenceNote: string;
 };
 
 export type CreateOrderResponse = {

@@ -1,0 +1,19 @@
+.order-payment-layout {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.5rem;
+}
+
+.order-left,
+.order-right {
+  flex: 1;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.order-right {
+  max-width: 420px;
+}

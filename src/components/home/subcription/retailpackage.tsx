@@ -13,24 +13,21 @@ export default function RetailPackage()  {
   // Static item info
   const blindBoxId = "ca108cad-a026-4dea-b3d1-62f7fcc51ef9";
   const quantity = 1;
-
-  const handleThanhToan = () => {
+  const price = 150000;
+    const handleThanhToan = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // Build the cart item
-    const item: PhieuSucKhoeResponse = {
-      id: blindBoxId,
-      name: "Blind Box",
-      quantity,
-      allergy,
-      feeling,
-    };
-
-    // Navigate to /thanh-toan and pass item in state
-    navigate("/thanh-toan", { state: { passedCart: [item] } });
+    navigate("/thanh-toan", {
+      state: {
+        from: "retail-package",
+        allergy,
+        feeling,
+        blindBoxId,
+        quantity,
+        price,
+      },
+    });
   };
-
-  return (
+   return (
     <div className="form-section">
       <div className="form-left">
         <h2>Gói mua lẻ</h2>
