@@ -3,6 +3,8 @@ import React from 'react';
 // Import các icon cần thiết
 import { FaFacebook } from "react-icons/fa";
 import { SiZalo } from "react-icons/si";
+import { MdMail } from 'react-icons/md';
+import { FaPhone } from 'react-icons/fa';
 
 // Import logo của bạn
 import logo from '../../assets/logo.png'; // **Đảm bảo đường dẫn này đúng**
@@ -44,6 +46,8 @@ export default function Footer() {
             <div className="social-icons">
               <a href="https://www.facebook.com/profile.php?id=61577740254103" aria-label="Facebook"><FaFacebook /></a>
               <a href="#" aria-label="Zalo"><SiZalo /></a>
+              <a href="#" aria-label="Email"><MdMail /></a>
+              <a href="#" aria-label="Phone"><FaPhone /></a>
             </div>
           </div>
         </div>
