@@ -4,39 +4,51 @@ import ReviewOrder from "./ReviewOrder";
 import ReviewOrderForm from "./ReviewOrderForm";
 import "../styles/Order.css";
 import { useOrders } from "../../../../context/OrderContext";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { cancelOrder, updateOrdersStatus } from "../../../../router/orderApi";
+import { formatOrderDate } from "../../../utils/DateTransfer";
 
 export default function Order() {
-  const { orders, refreshOrders } = useOrders();
+  const { orders, refreshOrders, cancelLocalOrder } = useOrders();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const currentTab = (searchParams.get("tab") as "status" | "review" | "favorite") || "status";
   const orderId = searchParams.get("id");
 
-const handleTabChange = (tab: "status" | "review" | "favorite", id?: string) => {
-  const params: Record<string, string> = {
-    section: "orders", // <── Always include this
-    tab,
+  const handleTabChange = (tab: "status" | "review" | "favorite", id?: string) => {
+    const params: Record<string, string> = {
+      section: "orders",
+      tab,
+    };
+    if (id) params.id = id;
+    setSearchParams(params);
   };
-  if (id) params.id = id;
-  setSearchParams(params);
-};
 
   useEffect(() => {
     if (orders.length === 0) refreshOrders();
   }, [orders]);
 
-  const { cancelLocalOrder } = useOrders();
-
   const handleCancelOrder = async (id: string) => {
-  const res = await cancelLocalOrder(id);
-  if (res.isSuccess) {
-    alert("Đơn hàng đã được hủy thành công.");
-  } else {
-    alert("Không thể hủy đơn hàng. Vui lòng thử lại.");
-  }
-};
+    const res = await cancelLocalOrder(id);
+    if (res.isSuccess) {
+      alert("Đơn hàng đã được hủy thành công.");
+    } else {
+      alert("Không thể hủy đơn hàng. Vui lòng thử lại.");
+    }
+  };
+
+
+const sortedOrders = useMemo(() => {
+  return [...orders]
+    .map(o => ({
+      ...o,
+      formattedDate: formatOrderDate(o.date), // human-readable
+    }))
+    .sort((a, b) => {
+      const truncateISO = (iso: string) => iso.replace(/(\.\d{3})\d+/, "$1");
+      return new Date(truncateISO(b.date)).getTime() - new Date(truncateISO(a.date)).getTime();
+    });
+}, [orders]);
 
   if (currentTab === "review" && orderId) {
     return (
@@ -47,8 +59,7 @@ const handleTabChange = (tab: "status" | "review" | "favorite", id?: string) => 
   }
 
   return (
-    <div className="orders">  
-      {/* only show tabs if NOT inside review form */}
+    <div className="orders">
       <div className="orders__tabs">
         <button
           className={`fancy-btn ${currentTab === "status" ? "active" : ""}`}
@@ -67,14 +78,14 @@ const handleTabChange = (tab: "status" | "review" | "favorite", id?: string) => 
       <div className="orders__content">
         {currentTab === "status" && (
           <OrderStatus
-            orders={orders}
+            orders={sortedOrders} // ✅ use sorted version here
             onCancel={handleCancelOrder}
             onSwitchTab={handleTabChange}
           />
         )}
         {currentTab === "review" && !orderId && (
           <ReviewOrder
-            orders={orders}
+            orders={sortedOrders} // ✅ also sorted
             onSwitchTab={handleTabChange}
           />
         )}

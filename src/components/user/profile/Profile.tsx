@@ -26,6 +26,7 @@ export default function Profile() {
     if (!searchParams.get("section")) {
       setSearchParams({ section: "profile" });
     }
+    refreshOrders();
   }, []);
 
   return (

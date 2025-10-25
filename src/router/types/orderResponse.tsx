@@ -19,8 +19,7 @@ export type Order = {
   id: string;
   userId: string;
   status: string; // e.g. "Pending" | "Completed"
-  orderDate?: string; // ISO date string, optional in some responses
-  totalPrice: number;
+  orderDate: string;
   finalPrice: number;
   discountCode: string | null;
   paymentMethod?: string | null; // e.g. "VNPay" | "PayOS" | "CashOnDelivery"

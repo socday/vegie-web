@@ -1,4 +1,5 @@
-import { Order } from "../components/user/profile/order/OrderStatus";
+import { formatOrderDate } from "../components/utils/DateTransfer";
+import { Order } from "../context/OrderContext";
 import { OrderResponse } from "../router/types/orderResponse";
 
 function mapOrderStatus(
@@ -24,7 +25,7 @@ export function transformApiOrders(apiOrders: OrderResponse["data"]): Order[] {
     return {
       id: o.id,
       name: firstItem?.boxName ?? "N/A",
-      date: new Date().toISOString().split("T")[0], // replace with real date if backend adds it
+      date: o.orderDate,
       qty: o.details.reduce((sum, d) => sum + d.quantity, 0),
       price: o.finalPrice,
       status: mapOrderStatus(o.status),

@@ -24,23 +24,25 @@ type OrderContextType = {
   cancelLocalOrder: (id: string) => Promise<CancelOrderResponse>;
 };
 
-const OrderContext = createContext<OrderContextType>({
-  orders: [],
-  refreshOrders: async () => {},
-  cancelLocalOrder: async () => ({
-    isSuccess: false,
-    message: "Not implemented",
-  }),
-});
+  const OrderContext = createContext<OrderContextType>({
+    orders: [],
+    refreshOrders: async () => {},
+    cancelLocalOrder: async () => ({
+      isSuccess: false,
+      message: "Not implemented",
+    }),
+  });
 
 export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
   const [orders, setOrders] = useState<Order[]>([]);
 
-  // Fetch orders from API or local cache
   const refreshOrders = async () => {
     try {
       const token = localStorage.getItem("accessToken");
-      if (!token) return;
+      if (!token) {
+        console.error("Token invalid")
+        return;
+      } 
 
       const res = await getOrder();
       if (res.isSuccess) {
