@@ -10,51 +10,63 @@ import { getPaymentLink } from "../../../../router/orderApi";
 export default function Payment({ passedCart }: { passedCart?: Item[] }) {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
-  const [paymentMethod, setPaymentMethod] = useState<number>(2); 
+  const [paymentMethod, setPaymentMethod] = useState<number>(2);
+  const [checkoutData, setCheckoutData] = useState<{
+    address: string;
+    deliveryTo: string;
+    phoneNumber: string;
+    deliveryMethod?: number;
+    discountCode?: string;
+  }>({
+    address: "",
+    deliveryTo: "",
+    phoneNumber: "",
+    deliveryMethod: 0,
+    discountCode: undefined,
+  });
+
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Handle updates from OrderConfirmation
+  const handleCheckoutDataChange = (data: Partial<typeof checkoutData>) => {
+    setCheckoutData((prev) => ({ ...prev, ...data }));
+  };
 
-const handleCheckout = async (discountCode: string) => {
-  const userId = localStorage.getItem("userId");
-  if (!userId) {
-    console.error("No userId found for checkout.");
-    return;
-  }
+  const handleCheckout = async (discountCode: string) => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      console.error("No userId found for checkout.");
+      return;
+    }
 
-  try {
-    const checkoutData = {
-      paymentMethod, // dynamically chosen by user
-      deliveryMethod: 0,
-      discountCode,
-      address:"",
-      deliveryTo: "",
-      phoneNumber: ""
-    };
+    try {
+      const payload = {
+        paymentMethod,
+        deliveryMethod: checkoutData.deliveryMethod || 0,
+        discountCode: discountCode || checkoutData.discountCode || "",
+        address: checkoutData.address,
+        deliveryTo: checkoutData.deliveryTo,
+        phoneNumber: checkoutData.phoneNumber,
+      };
 
-    const response = await cartCheckout(userId, checkoutData);
-    if (paymentMethod === 2 && response.data.data.id) {
-      try {
+      const response = await cartCheckout(userId, payload);
+
+      if (paymentMethod === 2 && response.data.data.id) {
         const paymentRes = await getPaymentLink(response.data.data.id);
         if (paymentRes.isSuccess && paymentRes.data.paymentUrl) {
-          // redirect to PayOS payment page
           window.location.href = paymentRes.data.paymentUrl;
         } else {
           alert("Không thể tạo liên kết thanh toán.");
         }
-      } catch (err) {
-        alert("Lỗi khi tạo liên kết thanh toán.");
+      } else {
+        navigate("/noti/order-success");
       }
-    } else {
-      navigate("/noti/order-success");
+    } catch (error) {
+      console.error("Checkout failed:", error);
+      alert("Thanh toán thất bại, vui lòng thử lại.");
     }
-
-  } catch (error) {
-    console.error("Checkout failed:", error);
-  } finally {
-    return false;
-  }
-};
+  };
 
   useEffect(() => {
     async function loadCart() {
@@ -93,7 +105,10 @@ const handleCheckout = async (discountCode: string) => {
   return (
     <div className="cart">
       <div className="cart-item-page">
-        <OrderConfirmation onPaymentChange={setPaymentMethod} />
+        <OrderConfirmation
+          onPaymentChange={setPaymentMethod}
+          onCheckoutDataChange={handleCheckoutDataChange}
+        />
       </div>
 
       <div className="cart-checkout-page">

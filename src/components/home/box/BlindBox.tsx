@@ -36,7 +36,7 @@ export default function BlindBox() {
       );
       alert(`Thêm thành công ${box.name} x ${newQty}`);
     } catch (err) {
-      console.error("Failed to update quantity:", err);
+      alert("Thêm vào giỏ hàng không thành công do lỗi hệ thống");
     }
     };
   

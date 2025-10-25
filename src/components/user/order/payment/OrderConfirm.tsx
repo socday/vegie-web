@@ -18,7 +18,6 @@ const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
   const [loading, setLoading] = useState<boolean>(true);
   const [editable, setEditable] = useState<boolean>(false);
 
-  // 🧩 Các state có thể thay đổi nếu người dùng chỉnh sửa địa chỉ
   const [deliveryTo, setDeliveryTo] = useState("");
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -29,7 +28,6 @@ const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
     onCheckoutDataChange({ paymentMethod: method });
   };
 
-  // 🟢 Gọi API lấy thông tin khách hàng
   useEffect(() => {
     const fetchCustomer = async () => {
       try {
