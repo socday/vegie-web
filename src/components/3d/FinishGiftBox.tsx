@@ -4,12 +4,14 @@ import "../../css/FruitSelection.css";
 import "./styles/letters.css";
 import "./styles/FinishGiftBox.css";
 import giftbox from "../../assets/images/mascot-giftbox-01.png"; // ✅ Correct image import
+import backgroundStar from "../../assets/images/giftbox-01.png";
 import { createGiftBoxOrder } from "../../router/orderApi";
+import { addToCart } from "../../router/cartApi";
 
 // Type for received state
 interface FinishGiftBoxLocationState {
   message?: string;
-  selectedImage?: number;
+  selectedLetter?: number;
   selectedBox?: number;
   selectedFruits?: Record<string, number>;
 }
@@ -20,29 +22,55 @@ export default function FinishGiftBox() {
 
   // Get state safely
   const message = location.state?.message || "";
-  const selectedImage = location.state?.selectedImage || 1;
+  const selectedLetter = location.state?.selectedLetter || 1;
   const selectedBox = location.state?.selectedBox || 1;
   const selectedFruits = location.state?.selectedFruits || {};
 
 
 
   const handleContinue = async () => {
+    const userId = localStorage.getItem("userId") || "";
 
-  const result = await createGiftBoxOrder();
-    console.log(result);
+    if (!userId) {
+      alert("Vui lòng đăng nhập để tiếp tục!");
+      return;
+    }
 
-    if (result.isSuccess) {
-      alert("Order created successfully!");
-      // navigate to next page
-    } else {
-      alert("Failed to create order.");
+    const vegetables: string[] = Object.keys(selectedFruits);
+
+    const fruitsString = Object.entries(selectedFruits)
+      .map(([name, qty]) => `${name} ${qty}`)
+      .join(", ");
+
+    const fullMessage = `${message} | Letter: ${selectedLetter}, Box: ${selectedBox}${fruitsString ? " | " + fruitsString : ""}`;
+
+    try {
+      const result = await addToCart({
+        userId,
+        vegetables,
+        greetingMessage: fullMessage,
+        boxDescription: selectedBox?.toString() || "",
+        letterScription: selectedLetter?.toString() || "",
+        quantity: 1
+      });
+
+      if (result.isSuccess) {
+        navigate("/gio-hang");
+        // console.log("Added to cart:", result.data);
+      } else {
+        alert("Thêm vào giỏ hàng không thành công");
+        // console.error("Failed to add to cart:", result.message);
+      }
+    } catch (err) {
+      // console.error("API error:", err);
     }
   };
 
   return (
     <div className="fruit-selection-page">
-      <div className="main-container">
+      <div className="finish-giftbox-container">
         {/* LEFT SIDE */}
+
         <div className="fnb-left">
           <div className="fruit-selection-title-display">
             <h1 className="finish-gift-box-title" style={{ color: "#91CF43" }}>
@@ -79,7 +107,7 @@ export default function FinishGiftBox() {
             />
           </div>
         </div>
-      </div>
+        </div>
     </div>
   );
 }

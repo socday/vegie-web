@@ -1,6 +1,6 @@
 import { api } from "./api";
 import { getBoxTypeName } from "./boxApi";
-import { CartCheckOut, CartResponse, Item } from "./types/cartResponse";
+import { AddToCartRequest, AddToCartResponse, CartCheckOut, CartResponse, Item } from "./types/cartResponse";
 
 export async function getCart(): Promise<CartResponse> {
   const token = localStorage.getItem("accessToken");
@@ -65,4 +65,20 @@ export async function cartCheckout (userId: string, checkOut: CartCheckOut) {
     checkOut,
     { headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` } }
   )
+}
+
+export async function addToCart(payload: AddToCartRequest): Promise<AddToCartResponse> {
+  const token = localStorage.getItem("accessToken");
+  if (!token) {
+    throw new Error("User not authenticated");
+  }
+
+  const res = await api.post<AddToCartResponse>("/GiftBox/add-to-cart", payload, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.data;
 }

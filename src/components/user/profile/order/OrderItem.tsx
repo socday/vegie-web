@@ -4,6 +4,7 @@ import "./styles/OrderItem.css";
 import { useMediaQuery } from "react-responsive";
 import { Order } from "../../../../context/OrderContext";
 import { useSearchParams } from "react-router-dom";
+import { formatOrderDate } from "../../../utils/DateTransfer";
 
 type Props = {
   order: Order;
@@ -24,6 +25,10 @@ export default function OrderItem({ order, onCancel, onSwitchTab, review}: Props
   const handleCancelClick = () => {
     setShowPopup(true);
   };
+
+  const formatDate = (isoDate: string) => {
+    return formatOrderDate(isoDate);
+  }
 
   const handleConfirmCancel = () => {
     if (!onCancel) {
@@ -57,12 +62,12 @@ export default function OrderItem({ order, onCancel, onSwitchTab, review}: Props
           <div className="product-info">
             <h3>{order.name}</h3>
             {isDesktop && (
-              <p>Ngày đặt hàng: {order.date}</p>
+              <p>Ngày đặt hàng: {formatDate(order.date)}</p>
             )}
             {isMobile && (
               <p>
                 Ngày đặt hàng:<br />
-                {order.date}
+                {formatDate(order.date)}
               </p>
             )}
             <p>Số lượng: {order.qty}</p>

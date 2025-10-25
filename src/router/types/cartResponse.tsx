@@ -20,3 +20,19 @@ export type CartCheckOut = {
   deliveryTo: string;
   phoneNumber: string;
 }
+
+export interface AddToCartRequest {
+  userId: string;
+  vegetables: string[];
+  greetingMessage: string;
+  boxDescription: string;
+  letterScription: string;
+  quantity: number;
+}
+
+export interface AddToCartResponse {
+  isSuccess: boolean;
+  data?: any; // adjust based on API response
+  message: string;
+  exception?: string | null;
+}

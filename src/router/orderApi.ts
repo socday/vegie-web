@@ -149,7 +149,7 @@ export async function createGiftBoxOrder(
 
   try {
     const response = await api.post<CreateGiftBoxResponse>(
-      "/api/GiftBox/create-order",
+      "/GiftBox/create-order",
       payload,
       {
         headers: {
@@ -167,4 +167,6 @@ export async function createGiftBoxOrder(
       exception: error.message
     };
   }
+
+  
 }

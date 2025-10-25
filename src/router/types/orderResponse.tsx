@@ -105,3 +105,4 @@ export interface CreateGiftBoxResponse {
   data?: any;
   exception?: string | null;
 }
+

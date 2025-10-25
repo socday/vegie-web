@@ -42,7 +42,6 @@ const sortedOrders = useMemo(() => {
   return [...orders]
     .map(o => ({
       ...o,
-      formattedDate: formatOrderDate(o.date), // human-readable
     }))
     .sort((a, b) => {
       const truncateISO = (iso: string) => iso.replace(/(\.\d{3})\d+/, "$1");
@@ -78,7 +77,7 @@ const sortedOrders = useMemo(() => {
       <div className="orders__content">
         {currentTab === "status" && (
           <OrderStatus
-            orders={sortedOrders} // ✅ use sorted version here
+            orders={sortedOrders}
             onCancel={handleCancelOrder}
             onSwitchTab={handleTabChange}
           />

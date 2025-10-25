@@ -32,7 +32,7 @@ export default function Letters() {
     console.log("Selected fruits:", selectedFruits);
 
   const [message, setMessage] = useState("");
-  const [selectedImage, setSelectedImage] = useState(1); // default image 1
+  const [selectedLetter, setSelectedImage] = useState(1); // default image 1
 
   // Handle text change
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -46,12 +46,8 @@ export default function Letters() {
       return;
     }
 
-    console.log("User message:", message);
-    console.log("Selected box:", selectedBox);
-    console.log("Selected fruits:", selectedFruits);
-
     navigate("/finish-giftbox", {
-      state: { message, selectedImage, selectedBox, selectedFruits },
+      state: { message, selectedLetter, selectedBox, selectedFruits },
     });
   };
 
@@ -91,7 +87,7 @@ export default function Letters() {
             {[1, 2, 3].map((num) => (
               <button
                 key={num}
-                className={`number-btn ${selectedImage === num ? "active" : ""}`}
+                className={`number-btn ${selectedLetter === num ? "active" : ""}`}
                 onClick={() => handleImageChange(num)}
               >
                 {num}
@@ -104,8 +100,8 @@ export default function Letters() {
         <div className="fruit-selection-right">
           <div className="letter-display-area">
             <img
-              src={letters[selectedImage]}
-              alt={`Letter Style ${selectedImage}`}
+              src={letters[selectedLetter]}
+              alt={`Letter Style ${selectedLetter}`}
               className="letter-preview-image"
             />
             <button
