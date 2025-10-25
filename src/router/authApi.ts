@@ -132,20 +132,29 @@ export async function checkAuth() {
     return res.data;
   }
 
-export async function updateCustomer(payload: {
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  gender: number;
-  address: string;
-  imgURL: string;
-}): Promise<Customer> {
+export async function updateCustomer(
+  payload:
+    | FormData
+    | {
+        firstName: string;
+        lastName: string;
+        phoneNumber: string;
+        gender: number;
+        address: string;
+        imgURL: string | File;
+      }
+): Promise<Customer> {
   const token = localStorage.getItem("accessToken");
+  const isFormData = payload instanceof FormData;
+
   const res = await api.put("/Customers/me", payload, {
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": isFormData
+        ? "multipart/form-data"
+        : "application/json",
       Authorization: `Bearer ${token}`,
     },
   });
+
   return res.data;
 }

@@ -78,7 +78,7 @@ const NavBar = () => {
 
                         <div className="nav-actions">
                             {/* Search Bar */}
-                            <form className="search-form" onSubmit={handleSubmit}>
+                            {/* <form className="search-form" onSubmit={handleSubmit}>
                                 <input
                                     type="text"
                                     placeholder="Tìm kiếm trong trang..."
@@ -89,7 +89,7 @@ const NavBar = () => {
                                 <button type="submit" className="search-button">
                                     <FiSearch />
                                 </button>
-                            </form>
+                            </form> */}
 
                             {/* Icons */}
                             <div className="nav-icons-action">

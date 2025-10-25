@@ -16,6 +16,16 @@ export default function ProfileForm({ onChangePassword }: ProfileFormProps) {
   const [originalCustomer, setOriginalCustomer] = useState<Customer | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+      setPreview(URL.createObjectURL(file)); // show preview
+    }
+  };
   // Fetch customer info on mount
 useEffect(() => {
   const fetchCustomer = async () => {
@@ -54,26 +64,27 @@ useEffect(() => {
 
   // Save to API
   const handleSave = async () => {
-    if (!customer) return;
-    try {
-      const payload = {
-        firstName: customer.fullName, // full name mapped
-        lastName: "",
-        phoneNumber: customer.phone,
-        gender: 0,
-        address: customer.address,
-        imgURL: customer.imgURL || "",
-      };
-
-      const updated = await updateCustomer(payload);
-      setCustomer(updated);
-      setOriginalCustomer(updated);
-      alert("Cập nhật thành công!");
-    } catch (err) {
-      console.error("Update failed:", err);
-      alert("Cập nhật thất bại!");
+  if (!customer) return;
+  try {
+    const formData = new FormData();
+    formData.append("firstName", customer.fullName);
+    formData.append("lastName", "");
+    formData.append("phoneNumber", customer.phone);
+    formData.append("gender", "0");
+    formData.append("address", customer.address);
+    if (selectedFile) {
+      formData.append("file", selectedFile);
     }
-  };
+
+    const updated = await updateCustomer(formData); // updateCustomer must send multipart
+    setCustomer(updated);
+    setOriginalCustomer(updated);
+    alert("Cập nhật thành công!");
+  } catch (err) {
+    console.error("Update failed:", err);
+    alert("Cập nhật thất bại!");
+  }
+};
 
   // Cancel edits
   const handleCancel = () => {
@@ -124,9 +135,19 @@ useEffect(() => {
           <>
             <div className="profile-row">
               <div className="avatar">
-                {customer.imgURL && <img src={customer.imgURL} alt="Avatar" />}
+                <img src={preview || customer.imgURL || "/default-avatar.png"} alt="" />
               </div>
-              <button className="d-btn d-btn-font">
+              <input
+                type="file"
+                accept="image/*"
+                id="avatarUpload"
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+              />
+              <button
+                className="d-btn d-btn-font"
+                onClick={() => document.getElementById("avatarUpload")?.click()}
+              >
                 <span>Tải ảnh lên</span>
               </button>
             </div>

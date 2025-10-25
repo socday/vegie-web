@@ -168,6 +168,7 @@
 }
 /* Icons inside nav-actions */
 .nav-icons-action {
+  margin-left: auto;
   width: 30%;
 }
 
