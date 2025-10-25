@@ -6,8 +6,6 @@ import "../../index.css";
 import LoginRegisterForm from "./LoginRegisterForm";
 import { registerUser } from "../../router/authApi";
 import { useMediaQuery } from "react-responsive";
-import StageNotification from "../notifications/StageNotification";
-import StageNotificationWrapper from "../notifications/StageNotificationWrapper";
 import { useNavigate } from "react-router-dom";
 
 
@@ -171,21 +169,7 @@ const Register = () => {
               />
             </div>
 
-            <div className="form-group">
-              <div className="coupon-form-group">
-                <span className="r-coupon-text">
-                  <p className="r-coupon-text-visible">Mã</p>
-                </span>
-                <input
-                  type="text"
-                  name="coupon"
-                  value={formData.coupon}
-                  onChange={handleChange}
-                  placeholder="Nhập mã"
-                  className="inputCoupon"
-                />
-              </div>
-            </div>
+
 
             {error && <p className="error">{error}</p>}
             {success && <p className="success">Đăng ký thành công!</p>}
