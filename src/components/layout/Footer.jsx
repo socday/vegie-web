@@ -41,9 +41,6 @@ export default function Footer() {
           {/* Cột 3: Liên hệ */}
           <div className="footer-column contact-column">
             <h3>LIÊN HỆ</h3>
-            <p>Số điện thoại: 033 315 9066</p>
-            <p>Email: vegicare9@gmail.com</p>
-            <p>Địa chỉ: Thành phố Hồ Chí Minh</p>
             <div className="social-icons">
               <a href="https://www.facebook.com/profile.php?id=61577740254103" aria-label="Facebook"><FaFacebook /></a>
               <a href="#" aria-label="Zalo"><SiZalo /></a>

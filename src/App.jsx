@@ -97,6 +97,7 @@ function AppContent() {
           <Route path='/gift-preview' element={<GiftPreview />} />
           <Route path="/combo/:type" element={<ViewComboSectionWrapper />} />
           <Route path="/noti/:type" element={<StageNotificationWrapper />} />
+          <Route path="/:type" element={<StageNotificationWrapper />} />
           <Route path="/thong-bao" element={
             <PrivateRoute>
               <UserNotification />

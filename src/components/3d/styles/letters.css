@@ -78,3 +78,8 @@
 .number-btn {
   color: #91CF43;
 }
+
+.letter-suggest-btn {
+  margin-left:auto;
+  margin-right: 6rem;
+}

@@ -256,3 +256,10 @@
     font-size: 1rem;
   }
 }
+
+mark.page-search-highlight {
+  background-color: yellow;
+  color: black;
+  padding: 0 2px;
+  border-radius: 2px;
+}

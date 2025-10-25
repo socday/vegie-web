@@ -36,3 +36,11 @@ export interface AddToCartResponse {
   message: string;
   exception?: string | null;
 }
+
+export interface PhieuSucKhoeResponse {
+  id: string;
+  name: string;
+  quantity: number;
+  allergy?: string;
+  feeling?: string;
+}

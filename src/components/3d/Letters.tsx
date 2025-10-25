@@ -93,6 +93,12 @@ export default function Letters() {
                 {num}
               </button>
             ))}
+            <button
+              className="letter-suggest-btn d-btn d-btn-font"
+              onClick={handleContinue}
+            >
+              <span>Gợi ý thư</span>
+            </button>
           </div>    
         </div>
 
