@@ -5,6 +5,11 @@ export interface OrderDetailDTO {
   boxName: string;
   quantity: number;
   unitPrice: number;
+  vegetables?: string[];
+  greetingMessage?: string;
+  boxDescription?: string;
+  letterScription?: string;
+  giftBoxOrderId?: string;
 }
 
 export interface OrderDTO {

@@ -114,16 +114,15 @@
 .table-card { background: #f5fbff; border: 1px solid #cde5ff; border-radius: 12px; padding: 12px; }
 .table-title { font-weight: 700; margin-bottom: 8px; }
 .table { display: grid; }
-.row { display: grid; grid-template-columns: 2fr 1fr 1.5fr; padding: 10px 8px; border-bottom: 1px dashed #cde5ff; align-items: center; }
+.row { display: grid; grid-template-columns: 2fr 1fr 1.5fr; gap: 2px; padding: 10px 8px; border-bottom: 1px dashed #cde5ff; align-items: center; }
 .row.header { font-weight: 600; background: #e9f5ff; border-top-left-radius: 8px; border-top-right-radius: 8px; }
 
 /* Boards */
-.board { display: grid; gap: 16px; }
+.board { display: grid; gap: 8px; }
 .filter-row { 
   display: flex; 
   align-items: center; 
   justify-content: space-between; 
-  margin-bottom: 8px;
   padding: 4px 0;
 }
 .btn-group { display: inline-flex; border: 1px solid #cde5ff; background: #e9f6ff; border-radius: 10px; overflow: hidden; }
@@ -142,7 +141,7 @@
   border-radius: 0;
 }
 
-.board .table .row { grid-template-columns: 1fr 1.2fr 1fr 1fr 1fr 1fr; }
+.board .table .row { grid-template-columns: 1fr 1.2fr 1fr 1fr 1fr 1fr; gap: 2px; }
 
 .board-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
 .board-grid.three { grid-template-columns: 2fr 1fr; }
@@ -176,7 +175,7 @@
   border-radius: 12px;
   overflow: hidden;
   height: auto;
-  min-height: 580px;
+  min-height: 630px;
   display: flex;
   flex-direction: column;
 }
@@ -196,6 +195,7 @@
 .orders-header {
   display: grid;
   grid-template-columns: 0.5fr 1.7fr 0.6fr 1.6fr 1fr 0.6fr;
+  gap: 2px;
   padding: 8px 12px;
   background: #e9f5ff;
   font-weight: 600;
@@ -206,19 +206,28 @@
   min-height: 50px;
   align-items: center;
   flex-shrink: 0;
+  
 }
 
 .orders-body {
   flex: 1;
   overflow-y: auto;
   background: white;
-  min-height: 500px;
+  min-height: 550px;
   height: auto;
+  /* Hide scrollbar but keep scrolling functionality */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.orders-body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
 }
 
 .orders-row {
   display: grid;
   grid-template-columns: 0.5fr 1.7fr 0.6fr 1.6fr 1fr 0.6fr;
+  gap: 2px;
   padding: 8px 12px;
   border-bottom: 1px solid #f0f0f0;
   cursor: pointer;
@@ -228,6 +237,10 @@
   font-size: 14px;
   color: #2d3a4a;
   transition: background-color 0.2s ease;
+}
+
+.orders-row:nth-child(even) {
+  background-color: #e9f5ff;
 }
 
 .orders-row:hover {
@@ -249,9 +262,16 @@
   background: #f5fbff;
   border: 1px solid #cde5ff;
   border-radius: 12px;
-  padding: 16px;
-  max-height: 80vh;
+  padding: 10px;
+  max-height: 65vh;
   overflow-y: auto;
+  /* Hide scrollbar but keep scrolling functionality */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.order-detail::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
 }
 
 .no-selection {
@@ -264,7 +284,7 @@
 .detail-body {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px;
 }
 
 .order-title {
@@ -276,9 +296,10 @@
 }
 
 .detail-item {
-  font-size: 14px;
+  font-size: 13px;
   color: #2d3a4a;
-  line-height: 1.4;
+  line-height: 1.25;
+  margin: 1px 0;
 }
 
 .detail-item b {
@@ -290,8 +311,8 @@
   font-weight: 600;
   font-size: 14px;
   color: #2d3a4a;
-  margin-top: 8px;
-  padding-top: 8px;
+  margin-top: 2px;
+  padding-top: 4px;
   border-top: 1px solid #cde5ff;
 }
 
@@ -332,6 +353,7 @@
 .products-header {
   display: grid;
   grid-template-columns: 2fr 0.5fr 1fr;
+  gap: 2px;
   padding: 8px 12px;
   background: #f8fcff;
   font-weight: 600;
@@ -343,11 +365,16 @@
 .products-row {
   display: grid;
   grid-template-columns: 2fr 0.5fr 1fr;
+  gap: 2px;
   padding: 8px 12px;
   border-bottom: 1px solid #f0f0f0;
   font-size: 12px;
   color: #2d3a4a;
   align-items: center;
+}
+
+.products-row:nth-child(odd) {
+  background-color: #f8fcff;
 }
 
 .products-row:last-child {
@@ -642,28 +669,19 @@
   max-height: 60vh;
   overflow-y: auto;
   overflow-x: hidden;
+  /* Hide scrollbar but keep scrolling functionality */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 
 .recipes-table-inner::-webkit-scrollbar {
-  width: 8px;
-}
-
-.recipes-table-inner::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-.recipes-table-inner::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
-}
-
-.recipes-table-inner::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  display: none; /* Chrome, Safari and Opera */
 }
 
 .recipes-header {
   display: grid;
   grid-template-columns: 1fr 2fr 120px;
+  gap: 2px;
   background: #f8f9fa;
   border-bottom: 1px solid #e0e0e0;
   font-weight: 600;
@@ -692,9 +710,14 @@
 .recipe-row {
   display: grid;
   grid-template-columns: 1fr 2fr 120px;
+  gap: 2px;
   border-bottom: 1px solid #e0e0e0;
   min-height: 200px;
   box-sizing: border-box;
+}
+
+.recipe-row:nth-child(even) {
+  background-color: #f8f9fa;
 }
 
 .recipe-row:last-child {

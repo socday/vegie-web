@@ -11,8 +11,9 @@ export default function OrdersBoard({ orders = [], boxNameById, onRefresh }) {
   const [newStatus, setNewStatus] = useState('Pending')
   const [updating, setUpdating] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
+  const [expandedDetails, setExpandedDetails] = useState({}) // Track expanded detail indices
 
-  const pageSize = 10
+  const pageSize = 11
 
   // Update newStatus when selected order changes
   useEffect(() => {
@@ -177,7 +178,7 @@ export default function OrdersBoard({ orders = [], boxNameById, onRefresh }) {
           </button>
         </div>
       </div>
-      <div className="status-filter" style={{ display: 'flex', gap: 8, margin: '8px 0 12px' }}>
+      <div className="status-filter" style={{ display: 'flex', gap: 8, margin: '8px 0 4px' }}>
         {[
           { key: 'all', label: 'Tất cả' },
           { key: 'Pending', label: 'Đang chờ' },
@@ -239,8 +240,8 @@ export default function OrdersBoard({ orders = [], boxNameById, onRefresh }) {
                <div className="detail-item"><b>Ngày:</b> {getOrderDate(selected).toLocaleString('vi-VN')}</div>
                <div className="detail-item"><b>Thanh toán:</b> {viPaymentMethod(selected.paymentMethod) ?? '-'} ({viPaymentStatus(selected.paymentStatus) ?? '-'})</div>
                <div className="detail-item"><b>Giảm giá:</b> {selected.discountCode || '-'}</div>
-               <div className="detail-item"><b>Tổng:</b> {(selected.totalPrice || 0).toLocaleString('vi-VN')} VND</div>
-               <div className="detail-item"><b>Thanh toán cuối:</b> {(selected.finalPrice || selected.totalPrice || 0).toLocaleString('vi-VN')} VND</div>
+               <div className="detail-item"><b>Tổng giá:</b> {(selected.totalPrice || 0).toLocaleString('vi-VN')} VND</div>
+               <div className="detail-item"><b>Tổng thanh toán:</b> {(selected.finalPrice || selected.totalPrice || 0).toLocaleString('vi-VN')} VND</div>
                
                {/* Delivery Information */}
                {(selected.address || selected.deliveryTo || selected.phoneNumber || selected.allergyNote || selected.preferenceNote) && (
@@ -250,10 +251,10 @@ export default function OrdersBoard({ orders = [], boxNameById, onRefresh }) {
                    <div className="detail-item"><b>Người nhận:</b> {selected.deliveryTo || '-'}</div>
                    <div className="detail-item"><b>Số điện thoại:</b> {selected.phoneNumber || '-'}</div>
                    {selected.allergyNote && (
-                     <div className="detail-item"><b>Ghi chú dị ứng:</b> {selected.allergyNote}</div>
+                     <div className="detail-item"><b>Dị ứng:</b> {selected.allergyNote}</div>
                    )}
                    {selected.preferenceNote && (
-                     <div className="detail-item"><b>Ghi chú sở thích:</b> {selected.preferenceNote}</div>
+                     <div className="detail-item"><b>Sở thích:</b> {selected.preferenceNote}</div>
                    )}
                  </div>
                )}
@@ -276,13 +277,62 @@ export default function OrdersBoard({ orders = [], boxNameById, onRefresh }) {
                    <div>SL</div>
                    <div>Đơn giá</div>
                  </div>
-                 {(selected.details || []).map((d, idx) => (
-                   <div className="products-row" key={idx}>
-                     <div>{boxNameById(d.boxTypeId)}</div>
-                     <div>{d.quantity}</div>
-                     <div>{(d.unitPrice||0).toLocaleString('vi-VN')} VND</div>
-                   </div>
-                 ))}
+                 {(selected.details || []).map((d, idx) => {
+                  const hasExtraInfo = d.vegetables?.length > 0 || d.greetingMessage || d.boxDescription || d.letterScription || d.giftBoxOrderId
+                  const isExpanded = expandedDetails[idx]
+                  
+                  return (
+                    <React.Fragment key={idx}>
+                      <div className="products-row">
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                          <div>{boxNameById(d.boxTypeId)}</div>
+                          {hasExtraInfo && (
+                            <button
+                              onClick={() => setExpandedDetails(prev => ({ ...prev, [idx]: !prev[idx] }))}
+                              style={{
+                                background: 'transparent',
+                                border: 'none',
+                                cursor: 'pointer',
+                                fontSize: '12px',
+                                color: '#7cc043',
+                                padding: '2px 6px',
+                                borderRadius: '4px',
+                              }}
+                            >
+                              {isExpanded ? '▲ Thu gọn' : '▼ Chi tiết'}
+                            </button>
+                          )}
+                        </div>
+                        <div>{d.quantity}</div>
+                        <div>{(d.unitPrice||0).toLocaleString('vi-VN')} VND</div>
+                      </div>
+                      {isExpanded && hasExtraInfo && (
+                        <div style={{ paddingLeft: '20px', paddingTop: '4px', paddingBottom: '4px', borderTop: '1px solid #f0f0f0', borderBottom: '1px solid #f0f0f0' }}>
+                          {d.vegetables && d.vegetables.length > 0 && (
+                            <div className="detail-item" style={{ marginTop: '2px' }}>
+                              <b>Nguyên liệu:</b> {d.vegetables.join(', ')}
+                            </div>
+                          )}
+                          {d.greetingMessage && (
+                            <div className="detail-item" style={{ marginTop: '2px' }}>
+                              <b>Lời chúc:</b> {d.greetingMessage}
+                            </div>
+                          )}
+                          {d.boxDescription && (
+                            <div className="detail-item" style={{ marginTop: '2px' }}>
+                              <b>Chi tiết hộp:</b> {d.boxDescription}
+                            </div>
+                          )}
+                          {d.letterScription && (
+                            <div className="detail-item" style={{ marginTop: '2px' }}>
+                              <b>Chi tiết thư:</b> {d.letterScription}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </React.Fragment>
+                  )
+                })}
                </div>
                {selected.status !== 'Completed' && selected.status !== 'Cancelled' && (
                  <div className="status-update">
