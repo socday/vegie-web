@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { createDiscount, deleteDiscount, getDiscounts, updateDiscount } from '../../../router/adminApi'
+import { createDiscount, getDiscounts, updateDiscount } from '../../../router/adminApi'
 import '../styles/discounts.css'
 
 function toDateInputValue(iso) {
@@ -29,7 +29,6 @@ export default function DiscountsPage(){
   const selected = useMemo(() => items.find(x => x.id === selectedId) || null, [items, selectedId])
   const [currentPage, setCurrentPage] = useState(1)
   const pageSize = 5
-  const [newCustomersOnly, setNewCustomersOnly] = useState(false)
 
   const [form, setForm] = useState({
     code: '',
@@ -97,19 +96,7 @@ export default function DiscountsPage(){
     }
   }
 
-  async function handleDelete(id){
-    if (!id) return
-    if (!confirm('Xóa mã giảm giá này?')) return
-    const ok = await deleteDiscount(id)
-    if (!ok) {
-      alert('Xóa thất bại')
-      return
-    }
-    const refreshed = await getDiscounts()
-    setItems(refreshed)
-    setSelectedId(null)
-    handleNew()
-  }
+
 
   const totalPages = Math.max(1, Math.ceil(items.length / pageSize))
   const pageItems = items.slice((currentPage - 1) * pageSize, currentPage * pageSize)
@@ -182,13 +169,6 @@ export default function DiscountsPage(){
             <div className="discounts-field">
               <label className="discounts-label">Giá trị giảm</label>
               <input type="number" value={form.discountValue} onChange={e=>setForm(f=>({ ...f, discountValue: e.target.value }))} />
-            </div>
-            <div className="discounts-field">
-              <label className="discounts-label">Loại đơn</label>
-              <select value={'single'} onChange={()=>{}}>
-                <option value="single">Đơn lẻ</option>
-                <option value="group">Đơn nhóm</option>
-              </select>
             </div>
           </div>
         </div>
