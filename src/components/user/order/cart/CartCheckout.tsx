@@ -20,7 +20,9 @@ type CartSummaryProps = {
 export default function CartCheckout({ items, mode, onCheckout, onPayment }: CartSummaryProps) {
   const navigate = useNavigate();
   const isEmpty = items.length === 0;
+  const [isLoading, setIsLoading] = useState(false)
   const location = useLocation();
+
 
   const retailState = location.state as
     | {
@@ -58,7 +60,6 @@ export default function CartCheckout({ items, mode, onCheckout, onPayment }: Car
     return savedFinal ? Number(savedFinal) : total;
   });
 
-  // ✅ Handlers
   const handleGoToPayment = () => {
     if (isEmpty) {
       alert("Giỏ hàng trống, vui lòng thêm sản phẩm trước khi tiếp tục.");
@@ -69,16 +70,23 @@ export default function CartCheckout({ items, mode, onCheckout, onPayment }: Car
   };
 
   const handleCheckoutClick = () => {
+    console.log("Checkout clicked", isLoading);
     if (isEmpty) {
       alert("Giỏ hàng trống, vui lòng thêm sản phẩm trước khi tiếp tục.");
       return;
     }
+    setIsLoading(true);
+    console.log("Checkout clicked 3", isLoading);
     const codeToSend = discountCode.trim() || "";
     onCheckout?.(codeToSend);
   };
 
   const handlePayment = () => {
+    console.log("Checkout clicked 1", isLoading);
+    setIsLoading(true);
+    console.log("Checkout clicked 2", isLoading);
     onPayment?.();
+  
   };
 
   const clearDiscountStorage = () => {
@@ -211,10 +219,10 @@ export default function CartCheckout({ items, mode, onCheckout, onPayment }: Car
           <>
             <button
               onClick={isFromRetail || isFromWeekly? handlePayment : handleCheckoutClick}
-              disabled={isEmpty}
+              disabled={isEmpty || isLoading}
               className="d-btn d-btn-font"
             >
-              <span>Tiếp tục</span>
+              {isLoading ?<span >Xử lý...</span> : <span>Thanh toán</span>}
             </button>
             <div className="cart-summary__or">
               <span>hoặc</span>

@@ -35,7 +35,6 @@ import FooterMobile from './components/layout/FooterMobile.tsx'
 import StageNotificationWrapper from './components/notifications/StageNotificationWrapper.tsx'
 import ReviewOrderForm from './components/user/profile/order/ReviewOrderForm.tsx'
 import { OrderProvider } from './context/OrderContext.tsx'
-import PaymentNow from './components/user/order/payment/PaymentNow'
 import RetailPackage from './components/home/subcription/retailpackage.tsx'
 import WeeklyPackage from './components/home/subcription/WeeklyPackage'
 
@@ -78,7 +77,6 @@ function AppContent() {
           <Route path='/dang-ky' element={<Register />} />
           <Route path='/san-pham' element={<BoxSelector />} />
           <Route path='/custom-box' element={<GiftDetoxBox />} />
-          <Route path='/thanh-toan-ngay' element={<PaymentNow />} />
           <Route path='/retail-package' element={<RetailPackage/>} />
           <Route path='/weekly-package' element={<WeeklyPackage/>} />
           <Route path='/blind-box' element={<BlindBox />} />

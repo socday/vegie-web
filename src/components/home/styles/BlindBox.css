@@ -168,8 +168,8 @@
   color: #27600B;
 }
 
-.price-btn {
-  background: white;
+.controls .price-btn {
+  background-color: white;
   color: #27600B;
   font-weight: bold;
   padding: 8px 16px;
@@ -180,6 +180,9 @@
   width: 120px;
   height: 35px;
   transition: all 0.2s ease;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .price-btn:hover {

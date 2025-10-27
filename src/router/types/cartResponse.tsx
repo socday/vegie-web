@@ -61,3 +61,8 @@ export interface DiscountResponse {
   message: string;
   exception: string | null;
 }
+
+export interface DeleteCartItemRequest {
+  userId: string;
+  orderDetailId: string;
+}

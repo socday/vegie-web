@@ -21,7 +21,7 @@ export async function registerUser (payload: RegisterRequest) : Promise <Registe
   return res.data;
 }
 
-export async function changePassword (payload: changePasswordRequest) : Promise <RegisterResponse>
+export async function changePassword (payload: changePasswordRequest) : Promise <any>
 {
   let token = localStorage.getItem("accessToken");
   const res = await api.post<RegisterResponse> ("/Auth/", payload, {

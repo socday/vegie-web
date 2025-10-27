@@ -302,6 +302,11 @@
   }
 }
 
-
+.error-pcp-text {
+  color: red;
+  margin-top: 1rem;
+  font-weight: 600;
+  margin-left: 30px ;
+}
 
 

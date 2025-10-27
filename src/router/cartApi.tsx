@@ -98,3 +98,21 @@ export async function validateDiscountCode(code: string): Promise<DiscountRespon
     throw error;
   }
 }
+
+export async function deleteCart(orderDetailId: string): Promise<CartResponse> {
+  const token = localStorage.getItem("accessToken");
+  const userId = localStorage.getItem("userId");
+
+  if (!token || !userId) {
+    throw new Error("User not authenticated");
+  }
+
+  const res = await api.delete(`/Cart/${userId}/items/${orderDetailId}`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.data;
+}
