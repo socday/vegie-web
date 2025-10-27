@@ -1,48 +1,62 @@
 import CartItem from "./CartItem";
 import "../cart/styles/Cart.css";
 import React, { useEffect, useState } from "react";
-import { cartCheckout, getCart, updateCartItem } from "../../../../router/cartApi";
+import { cartCheckout, getCart, removeCartItem, updateCartItem } from "../../../../router/cartApi";
 import { CartResponse, Item } from "../../../../router/types/cartResponse";
 import CartCheckout from "./CartCheckout";
 import WaveText from "../../../lazy/WaveText";
 
 export default function Cart() {
   const [items, setItems] = useState<Item[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);  
  const userId = localStorage.getItem("userId");
+
+  async function fetchCart() {
+  try {
+    const cart: CartResponse = await getCart();
+    console.log("Fetched cart:", cart);
+    setItems(cart.items); // set real API items
+  } catch (err) {
+    console.error("Failed to load cart:", err);
+  } finally {
+    setLoading(false);
+  }
+}
+
   useEffect(() => {
-    async function fetchCart() {
-      try {
-        const cart: CartResponse = await getCart();
-        setItems(cart.items); // set real API items
-      } catch (err) {
-        console.error("Failed to load cart:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
     fetchCart();
   }, []);
 
-  const handleRemove = (id: string) => {
-    setItems(items.filter(item => item.id !== id));
-  };
+  
+  const handleRemove = async (cartId: string) => {
+    if (!userId) return console.warn("No userId");
+    try {
+      console.log("Removing item with cartId:", cartId);
+      await removeCartItem(userId, cartId);
+      setItems(prev => prev.filter(item => item.cartId !== cartId)); // update UI instantly
+      // optionally re-fetch if server recalculates totals
+      // await fetchCart();
+    } catch (err) {
+      console.error("Failed to remove item:", err);
+    }
+  }; 
 
- 
-  const handleQuantityChange = async (id: string, newQty: number) => {  if (!userId) return ("Ko lay duoc userid");
+  const handleQuantityChange = async (cartId: string, newQty: number) => {
+  if (!userId) return console.warn("No userId");
+
   try {
-    const newQtyFake = 1;
-    console.log("Updating item:", id, "to quantity:", newQty, "name", items.find(i => i.id === id)?.name);
-    await updateCartItem(userId, id, newQtyFake);
+    console.log("Updating cartId:", cartId, "to quantity:", newQty);
+    await updateCartItem(userId, cartId, newQty); // use cartId, not id
+
     setItems(prev =>
       prev.map(item =>
-        item.id === id ? { ...item, quantity: newQty } : item // use "quantity", not "initialQuantity"
+        item.cartId === cartId ? { ...item, quantity: newQty } : item
       )
     );
   } catch (err) {
     console.error("Failed to update quantity:", err);
   }
-  };
+};
 
   // if (loading) {
     // return <p>Đang tải giỏ hàng...</p>;
@@ -64,6 +78,7 @@ export default function Cart() {
             <CartItem
               key={item.id}
               id={item.id}
+              cartId={item.cartId}
               name={item.name}
               price={item.price}
               image={item.image}
