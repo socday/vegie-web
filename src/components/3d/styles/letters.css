@@ -34,8 +34,7 @@
 .letter-display-area {
     width: 100%;
     height: 100%;
-    padding-top: 4rem;
-    padding-right: 4rem;
+    justify-content: end;
     display:flex;
     flex-direction: column;
 }
@@ -75,6 +74,11 @@
     margin-left: auto;
 }
 
+.letter-display-area img{
+  width: 100%;
+  height: 100%;
+}
+
 .number-btn {
   color: #91CF43;
 }
@@ -83,3 +87,47 @@
   margin-left:auto;
   margin-right: 6rem;
 }
+
+.ai-letter-prompts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.ai-letter-prompts input{
+  font-size: 0.9rem;
+  text-align: left;
+  width:fit-content;
+  color:#91CF43
+}
+.ai-letter-prompts input::placeholder 
+{
+  color:#91CF43;
+  text-align: left;
+  opacity: 0.85;
+}
+
+.ai-letter-prompts input:hover {
+  color: #91CF43;
+}
+
+.ai-letter-prompts .p1 {
+ width: 40%;
+}
+
+.ai-letter-prompts .p2 {
+  width: 50%;
+}
+.ai-letter-prompts .p3 {
+  width: 60%;
+}
+
+.ai-letter-actions {
+  display: flex
+}
+
+/* .ai-letter-active {
+  margin-right: auto;
+  margin-left: 0;
+} */

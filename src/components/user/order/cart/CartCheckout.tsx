@@ -76,15 +76,12 @@ export default function CartCheckout({ items, mode, onCheckout, onPayment }: Car
       return;
     }
     setIsLoading(true);
-    console.log("Checkout clicked 3", isLoading);
     const codeToSend = discountCode.trim() || "";
     onCheckout?.(codeToSend);
   };
 
   const handlePayment = () => {
-    console.log("Checkout clicked 1", isLoading);
     setIsLoading(true);
-    console.log("Checkout clicked 2", isLoading);
     onPayment?.();
   
   };
@@ -137,7 +134,6 @@ export default function CartCheckout({ items, mode, onCheckout, onPayment }: Car
     }
   };
 
-  // ✅ Cleanup on unload
   useEffect(() => {
     const handleBeforeUnload = () => clearDiscountStorage();
 
@@ -148,7 +144,6 @@ export default function CartCheckout({ items, mode, onCheckout, onPayment }: Car
     };
   }, []);
 
-  // ✅ Render
   return (
     <div className="cart-summary">
 {isFromRetail ? (

@@ -170,3 +170,17 @@ export async function createGiftBoxOrder(
 
   
 }
+
+export async function createWeeklyPackageOrder(payload: CreateOrderRequest): Promise<CreateOrderResponse> {
+  const token = localStorage.getItem("accessToken");
+  if (!token) {
+    throw new Error("User not authenticated");
+  } 
+  const res = await api.post<CreateOrderResponse>("/Orders/weekly", payload, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res.data;
+}

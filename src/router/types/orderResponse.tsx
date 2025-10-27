@@ -52,6 +52,8 @@ export type CreateOrderRequest = {
   phoneNumber: string;
   allergyNote: string;
   preferenceNote: string;
+  deliveryStartDate?: string;
+  weeklyPackagePrice?: number;
 };
 
 export type CreateOrderResponse = {

@@ -24,7 +24,7 @@ interface LettersLocationState {
 export default function Letters() {
   const navigate = useNavigate();
   const location = useLocation() as { state: LettersLocationState };
-
+  const [isAiLetter, setIsAiLetter] = useState(false);
   // Get passed state safely
   const selectedBox = location.state?.selectedBox || 1;
   const selectedFruits = location.state?.selectedFruits ;
@@ -56,6 +56,10 @@ export default function Letters() {
     setSelectedImage(num);
   };
 
+  const handleCreateWish = () => {
+    
+  }
+
   return (
     <div className="fruit-selection-page">
       <div className="main-container">
@@ -63,15 +67,52 @@ export default function Letters() {
         <div className="fruit-selection-left">
           <div className="fruit-selection-title-display">
             <h1 className="gift-box-title" style={{ color: "#91CF43" }}>
-              Letter
+              {isAiLetter ? "AI" : ""} Letter
             </h1>
             <div className="title-line"></div>
           </div>
 
           <div className="instructions">
+            {isAiLetter ? <>
+            <p>Bạn không giỏi viết thư ?</p>
+            <p>Đừng lo, Vegie đã có AI Letter rồi đây!</p>
+            <p>Hãy nhập những mục bên dưới để AI Letter giúp bạn nhé</p>
+            </> 
+            :
+            <>  
             <p>Một lá thư nhỏ xinh trong gift box – món quà bất ngờ</p>
             <p>để người thân yêu của bạn biết rằng họ luôn được trân trọng.</p>
+            </>}
           </div>
+
+          {isAiLetter && <>
+          <div className="ai-letter-prompts">
+            <label>
+              <input
+                type="text"
+                className="d-btn-font d-btn p1"
+                placeholder="Người nhận là ai?"
+              />
+            </label>
+
+            <label>
+              <input
+                type="text"
+                className="d-btn-font d-btn p2"
+                placeholder="Nhân dịp gì vậy?"
+                required
+              />
+            </label>
+
+            <label>
+              <input
+                className="d-btn-font d-btn p3"
+                placeholder="Bạn muốn nói gì trong thư?"
+                required
+              />
+            </label>
+          </div>
+          </>}
 
           <div className="letter-input-container">
             <textarea
@@ -79,25 +120,43 @@ export default function Letters() {
               placeholder="Hãy viết lời nhắn tại đây!"
               value={message}
               onChange={handleChange}
+              required
             />
           </div>
 
           {/* === Number buttons === */}
           <div className="number-button-group">
+            {!isAiLetter ?  <>
             {[1, 2, 3].map((num) => (
               <button
-                key={num}
-                className={`number-btn ${selectedLetter === num ? "active" : ""}`}
-                onClick={() => handleImageChange(num)}
+              key={num}
+              className={`number-btn ${selectedLetter === num ? "active" : ""}`}
+              onClick={() => handleImageChange(num)}
               >
                 {num}
               </button>
             ))}
+            </>
+            :
+            <>
             <button
-              className="letter-suggest-btn d-btn d-btn-font"
-              onClick={handleContinue}
-            >
-              <span>Gợi ý thư</span>
+              className={`d-btn d-btn-font`}
+              onClick={() => handleCreateWish()}
+              >
+              <span>
+                Tạo lời chúc
+                </span>
+            </button>
+            </>
+            }
+
+            <button
+              className={`${isAiLetter ? "ai-letter-active" : ""} letter-suggest-btn d-btn d-btn-font`}
+              onClick={isAiLetter ? () => setIsAiLetter(false) : () => setIsAiLetter(true)}
+              >
+              <span>
+              {isAiLetter ? "Quay lại" : "Gợi ý thư"}
+                </span>
             </button>
           </div>    
         </div>
@@ -110,12 +169,29 @@ export default function Letters() {
               alt={`Letter Style ${selectedLetter}`}
               className="letter-preview-image"
             />
-            <button
-              className="letter-continue-btn d-btn d-btn-font"
-              onClick={handleContinue}
-            >
-              <span>Tiếp tục</span>
-            </button>
+            <div className="ai-letter-actions">
+              <div className="number-button-group">
+
+              {isAiLetter && <>
+                {[1, 2, 3].map((num) => (
+                  <button
+                  key={num}
+                  className={`number-btn ${selectedLetter === num ? "active" : ""}`}
+                  onClick={() => handleImageChange(num)}
+                  >
+                    {num}
+                  </button>
+                ))}
+                </>}
+              </div>
+
+              <button
+                className="letter-continue-btn d-btn d-btn-font"
+                onClick={handleContinue}
+                >
+                <span>Tiếp tục</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
