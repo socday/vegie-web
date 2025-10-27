@@ -75,3 +75,19 @@ export async function blindBoxAi(vegetables: string[]): Promise<BlindBoxAIRespon
     return { isSuccess: false, data: [], message: "Error generating recipes" };
   }
 }
+
+export async function getAiLetterSuggestion(receiver:string, mainWish: string, occasion: string): Promise<any> {
+  const token = localStorage.getItem("accessToken");
+  try {
+    const res = await api.post(
+      '/AI/generate-wish',
+      { receiver, occasion, mainWish },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    return res.data;
+  } catch (err) {
+    console.error("Error generating AI letter suggestion:", err);
+    return { isSuccess: false, data: [], message: "Error generating AI letter suggestion" };
+  }
+
+}

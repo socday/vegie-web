@@ -58,7 +58,16 @@ export default function FinishGiftBox() {
         navigate("/gio-hang");
         // console.log("Added to cart:", result.data);
       } else {
-        alert("Thêm vào giỏ hàng không thành công");
+        if (result.isSuccess === false) {
+    const errorMessage =
+      typeof result.data === "string"
+        ? result.data
+        : JSON.stringify(result.data, null, 2);
+    alert(errorMessage || "Thêm vào giỏ hàng không thành công");
+  } 
+        else{
+          alert("Thêm vào giỏ hàng không thành công");
+        }
         // console.error("Failed to add to cart:", result.message);
       }
     } catch (err) {

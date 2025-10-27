@@ -127,6 +127,9 @@
   display: flex
 }
 
+.letter-input-container textarea {
+  color:#27600B;
+}
 /* .ai-letter-active {
   margin-right: auto;
   margin-left: 0;
