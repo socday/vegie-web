@@ -1,0 +1,243 @@
+.products-page {
+  padding: 24px;
+}
+
+.products-page-header {
+  margin-bottom: 24px;
+}
+
+.chart-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #2d3a4a;
+}
+
+.products-content {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 24px;
+  align-items: start;
+}
+
+.products-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.box-category {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.box-parent,
+.box-child {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.box-header {
+  display: flex;
+  align-items: start;
+  gap: 8px;
+}
+
+.box-info {
+  flex: 1;
+}
+
+.expand-btn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: #666;
+  cursor: pointer;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.expand-btn:hover {
+  color: #7cc043;
+}
+
+.box-parent:hover,
+.box-child:hover {
+  background: #f8f9fa;
+  border-color: #7cc043;
+}
+
+.box-parent.active,
+.box-child.active {
+  background: #e3f2ff;
+  border-color: #7cc043;
+}
+
+.box-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2d3a4a;
+  margin-bottom: 4px;
+}
+
+.box-description {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.box-price {
+  font-size: 14px;
+  font-weight: 500;
+  color: #7cc043;
+}
+
+.box-child {
+  margin-left: 24px;
+  width: calc(100% - 24px);
+}
+
+.children-container {
+  margin-left: 24px;
+}
+
+/* Dark mode styles for expand button */
+body.admin-dark-mode .expand-btn {
+  color: #b0b0b0;
+}
+
+body.admin-dark-mode .expand-btn:hover {
+  color: #7cc043;
+}
+
+.products-detail {
+  position: sticky;
+  top: 24px;
+}
+
+.detail-card {
+  background: #D0E9FE;
+  color: #27600B;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.detail-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2d3a4a;
+  margin: 0;
+}
+
+.detail-input,
+.detail-textarea,
+.detail-select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #2d3a4a;
+}
+
+.detail-textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.detail-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detail-item {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.detail-item label {
+  font-weight: 600;
+  color: #27600B;
+  font-size: 14px;
+}
+
+.detail-item > div {
+  color: #27600B;
+  font-size: 14px;
+  word-break: break-word;
+}
+
+.detail-empty {
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+  padding: 40px 20px;
+}
+
+/* Dark mode styles */
+body.admin-dark-mode .chart-title {
+  color: #ffffff;
+}
+
+body.admin-dark-mode .box-parent,
+body.admin-dark-mode .box-child,
+body.admin-dark-mode .detail-card {
+  background: #3a3a3a;
+  border-color: #404040;
+}
+
+body.admin-dark-mode .box-parent:hover,
+body.admin-dark-mode .box-child:hover {
+  background: #4a4a4a;
+  border-color: #7cc043;
+}
+
+body.admin-dark-mode .box-parent.active,
+body.admin-dark-mode .box-child.active {
+  background: #2d4a3a;
+  border-color: #7cc043;
+}
+
+body.admin-dark-mode .box-name {
+  color: #ffffff;
+}
+
+body.admin-dark-mode .box-description,
+body.admin-dark-mode .detail-item label {
+  color: #b0b0b0;
+}
+
+body.admin-dark-mode .box-price,
+body.admin-dark-mode .detail-item > div {
+  color: #7cc043;
+}
+
+body.admin-dark-mode .detail-empty {
+  color: #666;
+}

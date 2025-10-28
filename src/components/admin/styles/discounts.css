@@ -67,24 +67,42 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
+    gap: 2px;
   }
   
   /* Header nổi bật */
   .discounts-table > .header.discount-row > div {
     font-weight: 700;
-    background: #f4f4f4;
-    border-bottom: 2px solid #dcdcdc;
+    background: #e9f5ff;
+    border-bottom: 2px solid #cde5ff;
+    color: #2d3a4a;
   }
   
   /* Hover và Active */
   .discounts-table > .discount-row:hover > div {
-    background: #f2faff;
+    background: #f8fcff;
     transition: background 0.2s ease;
   }
   
-  .discounts-table > .discount-row.active > div {
-    background: #d0e9fe;
-    border-bottom: 1px solid #b6d8f7;
+  .discounts-table > .discount-row.active > div:first-child {
+    border-left: 3px solid #7cc043;
+  }
+
+  /* Even rows */
+  .discounts-table > .discount-row:nth-child(even) > div {
+    background: #e9f5ff;
+  }
+
+  .discounts-table > .discount-row:nth-child(even):hover > div {
+    background: #f8fcff;
+  }
+
+  .discounts-table > .discount-row:nth-child(even).active > div {
+    background: #e3f2ff;
+  }
+
+  .discounts-table > .discount-row:nth-child(even).active > div:first-child {
+    border-left: 3px solid #7cc043;
   }
   
   /* ========== PHÂN TRANG ========== */
