@@ -128,7 +128,8 @@ export default function DashboardPage(){
 
       {activeBoard === 'orders' && (
         <OrdersBoard 
-          orders={orders} 
+          orders={orders}
+          users={contextData.users || []}
           boxNameById={boxNameById} 
           onRefresh={async () => {
             try {

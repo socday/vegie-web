@@ -1,10 +1,19 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import { updateOrdersStatus } from '../../../router/orderApi'
 
-export default function OrdersBoard({ orders = [], boxNameById, onRefresh }) {
+export default function OrdersBoard({ orders = [], boxNameById, onRefresh, users = [] }) {
+  // Create userNameById function
+  const userNameById = (id) => {
+    const user = users.find(u => u.id === id)
+    if (!user) return 'Unknown'
+    const name = `${user.firstName || ''} ${user.lastName || ''}`.trim() || user.fullName || 'Unknown'
+    return name
+  }
   const [page, setPage] = useState(1)
   const [selected, setSelected] = useState(null)
   const [statusFilter, setStatusFilter] = useState('all')
+  const [paymentStatusFilter, setPaymentStatusFilter] = useState('all')
+  const [paymentMethodFilter, setPaymentMethodFilter] = useState('all')
   const [codeQuery, setCodeQuery] = useState('')
   const [nameQuery, setNameQuery] = useState('')
   const [dateQuery, setDateQuery] = useState('')
@@ -122,6 +131,16 @@ export default function OrdersBoard({ orders = [], boxNameById, onRefresh }) {
       arr = arr.filter(o => String(o.status) === statusFilter)
     }
     
+    // Filter by payment status
+    if (paymentStatusFilter !== 'all') {
+      arr = arr.filter(o => String(o.paymentStatus) === paymentStatusFilter)
+    }
+    
+    // Filter by payment method
+    if (paymentMethodFilter !== 'all') {
+      arr = arr.filter(o => String(o.paymentMethod) === paymentMethodFilter)
+    }
+    
     // Filter by code (order id contains)
     if (codeQuery.trim()) {
       const q = codeQuery.trim().toLowerCase()
@@ -151,7 +170,7 @@ export default function OrdersBoard({ orders = [], boxNameById, onRefresh }) {
     }
     
     return arr
-  }, [orders, statusFilter, codeQuery, nameQuery, dateQuery, boxNameById])
+  }, [orders, statusFilter, paymentStatusFilter, paymentMethodFilter, codeQuery, nameQuery, dateQuery, boxNameById])
 
   const totalPages = Math.max(1, Math.ceil(sortedOrders.length / pageSize))
   const pagedOrders = useMemo(() => {
@@ -178,28 +197,63 @@ export default function OrdersBoard({ orders = [], boxNameById, onRefresh }) {
           </button>
         </div>
       </div>
-      <div className="status-filter" style={{ display: 'flex', gap: 8, margin: '8px 0 4px' }}>
-        {[
-          { key: 'all', label: 'Tất cả' },
-          { key: 'Pending', label: 'Đang chờ' },
-          { key: 'Processing', label: 'Đang xử lý' },
-          { key: 'Completed', label: 'Hoàn thành' },
-          { key: 'Cancelled', label: 'Đã hủy' },
-        ].map(({ key, label }) => (
-          <button
-            key={key}
-            className={`btn sm ${statusFilter === key ? 'primary' : ''}`}
-            onClick={() => { setPage(1); setStatusFilter(key) }}
-          >
-            {label}
-          </button>
-        ))}
+      <div style={{ display: 'flex', flexDirection: 'row', gap: 12, margin: '8px 0 4px' }}>
+        <div className="status-filter" style={{ display: 'flex', gap: 8, padding: '8px', border: '1px solid #cde5ff', borderRadius: '8px', backgroundColor: '#f9fcff' }}>
+          {[
+            { key: 'all', label: 'Tất cả' },
+            { key: 'Pending', label: 'Đang chờ' },
+            { key: 'Processing', label: 'Đang xử lý' },
+            { key: 'Completed', label: 'Hoàn thành' },
+            { key: 'Cancelled', label: 'Đã hủy' },
+          ].map(({ key, label }) => (
+            <button
+              key={key}
+              className={`btn sm ${statusFilter === key ? 'primary' : ''}`}
+              onClick={() => { setPage(1); setStatusFilter(key) }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <div className="status-filter" style={{ display: 'flex', gap: 8, padding: '8px', border: '1px solid #cde5ff', borderRadius: '8px', backgroundColor: '#f9fcff' }}>
+          {[
+            { key: 'all', label: 'Tất cả' },
+            { key: 'Pending', label: 'Chờ thanh toán' },
+            { key: 'Paid', label: 'Đã thanh toán' },
+            { key: 'Failed', label: 'Thất bại' },
+          ].map(({ key, label }) => (
+            <button
+              key={key}
+              className={`btn sm ${paymentStatusFilter === key ? 'primary' : ''}`}
+              onClick={() => { setPage(1); setPaymentStatusFilter(key) }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <div className="status-filter" style={{ display: 'flex', gap: 8, padding: '8px', border: '1px solid #cde5ff', borderRadius: '8px', backgroundColor: '#f9fcff' }}>
+          {[
+            { key: 'all', label: 'Tất cả' },
+            { key: 'VNPay', label: 'VNPay' },
+            { key: 'PayOS', label: 'PayOS' },
+            { key: 'CashOnDelivery', label: 'COD' },
+          ].map(({ key, label }) => (
+            <button
+              key={key}
+              className={`btn sm ${paymentMethodFilter === key ? 'primary' : ''}`}
+              onClick={() => { setPage(1); setPaymentMethodFilter(key) }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
        <div style={{ display: 'grid', gridTemplateColumns: '1fr 500px', gridTemplateRows: '1fr', gap: 16, alignItems: 'start' }}>
          <div className="orders-table">
            <div className="orders-header">
              <div>Mã đơn</div>
              <div>Tên</div>
+             <div>Box</div>
              <div>Số lượng</div>
              <div>Ngày đặt hàng</div>
              <div>Giá</div>
@@ -208,11 +262,12 @@ export default function OrdersBoard({ orders = [], boxNameById, onRefresh }) {
            <div className="orders-body">
              {pagedOrders.map((o) => {
                const qty = o.details?.reduce((s, d) => s + d.quantity, 0) || 0
-               const names = o.details?.map((d) => boxNameById(d.boxTypeId)).join(', ')
+               const boxNames = o.details?.map((d) => boxNameById(d.boxTypeId)).join(', ')
                return (
                  <div className={`orders-row ${selected?.id === o.id ? 'active' : ''}`} key={o.id} onClick={() => setSelected(o)}>
                    <div>{`#${o.id.slice(0, 6)}`}</div>
-                   <div>{names}</div>
+                   <div>{userNameById(o.userId)}</div>
+                   <div>{boxNames}</div>
                    <div className="quantity-cell">{qty}</div>
                    <div>{getOrderDate(o).toLocaleString('vi-VN')}</div>
                    <div>{(o.finalPrice ?? o.totalPrice).toLocaleString('vi-VN')} VND</div>

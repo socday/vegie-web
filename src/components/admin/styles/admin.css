@@ -76,7 +76,7 @@
 .admin-content { 
   padding: 8px 20px 20px 20px; 
   display: grid; 
-  gap: 16px; 
+  gap: 8px; 
   overflow-y: auto;
   height: 100%;
 }
@@ -194,7 +194,7 @@
 
 .orders-header {
   display: grid;
-  grid-template-columns: 0.5fr 1.7fr 0.6fr 1.6fr 1fr 0.6fr;
+  grid-template-columns: 0.5fr 1.2fr 1.7fr 0.6fr 1fr 1fr 0.6fr;
   gap: 2px;
   padding: 8px 12px;
   background: #e9f5ff;
@@ -226,7 +226,7 @@
 
 .orders-row {
   display: grid;
-  grid-template-columns: 0.5fr 1.7fr 0.6fr 1.6fr 1fr 0.6fr;
+  grid-template-columns: 0.5fr 1.2fr 1.7fr 0.6fr 1fr 1fr 0.6fr;
   gap: 2px;
   padding: 8px 12px;
   border-bottom: 1px solid #f0f0f0;

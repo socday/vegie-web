@@ -253,3 +253,52 @@ export async function deleteDiscount(id: string): Promise<boolean> {
   return !!res.data?.isSuccess;
 }
 
+// Users
+export interface UserDTO {
+  id: string;
+  fullName: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string | null;
+  gender: string;
+  createAt: string;
+  updateAt: string;
+  isLockedOut: boolean;
+  lockoutEnd: string | null;
+  emailConfirmed: boolean;
+  roles: string[];
+}
+
+export interface GetUsersResponse {
+  isSuccess: boolean;
+  data: UserDTO[];
+  message: string;
+  exception: string | null;
+}
+
+export async function getUsers(): Promise<UserDTO[]> {
+  const token = localStorage.getItem("accessToken");
+  const res = await api.get<GetUsersResponse>("/User?pageNumber=1&pageSize=1000", {
+    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+  });
+  if (res.data?.isSuccess) return res.data.data as UserDTO[];
+  return [];
+}
+
+export interface GetUserResponse {
+  isSuccess: boolean;
+  data: UserDTO;
+  message: string;
+  exception: string | null;
+}
+
+export async function getUser(id: string): Promise<UserDTO | null> {
+  const token = localStorage.getItem("accessToken");
+  const res = await api.get<GetUserResponse>(`/User/${id}`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+  });
+  if (res.data?.isSuccess) return res.data.data as UserDTO;
+  return null;
+}
+
