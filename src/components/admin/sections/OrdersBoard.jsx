@@ -45,7 +45,6 @@ export default function OrdersBoard({ orders = [], boxNameById, onRefresh, users
 
   const viPaymentMethod = (method) => {
     const map = {
-      'VNPay': 'VNPay',
       'PayOS': 'PayOS',
       'CashOnDelivery': 'Thanh toán khi nhận hàng'
     }
@@ -197,8 +196,8 @@ export default function OrdersBoard({ orders = [], boxNameById, onRefresh, users
           </button>
         </div>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'row', gap: 12, margin: '8px 0 4px' }}>
-        <div className="status-filter" style={{ display: 'flex', gap: 8, padding: '8px', border: '1px solid #cde5ff', borderRadius: '8px', backgroundColor: '#f9fcff' }}>
+      <div className="filter-row-container">
+        <div className="status-filter">
           {[
             { key: 'all', label: 'Tất cả' },
             { key: 'Pending', label: 'Đang chờ' },
@@ -215,7 +214,7 @@ export default function OrdersBoard({ orders = [], boxNameById, onRefresh, users
             </button>
           ))}
         </div>
-        <div className="status-filter" style={{ display: 'flex', gap: 8, padding: '8px', border: '1px solid #cde5ff', borderRadius: '8px', backgroundColor: '#f9fcff' }}>
+        <div className="status-filter">
           {[
             { key: 'all', label: 'Tất cả' },
             { key: 'Pending', label: 'Chờ thanh toán' },
@@ -231,10 +230,9 @@ export default function OrdersBoard({ orders = [], boxNameById, onRefresh, users
             </button>
           ))}
         </div>
-        <div className="status-filter" style={{ display: 'flex', gap: 8, padding: '8px', border: '1px solid #cde5ff', borderRadius: '8px', backgroundColor: '#f9fcff' }}>
+        <div className="status-filter">
           {[
             { key: 'all', label: 'Tất cả' },
-            { key: 'VNPay', label: 'VNPay' },
             { key: 'PayOS', label: 'PayOS' },
             { key: 'CashOnDelivery', label: 'COD' },
           ].map(({ key, label }) => (
