@@ -4,6 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
 
 // Component cho mô hình cà chua
+// 🔧 ĐIỀU CHỈNH DEFAULT PROPS: Thay đổi giá trị mặc định cho position, scale, rotation
 function TomatoModel({ position = [0, 0, 0], scale = [1, 1, 1], rotation = [0, 0, 0] }) {
   const gltf = useLoader(GLTFLoader, '/3D/fruits/tomato.glb');
   
@@ -32,6 +33,7 @@ export default function Tomato({ position, scale, rotation }) {
   return (
     <Suspense fallback={
       <mesh position={position}>
+        {/* 🔧 ĐIỀU CHỈNH KÍCH THƯỚC FALLBACK: Thay đổi [0.2, 0.2, 0.2] để điều chỉnh kích thước khi model chưa load */}
         <boxGeometry args={[0.2, 0.2, 0.2]} />
         <meshStandardMaterial color="#FF6347" />
       </mesh>

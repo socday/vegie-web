@@ -18,8 +18,8 @@ function FitCameraToObject({ object3D }) {
     const radius = sphere.radius
     // Tính khoảng cách theo FOV để mô hình nằm gọn trong khung
     const fov = camera.fov * (Math.PI / 180)
-    const distance = radius / Math.sin(fov / 2) * 1.2
-    const direction = new Vector3(1, 0.6, 1).normalize()
+    const distance = radius / Math.sin(fov / 2) * 1.1
+    const direction = new Vector3(1, 0.5, 1).normalize()
     const newPos = center.clone().add(direction.multiplyScalar(distance))
     camera.position.copy(newPos)
     camera.near = Math.max(0.01, radius / 100)
@@ -122,7 +122,7 @@ function Box3DViewer({ currentBox }) {
   return (
     <div className="box3d-viewer">
       <Canvas
-        camera={{ position: [5, 3, 5], fov: 50 }}
+        camera={{ position: [0, 3, 0], fov: 70 }}
         style={{ width: '100%', height: '100%' }}
       >
         <ambientLight intensity={0.6} />
@@ -130,9 +130,9 @@ function Box3DViewer({ currentBox }) {
         
         <Suspense fallback={<mesh><boxGeometry args={[1, 1, 1]} /><meshStandardMaterial color="#666" /></mesh>}>
           {currentBox === 1 ? (
-            <Box1 position={[0, 0, 0]} rotation={[0, 0, 0]} onLoaded={setObj3D} />
+            <Box1 position={[0, 0, 0]} rotation={[0, 0, 0]} scale={[2, 2, 2]} onLoaded={setObj3D} />
           ) : (
-            <Box2 position={[0, 0, 0]} rotation={[0, 0, 0]} onLoaded={setObj3D} />
+            <Box2 position={[0, 0, 0]} rotation={[0, 0, 0]} scale={[2, 2, 2]} onLoaded={setObj3D} />
           )}
         </Suspense>
         

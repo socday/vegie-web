@@ -168,6 +168,7 @@
 }
 /* Icons inside nav-actions */
 .nav-icons-action {
+  margin-left: auto;
   width: 30%;
 }
 
@@ -255,4 +256,11 @@
   .search-form .search-input::placeholder{
     font-size: 1rem;
   }
+}
+
+mark.page-search-highlight {
+  background-color: yellow;
+  color: black;
+  padding: 0 2px;
+  border-radius: 2px;
 }

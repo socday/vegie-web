@@ -1,4 +1,3 @@
-Fruit Selection Page - Theo Figma
 
 @font-face {
   font-family: "MyCustomFont";
@@ -6,11 +5,10 @@ Fruit Selection Page - Theo Figma
 }
 
 .fruit-selection-page {
-  min-height: 100vh;
+  min-height: calc(100% + 2.5rem);
+  margin-bottom: 10vh;
   background-color: #ffffff;
   position: relative;
-  padding: 0;
-  margin: 0;
 }
 
 
@@ -28,7 +26,8 @@ Fruit Selection Page - Theo Figma
 }
 
 .fruit-selection-right {
-  margin-top: 1%;
+  margin-top: 7%;
+  padding-right: 6%;
   width:50%;
 }
 
@@ -53,8 +52,9 @@ Fruit Selection Page - Theo Figma
 
 .title-line {
   height: 0px;
-  width:30%; 
+  width:50%; 
   border: 2px solid #91CF43;
+  margin-top: 1rem;
 }
 
 

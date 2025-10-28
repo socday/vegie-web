@@ -1,6 +1,7 @@
 import { JSX, useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { checkAuth } from "./authApi";
+import WaveText from "../components/lazy/WaveText";
 
 interface Props {
   children: JSX.Element;
@@ -31,7 +32,20 @@ export default function PrivateRoute({ children }: Props) {
   }, []);
 
   if (loading) {
-    return <div>Đang kiểm tra đăng nhập...</div>;
+    return (
+      <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "60vh",
+        backgroundColor: "#ffffff",
+        fontFamily: "Inter, sans-serif",
+      }}
+    >
+        <WaveText />
+      </div>
+    );
   }
 
   return authenticated ? (

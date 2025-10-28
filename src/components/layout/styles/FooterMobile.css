@@ -9,6 +9,9 @@
   z-index: 1000;
 }
 
+.footer-column h3 {
+  padding-right: 10%;
+}
 /* Layout container */
 .footer-mobile-display {
   display: flex;

@@ -15,6 +15,9 @@ export default function TodayMenu() {
         setError(null);
 
         const response = await blindBoxAi(["carrot", "onion"]); // example vegetables
+        console.log("BlindBoxAI Success:", response.isSuccess);
+
+        console.log("BlindBoxAI Data:", response.data.at(0));
         if (response.isSuccess && response.data.length > 0) {
           setRecipe(response.data[0]);
         } else {
@@ -35,31 +38,63 @@ export default function TodayMenu() {
 
 
 
-return (
-  <div className="today-menu-page">
-    <div className="today-menu-container">
-      <div className="today-menu-word">
-        <h2 className="head2">Thực đơn hôm nay</h2>
 
-        {loading ? (
-          <p>Đang tải thực đơn hôm nay...</p>
-        ) : error ? (
-          <p className="error-message">{error}</p>
-        ) : !recipe ? (
-          <p>Không có công thức nào được tìm thấy.</p>
-        ) : (
-          <>
-            <h3 className="head3">{recipe.dishName}</h3>
-            <p>{recipe.description}</p>
-            <p>Nguyên liệu: {recipe.ingredients.join(", ")}</p>
-            <p>Dự tính thời gian: {recipe.estimatedCookingTime}</p>
-            <p>Mẹo vào bếp: {recipe.cookingTips}</p>
-          </>
-        )}
+  return (
+    <div className="today-menu-page">
+      <div className="today-menu-background"></div>
+      <div className="today-menu-container">
+        <div className="today-menu-word">
+          <h2 className="head2">Thực đơn hôm nay</h2>
+          {loading ? (
+            <p>Đang tải thực đơn hôm nay...</p>
+          ) : error ? (
+            <p className="error-message">{error}</p>
+          ) : !recipe ? (
+            <p>Không có công thức nào được tìm thấy.</p>
+          ) : (
+            <>
+              <h3>{recipe.dishName}</h3>
+              <p>{recipe.description}</p>
+              <div className="today-menu-word-form">
+
+                <div className="today-menu-word-ingredients">
+                  <span>Nguyên liệu:
+                    </span>
+                  <ul style={{ listStyleType: "none"}}>
+                      {recipe.ingredients.map((item, index) => (
+                      <li key={index} >
+                        - {item}
+                      </li>
+                      ))}
+                  </ul>
+                </div>
+                <div className="today-menu-word-cooking">
+                  <span>
+                    Hướng dẫn vào bếp:</span>
+                  <ul style={{ listStyleType: "none"}}>
+                      {recipe.instructions.map((item, index) => (
+                      <li key={index} >
+                        - {item}
+                      </li>
+                      ))}
+                  </ul>
+                </div>
+
+              </div>
+              <p className="today-menu-estimated"> <span>
+                Dự tính thời gian:</span> {recipe.estimatedCookingTime}</p>
+              <p><span>Mẹo vào bếp:</span> {recipe.cookingTips}</p>
+              {/* <img
+                src={recipe.imageUrl}
+                alt={recipe.dishName}
+                style={{ width: "300px", borderRadius: "12px", marginTop: "10px" }}
+              /> */}
+            </>
+          )}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
 }
 
 // import { useEffect, useState } from "react";

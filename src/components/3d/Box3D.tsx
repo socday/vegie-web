@@ -1,29 +1,34 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Box3DViewer from './Box3DViewer';
 import '../../css/Box3D.css';
 
-export default function Box3D () {
+interface Box3DLocationState {
+  selectedFruits: Record<string, number>;
+}
+
+export default function Box3D() {
   const [currentBox, setCurrentBox] = useState(1);
   const navigate = useNavigate();
+  const location = useLocation() as { state: Box3DLocationState };
+  const selectedFruits = location.state?.selectedFruits;
 
   const handleContinue = () => {
-    navigate('/letters', { state: { selectedBox: currentBox } });
+    navigate('/letters', { state: { selectedBox: currentBox, selectedFruits } });
   };
+
+  console.log("Received selected fruits:", selectedFruits);
 
   return (
     <div className="box3d-page">
-      
       <main className="figma-main-content">
         <div className="model-viewer-container">
           <Box3DViewer currentBox={currentBox} />
-          
-          {/* Prompt Banner riêng lẻ */}
+
           <div className="prompt-banner">
             Hãy chọn mẫu hộp bạn thích nhé!
           </div>
-          
-          {/* Box Selector riêng lẻ */}
+
           <div className="box-selector">
             <button 
               className={`box-btn ${currentBox === 1 ? 'active' : ''}`}
@@ -40,13 +45,12 @@ export default function Box3D () {
               <span style={{ color: 'transparent' }}>2</span>
             </button>
           </div>
-          
-          {/* Continue Button riêng lẻ */}
+
           <button className="continue-btn" onClick={handleContinue}>
             Tiếp tục
           </button>
-        </div>
+        </div>  
       </main>
     </div>
   );
-};
+}

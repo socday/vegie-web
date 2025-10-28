@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/BlindBox.css";
-import { updateCartItem } from "../../../router/cartApi";
+import { addCartItem, updateCartItem } from "../../../router/cartApi";
 import { Item } from "../../../router/types/cartResponse";
 import { useNavigate } from "react-router-dom";
 
@@ -28,14 +28,15 @@ export default function BlindBox() {
         navigate("/dang-nhap");
       }
       console.log("Item:", id, "to quantity:", newQty, "name", items.find(i => i.id === id)?.name);
-      await updateCartItem(userId, id, newQty);
+      await addCartItem(userId, id, newQty);
       setItems((prev) =>
         prev.map((item) =>
           item.id === id ? { ...item, initialQuantity: newQty } : item
         )
       );
+      alert(`Thêm thành công ${box.name} x ${newQty}`);
     } catch (err) {
-      console.error("Failed to update quantity:", err);
+      alert("Thêm vào giỏ hàng không thành công do lỗi hệ thống");
     }
     };
   

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // ✅ add useNavigate
 import "../../css/Login.css";
-import LoginRegisterForm from "./LoginRegisterForm.tsx";
-import { loginUser } from "../../router/authApi.ts";
 import { useMediaQuery } from 'react-responsive';
+import { loginUser } from "../../router/authApi";
+import LoginRegisterForm from "./LoginRegisterForm";
 
 
 const Login = () => {

@@ -9,7 +9,7 @@ const API_URL = "https://exe-be-qu8u.onrender.com/api";
 
 export const api = axios.create({
   baseURL: API_URL,   
-  timeout: 5000,     // optional: 10s timeout
+  timeout: 15000,     // optional: 10s timeout
 });
 
 // Log all requests
@@ -32,12 +32,12 @@ api.interceptors.request.use((config) => {
 // Log all responses
 api.interceptors.response.use(
    (response) => {
-    // console.log("Response:", {
-    //   status: response.status,
-    //   headers: response.headers,
-    //   data: response.data,
-    // });
-    // console.log("DATA LA", response.data);
+    console.log("Response:", {
+      status: response.status,
+      headers: response.headers,
+      data: response.data,
+    });
+    console.log("DATA LA", response.data);
     return response;
   },
   (error) => {

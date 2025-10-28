@@ -1,6 +1,6 @@
 import axios from "axios";
 import { api } from "./api";
-import { changePasswordRequest, LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from "./types/authResponse";
+import { changePasswordRequest, Customer, GetCustomerResponse, LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from "./types/authResponse";
 
 export async function loginUser(payload: LoginRequest): Promise<LoginResponse> {
   const res = await api.post<LoginResponse>("/Auth/login", payload, {
@@ -21,7 +21,7 @@ export async function registerUser (payload: RegisterRequest) : Promise <Registe
   return res.data;
 }
 
-export async function changePassword (payload: changePasswordRequest) : Promise <RegisterResponse>
+export async function changePassword (payload: changePasswordRequest) : Promise <any>
 {
   let token = localStorage.getItem("accessToken");
   const res = await api.post<RegisterResponse> ("/Auth/", payload, {
@@ -121,3 +121,40 @@ export async function checkAuth() {
     
   }
 
+  export async function getCustomer (): Promise<GetCustomerResponse> {
+    let token = localStorage.getItem("accessToken");
+    const res = await api.get<GetCustomerResponse> ("/Customers/me", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+    });
+    return res.data;
+  }
+
+export async function updateCustomer(
+  payload:
+    | FormData
+    | {
+        firstName: string;
+        lastName: string;
+        phoneNumber: string;
+        gender: number;
+        address: string;
+        imgURL: string | File;
+      }
+): Promise<Customer> {
+  const token = localStorage.getItem("accessToken");
+  const isFormData = payload instanceof FormData;
+
+  const res = await api.put("/Customers/me", payload, {
+    headers: {
+      "Content-Type": isFormData
+        ? "multipart/form-data"
+        : "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.data;
+}

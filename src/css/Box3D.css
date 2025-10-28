@@ -1,28 +1,29 @@
 /* Box3D Page - Theo Figma */
 .box3d-page {
-  min-height: 100vh;
+  min-height: 50vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 /* Main Content Area theo Figma */
 .figma-main-content {
+  width:80%;
   flex: 1;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-center;  /* Thay đổi từ center thành flex-start */
+  justify-content: flex-center;  /* Thay đổi từ center thành flex-start */
   padding: 0;
   position: relative;
   margin-bottom: 8rem;
-  
 }
 
 .model-viewer-container {
   position: absolute;
-  width: 80%;
+  width: 100%;
   height: 528px;
   left: 0;
-  top: 82px;
+  top: 0;  /* Thay đổi từ 82px thành 0 để đẩy lên đầu */
   background: transparent;
   overflow: hidden;
   position: relative;
@@ -299,4 +300,11 @@
     line-height: 13px;
     padding: 8px 16px;
   }
+}
+
+.selected-fruits {
+  margin-top: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #333;
 }

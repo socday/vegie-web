@@ -3,10 +3,10 @@ export default function AiMenu () {
     return (
         <div className="ai-menu-page">
             <div className='ai-menu-background'></div>
-            <div className="ai-menu-container">
+            <div className="ai-menu-page-container">
                 <div className="ai-menu-word">
                     <h2>AI Menu</h2>
-                    <span>Hãy đoán xem hôm nay </span> <span>chúng ta có gì nào?<br/></span>
+                    <span>Hãy đoán xem hôm nay chúng ta có gì nào?<br/></span>
                     <a href="/today-menu" className="circle-btn">
                     <span>?</span></a>
                 </div>

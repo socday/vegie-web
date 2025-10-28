@@ -1,39 +1,102 @@
+import React, { useEffect, useState } from "react";
 import "../styles/Profile.css";
+import { useSearchParams } from "react-router-dom";
+import { getCustomer } from "../../../../router/authApi";
+import { Customer } from "../../../../router/types/authResponse";
 
-type SidebarProps = {
-  onSelect: (section: string) => void;
-  activeSection: string;
-};
+export default function ProfileSidebar() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeSection = searchParams.get("section") || "profile";
 
-export default function ProfileSidebar({ onSelect, activeSection }: SidebarProps) {
+  const [customer, setCustomer] = useState<Customer | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCustomer = async () => {
+      try {
+        setLoading(true);
+        const response = await getCustomer();
+        const user = response.data ?? response;
+        const mappedCustomer: Customer = {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          fullName: `${user.firstName} ${user.lastName}`,
+          email: user.email,
+          phone: user.phone,
+          address: user.address,
+          imgURL: user.imgURL,
+        };
+        setCustomer(mappedCustomer);
+      } catch (err) {
+        console.error("Failed to load profile:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCustomer();
+  }, []);
+
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Bạn có chắc chắn muốn đăng xuất không?");
+    if (confirmLogout) {
+      localStorage.clear();
+      alert("Đăng xuất thành công!");
+      window.location.href = "/dang-nhap";
+    }
+  };
+
   const menuItems = [
     { key: "profile", label: "Thông tin cá nhân" },
     { key: "orders", label: "Đơn hàng" },
     { key: "services", label: "Gói dịch vụ" },
-    { key: "groups", label: "Đơn nhóm" },
     { key: "health", label: "Phiếu sức khỏe" },
-
+    { key: "logout", label: "Đăng xuất" },
   ];
+
+  const handleSelect = (key: string) => {
+    if (key === "logout") {
+      handleLogout();
+    } else {
+      setSearchParams({ section: key });
+    }
+  };
 
   return (
     <div className="sidebar">
-      <div className="profile-pic"></div>
-      <h3 className="username">USER NAME</h3>
+      <div className="profile-pic">
+        {customer?.imgURL ? (
+          <img
+            src={customer.imgURL}
+            alt="Avatar"
+            className="sidebar-avatar-img"
+          />
+        ) : (
+          <div className="no-avatar"></div>
+        )}
+      </div>
+
+      <h3 className="username">
+        {loading ? "Đang tải..." : customer?.fullName || "Chưa có tên"}
+      </h3>
 
       {menuItems.map((item) => (
         <button
           key={item.key}
-          className={`sidebar-btn d-btn-font ${activeSection === item.key ? "active" : ""}`}
-          onClick={() => onSelect(item.key)}
+          className={`sidebar-btn d-btn-font ${
+            activeSection === item.key ? "active" : ""
+          }`}
+          onClick={() => handleSelect(item.key)}
         >
           {item.label}
         </button>
       ))}
+
       <div>
-        <span className="sidebar-btn d-btn-font">Số điểm hiện tại: 100
-          
+        <span className="sidebar-btn d-btn-font">
+          Số điểm hiện tại: 100
         </span>
       </div>
+
       <div className="profile-sidebar-invincible"></div>
     </div>
   );

@@ -6,16 +6,24 @@ export type OrderDetail = {
   unitPrice: number;
 };
 
+
+export type ReviewOrder = {
+  orderId: string;
+  serviceQualityRating: number;
+  productQualityRating: number;
+  content: string;
+};
+
+
 export type Order = {
   id: string;
   userId: string;
   status: string; // e.g. "Pending" | "Completed"
-  orderDate?: string; // ISO date string, optional in some responses
-  totalPrice: number;
+  orderDate: string;
   finalPrice: number;
   discountCode: string | null;
-  paymentMethod?: string | null; // e.g. "VNPay" | "PayOS" | "CashOnDelivery"
-  paymentStatus?: string | null; // e.g. "Pending" | "Paid"
+  paymentMethod?: string | null; 
+  paymentStatus?: string | null; 
   payOSPaymentUrl?: string | null;
   payOSOrderCode?: string | null;
   details: OrderDetail[];
@@ -39,6 +47,13 @@ export type CreateOrderRequest = {
   discountCode?: string | null;
   deliveryMethod: number;
   paymentMethod: number;
+  address: string;
+  deliveryTo: string;
+  phoneNumber: string;
+  allergyNote: string;
+  preferenceNote: string;
+  deliveryStartDate?: string;
+  weeklyPackagePrice?: number;
 };
 
 export type CreateOrderResponse = {
@@ -59,3 +74,39 @@ export type UpdateOrderStatusResponse = {
   message: string;
   exception: string | null;
 };
+
+export interface PaymentLinkResponse {
+  isSuccess: boolean;
+  data: {
+    paymentLinkId: string;
+    paymentUrl: string;
+    amount: number;
+    description: string;
+    orderCode: number;
+    status: string;
+  };
+  message: string;
+  exception: string | null;
+}
+
+// types/giftBox.ts
+export interface CreateGiftBoxRequest {
+  userId: string;
+  vegetables: string[];
+  greetingMessage: string;
+  quantity: number;
+  discountCode?: string;
+  deliveryMethod: number;
+  paymentMethod: number;
+  address: string;
+  deliveryTo: string;
+  phoneNumber: string;
+}
+
+export interface CreateGiftBoxResponse {
+  isSuccess: boolean;
+  message: string;
+  data?: any;
+  exception?: string | null;
+}
+

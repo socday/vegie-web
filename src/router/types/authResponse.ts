@@ -49,3 +49,20 @@ export interface changePasswordRequest {
   password:string;
   passwordConfirm:string ;
 }
+
+export interface Customer {
+  firstName: string;
+  lastName: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  address: string;
+  imgURL: string | null;
+};
+
+export interface GetCustomerResponse {
+  isSuccess: boolean;
+  data: Customer;
+  message: string;
+  exception: string | null;
+}

@@ -7,7 +7,7 @@
   font-family: "Inter", sans-serif;
 }
 
-.package-card {
+.weekly-package-card {
   display: flex;
   flex-direction: row;
   background-color: #cfeaff;
