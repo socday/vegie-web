@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { checkAuth } from '../../router/authApi'
-import { getAllBoxTypes, getAllOrders, getStatistics } from '../../router/adminApi'
+import { getAllBoxTypes, getAllOrders, getStatistics, getUsers } from '../../router/adminApi'
 import './styles/admin.css'
 
 export default function AdminShell() {
   const [adminUser, setAdminUser] = useState({ firstName: '', lastName: '', email: '', roles: [] })
   const [orders, setOrders] = useState([])
   const [boxTypes, setBoxTypes] = useState([])
+  const [users, setUsers] = useState([])
   const [currentMonthStats, setCurrentMonthStats] = useState(null)
   const [previousMonthStats, setPreviousMonthStats] = useState(null)
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -49,15 +50,18 @@ export default function AdminShell() {
     }
 
     try {
-      const [o, b, currentStats, prevStats] = await Promise.all([
+      const [o, b, u, currentStats, prevStats] = await Promise.all([
         getAllOrders(), 
         getAllBoxTypes(),
+        getUsers(),
         getStatistics(formatDate(currentMonthStart), formatDate(currentMonthEnd)),
         getStatistics(formatDate(previousMonthStart), formatDate(previousMonthEnd))
       ])
       
+      console.log('AdminShell - loaded users:', u.length)
       setOrders(o)
       setBoxTypes(b)
+      setUsers(u)
       setCurrentMonthStats(currentStats)
       setPreviousMonthStats(prevStats)
     } catch (error) {
@@ -88,6 +92,14 @@ export default function AdminShell() {
       }
     }
 
+    const handleUsersRefresh = (event) => {
+      const newUsers = event.detail
+      console.log('AdminShell - received users refresh:', newUsers?.length)
+      if (newUsers) {
+        setUsers(newUsers)
+      }
+    }
+
     const handleStatsRefresh = (event) => {
       const { currentMonth, previousMonth } = event.detail
       if (currentMonth) {
@@ -107,12 +119,14 @@ export default function AdminShell() {
     window.addEventListener('box-types-refresh', handleBoxTypesRefresh)
     window.addEventListener('stats-refresh', handleStatsRefresh)
     window.addEventListener('orders-updated', handleOrdersUpdate)
+    window.addEventListener('users-refresh', handleUsersRefresh)
     
     return () => {
       window.removeEventListener('orders-refresh', handleOrdersRefresh)
       window.removeEventListener('box-types-refresh', handleBoxTypesRefresh)
       window.removeEventListener('stats-refresh', handleStatsRefresh)
       window.removeEventListener('orders-updated', handleOrdersUpdate)
+      window.removeEventListener('users-refresh', handleUsersRefresh)
     }
   }, [])
 
@@ -166,7 +180,7 @@ export default function AdminShell() {
 
       <div className="admin-main">
         <main className="admin-content">
-          <Outlet context={{ orders, boxTypes, adminUser, currentMonthStats, previousMonthStats }} />
+          <Outlet context={{ orders, boxTypes, users, adminUser, currentMonthStats, previousMonthStats }} />
         </main>
       </div>
     </div>

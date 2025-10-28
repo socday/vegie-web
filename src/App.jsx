@@ -24,6 +24,7 @@ import DashboardPage from './components/admin/pages/DashboardPage'
 import OrdersPage from './components/admin/pages/OrdersPage'
 import AIRecipesPage from './components/admin/pages/AIRecipesPage'
 import DiscountsPage from './components/admin/pages/DiscountsPage'
+import UsersPage from './components/admin/pages/UsersPage'
 import Box3D from './components/3d/Box3D'
 import MyWeeklyPackage from './components/home/WeeklyPackage'
 import AiMenu from './components/home/AiMenu'
@@ -128,7 +129,7 @@ function AppContent() {
           <Route index element={<DashboardPage />} />
           <Route path='orders' element={<OrdersPage />} />
           <Route path='products' element={<div />} />
-          <Route path='customers' element={<div />} />
+          <Route path='customers' element={<UsersPage />} />
           <Route path='coupons' element={<DiscountsPage />} />
           <Route path='blog' element={<div />} />
           <Route path='payments' element={<div />} />
