@@ -6,6 +6,7 @@
     align-items: center;
     border-radius: 22px;
     margin-bottom: 10rem;
+    width: 100%;
 }
 .orders__tabs {
   display: flex;
