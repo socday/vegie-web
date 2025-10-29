@@ -24,7 +24,7 @@ export default function Footer() {
       {/* Phần chính màu xanh nhạt */}
       <div className="footer-main">
         <div className="footer-content">
-          {/* Cột 1: Đăng ký thông tin */}
+          {/* Cột 2: Đăng ký thông tin */}
           <div className="footer-column subscribe-column">
             <h3>ĐĂNG KÝ THÔNG TIN</h3>
             <p>Đăng ký thông tin để nhận ngay </p> <p> những ưu đãi từ Vegie nhé!</p>

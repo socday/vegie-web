@@ -112,7 +112,7 @@ const NavBar = () => {
                             <form className="search-form" onSubmit={handleSubmit}>
                                 <input
                                     type="text"
-                                    placeholder="Tìm kiếm trong trang..."
+                                    placeholder="Tìm kiếm" 
                                     className="search-input"
                                     value={searchTerm}
                                     onChange={e => setSearchTerm(e.target.value)}

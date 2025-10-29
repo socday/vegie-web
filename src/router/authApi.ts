@@ -36,27 +36,42 @@ export async function changePassword (payload: changePasswordRequest) : Promise 
 export async function checkAuth() {
   let token = localStorage.getItem("accessToken");
   const refreshToken = localStorage.getItem("refreshToken");
+  // Nếu ko có accessToken => user ko hợp lệ
   if (!token) {
     return { isAuthenticated: false, user: null, token: null };
   }
 
   try {
-    // Try with current token first
+    // Lấy current user xem hợp lệ không
     const response = await api.get("/Auth/current-user", {
       headers: { Authorization: `Bearer ${token}` },
     });
     
     if (response.data.isSuccess) {
-      // Token is still valid, return success
+      // Hợp lệ trả về
       return {
         isAuthenticated: true,
         user: response.data,
         token,
       };
     } else {
-      // Token is invalid, try to refresh
+      // Token hết hạn thì refresh
       if (refreshToken) {
         try {
+          console.log("DANG REFRESH TOKEN");
+          console.log("DANG REFRESH TOKEN");
+          console.log("DANG REFRESH TOKEN");
+          console.log("DANG REFRESH TOKEN");
+          console.log("DANG REFRESH TOKEN");
+          console.log("DANG REFRESH TOKEN");
+          console.log("DANG REFRESH TOKEN");
+          console.log("DANG REFRESH TOKEN");
+          console.log("DANG REFRESH TOKEN");
+          console.log("DANG REFRESH TOKEN");
+          console.log("DANG REFRESH TOKEN");
+          console.log("DANG REFRESH TOKEN");
+          console.log("DANG REFRESH TOKEN");
+          console.log("DANG REFRESH TOKEN");
           console.log("DANG REFRESH TOKEN");
           const refreshRes = await api.post(
             "/Auth/refresh-token",
@@ -64,6 +79,7 @@ export async function checkAuth() {
             { headers: { Authorization: `Bearer ${token}` } }
           );
 
+          // Refresh thành công thì trả thành công
           if (refreshRes.data?.isSuccess) {
             const newToken = refreshRes.data.data.accessToken;
             localStorage.setItem("accessToken", newToken);
@@ -79,13 +95,13 @@ export async function checkAuth() {
         }
       }
       
-      // Both current token and refresh failed
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
+      localStorage.removeItem("userId")
       return { isAuthenticated: false, user: null, token: null };
     }
   } catch (error: any) {
-    // Network error or token expired, try refresh
+    // Có lỗi gì thử refresh, refresh ko đc thì cho đăng nhập
     if (refreshToken) {
       try {
         console.log("DANG REFRESH TOKEN");
@@ -109,10 +125,10 @@ export async function checkAuth() {
         console.error("Token refresh failed:", refreshError);
       }
     }
-    
+    // Nếu ko có refresh token thì cho đăng nhập lại
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-    console.error("Auth check failed:", error);
+    localStorage.removeItem("userId")
     return { isAuthenticated: false, user: null, token: null };
   }
 }

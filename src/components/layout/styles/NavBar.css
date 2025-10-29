@@ -152,7 +152,7 @@
   cursor: pointer;
 }
 
-.search-form:hover,
+/* .search-form:hover,
 .search-form:focus-within {
   width: 35%;
 }
@@ -165,7 +165,7 @@
 .search-form:hover button,
 .search-form:focus-within button {
   width: 15%;
-}
+} */
 /* Icons inside nav-actions */
 .nav-icons-action {
   margin-left: auto;
