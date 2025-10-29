@@ -92,17 +92,25 @@
 .stars {
   margin-bottom: 10px;
   margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .star {
   color: #ffd700;
-  font-size: 1.2rem;
+  font-size: 0.9rem;
+  text-shadow: 0 0 2px rgba(255, 215, 0, 0.5);
+  -webkit-text-stroke: 0.3px #ffd700;
 }
 
 .rating {
   color: white;
-  font-size: 6px;
-  opacity: 0.8;
+  font-size: 0.9rem;
+  opacity: 1;
+  font-weight: 500;
+  line-height: 1;
+  vertical-align: middle;
 }
 
 .description {
