@@ -10,7 +10,7 @@ import { FaPhone } from 'react-icons/fa';
 import logo from '../../assets/logo.png'; // **Đảm bảo đường dẫn này đúng**
 
 // Import file CSS (chúng ta sẽ tạo ở bước tiếp theo)
-import '../../css/Footer.css';
+import './styles/Footer.css';
 import { useMediaQuery } from "react-responsive";
 import { useNavigate} from 'react-router-dom';
 
@@ -20,7 +20,6 @@ export default function Footer() {
   const isDesktop = useMediaQuery({ minWidth: 769 });
   return (
       <>
-    {isDesktop &&
     <footer className="site-footer">
       {/* Phần chính màu xanh nhạt */}
       <div className="footer-main">
@@ -41,7 +40,7 @@ export default function Footer() {
           </div>
 
           {/* Cột 3: Liên hệ */}
-          <div className="footer-column contact-column">
+          <div className="footer-column contact-column">            
             <h3>LIÊN HỆ</h3>
             <div className="social-icons">
               <a href="https://www.facebook.com/profile.php?id=61577740254103" aria-label="Facebook"><FaFacebook /></a>
@@ -58,8 +57,6 @@ export default function Footer() {
         <p>VEGIE CARE</p>
       </div>
     </footer>
-    }
-    {isMobile && <footer className="site-footer"></footer>}
     </>
   );
 }

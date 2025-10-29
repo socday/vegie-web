@@ -61,7 +61,7 @@ export default function RetailPackage()  {
           onChange={(e) => setFeeling(e.target.value)}
         />
 
-        <button type="submit" className="pay-btn">
+        <button type="submit" className="d-btn d-btn-font pay-btn">
           <span>Thanh toán</span>
         </button>
       </form>

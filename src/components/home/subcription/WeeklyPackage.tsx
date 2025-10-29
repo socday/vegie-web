@@ -66,7 +66,7 @@ export default function WeeklyPackage() {
           onChange={(e) => setFeeling(e.target.value)}
         />
           </label>
-          <button type="submit" className="pay-btn">
+          <button type="submit" className="d-btn d-btn-font pay-btn">
             <span>Thanh toán
               </span>
           </button>

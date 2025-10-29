@@ -143,20 +143,15 @@ body {
   padding:0;
 }
 
-.pay-btn span {
-  color: #27600B;
-}
-.pay-btn:hover {
-  background-color: #27600B;
-}
 
-.pay-btn:hover span{
-  color: white;
-}
 
 .weekly-package .fancy-btn {
   background-color: #91CF43;
   color: white;
   padding: 0.5rem 10%;
   font-weight: 500;
+}
+
+.health-voucher input {
+  text-align: start;
 }

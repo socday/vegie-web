@@ -5,7 +5,7 @@ import CartCheckout from "../cart/CartCheckout";
 import { cartCheckout, getCart } from "../../../../router/cartApi";
 import { CartResponse, Item } from "../../../../router/types/cartResponse";
 import { useNavigate, useLocation } from "react-router-dom";
-import { createOrder, getPaymentLink } from "../../../../router/orderApi";
+import { createOrder, createWeeklyPackageOrder, getPaymentLink } from "../../../../router/orderApi";
 
 export default function Payment({ passedCart }: { passedCart?: Item[] }) {
   const [items, setItems] = useState<Item[]>([]);
@@ -36,10 +36,12 @@ export default function Payment({ passedCart }: { passedCart?: Item[] }) {
       quantity?: number;
       price?: number;
       passedCart?: any[];
+      deliveryStartDate?: Date;
+      weeklyPackagePrice?: number;
     }
   | undefined;
 
-  const isFromRetail = retailState?.from === "retail-package";
+  let isFromRetail = retailState?.from === "retail-package";
 
   const navigate = useNavigate();
 
@@ -86,8 +88,10 @@ export default function Payment({ passedCart }: { passedCart?: Item[] }) {
   };
 
   const handlePayment = async () => {
+    if (!isFromRetail) {
+      isFromRetail= true;
+    }
   try {
-    console.log("Processing payment with method:", paymentMethod);
     const userId = localStorage.getItem("userId");
     if (!userId) {
       alert("Người dùng chưa đăng nhập.");
@@ -98,7 +102,11 @@ export default function Payment({ passedCart }: { passedCart?: Item[] }) {
       alert("Thiếu thông tin sản phẩm để thanh toán.");
       return;
     }
-
+    if (!isFromRetail) {
+      retailState.weeklyPackagePrice = retailState.price;
+      retailState.deliveryStartDate = new Date();    
+    }
+    console.log("DATA CUOI CUNG: ", retailState)
     const items = [
       {
         boxTypeId: retailState.blindBoxId,
@@ -117,11 +125,21 @@ export default function Payment({ passedCart }: { passedCart?: Item[] }) {
       phoneNumber: checkoutData.phoneNumber,
       allergyNote: retailState?.allergy || "",
       preferenceNote: retailState?.feeling || "",
+      ...(retailState.deliveryStartDate ? { deliveryStartDate: retailState.deliveryStartDate } : {}),
+      ...(retailState.weeklyPackagePrice? { weeklyPackagePrice: retailState.weeklyPackagePrice } : {}),
     };
+    let response;
+    if (isFromRetail) {
+      response = await createOrder(payload);
+    }
+    else {
+      response = await createWeeklyPackageOrder(payload);
+    }
 
-    const response = await createOrder(payload);
-
-    if (paymentMethod === 2 && response.data?.id) {
+    if (!response.isSuccess){
+      alert("Thanh toán bị lỗi");
+    }
+    if (paymentMethod === 2 && response.data?.id && response.isSuccess) {
       const paymentRes = await getPaymentLink(response.data.id);
       if (paymentRes.isSuccess && paymentRes.data.paymentUrl) {
         window.location.href = paymentRes.data.paymentUrl;

@@ -90,7 +90,6 @@ function AppContent() {
     } />
 
     <Route path='/profile-test' element={<Profile />} />
-    <Route path='/my-weekly-package' element={<MyWeeklyPackage />} />
 
     <Route path='/ai-menu' element={
       <PrivateRoute>

@@ -116,3 +116,7 @@ body {
 .btn-submit:hover {
   background-color: #347534;
 }
+
+.form-right input {
+  text-align: start;
+}
