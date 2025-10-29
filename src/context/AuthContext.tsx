@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
-import { startSilentRefresh } from "../router/api"; // the axios setup with refresh
+import { startSilentRefresh } from "../router/api";
 import { getCustomer } from "../router/authApi";
 
 type AuthContextType = {
   user: any | null;
   isAuthenticated: boolean;
+  loading: boolean;
   refreshAuth: () => Promise<void>;
   logout: () => void;
 };
@@ -12,6 +13,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType>({
   user: null,
   isAuthenticated: false,
+  loading: true,
   refreshAuth: async () => {},
   logout: () => {},
 });
@@ -19,12 +21,16 @@ const AuthContext = createContext<AuthContextType>({
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<any | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const refreshAuth = useCallback(async () => {
+    setLoading(true);
     const token = localStorage.getItem("accessToken");
+
     if (!token) {
       setUser(null);
       setIsAuthenticated(false);
+      setLoading(false);
       return;
     }
 
@@ -41,6 +47,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       console.error("Auth refresh failed:", err);
       setUser(null);
       setIsAuthenticated(false);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
@@ -56,7 +64,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     startSilentRefresh();
   }, [refreshAuth]);
 
-  // cross-tab login/logout sync
+  // React to login/logout in other tabs
   useEffect(() => {
     const handler = () => refreshAuth();
     window.addEventListener("storage", handler);
@@ -67,8 +75,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, [refreshAuth]);
 
+  // Watch for token changes (e.g., after login)
+  useEffect(() => {
+    const tokenListener = () => {
+      refreshAuth();
+    };
+    window.addEventListener("token-update", tokenListener);
+    return () => window.removeEventListener("token-update", tokenListener);
+  }, [refreshAuth]);
+
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, refreshAuth, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, loading, refreshAuth, logout }}>
       {children}
     </AuthContext.Provider>
   );

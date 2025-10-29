@@ -90,10 +90,10 @@ async function tryRefreshToken(token: string, refreshToken: string) {
   );
 
   if (refreshRes.data?.isSuccess) {
-    const { accessToken, refreshToken: newRefresh, userId } = refreshRes.data.data;
+    const { accessToken, refreshToken: newRefresh, id } = refreshRes.data.data;
     localStorage.setItem("accessToken", accessToken);
     localStorage.setItem("refreshToken", newRefresh);
-    localStorage.setItem("userId", userId);
+    localStorage.setItem("userId", id);
     console.log("REFRESH SUCCESS");
     return accessToken;
   }

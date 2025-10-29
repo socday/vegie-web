@@ -68,7 +68,7 @@ export default function ProfileForm({ onChangePassword }: ProfileFormProps) {
   const handleSave = async () => {
   if (!customer) return;
   if (!isValidPhone(customer.phone)) {
-    alert("Số điện thoại không hợp lệ! Vui lòng nhập dạng 0xxxxxxxxx hoặc +84xxxxxxxxx");
+    alert("Số điện thoại không hợp lệ");
   return;
   }
   try {

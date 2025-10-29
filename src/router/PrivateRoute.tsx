@@ -4,10 +4,11 @@ import WaveText from "../components/lazy/WaveText";
 import { useAuth } from "../context/AuthContext";
 
 export default function PrivateRoute({ children }: { children: JSX.Element }) {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
   const location = useLocation();
 
-  if (user === null && !isAuthenticated) {
+  // Still checking (avoid redirecting too early)
+  if (loading) {
     return (
       <div
         style={{
@@ -24,10 +25,11 @@ export default function PrivateRoute({ children }: { children: JSX.Element }) {
     );
   }
 
+  // If not authenticated, navigate (no alert)
   if (!isAuthenticated) {
-    alert("Vui lòng đăng nhập để tiếp tục!");
     return <Navigate to="/dang-nhap" replace state={{ from: location }} />;
   }
 
+  // Otherwise render page
   return children;
 }
