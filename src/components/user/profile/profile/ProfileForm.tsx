@@ -73,7 +73,7 @@ useEffect(() => {
     formData.append("gender", "0");
     formData.append("address", customer.address);
     if (selectedFile) {
-      formData.append("file", selectedFile);
+      formData.append("avatar", selectedFile);
     }
 
     const updated = await updateCustomer(formData); // updateCustomer must send multipart

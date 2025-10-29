@@ -57,7 +57,8 @@ export interface Customer {
   email: string;
   phone: string;
   address: string;
-  imgURL: string | null;
+  imgURL: string;
+  avatar?: File | null;
 };
 
 export interface GetCustomerResponse {

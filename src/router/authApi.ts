@@ -1,6 +1,7 @@
 import axios from "axios";
 import { api } from "./api";
 import { changePasswordRequest, Customer, GetCustomerResponse, LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from "./types/authResponse";
+import { useNavigate } from "react-router-dom";
 
 export async function loginUser(payload: LoginRequest): Promise<LoginResponse> {
   const res = await api.post<LoginResponse>("/Auth/login", payload, {
@@ -36,101 +37,55 @@ export async function changePassword (payload: changePasswordRequest) : Promise 
 export async function checkAuth() {
   let token = localStorage.getItem("accessToken");
   const refreshToken = localStorage.getItem("refreshToken");
-  // Nếu ko có accessToken => user ko hợp lệ
+
   if (!token) {
     return { isAuthenticated: false, user: null, token: null };
   }
 
   try {
-    // Lấy current user xem hợp lệ không
     const response = await api.get("/Auth/current-user", {
       headers: { Authorization: `Bearer ${token}` },
     });
-    
-    if (response.data.isSuccess) {
-      // Hợp lệ trả về
-      return {
-        isAuthenticated: true,
-        user: response.data,
-        token,
-      };
-    } else {
-      // Token hết hạn thì refresh
-      if (refreshToken) {
-        try {
-          console.log("DANG REFRESH TOKEN");
-          console.log("DANG REFRESH TOKEN");
-          console.log("DANG REFRESH TOKEN");
-          console.log("DANG REFRESH TOKEN");
-          console.log("DANG REFRESH TOKEN");
-          console.log("DANG REFRESH TOKEN");
-          console.log("DANG REFRESH TOKEN");
-          console.log("DANG REFRESH TOKEN");
-          console.log("DANG REFRESH TOKEN");
-          console.log("DANG REFRESH TOKEN");
-          console.log("DANG REFRESH TOKEN");
-          console.log("DANG REFRESH TOKEN");
-          console.log("DANG REFRESH TOKEN");
-          console.log("DANG REFRESH TOKEN");
-          console.log("DANG REFRESH TOKEN");
-          const refreshRes = await api.post(
-            "/Auth/refresh-token",
-            { refreshToken }, 
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
 
-          // Refresh thành công thì trả thành công
-          if (refreshRes.data?.isSuccess) {
-            const newToken = refreshRes.data.data.accessToken;
-            localStorage.setItem("accessToken", newToken);
-            console.log("REFRESH SUCCESS");
-            return {
-              isAuthenticated: true,
-              user: refreshRes.data,
-              token: newToken,
-            };
-          }
-        } catch (refreshError) {
-          console.error("Token refresh failed:", refreshError);
-        }
-      }
-      
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("userId")
-      return { isAuthenticated: false, user: null, token: null };
+    if (response.data.isSuccess) {
+      return { isAuthenticated: true, user: response.data.data, token };
     }
-  } catch (error: any) {
-    // Có lỗi gì thử refresh, refresh ko đc thì cho đăng nhập
+
+    if (refreshToken) {
+      const newToken = await tryRefreshToken(token, refreshToken);
+      return { isAuthenticated: true, user: response.data.data, token: newToken };
+    }
+  } catch (error) {
     if (refreshToken) {
       try {
-        console.log("DANG REFRESH TOKEN");
-        const refreshRes = await api.post(
-          "/Auth/refresh-token",
-          { refreshToken }, 
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-
-        if (refreshRes.data?.isSuccess) {
-          const newToken = refreshRes.data.data.accessToken;
-          localStorage.setItem("accessToken", newToken);
-          console.log("REFRESH SUCCESS");
-          return {
-            isAuthenticated: true,
-            user: refreshRes.data,
-            token: newToken,
-          };
-        }
-      } catch (refreshError) {
-        console.error("Token refresh failed:", refreshError);
+        const newToken = await tryRefreshToken(token, refreshToken);
+        return { isAuthenticated: true, user: null, token: newToken };
+      } catch {
+        console.error("Token refresh failed:", error);
       }
     }
-    // Nếu ko có refresh token thì cho đăng nhập lại
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("userId")
-    return { isAuthenticated: false, user: null, token: null };
   }
+
+  localStorage.clear();
+  return { isAuthenticated: false, user: null, token: null };
+}
+
+
+async function tryRefreshToken(token: string, refreshToken: string) {
+  const refreshRes = await api.post(
+    "/Auth/refresh-token",
+    { refreshToken },
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+
+  if (refreshRes.data?.isSuccess) {
+    const newToken = refreshRes.data.data.accessToken;
+    localStorage.setItem("accessToken", newToken);
+    console.log("REFRESH SUCCESS");
+    return newToken;
+  }
+
+  throw new Error("Refresh failed");
 }
 
   export async function forgotPassword(email: string): Promise<any> {
@@ -157,7 +112,7 @@ export async function updateCustomer(
         phoneNumber: string;
         gender: number;
         address: string;
-        imgURL: string | File;
+        avatar: File | null;
       }
 ): Promise<Customer> {
   const token = localStorage.getItem("accessToken");
