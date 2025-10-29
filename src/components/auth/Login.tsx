@@ -4,6 +4,7 @@ import "../../css/Login.css";
 import { useMediaQuery } from 'react-responsive';
 import { loginUser } from "../../router/authApi";
 import LoginRegisterForm from "./LoginRegisterForm";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 
 const Login = () => {
@@ -60,6 +61,7 @@ const Login = () => {
   };
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const isDesktop = useMediaQuery({ minWidth: 768 });
+    const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="login-page">
@@ -85,15 +87,23 @@ const Login = () => {
 
             <div className="form-group">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Mật khẩu"
                 required
               />
+              <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="show-password"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
             </div>
 
+              
+            
             {error && <p style={{ color: "red" }}>{error}</p>}
 
             <div className="form-actions">
@@ -109,6 +119,7 @@ const Login = () => {
               <Link to="/khoi-phuc-mat-khau" className="d-btn-font d-btn">
                 <span>Quên mật khẩu</span>
               </Link>
+                
             </div>
           </form>
         </div>
