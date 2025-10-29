@@ -39,7 +39,8 @@ import StageNotificationWrapper from './components/notifications/StageNotificati
 import ReviewOrderForm from './components/user/profile/order/ReviewOrderForm.tsx'
 import { OrderProvider } from './context/OrderContext.tsx'
 import RetailPackage from './components/home/subcription/retailpackage.tsx'
-
+import { startSilentRefresh } from "./router/api";
+import { AuthProvider } from './context/AuthContext'
 function AppContent() {
   const location = useLocation()
   const [authTick, setAuthTick] = useState(0)
@@ -62,106 +63,114 @@ function AppContent() {
     return () => window.removeEventListener('auth-change', onAuthEvent)
   }, [])
 
+  useEffect(() => {
+    startSilentRefresh();
+  }, []);
   return (
     <>
+    <AuthProvider>
+      <div className='app-layout'> 
       {isAdminRoute ? null : <NavBar key={`nav-${authTick}`} />}
       <ScrollToTop />
-<OrderProvider>
-  <Routes>
-    <Route path='/' element={<Home />} />
-    <Route path='/trang-chu' element={<Home />} />
-    <Route path='/vegie-care' element={<Home />} />
-    <Route path='/gioi-thieu' element={<Home />} />
+      <OrderProvider>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/trang-chu' element={<Home />} />
+          <Route path='/vegie-care' element={<Home />} />
+          <Route path='/gioi-thieu' element={<Home />} />
 
-    <Route path='/dang-nhap' element={<Login />} />
-    <Route path='/khoi-phuc-mat-khau' element={<PasswordRecovery />} />
-    <Route path='/stage-notification' element={<StageNotification />} />
-    <Route path='/dang-ky' element={<Register />} />
+          <Route path='/dang-nhap' element={<Login />} />
+          <Route path='/khoi-phuc-mat-khau' element={<PasswordRecovery />} />
+          <Route path='/stage-notification' element={<StageNotification />} />
+          <Route path='/dang-ky' element={<Register />} />
 
-    <Route path='/san-pham' element={<BoxSelector />} />
-    <Route path='/custom-box' element={<GiftDetoxBox />} />
-    <Route path='/retail-package' element={<RetailPackage />} />
-    <Route path='/weekly-package' element={<WeeklyPackage />} />
-    <Route path='/blind-box' element={<BlindBox />} />
+          <Route path='/san-pham' element={<BoxSelector />} />
+          <Route path='/custom-box' element={<GiftDetoxBox />} />
+          <Route path='/retail-package' element={<RetailPackage />} />
+          <Route path='/weekly-package' element={<WeeklyPackage />} />
+          <Route path='/blind-box' element={<BlindBox />} />
 
-    <Route path='/box-3d' element={
-      <PrivateRoute>
-        <Box3D />
-      </PrivateRoute>
-    } />
+          <Route path='/box-3d' element={
+            <PrivateRoute>
+              <Box3D />
+            </PrivateRoute>
+          } />
 
-    <Route path='/profile-test' element={<Profile />} />
+          <Route path='/profile-test' element={<Profile />} />
 
-    <Route path='/ai-menu' element={
-      <PrivateRoute>
-        <AiMenu />
-      </PrivateRoute>
-    } />
+          <Route path='/ai-menu' element={
+            <PrivateRoute>
+              <AiMenu />
+            </PrivateRoute>
+          } />
 
-    <Route path='/ai-menu-test' element={<AiMenu />} />
+          <Route path='/ai-menu-test' element={<AiMenu />} />
 
-    <Route path='/fruit-selection' element={<FruitSelection />} />
+          <Route path='/fruit-selection' element={<FruitSelection />} />
 
-    <Route path='/today-menu' element={
-      <PrivateRoute>
-        <TodayMenu />
-      </PrivateRoute>
-    } />
+          <Route path='/today-menu' element={
+            <PrivateRoute>
+              <TodayMenu />
+            </PrivateRoute>
+          } />
 
-    <Route path='/finish-giftbox' element={<FinishGiftBox />} />
-    <Route path='/letters' element={<Letters />} />
-    <Route path='/gift-preview' element={<GiftPreview />} />
-    <Route path="/combo/:type" element={<ViewComboSectionWrapper />} />
+          <Route path='/finish-giftbox' element={<FinishGiftBox />} />
+          <Route path='/letters' element={<Letters />} />
+          <Route path='/gift-preview' element={<GiftPreview />} />
+          <Route path="/combo/:type" element={<ViewComboSectionWrapper />} />
 
-    {/* Bổ sung từ main */}
-    <Route path="/noti/:type" element={<StageNotificationWrapper />} />
-    <Route path="/:type" element={<StageNotificationWrapper />} />
+          {/* Bổ sung từ main */}
+          <Route path="/noti/:type" element={<StageNotificationWrapper />} />
+          <Route path="/:type" element={<StageNotificationWrapper />} />
 
-    <Route path="/thong-bao" element={
-      <PrivateRoute>
-        <UserNotification />
-      </PrivateRoute>
-    } />
+          <Route path="/thong-bao" element={
+            <PrivateRoute>
+              <UserNotification />
+            </PrivateRoute>
+          } />
 
-    <Route path="/profile" element={
-      <PrivateRoute>
-        <Profile />
-      </PrivateRoute>
-    } />
+          <Route path="/profile" element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          } />
 
-    <Route path="/gio-hang" element={
-      <PrivateRoute>
-        <Cart />
-      </PrivateRoute>
-    } />
+          <Route path="/gio-hang" element={
+            <PrivateRoute>
+              <Cart />
+            </PrivateRoute>
+          } />
 
-    <Route path="/thanh-toan" element={
-      <PrivateRoute>
-        <Payment />
-      </PrivateRoute>
-    } />
+          <Route path="/thanh-toan" element={
+            <PrivateRoute>
+              <Payment />
+            </PrivateRoute>
+          } />
 
-    <Route path="/review-order/:orderId" element={
-      <PrivateRoute>
-        <ReviewOrderForm />
-      </PrivateRoute>
-    } />
+          <Route path="/review-order/:orderId" element={
+            <PrivateRoute>
+              <ReviewOrderForm />
+            </PrivateRoute>
+          } />
 
-    {/* Khu vực admin */}
-        <Route path='/admin' element={<AdminShell />} >
-          <Route index element={<DashboardPage />} />
-          <Route path='orders' element={<OrdersPage />} />
-          <Route path='products' element={<ProductsPage />} />
-          <Route path='customers' element={<UsersPage />} />
-          <Route path='coupons' element={<DiscountsPage />} />
-          <Route path='blog' element={<div />} />
-          <Route path='payments' element={<div />} />
-          <Route path='ai-recipes' element={<AIRecipesPage />} />
-        </Route>
-  </Routes>
-</OrderProvider>
+          {/* Khu vực admin */}
+              <Route path='/admin' element={<AdminShell />} >
+                <Route index element={<DashboardPage />} />
+                <Route path='orders' element={<OrdersPage />} />
+                <Route path='products' element={<ProductsPage />} />
+                <Route path='customers' element={<UsersPage />} />
+                <Route path='coupons' element={<DiscountsPage />} />
+                <Route path='blog' element={<div />} />
+                <Route path='payments' element={<div />} />
+                <Route path='ai-recipes' element={<AIRecipesPage />} />
+              </Route>
+        </Routes>
+      </OrderProvider>
+    </div>      
       {isAdminRoute ? null : <Footer key={`footer-${authTick}`} />}
-      <FooterMobile />
+
+<FooterMobile />
+</AuthProvider>
     </>
   )
 }

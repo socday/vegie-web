@@ -1,56 +1,33 @@
-import { JSX, useEffect, useState } from "react";
+import React, { JSX } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { checkAuth } from "./authApi";
 import WaveText from "../components/lazy/WaveText";
+import { useAuth } from "../context/AuthContext";
 
-interface Props {
-  children: JSX.Element;
-}
-
-export default function PrivateRoute({ children }: Props) {
-  const [loading, setLoading] = useState(true);
-  const [authenticated, setAuthenticated] = useState(false);
+export default function PrivateRoute({ children }: { children: JSX.Element }) {
+  const { isAuthenticated, user } = useAuth();
   const location = useLocation();
 
-  useEffect(() => {
-    const verifyAuth = async () => {
-      try {
-        const result = await checkAuth();
-        setAuthenticated(result.isAuthenticated);
-        if (!result.isAuthenticated) {
-          alert("Vui lòng đăng nhập để tiếp tục!");
-        }
-      } catch (err) {
-        console.error("Auth check failed:", err);
-        setAuthenticated(false);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    verifyAuth();
-  }, []);
-
-  if (loading) {
+  if (user === null && !isAuthenticated) {
     return (
       <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "60vh",
-        backgroundColor: "#ffffff",
-        fontFamily: "Inter, sans-serif",
-      }}
-    >
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "60vh",
+          backgroundColor: "#ffffff",
+          fontFamily: "Inter, sans-serif",
+        }}
+      >
         <WaveText />
       </div>
     );
   }
 
-  return authenticated ? (
-    children
-  ) : (
-    <Navigate to="/dang-nhap" replace state={{ from: location }} />
-  );
+  if (!isAuthenticated) {
+    alert("Vui lòng đăng nhập để tiếp tục!");
+    return <Navigate to="/dang-nhap" replace state={{ from: location }} />;
+  }
+
+  return children;
 }

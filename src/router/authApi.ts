@@ -34,31 +34,37 @@ export async function changePassword (payload: changePasswordRequest) : Promise 
   return res.data;
 }
 
+let isRefreshing = false;
+
 export async function checkAuth() {
   let token = localStorage.getItem("accessToken");
-  const refreshToken = localStorage.getItem("refreshToken");
+  let refreshToken = localStorage.getItem("refreshToken");
 
   if (!token) {
     return { isAuthenticated: false, user: null, token: null };
   }
 
   try {
-    const response = await api.get("/Auth/current-user", {
+    const response = await api.get("/Auth/check-token", {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    if (response.data.isSuccess) {
+    if (!response.data.data.isExpired) {
       return { isAuthenticated: true, user: response.data.data, token };
     }
 
-    if (refreshToken) {
+    if (refreshToken && !isRefreshing) {
+      isRefreshing = true;
       const newToken = await tryRefreshToken(token, refreshToken);
+      isRefreshing = false;
       return { isAuthenticated: true, user: response.data.data, token: newToken };
     }
   } catch (error) {
-    if (refreshToken) {
+    if (refreshToken && !isRefreshing) {
       try {
+        isRefreshing = true;
         const newToken = await tryRefreshToken(token, refreshToken);
+        isRefreshing = false;
         return { isAuthenticated: true, user: null, token: newToken };
       } catch {
         console.error("Token refresh failed:", error);
@@ -66,12 +72,17 @@ export async function checkAuth() {
     }
   }
 
-  localStorage.clear();
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
   return { isAuthenticated: false, user: null, token: null };
 }
 
 
 async function tryRefreshToken(token: string, refreshToken: string) {
+  console.log("REFRESH TOKEN");
+  console.log("REFRESH TOKEN");
+  console.log("REFRESH TOKEN");
+
   const refreshRes = await api.post(
     "/Auth/refresh-token",
     { refreshToken },
@@ -79,14 +90,17 @@ async function tryRefreshToken(token: string, refreshToken: string) {
   );
 
   if (refreshRes.data?.isSuccess) {
-    const newToken = refreshRes.data.data.accessToken;
-    localStorage.setItem("accessToken", newToken);
+    const { accessToken, refreshToken: newRefresh, userId } = refreshRes.data.data;
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", newRefresh);
+    localStorage.setItem("userId", userId);
     console.log("REFRESH SUCCESS");
-    return newToken;
+    return accessToken;
   }
 
   throw new Error("Refresh failed");
 }
+
 
   export async function forgotPassword(email: string): Promise<any> {
     

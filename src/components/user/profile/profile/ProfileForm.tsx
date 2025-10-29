@@ -19,6 +19,11 @@ export default function ProfileForm({ onChangePassword }: ProfileFormProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
 
+  const isValidPhone = (phone: string) => {
+  const vnPhoneRegex = /^(0|\+84)(\d{9,10})$/;
+  return vnPhoneRegex.test(phone);
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -26,14 +31,13 @@ export default function ProfileForm({ onChangePassword }: ProfileFormProps) {
       setPreview(URL.createObjectURL(file)); // show preview
     }
   };
-  // Fetch customer info on mount
-useEffect(() => {
+
+  useEffect(() => {
   const fetchCustomer = async () => {
     try {
       setLoading(true);
       const response = await getCustomer();
 
-      // If response.data holds the actual customer
       const user = response.data ?? response;
 
       const mappedCustomer: Customer = {
@@ -57,14 +61,16 @@ useEffect(() => {
   fetchCustomer();
 }, []);
 
-  // Handle input change
   const handleChange = (field: keyof Customer, value: string) => {
     setCustomer((prev) => (prev ? { ...prev, [field]: value } : prev));
   };
 
-  // Save to API
   const handleSave = async () => {
   if (!customer) return;
+  if (!isValidPhone(customer.phone)) {
+    alert("Số điện thoại không hợp lệ! Vui lòng nhập dạng 0xxxxxxxxx hoặc +84xxxxxxxxx");
+  return;
+  }
   try {
     const formData = new FormData();
     formData.append("firstName", customer.fullName);
