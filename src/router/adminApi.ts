@@ -148,6 +148,21 @@ export async function getAllBoxTypes(): Promise<BoxTypeDTO[]> {
   return [];
 }
 
+export interface UpdateBoxTypeRequest {
+  name: string;
+  description: string;
+  price: number;
+  parentID: string;
+}
+
+export async function updateBoxType(id: string, payload: UpdateBoxTypeRequest): Promise<{ isSuccess: boolean; data: BoxTypeDTO; message: string; exception: string | null; }> {
+  const token = localStorage.getItem("accessToken");
+  const res = await api.put(`/BoxTypes/${id}`, payload, {
+    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+  });
+  return res.data;
+}
+
 export interface StatisticsResponse {
   totalOrders: number;
   paidOrders: number;

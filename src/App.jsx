@@ -20,11 +20,13 @@ import PrivateRoute from './router/PrivateRoute'
 import AdminShell from './components/admin/AdminShell'
 import DashboardPage from './components/admin/pages/DashboardPage'
 import OrdersPage from './components/admin/pages/OrdersPage'
+import ProductsPage from './components/admin/pages/ProductsPage'
 import AIRecipesPage from './components/admin/pages/AIRecipesPage'
 import DiscountsPage from './components/admin/pages/DiscountsPage'
 import UsersPage from './components/admin/pages/UsersPage'
 import Box3D from './components/3d/Box3D'
 import AiMenu from './components/home/AiMenu'
+import WeeklyPackage from './components/home/subcription/WeeklyPackage'
 import FruitSelection from './components/3d/FruitSelection'
 import Letters from './components/3d/Letters'
 import GiftPreview from './components/3d/GiftPreview'
@@ -37,7 +39,6 @@ import StageNotificationWrapper from './components/notifications/StageNotificati
 import ReviewOrderForm from './components/user/profile/order/ReviewOrderForm.tsx'
 import { OrderProvider } from './context/OrderContext.tsx'
 import RetailPackage from './components/home/subcription/retailpackage.tsx'
-import WeeklyPackage from './components/home/subcription/WeeklyPackage'
 
 function AppContent() {
   const location = useLocation()
@@ -147,16 +148,16 @@ function AppContent() {
     } />
 
     {/* Khu vực admin */}
-    <Route path='/admin' element={<AdminShell />} >
-      <Route index element={<DashboardPage />} />
-      <Route path='orders' element={<OrdersPage />} />
-      <Route path='products' element={<div />} />
-      <Route path='customers' element={<UsersPage />} />
-      <Route path='coupons' element={<DiscountsPage />} />
-      <Route path='blog' element={<div />} />
-      <Route path='payments' element={<div />} />
-      <Route path='ai-recipes' element={<AIRecipesPage />} />
-    </Route>
+        <Route path='/admin' element={<AdminShell />} >
+          <Route index element={<DashboardPage />} />
+          <Route path='orders' element={<OrdersPage />} />
+          <Route path='products' element={<ProductsPage />} />
+          <Route path='customers' element={<UsersPage />} />
+          <Route path='coupons' element={<DiscountsPage />} />
+          <Route path='blog' element={<div />} />
+          <Route path='payments' element={<div />} />
+          <Route path='ai-recipes' element={<AIRecipesPage />} />
+        </Route>
   </Routes>
 </OrderProvider>
       {isAdminRoute ? null : <Footer key={`footer-${authTick}`} />}

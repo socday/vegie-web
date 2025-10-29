@@ -1,20 +1,61 @@
 /* Users Page */
 .users-page {
-  display: grid;
-  grid-template-rows: auto 1fr;
   padding: 24px;
 }
 
 .users-header-section {
-  grid-column: 1 / -1;
   margin-bottom: 16px;
 }
 
-.users-content-grid {
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 24px;
-  align-items: start;
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  width: 85vw;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.users-page:has(.modal-overlay) .users-table-section .header.users-row {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.users-page:has(.modal-overlay) .users-table-section .users-row {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #2d3a4a;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: #f0f0f0;
 }
 
 .users-title {
@@ -33,9 +74,8 @@
 }
 
 .users-row {
-  display: grid;
-  grid-template-columns: 1.5fr 1.5fr 1.5fr 0.5fr 0.5fr;
-  gap: 2px;
+  display: flex;
+  gap: 8px;
   padding: 8px 12px;
   border-bottom: 1px solid #f0f0f0;
   cursor: pointer;
@@ -53,6 +93,17 @@
   transition: background-color 0.2s ease;
   background-color: transparent;
   box-sizing: border-box;
+}
+
+.users-row > div:nth-child(1),
+.users-row > div:nth-child(2),
+.users-row > div:nth-child(3) {
+  flex: 1.5;
+}
+
+.users-row > div:nth-child(4),
+.users-row > div:nth-child(5) {
+  flex: 0.5;
 }
 
 .users-row:nth-child(even) {
@@ -87,13 +138,12 @@
   background: white;
   min-height: 550px;
   height: auto;
-  /* Hide scrollbar but keep scrolling functionality */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .users-body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari and Opera */
+  display: none;
 }
 
 .users-pagination {
@@ -139,13 +189,12 @@
   overflow: hidden;
   max-height: 85vh;
   overflow-y: auto;
-  /* Hide scrollbar but keep scrolling functionality */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .users-editor::-webkit-scrollbar {
-  display: none; /* Chrome, Safari and Opera */
+  display: none;
 }
 
 .users-editor-header {
@@ -162,8 +211,18 @@
   color: #2d3a4a;
 }
 
-.users-section {
+.users-editor-body {
+  display: flex;
+  gap: 16px;
   padding: 16px;
+}
+
+.users-section {
+  flex: 1;
+}
+
+.users-section.orders-section {
+  flex: 1.5;
 }
 
 .users-section-title {
@@ -174,13 +233,13 @@
 }
 
 .users-fields-grid {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 12px;
 }
 
 .users-field {
-  display: grid;
-  grid-template-columns: 150px 1fr;
+  display: flex;
   gap: 12px;
   align-items: center;
 }
@@ -189,17 +248,20 @@
   font-size: 12px;
   color: #6b7785;
   font-weight: 500;
+  width: 150px;
+  flex-shrink: 0;
 }
 
 .users-value {
   font-size: 14px;
   color: #2d3a4a;
+  flex: 1;
 }
 
 .users-divider {
-  height: 1px;
+  width: 1px;
   background: #cde5ff;
-  margin: 0 16px;
+  align-self: stretch;
 }
 
 .users-orders-table {
@@ -208,17 +270,40 @@
   border-radius: 8px;
   overflow: hidden;
   margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.users-orders-table-body {
+  min-height: 500px;
+  max-height: 500px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.users-orders-table-body::-webkit-scrollbar {
+  display: none;
 }
 
 .users-orders-table .row {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
-  gap: 2px;
+  display: flex;
+  gap: 8px;
   padding: 8px 12px;
   border-bottom: 1px solid #cde5ff;
   min-height: 50px;
   align-items: center;
   font-size: 14px;
+}
+
+.users-orders-table .row > div:nth-child(1) {
+  flex: 1.5;
+}
+
+.users-orders-table .row > div:nth-child(2),
+.users-orders-table .row > div:nth-child(3),
+.users-orders-table .row > div:nth-child(4) {
+  flex: 1;
 }
 
 .users-orders-table .row.header {
@@ -318,11 +403,11 @@ body.admin-dark-mode .users-divider {
   background: #404040;
 }
 
-body.admin-dark-mode .users-divider {
-  background: #404040;
+body.admin-dark-mode .users-orders-table {
+  background: #333333;
 }
 
-body.admin-dark-mode .users-orders-table {
+body.admin-dark-mode .users-orders-table-body {
   background: #333333;
 }
 
@@ -333,9 +418,167 @@ body.admin-dark-mode .users-orders-table .row {
 
 body.admin-dark-mode .users-orders-table .row.header {
   background: #3a3a3a;
-}
-
-body.admin-dark-mode .users-orders-table .row.header {
   color: #ffffff;
 }
 
+/* Order Detail Modal */
+.order-detail-modal {
+  background: #f5fbff;
+  border: 1px solid #cde5ff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.order-detail-modal .detail-body {
+  max-height: calc(80vh - 60px);
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.order-detail-modal .detail-body::-webkit-scrollbar {
+  display: none;
+}
+
+.order-detail-modal .order-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #2d3a4a;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #cde5ff;
+}
+
+.order-detail-modal .detail-item {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #2d3a4a;
+  line-height: 1.5;
+}
+
+.order-detail-modal .detail-item b {
+  color: #6b7785;
+  margin-right: 4px;
+}
+
+.order-detail-modal .delivery-section,
+.order-detail-modal .payment-section {
+  margin-top: 16px;
+  padding: 12px;
+  background: #ffffff;
+  border: 1px solid #cde5ff;
+  border-radius: 8px;
+}
+
+.order-detail-modal .detail-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #2d3a4a;
+}
+
+.order-detail-modal .products-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  margin-top: 16px;
+  color: #2d3a4a;
+}
+
+.order-detail-modal .products-table {
+  border: 1px solid #cde5ff;
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+}
+
+.order-detail-modal .products-header {
+  display: flex;
+  padding: 8px 12px;
+  background: #e9f5ff;
+  font-weight: 600;
+  font-size: 14px;
+  border-bottom: 1px solid #cde5ff;
+  color: #2d3a4a;
+}
+
+.order-detail-modal .products-row {
+  display: flex;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #2d3a4a;
+}
+
+.order-detail-modal .products-row:last-child {
+  border-bottom: none;
+}
+
+.order-detail-modal .products-row button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  color: #7cc043;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.order-detail-modal .products-row button:hover {
+  background: #f0f0f0;
+}
+
+/* Dark Mode for Order Detail Modal */
+body.admin-dark-mode .order-detail-modal {
+  background: #2d2d2d;
+  border-color: #404040;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+body.admin-dark-mode .order-detail-modal .order-title {
+  color: #ffffff;
+  border-bottom-color: #404040;
+}
+
+body.admin-dark-mode .order-detail-modal .detail-item {
+  color: #ffffff;
+}
+
+body.admin-dark-mode .order-detail-modal .detail-item b {
+  color: #a0a0a0;
+}
+
+body.admin-dark-mode .order-detail-modal .delivery-section,
+body.admin-dark-mode .order-detail-modal .payment-section {
+  background: #333333;
+  border-color: #404040;
+}
+
+body.admin-dark-mode .order-detail-modal .detail-section-title {
+  color: #ffffff;
+}
+
+body.admin-dark-mode .order-detail-modal .products-title {
+  color: #ffffff;
+}
+
+body.admin-dark-mode .order-detail-modal .products-table {
+  border-color: #404040;
+  background: #333333;
+}
+
+body.admin-dark-mode .order-detail-modal .products-header {
+  background: #3a3a3a;
+  border-bottom-color: #404040;
+  color: #ffffff;
+}
+
+body.admin-dark-mode .order-detail-modal .products-row {
+  border-bottom-color: #404040;
+  color: #ffffff;
+}
+
+body.admin-dark-mode .order-detail-modal .products-row button:hover {
+  background: #404040;
+}

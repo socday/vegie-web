@@ -115,10 +115,16 @@ export default function AdminShell() {
       loadData()
     }
 
+    const handleBoxTypesUpdate = () => {
+      // Refetch all data when box types are updated
+      loadData()
+    }
+
     window.addEventListener('orders-refresh', handleOrdersRefresh)
     window.addEventListener('box-types-refresh', handleBoxTypesRefresh)
     window.addEventListener('stats-refresh', handleStatsRefresh)
     window.addEventListener('orders-updated', handleOrdersUpdate)
+    window.addEventListener('box-types-updated', handleBoxTypesUpdate)
     window.addEventListener('users-refresh', handleUsersRefresh)
     
     return () => {
@@ -126,6 +132,7 @@ export default function AdminShell() {
       window.removeEventListener('box-types-refresh', handleBoxTypesRefresh)
       window.removeEventListener('stats-refresh', handleStatsRefresh)
       window.removeEventListener('orders-updated', handleOrdersUpdate)
+      window.removeEventListener('box-types-updated', handleBoxTypesUpdate)
       window.removeEventListener('users-refresh', handleUsersRefresh)
     }
   }, [])
@@ -168,7 +175,6 @@ export default function AdminShell() {
           <NavLink to="/admin/ai-recipes">AI Recipes</NavLink>
           <NavLink to="/admin/coupons">Mã giảm giá</NavLink>
           <NavLink to="/admin/blog">Blog</NavLink>
-          <NavLink to="/admin/payments">Thanh toán</NavLink>
         </nav>
 
         
