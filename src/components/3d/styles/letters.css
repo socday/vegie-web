@@ -152,6 +152,7 @@
 
   .instructions {
     padding: 0;
+    font-weight: 700;
   }
   .letters-left {
     display: flex;
@@ -162,4 +163,70 @@
     width: 100%;
   }
 
+  .number-btn {
+    display: none;
+  }
+
+  .letter-suggest-btn {
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  .number-button-group .mobile-continue-btn {
+    border: 2px solid #27600B;
+  }
+
+  .mobile-letter-active {
+    display: none;
+  }
+
+  .fruit-selection-right {
+    width: 85%;
+    margin: 0 auto;
+  }
+
+  .mobile-letter-top-bar {
+    width: 100%;
+    padding-left: 3rem;
+  }
+
+  .number-btn-active {
+    display: inline-flex;
+    width: auto;
+    height: auto;
+    padding: 0.5rem 1rem; 
+    border-color: #27600B;
+  }
+
+  .number-btn-active:active,
+  .number-btn-active:hover {
+    background-color: #27600B;
+  }
+
+  .number-btn.active {
+    background-color: #27600B;
+    color: white;
+  }
+
+  .number-button-group {
+    margin: 0;
+    margin-left: 2rem;
+  }
+
+  .lazy {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .instructions p {
+    font-size: 1rem;
+    width: fit-content;
+    text-align: center;
+  }
+
+  .instructions {
+    width:fit-content;
+    margin-bottom: 2rem;
+  }
 }
