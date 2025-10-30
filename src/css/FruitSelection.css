@@ -116,9 +116,8 @@
 }
 .product-item .cart-quantity span, 
 .product-item .cart-quantity-button {
-
-  font-size: 1.2rem;
-  height: 1.56rem;
+  font-size: 1.75rem;
+  height: 2rem;
   font-weight: 300;
   background-color: white;
   width:2rem;
@@ -284,8 +283,6 @@
     height: 400px;
   }
   
-  .product-selection-container {
-  }
   
   .instructions {
     width: 90%;
@@ -299,9 +296,7 @@
     width: 300px;
   }
   
-  .title-line {
-    
-  }
+  /* no title-line overrides for this breakpoint */
   
   .instructions {
     width: 90%;
@@ -316,5 +311,63 @@
   .display-area {
     width: 90%;
     height: 300px;
+  }
+
+  /* Reflow: put the box-display (right column) on top as full width,
+     hide the title block and move instructions and product list below it */
+  .main-container {
+    flex-direction: column;
+  }
+
+  /* Make box area full width and appear first */
+  .fruit-selection-right {
+    order: -1; /* appear before the left column */
+    width: 100%;
+    padding-right: 0;
+    margin-top: 0;
+  }
+
+  .box-display-area {
+    width: 100%;
+    height: auto;
+    padding-top: 0;
+    padding-bottom: 1rem;
+  }
+
+  .box-preview {
+    width: 100%;
+    min-height: 260px;
+    height: auto;
+  }
+
+  /* Hide the big title on mobile as requested */
+  .fruit-selection-title-display {
+    display: none;
+  }
+
+  /* Ensure instructions appear below the box and above the product list */
+  .fruit-selection-left {
+    width: 100%;
+    padding-left: 6%;
+    padding-right: 6%;
+    margin-top: 0.5rem;
+  }
+
+  .instructions {
+    margin-top: 0.75rem;
+    order: 0;
+  }
+
+  .product-selection-container {
+    width: 100%;
+    max-width: none;
+    margin-top: 0.75rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .product-list {
+    width: 100%;
+    max-width: 420px;
   }
 }

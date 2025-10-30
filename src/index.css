@@ -33,8 +33,17 @@ main {
   html {
     font-size: 14px;
   }
+
+  .app-layout {
+    min-height: 83vh;
+  }
 }
 
+@media (max-width: 768px) {
+  html {
+    font-size: 10.5px;
+  }
+}
 @media (max-width: 480px) {
   html {
     font-size: 10.5px;

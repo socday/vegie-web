@@ -1,0 +1,135 @@
+.mobile-continue-btn {
+    border: 1.5px solid #27600B;
+    padding: 0.5rem 2rem;
+    width: fit-content;
+}
+
+@media screen and (max-width: 767px) {
+  .gift-box-title {
+    font-size: 7.5rem;
+  }
+  .fruit-selection-left {
+    display: flex;
+
+  }
+  .product-selection-container {
+    background-color: white;
+    border: 0;
+  }
+
+  .product-list {
+    display:flex;
+    align-items: flex-end;
+    justify-content: start;
+    padding: 0;
+  }
+
+  .product-list .fruit-name{
+    border: 1.5px solid #27600B;
+    margin-right: auto;
+  }
+
+  .product-list .product-item {
+    gap:2rem;
+    width: 100%;
+  }
+
+  .product-item .cart-quantity span {
+    font-size: 1rem;
+  }
+
+  .product-item .cart-quantity {
+    width: 40%;
+  }
+
+  .fruit-name-mobile {
+    font-size: 1rem;
+    width: 55px;
+  }
+
+  .cart-decrease-style {
+    border-radius: 6px 0 0 6px;
+    padding:0 0.5rem;
+  }
+
+  .cart-increase-style {
+    border-radius: 0 6px 6px 0;
+    padding:0 0.5rem;
+  }
+
+  .quantity-fruit {
+    padding:0 1.5rem;
+  }
+
+  /* Mobile reflow: put box preview on top, hide title, and move instructions + product list below */
+  .main-container {
+    flex-direction: column;
+  }
+
+  .fruit-selection-right {
+    order: -1; /* appear before left column */
+    width: 100%;
+    padding-right: 0;
+    margin-top: 0;
+  }
+
+  .box-display-area {
+    width: 100%;
+    height: auto;
+    padding-top: 0;
+    padding-bottom: 1rem;
+  }
+
+  .box-preview {
+    width: 100%;
+    min-height: 220px;
+    height: auto;
+  }
+
+  .fruit-selection-title-display {
+    display: none;
+  }
+
+  .fruit-selection-left {
+    width: 100%;
+    padding-left: 6%;
+    padding-right: 6%;
+    margin-top: 0.5rem;
+  }
+
+  /* Instructions: tighter spacing and 1rem font */
+  .instructions {
+    font-size: 1rem;
+    line-height: 1.4;
+    color: #91CF43;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-top: 1rem;
+  }
+
+  .instructions p {
+    padding: 0;
+    
+    white-space: normal; /* allow wrapping on small screens */
+    font-size: 1rem;
+  }
+
+  .product-selection-container {
+    width: 100%;
+    max-width: none;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    border: 0;
+  }
+
+  .product-list {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+  }
+}

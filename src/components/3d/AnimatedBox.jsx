@@ -129,4 +129,3 @@ function AnimatedBox({ boxNumber, isClosed, onClick, onLoaded, isAnimating, onAn
 }
 
 export default AnimatedBox;
-

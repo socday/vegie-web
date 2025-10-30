@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../css/StageNotification.css';
+import './styles/StageNotification.css';
 import mascot from '../../assets/images/mascot-smile.png';
 
 export default function StageNotification({ type }) {
@@ -55,7 +55,7 @@ export default function StageNotification({ type }) {
     if (isOrderSuccess)
       return 'Sau khi xác nhận thông tin, đơn hàng của bạn sẽ được nhận 100 điểm.';
     if (isRegisterSuccess)
-      return 'Tài khoản của bạn đã được tạo thành công. Hãy đăng nhập để tiếp tục.';
+      return 'Tài khoản của bạn đã được tạo thành công';
     if (isRestorePassword)
       return 'Mật khẩu của bạn đã được đặt lại. Hãy đăng nhập với mật khẩu mới.';
     if (isProfileUpdateSuccess)

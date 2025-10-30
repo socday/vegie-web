@@ -112,3 +112,17 @@
   content:"";
   width: 100%;
 }
+
+@media screen and (max-width: 787px) {
+  .stage-notification-header h2 {
+    font-size: 2.5rem;
+  }
+
+  .stage-notification-title p {
+    font-size: 1.2rem;
+  }
+
+  .stage-image-display .mascot-image{
+    width: 250px;
+  }
+}
