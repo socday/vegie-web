@@ -329,4 +329,8 @@
   .box-btn::after {
     background: #27600B;
   }
+
+  .mobile-continue-btn {
+    margin-top: 1rem;
+  }
 }

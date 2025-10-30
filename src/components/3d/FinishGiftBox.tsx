@@ -81,8 +81,8 @@ export default function FinishGiftBox() {
         {/* LEFT SIDE */}
 
         <div className="fnb-left">
-          <div className="fruit-selection-title-display">
-            <h1 className="finish-gift-box-title" style={{ color: "#91CF43" }}>
+          <div className="finish-selection-title-display">
+            <h1 className="finish-giftbox-title" >
               Hoàn thành
               <br />
               Gift Box

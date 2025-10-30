@@ -108,7 +108,7 @@ export default function Letters() {
             <div className="title-line"></div>
           </div>
 
-          <div className="instructions">
+          <div className="instructions-letters">
             {isAiLetter ? (
               <>
                 <p>Bạn không giỏi viết thư ?</p>
@@ -211,7 +211,7 @@ export default function Letters() {
             <div className="title-line"></div>
           </div>
           <div className="lazy">
-            <div className="instructions">
+            <div className="instructions-letters">
                   <p>Chọn 1 mẫu thư nhé</p>
             </div>
             <div className="number-button-group">

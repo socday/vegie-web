@@ -1,4 +1,4 @@
-.finish-gift-box-title {
+.finish-giftbox-title {
   margin: 0;
   padding: 0;
   text-transform: none;
@@ -10,6 +10,7 @@
   white-space: normal; 
   word-break: break-word;
   margin-bottom: 2rem;
+  color: #91CF43;
 }
 
 .finish-giftbox-container {
@@ -63,4 +64,31 @@
   max-width: 500px;
   height: auto;
   object-fit: contain;
+}
+
+@media screen and (max-width: 787px) {
+  .finish-giftbox-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fnb-left, .fnb-right {
+    width: 100%;
+    padding: 2rem;
+  }
+
+  .fnb-right {
+    display: none;
+  }
+
+  .fnb-left .finish-giftbox-title {
+    display: flex;
+    background-color: transparent;
+    color:#27600B;
+    font-size: 6rem;
+  }
+
+  .fnb-left .title-line {
+    border-color: #27600B;
+  }
 }
