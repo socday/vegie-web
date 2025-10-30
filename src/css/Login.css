@@ -105,13 +105,24 @@
   position: relative;
 }
 
+/* ensure input leaves space for the eye button */
+.password-group input {
+  padding-right: 2.6rem;
+}
+
+/* place the eye inside the input vertically centered on the right */
 .show-password {
   position: absolute;
-  bottom: -1.8rem; /* below the input */
-  right: 0.8rem; /* aligned to the right */
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
   cursor: pointer;
   color: #27600B;
   font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1em;
 }
 
 .show-password:hover {

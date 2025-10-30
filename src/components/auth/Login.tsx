@@ -86,7 +86,7 @@ const Login = () => {
               />
             </div>
 
-            <div className="form-group">
+          <div className="form-group password-group">
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
@@ -96,14 +96,13 @@ const Login = () => {
                 required
               />
               <span
-              onClick={() => setShowPassword(!showPassword)}
-              className="show-password"
-            >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+                onClick={() => setShowPassword(!showPassword)}
+                className="show-password"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />} 
+              </span>
             </div>
-
+{error && <p style={{ color: "red" }}>{error}</p>}
               
             
 
