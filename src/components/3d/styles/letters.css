@@ -134,3 +134,32 @@
   margin-right: auto;
   margin-left: 0;
 } */
+
+@media screen and (max-width: 787px) {
+  .letters-right {
+    order: 0;
+  }
+
+  .letter-title-display{
+    display:flex;
+  }
+
+  .letter-title-display div, 
+  .letter-title-display h1{
+    color: #27600B;
+    border-color: #27600B;
+  }
+
+  .instructions {
+    padding: 0;
+  }
+  .letters-left {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .letter-input-container {
+    width: 100%;
+  }
+
+}

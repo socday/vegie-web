@@ -159,7 +159,7 @@ export function startSilentRefresh() {
   if (!payload?.exp) return;
 
   const expiresInMs = payload.exp * 1000 - Date.now();
-  const refreshBeforeMs = expiresInMs - 10_000; // refresh 10s before expiry
+  const refreshBeforeMs = expiresInMs - 60_000; // refresh 60s before expiry
 
   if (refreshBeforeMs <= 0) return;
 

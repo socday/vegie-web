@@ -88,9 +88,9 @@ export default function Letters() {
     <div className="fruit-selection-page">
       <div className="main-container">
         {/* LEFT SIDE */}
-        <div className="fruit-selection-left">
-          <div className="fruit-selection-title-display">
-            <h1 className="gift-box-title" style={{ color: "#91CF43" }}>
+        <div className="fruit-selection-left letters-left">
+          <div className="fruit-selection-title-display letter-title-display">
+            <h1 className="gift-box-title letter-title">
               {isAiLetter ? "AI" : ""} Letter
             </h1>
             <div className="title-line"></div>
@@ -184,7 +184,7 @@ export default function Letters() {
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="fruit-selection-right">
+        <div className="fruit-selection-right letters-right">
           <div className="letter-display-area">
             <img
               src={letters[selectedLetter]}

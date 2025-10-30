@@ -91,9 +91,7 @@ function AppContent() {
           <Route path='/blind-box' element={<BlindBox />} />
 
           <Route path='/box-3d' element={
-            <PrivateRoute>
               <Box3D />
-            </PrivateRoute>
           } />
 
           <Route path='/profile-test' element={<Profile />} />
