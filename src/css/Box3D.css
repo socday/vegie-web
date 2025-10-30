@@ -317,6 +317,9 @@
   .box-btn{
     display: flex;
     position: relative;
+    width:auto;
+    height: auto;
+    padding: 0.5rem 1rem;
   }
   .box-btn.active{
     background-color: #27600B;

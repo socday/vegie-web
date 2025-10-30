@@ -84,7 +84,7 @@ export default function Box3D() {
                 </button>
               </div>
             </div>
-            <button className="d-btn d-btn-font continue-btn-mobile" onClick={handleContinue}>
+            <button className="d-btn d-btn-font mobile-continue-btn" onClick={handleContinue}>
               Tiếp tục
             </button>
           </div>
