@@ -5,6 +5,7 @@ import { useMediaQuery } from 'react-responsive';
 import { loginUser } from "../../router/authApi";
 import LoginRegisterForm from "./LoginRegisterForm";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { extractErrorMessage } from "../utils/extractErrorMessage";
 
 
 const Login = () => {
@@ -54,7 +55,7 @@ const Login = () => {
       }
     } catch (err) {
       console.error("Login error:", err);
-      setError("");
+      setError(extractErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -100,11 +101,11 @@ const Login = () => {
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
+            {error && <p style={{ color: "red" }}>{error}</p>}
             </div>
 
               
             
-            {error && <p style={{ color: "red" }}>{error}</p>}
 
             <div className="form-actions">
               <button type="submit" className="d-btn-font d-btn" disabled={loading}>

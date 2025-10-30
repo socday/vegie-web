@@ -129,6 +129,7 @@ export async function updateCustomer(
         avatar: File | null;
       }
 ): Promise<Customer> {
+  console.log("DANG UPDATE CUSTOMER");
   const token = localStorage.getItem("accessToken");
   const isFormData = payload instanceof FormData;
 

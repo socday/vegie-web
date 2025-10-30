@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import "./styles/ReviewOrderForm.css";
 import { ReviewOrder } from "../../../../router/types/orderResponse";
 import { reviewOrder } from "../../../../router/orderApi";
+import { extractErrorMessage } from "../../../utils/extractErrorMessage";
 
 export default function ReviewOrderForm({ orderId }: { orderId: string }) {
   const [searchParams] = useSearchParams();
@@ -34,9 +35,9 @@ export default function ReviewOrderForm({ orderId }: { orderId: string }) {
       const response = await reviewOrder(payload);
       console.log("Review saved:", response);
       setSuccess(true);
-    } catch (err: any) {
+    } catch (err) {
       console.error("Review submission failed:", err);
-      setError(err.message || "Gửi đánh giá thất bại.");
+      setError(extractErrorMessage(err) || "Gửi đánh giá thất bại.");
     } finally {
       setLoading(false);
     }

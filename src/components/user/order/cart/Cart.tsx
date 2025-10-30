@@ -5,6 +5,7 @@ import { cartCheckout, getCart, removeCartItem, updateCartItem } from "../../../
 import { CartResponse, Item } from "../../../../router/types/cartResponse";
 import CartCheckout from "./CartCheckout";
 import WaveText from "../../../lazy/WaveText";
+import { extractErrorMessage } from "../../../utils/extractErrorMessage";
 
 export default function Cart() {
   const [items, setItems] = useState<Item[]>([]);
@@ -34,10 +35,12 @@ export default function Cart() {
       console.log("Removing item with cartId:", cartId);
       await removeCartItem(userId, cartId);
       setItems(prev => prev.filter(item => item.cartId !== cartId)); // update UI instantly
+      alert("Xoá sản phẩm thành công!");
       // optionally re-fetch if server recalculates totals
       // await fetchCart();
     } catch (err) {
       console.error("Failed to remove item:", err);
+      alert(extractErrorMessage(err) || "Xoá sản phẩm thất bại.");
     }
   }; 
 

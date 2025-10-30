@@ -3,6 +3,7 @@ import { useMediaQuery } from "react-responsive";
 import "../styles/Profile.css";
 import { Customer } from "../../../../router/types/authResponse";
 import { getCustomer, updateCustomer } from "../../../../router/authApi";
+import { extractErrorMessage } from "../../../utils/extractErrorMessage";
 
 type ProfileFormProps = {
   onChangePassword: () => void;
@@ -24,6 +25,20 @@ export default function ProfileForm({ onChangePassword }: ProfileFormProps) {
   return vnPhoneRegex.test(phone);
   };
 
+  const isCustomerChanged = () => {
+  if (!customer || !originalCustomer) return false;
+
+  // Compare basic fields
+  const fields: (keyof Customer)[] = ["fullName", "phone", "address"];
+  for (let field of fields) {
+    if (customer[field] !== originalCustomer[field]) return true;
+  }
+
+  // Check if a new file is selected
+  if (selectedFile) return true;
+
+  return false;
+};
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -43,7 +58,7 @@ export default function ProfileForm({ onChangePassword }: ProfileFormProps) {
       const mappedCustomer: Customer = {
         firstName: user.firstName,
         lastName: user.lastName,
-        fullName: user.fullName, 
+        fullName: user.firstName, 
         email: user.email,
         phone: user.phone,
         address: user.address,
@@ -71,6 +86,10 @@ export default function ProfileForm({ onChangePassword }: ProfileFormProps) {
     alert("Số điện thoại không hợp lệ");
   return;
   }
+  if (!isCustomerChanged()) {
+    alert("Dữ liệu chưa thay đổi!");
+    return; // don't call API
+  }
   try {
     const formData = new FormData();
     formData.append("firstName", customer.fullName);
@@ -83,12 +102,14 @@ export default function ProfileForm({ onChangePassword }: ProfileFormProps) {
     }
 
     const updated = await updateCustomer(formData); // updateCustomer must send multipart
+    console.log("UPDATED DATA LA: ", updated);
     setCustomer(updated);
     setOriginalCustomer(updated);
+    // window.location.reload();
     alert("Cập nhật thành công!");
   } catch (err) {
     console.error("Update failed:", err);
-    alert("Cập nhật thất bại!");
+    alert(`Cập nhật thất bại! ${extractErrorMessage(err)}` );
   }
 };
 

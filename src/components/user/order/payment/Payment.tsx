@@ -6,6 +6,7 @@ import { cartCheckout, getCart } from "../../../../router/cartApi";
 import { CartResponse, Item } from "../../../../router/types/cartResponse";
 import { useNavigate, useLocation } from "react-router-dom";
 import { createOrder, createWeeklyPackageOrder, getPaymentLink } from "../../../../router/orderApi";
+import { extractErrorMessage } from "../../../utils/extractErrorMessage";
 
 export default function Payment({ passedCart }: { passedCart?: Item[] }) {
   const [items, setItems] = useState<Item[]>([]);
@@ -151,7 +152,7 @@ export default function Payment({ passedCart }: { passedCart?: Item[] }) {
     }
   } catch (error) {
     console.error("Checkout failed:", error);
-    alert("Thanh toán thất bại, vui lòng thử lại.");
+    alert(extractErrorMessage(error) || "Thanh toán thất bại, vui lòng thử lại.");
   }
 };
 
