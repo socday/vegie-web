@@ -18,9 +18,8 @@ export default function ProfileSidebar() {
         const response = await getCustomer();
         const user = response.data ?? response;
         const mappedCustomer: Customer = {
-          firstName: user.firstName,
-          lastName: user.lastName,
-          fullName: `${user.firstName} ${user.lastName}`,
+
+          fullName: user.fullName,
           email: user.email,
           phone: user.phone,
           address: user.address,

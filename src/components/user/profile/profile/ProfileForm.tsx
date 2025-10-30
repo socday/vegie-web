@@ -56,9 +56,8 @@ export default function ProfileForm({ onChangePassword }: ProfileFormProps) {
       const user = response.data ?? response;
 
       const mappedCustomer: Customer = {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        fullName: user.firstName, 
+
+        fullName: user.fullName, 
         email: user.email,
         phone: user.phone,
         address: user.address,
