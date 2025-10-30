@@ -105,7 +105,7 @@ export default function ProfileForm({ onChangePassword }: ProfileFormProps) {
     console.log("UPDATED DATA LA: ", updated);
     setCustomer(updated);
     setOriginalCustomer(updated);
-    // window.location.reload();
+    window.location.reload();
     alert("Cập nhật thành công!");
   } catch (err) {
     console.error("Update failed:", err);
