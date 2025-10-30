@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import OpenBox3DViewer from './OpenBox3DViewer';
 import { useMediaQuery } from 'react-responsive';
-import './styles/FruitSelection.css';
+import "../../css/FruitSelection.css";
 type FruitType = 'Cà rốt' | 'Súp lơ' | 'Bắp' | 'Cà chua';
 
 interface FruitsState {
