@@ -1,9 +1,8 @@
 import React from "react";
 import "../styles/BoxSelector.css";
-import { useNavigate } from "react-router-dom"; // 👈 import thêm
-
+import { useNavigate } from "react-router-dom";
 export default function BoxSelector() {
-      const navigate = useNavigate(); // 👈 khai báo hook để dùng navigate
+      const navigate = useNavigate();
     const handleGiftBoxClick = () => {
     navigate('/fruit-selection');
   };
@@ -72,12 +71,6 @@ export default function BoxSelector() {
           Quà cá nhân hoá được tự ý thiết kế theo dạng 3D
         </span>
       </button>
-      <br />
-      <br />
-      <br />
-       <br />
-      <br />
-      <br />
       </div>
     </>
   );

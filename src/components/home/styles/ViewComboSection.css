@@ -7,10 +7,10 @@
 }
 
 .view-combo-single-card {
-    width:90%;
-    height: 30rem;
-    background-color: #27600B;
-    border-radius: 60px;
+  width:90%;
+  height: 30rem;
+  background-color: #27600B;
+  border-radius: 60px;
 }
 
 .view-combo-single {
@@ -27,6 +27,7 @@
   border-radius: 3rem;
   padding: 2.8rem;
   gap: 3rem;
+  position: relative; /* needed for absolute positioned mobile button */
   
 }
 
@@ -83,4 +84,110 @@ ul {
 li {
   margin-bottom: 0.3rem;
   line-height: 1.5;
+}
+
+@media screen and (max-width: 767px) {
+  .view-combo-single {
+    flex-direction: column;
+    justify-content: start;
+  }
+
+  .view-combo-single-card {
+    margin-top: 10vh;
+    flex-direction: column;
+    padding: 3rem;
+  }
+
+  .divider {
+    display: none;
+  }
+  /* Mobile typography adjustments requested */
+  .view-combo-single h1 {
+    font-size: 3.25rem;
+  }
+
+  .view-combo-single h2 {
+    font-size: 2rem;
+  }
+
+  .view-combo-single p,
+  .view-combo-single .subtitle {
+    font-size: 0.875rem;
+  }
+
+  /* Mobile toggle button: position and animate via transform for smooth slide */
+  .mobile-toggle-button {
+    position: absolute;
+    bottom: 32px;
+    left: 32px; /* numeric origin so transform can animate */
+    display: flex;
+    width: fit-content;
+    padding: 0.5rem 3rem;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    color: #27600B;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+    cursor: pointer;
+    transition: transform 0.28s ease;
+    transform: translateX(0);
+    will-change: transform;
+    z-index: 10;
+  }
+
+  .mobile-toggle-button .arrow {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  /* mobile sliding panels */
+  .mobile-panel {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    transition: transform 0.36s ease;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .mobile-panel .panel-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3rem; /* match card padding on mobile */
+    box-sizing: border-box;
+  }
+
+  /* initial positions */
+  .mobile-panel.left { transform: translateX(0); }
+  .mobile-panel.right { transform: translateX(calc(100% - 32px)); }
+
+  /* when the card has .show-right, slide left out and bring right in */
+  .view-combo-single-card.show-right .mobile-panel.left { transform: translateX(-100%); }
+  .view-combo-single-card.show-right .mobile-panel.right { transform: translateX(0); }
+
+  /* make sure panels overlay on top of card background */
+  .view-combo-single-card { overflow: hidden; }
+
+  .view-combo-single-left p,
+  .panel-inner p,
+  .view-combo-single-left ul,
+  .view-combo-single-left li,
+  .view-combo-single-right ul,
+  .view-combo-single-right li,
+  .panel-inner li {
+    color: white;
+    font-size: 0.875rem;
+  }
+  .panel-inner strong {
+    font-size: 1rem;
+  }
 }
