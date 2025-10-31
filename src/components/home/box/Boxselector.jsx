@@ -28,7 +28,7 @@ export default function BoxSelector() {
         >
           Giao hàng tận nơi
         </span>
-        <span 
+        <span
             className="small-text"
           style={{
             color: "#27600B",
@@ -36,6 +36,9 @@ export default function BoxSelector() {
         >
           Được cung cấp thực đơn AI <br/>Chat với bé cừu AI dinh dưỡng về các thông tin thực phẩm rau củ quả
         </span>
+        <button className="detail-btn" onClick={(e) => { e.stopPropagation(); navigate("/blind-box"); }}>
+          <span>Xem chi tiết</span>
+        </button>
       </button>
       <button className="giftbox-btn" onClick={handleGiftBoxClick}>
         <span
@@ -70,6 +73,9 @@ export default function BoxSelector() {
         >
           Quà cá nhân hoá được tự ý thiết kế theo dạng 3D
         </span>
+        <button className="start-btn" onClick={(e) => { e.stopPropagation(); handleGiftBoxClick(); }}>
+          <span>Bắt đầu</span>
+        </button>
       </button>
       </div>
     </>

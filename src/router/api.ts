@@ -16,6 +16,7 @@ export const api = axios.create({
 // === Token Refresh State ===
 let isRefreshing = false;
 let refreshSubscribers: ((token: string) => void)[] = [];
+let silentRefreshTimer: NodeJS.Timeout | null = null;
 
 // === Helper: Notify subscribers when refresh done ===
 function onRefreshed(newToken: string) {
@@ -73,8 +74,10 @@ api.interceptors.response.use(
 
         if (!refreshToken) {
           console.warn("🚫 No refresh token — forcing logout");
-          localStorage.clear();
-          window.location.href = "/login";
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          localStorage.removeItem("userId");
+          window.location.href = "/dang-nhap";
           return Promise.reject(error);
         }
 
@@ -97,7 +100,7 @@ api.interceptors.response.use(
             refreshToken,
           });
 
-          const { accessToken, refreshToken: newRefresh } = refreshRes.data.data;
+          const { accessToken, refreshToken: newRefresh, id } = refreshRes.data.data;
           console.log("✅ Token refreshed successfully:", {
             newAccessToken: accessToken,
             newRefreshToken: newRefresh,
@@ -105,7 +108,11 @@ api.interceptors.response.use(
 
           localStorage.setItem("accessToken", accessToken);
           localStorage.setItem("refreshToken", newRefresh);
+          if (id) localStorage.setItem("userId", id);
           api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+
+          // Dispatch event to notify other tabs and components
+          window.dispatchEvent(new Event("token-update"));
 
           isRefreshing = false;
           onRefreshed(accessToken);
@@ -115,8 +122,10 @@ api.interceptors.response.use(
         } catch (refreshError) {
           isRefreshing = false;
           console.error("❌ Token refresh failed:", refreshError);
-          localStorage.clear();
-          window.location.href = "/login";
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          localStorage.removeItem("userId");
+          window.location.href = "/dang-nhap";
           return Promise.reject(refreshError);
         }
       }
@@ -152,6 +161,12 @@ function decodeJWT(token: string) {
 
 // === Background Silent Refresh (pre-expiry) ===
 export function startSilentRefresh() {
+  // Clear any existing timer to prevent duplicates
+  if (silentRefreshTimer) {
+    clearTimeout(silentRefreshTimer);
+    silentRefreshTimer = null;
+  }
+
   const token = localStorage.getItem("accessToken");
   if (!token) return;
 
@@ -159,16 +174,67 @@ export function startSilentRefresh() {
   if (!payload?.exp) return;
 
   const expiresInMs = payload.exp * 1000 - Date.now();
+
+  // If token expires in less than 60s, refresh immediately
+  if (expiresInMs <= 60_000) {
+    console.log("⚡ Token expiring soon, refreshing immediately");
+
+    // Refresh immediately (no setTimeout)
+    (async () => {
+      if (isRefreshing) return;
+      isRefreshing = true;
+
+      try {
+        const refreshToken = localStorage.getItem("refreshToken");
+        if (!refreshToken) {
+          isRefreshing = false;
+          return;
+        }
+
+        const refreshRes = await axios.post(`${API_URL}/Auth/refresh-token`, {
+          refreshToken,
+        });
+
+        const { accessToken, refreshToken: newRefresh, id } = refreshRes.data.data;
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", newRefresh);
+        if (id) localStorage.setItem("userId", id);
+        api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+        window.dispatchEvent(new Event("token-update"));
+
+        isRefreshing = false;
+        onRefreshed(accessToken);
+
+        console.log("✅ Immediate refresh success");
+        startSilentRefresh(); // schedule next
+      } catch (error) {
+        isRefreshing = false;
+        console.error("❌ Immediate refresh failed:", error);
+        setTimeout(() => startSilentRefresh(), 2000);
+      }
+    })();
+
+    return;
+  }
+
   const refreshBeforeMs = expiresInMs - 60_000; // refresh 60s before expiry
-
-  if (refreshBeforeMs <= 0) return;
-
   console.log(`🕒 Silent refresh scheduled in ${Math.floor(refreshBeforeMs / 1000)}s`);
 
-  setTimeout(async () => {
+  silentRefreshTimer = setTimeout(async () => {
+    // Check if refresh already in progress
+    if (isRefreshing) {
+      console.log("⏭️ Refresh already in progress, skipping silent refresh");
+      return;
+    }
+
+    isRefreshing = true; // Set flag to prevent concurrent refreshes
+
     try {
       const refreshToken = localStorage.getItem("refreshToken");
-      if (!refreshToken) return;
+      if (!refreshToken) {
+        isRefreshing = false;
+        return;
+      }
 
       console.log("🔁 Performing silent token refresh...");
 
@@ -176,17 +242,38 @@ export function startSilentRefresh() {
         refreshToken,
       });
 
-      const { accessToken, refreshToken: newRefresh } = refreshRes.data.data;
+      const { accessToken, refreshToken: newRefresh, id } = refreshRes.data.data;
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", newRefresh);
+      if (id) localStorage.setItem("userId", id);
       api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+
+      // Dispatch event to notify other tabs and components
+      window.dispatchEvent(new Event("token-update"));
+
+      isRefreshing = false; // Reset flag
+      onRefreshed(accessToken); // Notify any waiting requests
 
       console.log("✅ Silent refresh success");
       startSilentRefresh(); // schedule next
     } catch (error) {
+      isRefreshing = false; // Reset flag on error
       console.error("❌ Silent refresh failed:", error);
-      localStorage.clear();
-      window.location.href = "/login";
+
+      // Retry once after 2 seconds instead of immediate logout
+      setTimeout(() => {
+        console.log("🔄 Retrying silent refresh...");
+        startSilentRefresh();
+      }, 2000);
     }
   }, refreshBeforeMs);
+}
+
+// === Stop Silent Refresh (cleanup on logout) ===
+export function stopSilentRefresh() {
+  if (silentRefreshTimer) {
+    clearTimeout(silentRefreshTimer);
+    silentRefreshTimer = null;
+    console.log("🛑 Silent refresh timer cleared");
+  }
 }

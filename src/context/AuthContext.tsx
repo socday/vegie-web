@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
-import { startSilentRefresh } from "../router/api";
+import { startSilentRefresh, stopSilentRefresh } from "../router/api";
 import { getCustomer } from "../router/authApi";
 
 type AuthContextType = {
@@ -53,7 +53,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const logout = useCallback(() => {
-    localStorage.clear();
+    stopSilentRefresh(); // Clean up timer
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("userId");
     setUser(null);
     setIsAuthenticated(false);
     window.dispatchEvent(new Event("auth-change"));

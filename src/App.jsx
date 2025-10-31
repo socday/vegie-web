@@ -39,8 +39,8 @@ import StageNotificationWrapper from './components/notifications/StageNotificati
 import ReviewOrderForm from './components/user/profile/order/ReviewOrderForm.tsx'
 import { OrderProvider } from './context/OrderContext.tsx'
 import RetailPackage from './components/home/subcription/retailpackage.tsx'
-import { startSilentRefresh } from "./router/api";
 import { AuthProvider } from './context/AuthContext'
+
 function AppContent() {
   const location = useLocation()
   const [authTick, setAuthTick] = useState(0)
@@ -63,9 +63,7 @@ function AppContent() {
     return () => window.removeEventListener('auth-change', onAuthEvent)
   }, [])
 
-  useEffect(() => {
-    startSilentRefresh();
-  }, []);
+  // Silent refresh is now handled in AuthContext to avoid duplicate calls
   return (
     <>
     <AuthProvider>

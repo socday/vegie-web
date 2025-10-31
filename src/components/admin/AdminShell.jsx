@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { checkAuth } from '../../router/authApi'
+import { getCustomer } from '../../router/authApi'
 import { getAllBoxTypes, getAllOrders, getStatistics, getUsers } from '../../router/adminApi'
 import './styles/admin.css'
 
@@ -18,16 +18,22 @@ export default function AdminShell() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    checkAuth().then((res) => {
-      const data = res?.user?.data ?? res?.user ?? {}
-      setAdminUser({
-        firstName: data.firstName ?? '',
-        lastName: data.lastName ?? '',
-        email: data.email ?? '',
-        roles: data.roles ?? ['ADMIN'],
-      })
-    }).catch(() => {})
-  }, [])
+    getCustomer().then((res) => {
+      if (res?.isSuccess && res?.data) {
+        const data = res.data
+        const [firstName = '', lastName = ''] = (data.fullName || '').split(' ')
+        setAdminUser({
+          firstName: firstName,
+          lastName: lastName || firstName, // If no last name, use first name
+          email: data.email ?? '',
+          roles: ['ADMIN'], // Default to ADMIN for admin panel
+        })
+      }
+    }).catch(() => {
+      // If not authenticated, redirect to login
+      navigate('/dang-nhap')
+    })
+  }, [navigate])
 
   const loadData = async () => {
     // Tính toán ngày tháng hiện tại và tháng trước
