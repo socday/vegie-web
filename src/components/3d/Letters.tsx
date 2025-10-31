@@ -4,9 +4,9 @@ import "../../css/FruitSelection.css";
 import "./styles/letters.css";
 
 // Import all images statically
-import letter1 from "../../assets/images/letter1.png";
-import letter2 from "../../assets/images/letter2.png";
-import letter3 from "../../assets/images/letter3.png";
+import letter1 from "../../assets/images/webp/letter1.webp";
+import letter2 from "../../assets/images/webp/letter2.webp";
+import letter3 from "../../assets/images/webp/letter3.webp";
 import { getAiLetterSuggestion } from "../../router/boxApi";
 import { useMediaQuery } from "react-responsive";
 

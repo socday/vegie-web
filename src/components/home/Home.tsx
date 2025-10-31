@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 
-import mascotSmile from '../../assets/images/mascot-smile.png';
+import mascotSmile from '../../assets/images/webp/mascot-smile.webp';
 import brandLogo from '../../assets/logo-brand.png';
-import vegeBefore from '../../assets/images/Homepage/VegeBefore.png';
-import vegeAfter from '../../assets/images/Homepage/VegeAfter.png';
-import stars from '../../assets/images/Homepage/Stars.png';
-import sheep from '../../assets/images/Homepage/Sheep.png';
-import mouthBefore from '../../assets/images/Homepage/MouthBefore.png';
-import mouthAfter from '../../assets/images/Homepage/MouthAfter.png';
-import rightFoot from '../../assets/images/Homepage/RightFoot.png';
-import rightHand from '../../assets/images/Homepage/RightHand.png';
-import monTronBack from '../../assets/images/Homepage/MonTronNgauNhienBack.png';
-import monTronFront from '../../assets/images/Homepage/MonTronNgauNhienFront.png';
-import tronViAnBack from '../../assets/images/Homepage/TronViAnBack.png';
-import tronViAnFront from '../../assets/images/Homepage/TronViAnFront.png';
+import vegeBefore from '../../assets/images/webp/Homepage/VegeBefore.webp';
+import vegeAfter from '../../assets/images/webp/Homepage/VegeAfter.webp';
+import stars from '../../assets/images/webp/Homepage/Stars.webp';
+import sheep from '../../assets/images/webp/Homepage/Sheep.webp';
+import mouthBefore from '../../assets/images/webp/Homepage/MouthBefore.webp';
+import mouthAfter from '../../assets/images/webp/Homepage/MouthAfter.webp';
+import rightFoot from '../../assets/images/webp/Homepage/RightFoot.webp';
+import rightHand from '../../assets/images/webp/Homepage/RightHand.webp';
+import monTronBack from '../../assets/images/webp/Homepage/MonTronNgauNhienBack.webp';
+import monTronFront from '../../assets/images/webp/Homepage/MonTronNgauNhienFront.webp';
+import tronViAnBack from '../../assets/images/webp/Homepage/TronViAnBack.webp';
+import tronViAnFront from '../../assets/images/webp/Homepage/TronViAnFront.webp';
 import mascot1 from '../../assets/mascot1.png';
 import { useNavigate } from 'react-router-dom';
 import './styles/Home.css';
@@ -191,7 +191,6 @@ export default function Home() {
           </div>
           </>}
         </section>
-        loading= "lazy"
       
       <div className='normal-spacing'></div> 
         <section className='intro-section'>
@@ -201,7 +200,6 @@ export default function Home() {
                   <h1 className="head1">
                     Vegie
                     Care</h1>
-                    loading= "lazy"
                 </div>
 
                <div className="intro-actions">

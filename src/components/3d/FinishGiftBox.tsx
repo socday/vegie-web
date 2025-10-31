@@ -3,8 +3,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "../../css/FruitSelection.css";
 import "./styles/letters.css";
 import "./styles/FinishGiftBox.css";
-import giftbox from "../../assets/images/mascot-giftbox-01.png"; // ✅ Correct image import
-import backgroundStar from "../../assets/images/giftbox-01.png";
+import giftbox from "../../assets/images/webp/mascot-giftbox-01.webp"; // ✅ Correct image import
+import backgroundStar from "../../assets/images/webp/giftbox-01.webp";
 import { createGiftBoxOrder } from "../../router/orderApi";
 import { addToCart } from "../../router/cartApi";
 

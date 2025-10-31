@@ -2,8 +2,8 @@
        width: 1306px;
       height: 445.01px;
       background-color: #D0E9FE;
-      background-image: url('../../../assets/images/DetoxBox.png'); /* Đường dẫn đến ảnh nền */
-      background-image: url('../../../assets/images/DetoxBox.png');
+      background-image: url('../../../assets/images/webp/DetoxBox.webp'); /* Đường dẫn đến ảnh nền */
+      background-image: url('../../../assets/images/webp/DetoxBox.webp');
       background-repeat: no-repeat;
       background-size: cover; /* hoặc contain nếu muốn toàn bộ ảnh hiển thị */
       background-position: center;
@@ -25,7 +25,7 @@
         margin-top: 70px;
 
       background-color: #91CF43;
-      background-image: url('../../../assets/images/Gift-Box.png'); /* Đường dẫn đến ảnh nền */
+      background-image: url('../../../assets/images/webp/Gift-Box.webp'); /* Đường dẫn đến ảnh nền */
       background-repeat: no-repeat;
       background-size: cover; /* hoặc contain nếu muốn toàn bộ ảnh hiển thị */
       background-position: center;

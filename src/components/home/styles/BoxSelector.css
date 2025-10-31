@@ -2,7 +2,7 @@
   width: 1306px;
   height: 445.01px;
   background-color: #D0E9FE;
-  background-image: url('../../../assets/images/Blind-Box.png'); /* Corrected path */
+  background-image: url('../../../assets/images/webp/Blind-Box.webp'); /* Corrected path */
   background-repeat: no-repeat;
   background-size: cover; /* hoặc contain nếu muốn toàn bộ ảnh hiển thị */
   background-position: center;
@@ -77,3 +77,4 @@
   }
   
 }
+

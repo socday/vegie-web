@@ -23,6 +23,10 @@ const PasswordRecovery: React.FC = () => {
 
     try {
       const res = await forgotPassword(email);
+      if (res.success !== true) {
+        setError(`Không thể khôi phục mật khẩu. Vui lòng thử lại. ${extractErrorMessage(res.message)}`);
+        return;
+      }
       navigate('/noti/restore-password');
     } catch (err) {
       setError(`Không thể khôi phục mật khẩu. Vui lòng thử lại. ${extractErrorMessage(err)}`);
@@ -44,7 +48,7 @@ const PasswordRecovery: React.FC = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="recovery-form">
-            <div className="form-group">
+            <div className="form-group pr-form-group">
               <input
                 type="text"
                 name="email"

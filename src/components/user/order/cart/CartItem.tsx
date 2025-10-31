@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../cart/styles/Cart.css";
-import BlindBoxImage from "../../../../assets/images/blind-box-object.png";
+import BlindBoxImage from "../../../../assets/images/webp/blind-box-object.webp";
 
 type CartItemProps = {
   id: string;
