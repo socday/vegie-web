@@ -2,6 +2,7 @@ import axios from "axios";
 import { api } from "./api";
 import { changePasswordRequest, Customer, GetCustomerResponse, LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from "./types/authResponse";
 import { useNavigate } from "react-router-dom";
+import { AttachFnType } from "@react-three/fiber";
 
 export async function loginUser(payload: LoginRequest): Promise<LoginResponse> {
   const res = await api.post<LoginResponse>("/Auth/login", payload, {
@@ -103,7 +104,16 @@ async function tryRefreshToken(token: string, refreshToken: string) {
 
 
   export async function forgotPassword(email: string): Promise<any> {
-    
+    let token = localStorage.getItem("accessToken");
+    const res = await api.post<any> ("/Auth/forgot-password",
+      { email }, 
+      {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+    });
+    return res.data;
   }
 
   export async function getCustomer (): Promise<GetCustomerResponse> {

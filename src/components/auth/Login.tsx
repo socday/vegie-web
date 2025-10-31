@@ -116,7 +116,7 @@ const Login = () => {
                  <span>Đăng ký</span>
                </Link>
               </>}
-              <Link to="/khoi-phuc-mat-khau" className="d-btn-font d-btn">
+              <Link to="/khoi-phuc-mat-khau" className="d-btn-font d-btn lr-link-btn">
                 <span>Quên mật khẩu</span>
               </Link>
                 
