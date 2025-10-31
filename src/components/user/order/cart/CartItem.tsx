@@ -56,18 +56,19 @@ export default function CartItem({
         <div className="cart-quantity">
           <button
             onClick={decrease}
-            className="cart-quantity-button cart-decrease-style"
+            className="cart-quantity-button cart-decrease-style "
           >
             -
           </button>
           <span>{quantity}</span>
           <button
             onClick={increase}
-            className="cart-quantity-button cart-increase-style"
+            className="cart-quantity-button cart-increase-style "
           >
             +
           </button>
         </div>
+        <p className="cart-item-price">${price}</p>
       </div>
     </div>
   );

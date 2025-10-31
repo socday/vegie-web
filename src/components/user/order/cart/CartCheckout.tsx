@@ -203,13 +203,13 @@ export default function CartCheckout({ items, mode, onCheckout, onPayment }: Car
 
         {mode === "checkout" ? (
           <>
-            <button onClick={handleGoToPayment} className="d-btn d-btn-font">
+            <button onClick={handleGoToPayment} className="d-btn d-btn-font mobile-cart-btn">
               <span>Tiếp tục</span>
             </button>
             <div className="cart-summary__or">
               <span>hoặc</span>
             </div>
-            <a href="/vegie-care" className="d-btn d-btn-font">
+            <a href="/vegie-care" className="d-btn d-btn-font mobile-cart-btn">
               <span>Quay lại</span>
             </a>
           </>
@@ -218,14 +218,14 @@ export default function CartCheckout({ items, mode, onCheckout, onPayment }: Car
             <button
               onClick={isFromRetail || isFromWeekly? handlePayment : handleCheckoutClick}
               disabled={isEmpty || isLoading}
-              className="d-btn d-btn-font"
+              className="d-btn d-btn-font mobile-cart-btn"
             >
               {isLoading ?<span >Xử lý...</span> : <span>Thanh toán</span>}
             </button>
             <div className="cart-summary__or">
               <span>hoặc</span>
             </div>
-            <a href="/gio-hang" className="d-btn d-btn-font">
+            <a href="/gio-hang" className="d-btn d-btn-font mobile-cart-btn">
               <span>Xem lại giỏ hàng</span>
             </a>
           </>

@@ -1,5 +1,5 @@
 import CartItem from "./CartItem";
-import "../cart/styles/Cart.css";
+import "./styles/Cart.css";
 import React, { useEffect, useState } from "react";
 import { cartCheckout, getCart, removeCartItem, updateCartItem } from "../../../../router/cartApi";
 import { CartResponse, Item } from "../../../../router/types/cartResponse";
