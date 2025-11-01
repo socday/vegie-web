@@ -68,7 +68,7 @@ export default function CartItem({
             +
           </button>
         </div>
-        <p className="cart-item-price">${price}</p>
+        <p className="cart-item-price">{price.toLocaleString()}đ</p>
       </div>
     </div>
   );
