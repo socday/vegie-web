@@ -53,6 +53,33 @@ export async function changePassword (payload: changePasswordRequest) : Promise 
     return res.data;
   }
 
+  export async function checkAuth() {
+  let token = localStorage.getItem("accessToken");
+  let refreshToken = localStorage.getItem("refreshToken");
+
+  if (!token) {
+    return { isAuthenticated: false, user: null, token: null };
+  }
+
+  try {
+    const response = await api.get("/Auth/check-token", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (!response.data.data.isExpired) {
+      return { isAuthenticated: true, user: response.data.data, token };
+    }
+
+  } catch (error) {
+    console.error("Error during auth check:", error);
+  }
+
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  return { isAuthenticated: false, user: null, token: null };
+}
+
+
 export async function updateCustomer(
   payload:
     | FormData

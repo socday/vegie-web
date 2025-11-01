@@ -16,7 +16,8 @@ export const api = axios.create({
 // === Token Refresh State ===
 let isRefreshing = false;
 let refreshSubscribers: ((token: string) => void)[] = [];
-let silentRefreshTimer: NodeJS.Timeout | null = null;
+let silentRefreshTimer: ReturnType<typeof setTimeout> | null = null;
+
 
 // === Helper: Notify subscribers when refresh done ===
 function onRefreshed(newToken: string) {
