@@ -655,7 +655,7 @@
     min-height: 70vh;
   }
   .blindbox-btn {
-    width: 400px;
+    width: 98%;
     height: 150px;
     padding: 20px;
     border-radius: 25px;
@@ -683,7 +683,7 @@
   }
 
   .giftbox-btn {
-    width: 400px;
+    width: 98%;
     height: 150px;
     padding: 20px;
     background-size: contain; /* Đảm bảo ảnh vừa với button */
