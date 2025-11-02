@@ -743,11 +743,11 @@
 .blindbox-container::after {
   content: "";
   position: absolute;
-  bottom: 0;
+  top: 10%;
   left: 75%;
   transform: translateX(-50%);
-  width: 23.3rem;
-  height: 20.3rem;
+  width: 50%;
+  height: 60%;
   background: url('../../../assets/images/webp/blind-box-object.webp') center/contain no-repeat;
   z-index: 0; /* put it behind */
 }
@@ -783,4 +783,108 @@
     padding: 0;
   }
 
+  .stars {
+    height: fit-content;
+    max-height: fit-content;
+    margin:0;
+  }
+
+  .blindbox-container {
+    justify-content: start;
+    align-items: start;
+    gap:0;
+  }
+
+  .quantity-control button {
+    width:auto;
+    height: auto;
+    font-size: 1.1rem;
+  }
+  .bb-quantity-btn {
+    border: 2px solid #91CF43;
+    padding: 0.5rem 1.5rem;
+    width: auto;
+    height: auto;
+  }
+
+  .bb-l {
+    border-right: none;
+    border-radius: 0.5rem 0 0 0.5rem;
+  }
+
+  .quantity-display {
+    border: 2px solid #91CF43;
+    margin:0;
+    padding: 0.5rem 1rem;
+    border-left: none;
+    border-right: none;
+  }
+  .bb-r {
+    border-left: none;
+    border-radius: 0 0.5rem 0.5rem 0;
+  }
+
+  .controls .bb-price-btn {
+    padding: 0.5rem 2rem;
+    font-size: 1.1rem;
+    width: auto;
+    height: auto;
+  }
+
+  .controls .bb-price-btn span{
+    font-size: 1.1rem;
+  }
+
+  .description span {
+    font-size: 1rem;
+  }
+
+  .right-section {
+    display: none;
+  }
+
+  .subtitle {
+    line-height: 1;
+  }
+
+  .left-section {
+    gap: 0.8rem;
+  }
+
+  .bb-form-button {
+    gap: 0.5rem;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .bb-form-button a,
+  .bb-form-button button {
+    padding: 0.5rem 1rem;
+    height: fit-content;
+    width: fit-content;
+  }
+  .bb-form-button span {
+    font-size: 0.8rem;
+    text-align: center;
+  }
+  /* Ensure the individual action buttons in the mobile form flow size to their content
+     instead of inheriting fixed widths from the desktop rules. This specifically makes
+     "Mua lẻ" fit its content plus padding. */
+  .bb-form-button .mua-le,
+  .bb-form-button .mua-theo-tuan,
+  .bb-form-button .them-gio {
+    width: fit-content; /* fallback: auto will also work in older browsers */
+    padding: 0.5rem 1rem;
+    min-width: 0; /* allow shrinking to content */
+  }
+  /* Prevent flex children from stretching equally — force content-sized buttons */
+  .bb-form-button > * {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 0;
+  }
+
+  .bb-form-button .bb-btn-m {
+    flex:none;
+  }
 }
