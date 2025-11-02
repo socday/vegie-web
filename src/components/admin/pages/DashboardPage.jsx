@@ -15,7 +15,8 @@ export default function DashboardPage(){
   const didLoadData = useRef(false)
   
   useEffect(() => {
-    // If context data is available, use it
+    // Always use context data if available (from AdminShell)
+    // Only fallback to direct API call if context is completely empty
     if (contextOrders.length > 0 || contextBoxTypes.length > 0 || contextCurrentStats) {
       setOrders(contextOrders)
       setBoxTypes(contextBoxTypes)
@@ -24,42 +25,29 @@ export default function DashboardPage(){
       return
     }
     
-    // Fallback: Load data directly
+    // Fallback: Only load if context is truly empty and haven't loaded yet
     if (didLoadData.current) return
-    didLoadData.current = true
-    
-    const now = new Date()
-    const currentYear = now.getFullYear()
-    const currentMonth = now.getMonth()
-    
-    const currentMonthStart = new Date(currentYear, currentMonth, 1)
-    const currentMonthEnd = new Date(currentYear, currentMonth + 1, 0)
-    const previousMonthStart = new Date(currentYear, currentMonth - 1, 1)
-    const previousMonthEnd = new Date(currentYear, currentMonth, 0)
-    
-    const formatDate = (date) => {
-      const y = date.getFullYear()
-      const m = String(date.getMonth() + 1).padStart(2, '0')
-      const d = String(date.getDate()).padStart(2, '0')
-      return `${y}-${m}-${d}`
-    }
+    if (contextOrders.length === 0 && contextBoxTypes.length === 0 && !contextCurrentStats) {
+      didLoadData.current = true
+      
+      const { currentMonthStart, currentMonthEnd, previousMonthStart, previousMonthEnd } = getStatisticsDateRanges()
 
-    
-    Promise.all([
-      getAllOrders(), 
-      getAllBoxTypes(),
-      getStatistics(formatDate(currentMonthStart), formatDate(currentMonthEnd)),
-      getStatistics(formatDate(previousMonthStart), formatDate(previousMonthEnd))
-    ])
-      .then(([o, b, currentStats, prevStats]) => { 
-        setOrders(o)
-        setBoxTypes(b)
-        setCurrentMonthStats(currentStats)
-        setPreviousMonthStats(prevStats)
-      })
-      .catch((error) => {
-        console.error("DashboardPage API error:", error)
-      })
+      Promise.all([
+        getAllOrders(), 
+        getAllBoxTypes(),
+        getStatistics(formatDate(currentMonthStart), formatDate(currentMonthEnd)),
+        getStatistics(formatDate(previousMonthStart), formatDate(previousMonthEnd))
+      ])
+        .then(([o, b, currentStats, prevStats]) => { 
+          setOrders(o)
+          setBoxTypes(b)
+          setCurrentMonthStats(currentStats)
+          setPreviousMonthStats(prevStats)
+        })
+        .catch((error) => {
+          console.error("DashboardPage API error:", error)
+        })
+    }
   }, [contextOrders, contextBoxTypes, contextCurrentStats, contextPrevStats])
 
   const [activeBoard, setActiveBoard] = useState('orders')
@@ -72,6 +60,38 @@ export default function DashboardPage(){
     return (id) => map.get(id) || 'Unknown'
   }, [boxTypes])
 
+  // Helper function to format date
+  const formatDate = (date) => {
+    const y = date.getFullYear()
+    const m = String(date.getMonth() + 1).padStart(2, '0')
+    const d = String(date.getDate()).padStart(2, '0')
+    return `${y}-${m}-${d}`
+  }
+
+  // Helper function to get date ranges for statistics
+  const getStatisticsDateRanges = () => {
+    const now = new Date()
+    const currentYear = now.getFullYear()
+    const currentMonth = now.getMonth()
+    
+    const currentMonthStart = new Date(currentYear, currentMonth, 1)
+    currentMonthStart.setHours(0, 0, 0, 0)
+    const currentMonthEnd = new Date(currentYear, currentMonth + 1, 0)
+    currentMonthEnd.setHours(23, 59, 59, 999)
+    
+    const previousMonthStart = new Date(currentYear, currentMonth - 1, 1)
+    previousMonthStart.setHours(0, 0, 0, 0)
+    const previousMonthEnd = new Date(currentYear, currentMonth, 0)
+    previousMonthEnd.setHours(23, 59, 59, 999)
+    
+    return {
+      currentMonthStart,
+      currentMonthEnd,
+      previousMonthStart,
+      previousMonthEnd
+    }
+  }
+
   // Tính toán phần trăm thay đổi cho KPI
   const calculatePercentageChange = (current, previous) => {
     if (!current || !previous || previous === 0) return 0
@@ -81,6 +101,7 @@ export default function DashboardPage(){
   const ordersChange = currentMonthStats && previousMonthStats 
     ? calculatePercentageChange(currentMonthStats.totalOrders, previousMonthStats.totalOrders)
     : 0
+
 
   return (
     <>
@@ -132,37 +153,9 @@ export default function DashboardPage(){
           users={contextData.users || []}
           boxNameById={boxNameById} 
           onRefresh={async () => {
-            try {
-              const now = new Date()
-              const currentYear = now.getFullYear()
-              const currentMonth = now.getMonth()
-              
-              const currentMonthStart = new Date(currentYear, currentMonth, 1)
-              const currentMonthEnd = new Date(currentYear, currentMonth + 1, 0)
-              const previousMonthStart = new Date(currentYear, currentMonth - 1, 1)
-              const previousMonthEnd = new Date(currentYear, currentMonth, 0)
-              
-              const formatDate = (date) => {
-                const y = date.getFullYear()
-                const m = String(date.getMonth() + 1).padStart(2, '0')
-                const d = String(date.getDate()).padStart(2, '0')
-                return `${y}-${m}-${d}`
-              }
-
-              const [ordersData, boxTypesData, currentStats, prevStats] = await Promise.all([
-                getAllOrders(),
-                getAllBoxTypes(),
-                getStatistics(formatDate(currentMonthStart), formatDate(currentMonthEnd)),
-                getStatistics(formatDate(previousMonthStart), formatDate(previousMonthEnd))
-              ])
-              setOrders(ordersData)
-              setBoxTypes(boxTypesData)
-              setCurrentMonthStats(currentStats)
-              setPreviousMonthStats(prevStats)
-            } catch (error) {
-              console.error('Failed to refresh data:', error)
-              throw error
-            }
+            // Trigger refresh in AdminShell to avoid duplicate API calls
+            // AdminShell will reload all data and update context
+            window.dispatchEvent(new CustomEvent('orders-updated'))
           }}
         />
       )}
@@ -214,26 +207,56 @@ export default function DashboardPage(){
              </div>
              <div className="line-chart-container" style={{ width: '100%', height: '300px', padding: '20px' }}>
                {(() => {
-                 if (!currentMonthStats?.revenueByDate?.length) {
+                 // Get all available revenue data
+                 const currentData = currentMonthStats?.revenueByDate || []
+                 const previousData = previousMonthStats?.revenueByDate || []
+                 
+                 // Merge data from both months for filtering
+                 const allData = [...currentData, ...previousData]
+                 
+                 if (!allData.length) {
                    return <div>Không có dữ liệu doanh thu theo ngày</div>
                  }
                  
                  // Filter data based on selected filter
-                 let data = currentMonthStats.revenueByDate
+                 let data = []
                  const now = new Date()
+                 now.setHours(23, 59, 59, 999) // Set to end of today
                  
-                 if (revenueFilter === '7-days') {
+                 if (revenueFilter === 'current-month') {
+                   // Use only current month data
+                   data = currentData
+                 } else if (revenueFilter === 'previous-month') {
+                   // Use previous month data
+                   data = previousData
+                 } else if (revenueFilter === '7-days') {
+                   // Filter last 7 days from all data
                    const sevenDaysAgo = new Date(now)
                    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
-                   data = data.filter(item => new Date(item.date) >= sevenDaysAgo)
+                   sevenDaysAgo.setHours(0, 0, 0, 0)
+                   data = allData.filter(item => {
+                     const itemDate = new Date(item.date)
+                     itemDate.setHours(0, 0, 0, 0)
+                     return itemDate >= sevenDaysAgo && itemDate <= now
+                   })
                  } else if (revenueFilter === '30-days') {
+                   // Filter last 30 days from all data
                    const thirtyDaysAgo = new Date(now)
                    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
-                   data = data.filter(item => new Date(item.date) >= thirtyDaysAgo)
-                 } else if (revenueFilter === 'previous-month') {
-                   // Use previous month data if available
-                   data = previousMonthStats?.revenueByDate || []
+                   thirtyDaysAgo.setHours(0, 0, 0, 0)
+                   data = allData.filter(item => {
+                     const itemDate = new Date(item.date)
+                     itemDate.setHours(0, 0, 0, 0)
+                     return itemDate >= thirtyDaysAgo && itemDate <= now
+                   })
                  }
+                 
+                 // Sort data by date to ensure correct order
+                 data = data.sort((a, b) => {
+                   const dateA = new Date(a.date)
+                   const dateB = new Date(b.date)
+                   return dateA - dateB
+                 })
                  
                  if (!data.length) {
                    return <div>Không có dữ liệu cho khoảng thời gian đã chọn</div>
@@ -390,28 +413,84 @@ export default function DashboardPage(){
           </div>             
              <div className="table-card">
                <div className="table-title">Sản phẩm đã bán</div>
-               <div className="table">
-                 <div className="row header">
+               <div className="table" style={{ margin: '0 auto', width: 'fit-content' }}>
+                 <div className="row header" style={{ gridTemplateColumns: '1.5fr 1fr 1.2fr 1fr 1fr', padding: '10px 8px', boxSizing: 'border-box', minWidth: '746px' }}>
                    <div>Sản phẩm</div>
                    <div>Số lượng bán</div>
                    <div>Doanh thu</div>
                    <div>% Tổng</div>
                    <div>Giá TB</div>
                  </div>
-                 {currentMonthStats?.topProducts?.map((product, index) => (
-                   <div className="row" key={index}>
-                     <div>{product.boxTypeName}</div>
-                     <div>{product.quantitySold}</div>
-                     <div>{product.revenue.toLocaleString('vi-VN')} VND</div>
-                     <div>
-                       {(() => {
-                         const totalRevenue = currentMonthStats.topProducts.reduce((sum, p) => sum + p.revenue, 0)
-                         return totalRevenue > 0 ? ((product.revenue / totalRevenue) * 100).toFixed(0) : 0
-                       })()}%
+                 {(() => {
+                   // Calculate topProducts based on current filter
+                   let topProducts = []
+                   
+                   if (revenueFilter === 'current-month') {
+                     topProducts = currentMonthStats?.topProducts || []
+                   } else if (revenueFilter === 'previous-month') {
+                     topProducts = previousMonthStats?.topProducts || []
+                   } else if (revenueFilter === '7-days' || revenueFilter === '30-days') {
+                     // Calculate from orders for 7/30 days filter
+                     const now = new Date()
+                     now.setHours(23, 59, 59, 999)
+                     const daysAgo = revenueFilter === '7-days' ? 7 : 30
+                     const startDate = new Date(now)
+                     startDate.setDate(startDate.getDate() - daysAgo)
+                     startDate.setHours(0, 0, 0, 0)
+                     
+                     // Filter orders by date
+                     const filteredOrders = orders.filter(order => {
+                       const orderDate = new Date(order.orderDate)
+                       orderDate.setHours(0, 0, 0, 0)
+                       return orderDate >= startDate && orderDate <= now
+                     })
+                     
+                     // Calculate product sales from filtered orders
+                     const productMap = new Map()
+                     filteredOrders.forEach(order => {
+                       if (order.details && order.details.length > 0) {
+                         order.details.forEach(detail => {
+                           const boxName = boxNameById(detail.boxTypeId)
+                           const quantity = detail.quantity || 0
+                           const revenue = (detail.unitPrice || 0) * quantity
+                           
+                           if (productMap.has(boxName)) {
+                             const existing = productMap.get(boxName)
+                             existing.quantitySold += quantity
+                             existing.revenue += revenue
+                           } else {
+                             productMap.set(boxName, {
+                               boxTypeName: boxName,
+                               quantitySold: quantity,
+                               revenue: revenue
+                             })
+                           }
+                         })
+                       }
+                     })
+                     
+                     topProducts = Array.from(productMap.values())
+                       .sort((a, b) => b.revenue - a.revenue)
+                   }
+                   
+                   if (topProducts.length === 0) {
+                     return <div className="row"><div style={{ width: '100%', textAlign: 'center', padding: '20px' }}>Không có dữ liệu sản phẩm</div></div>
+                   }
+                   
+                   const totalRevenue = topProducts.reduce((sum, p) => sum + p.revenue, 0)
+                   
+                   return topProducts.map((product, index) => (
+                     <div className="row" key={index} style={{ gridTemplateColumns: '1.5fr 1fr 1.2fr 1fr 1fr', padding: '10px 8px', boxSizing: 'border-box', minWidth: '746px' }}>
+                       <div>{product.boxTypeName}</div>
+                       <div>{product.quantitySold}</div>
+                       <div>{product.revenue.toLocaleString('vi-VN')} VND</div>
+                       <div>
+                         {totalRevenue > 0 ? ((product.revenue / totalRevenue) * 100).toFixed(0) : 0}%
+                       </div>
+                       <div>{product.quantitySold > 0 ? Math.round(product.revenue / product.quantitySold).toLocaleString('vi-VN') : 0} VND</div>
                      </div>
-                     <div>{Math.round(product.revenue / product.quantitySold).toLocaleString('vi-VN')} VND</div>
-                   </div>
-                 )) || <div className="row"><div>Không có dữ liệu sản phẩm</div></div>}
+                   ))
+                 })()}
                </div>
              </div>
         </section>

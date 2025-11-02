@@ -33,9 +33,38 @@ export async function changePassword (payload: changePasswordRequest) : Promise 
   return res.data;
 }
 
+// Helper function to refresh access token
+async function refreshAccessToken(): Promise<{ accessToken: string; refreshToken?: string } | null> {
+  const refreshToken = localStorage.getItem("refreshToken");
+  if (!refreshToken) {
+    return null;
+  }
+
+  try {
+    console.log("Refreshing token...");
+    const refreshRes = await api.post("/Auth/refresh-token", { refreshToken });
+
+    if (refreshRes.data?.isSuccess && refreshRes.data.data?.accessToken) {
+      const newToken = refreshRes.data.data.accessToken;
+      const newRefreshToken = refreshRes.data.data.refreshToken; // Nếu API trả về refreshToken mới
+      
+      localStorage.setItem("accessToken", newToken);
+      if (newRefreshToken) {
+        localStorage.setItem("refreshToken", newRefreshToken);
+      }
+      
+      console.log("Token refreshed successfully");
+      return { accessToken: newToken, refreshToken: newRefreshToken };
+    }
+  } catch (refreshError: any) {
+    console.error("Token refresh failed:", refreshError);
+  }
+
+  return null;
+}
+
 export async function checkAuth() {
   let token = localStorage.getItem("accessToken");
-  const refreshToken = localStorage.getItem("refreshToken");
   if (!token) {
     return { isAuthenticated: false, user: null, token: null };
   }
@@ -53,68 +82,40 @@ export async function checkAuth() {
         user: response.data,
         token,
       };
-    } else {
-      // Token is invalid, try to refresh
-      if (refreshToken) {
-        try {
-          console.log("DANG REFRESH TOKEN");
-          const refreshRes = await api.post(
-            "/Auth/refresh-token",
-            { refreshToken }, 
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-
-          if (refreshRes.data?.isSuccess) {
-            const newToken = refreshRes.data.data.accessToken;
-            localStorage.setItem("accessToken", newToken);
-            console.log("REFRESH SUCCESS");
-            return {
-              isAuthenticated: true,
-              user: refreshRes.data,
-              token: newToken,
-            };
-          }
-        } catch (refreshError) {
-          console.error("Token refresh failed:", refreshError);
-        }
-      }
-      
-      // Both current token and refresh failed
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-      return { isAuthenticated: false, user: null, token: null };
     }
   } catch (error: any) {
-    // Network error or token expired, try refresh
-    if (refreshToken) {
-      try {
-        console.log("DANG REFRESH TOKEN");
-        const refreshRes = await api.post(
-          "/Auth/refresh-token",
-          { refreshToken }, 
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-
-        if (refreshRes.data?.isSuccess) {
-          const newToken = refreshRes.data.data.accessToken;
-          localStorage.setItem("accessToken", newToken);
-          console.log("REFRESH SUCCESS");
-          return {
-            isAuthenticated: true,
-            user: refreshRes.data,
-            token: newToken,
-          };
+    // Only refresh if it's a 401 Unauthorized error
+    if (error.response?.status === 401) {
+      const refreshResult = await refreshAccessToken();
+      
+      if (refreshResult) {
+        // Retry with new token
+        try {
+          const retryResponse = await api.get("/Auth/current-user", {
+            headers: { Authorization: `Bearer ${refreshResult.accessToken}` },
+          });
+          
+          if (retryResponse.data.isSuccess) {
+            return {
+              isAuthenticated: true,
+              user: retryResponse.data,
+              token: refreshResult.accessToken,
+            };
+          }
+        } catch (retryError) {
+          console.error("Retry after refresh failed:", retryError);
         }
-      } catch (refreshError) {
-        console.error("Token refresh failed:", refreshError);
       }
+    } else {
+      // Other errors (network, 500, etc.) - don't try to refresh
+      console.error("Auth check failed:", error);
     }
-    
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    console.error("Auth check failed:", error);
-    return { isAuthenticated: false, user: null, token: null };
   }
+  
+  // Both current token and refresh failed
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  return { isAuthenticated: false, user: null, token: null };
 }
 
   export async function forgotPassword(email: string): Promise<any> {

@@ -88,11 +88,31 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
+    // Don't fetch orders if user is on admin route
+    const isAdminRoute = window.location.pathname.startsWith('/admin');
+    if (isAdminRoute) {
+      return;
+    }
+
     const cached = localStorage.getItem("orders_cache");
     if (cached) {
-      setOrders(JSON.parse(cached));
+      try {
+        setOrders(JSON.parse(cached));
+      } catch (e) {
+        // If cache is invalid, fetch fresh data
+        const token = localStorage.getItem("accessToken");
+        const userId = localStorage.getItem("userId");
+        if (token && userId) {
+          refreshOrders();
+        }
+      }
     } else {
-      refreshOrders();
+      // Only fetch if no cache exists and user is authenticated
+      const token = localStorage.getItem("accessToken");
+      const userId = localStorage.getItem("userId");
+      if (token && userId) {
+        refreshOrders();
+      }
     }
   }, []);
 
