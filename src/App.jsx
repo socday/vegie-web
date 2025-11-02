@@ -40,6 +40,7 @@ import ReviewOrderForm from './components/user/profile/order/ReviewOrderForm.tsx
 import { OrderProvider } from './context/OrderContext.tsx'
 import RetailPackage from './components/home/subcription/retailpackage.tsx'
 import { AuthProvider } from './context/AuthContext'
+import PasswordRecoveryForm from './components/auth/PasswordRecoveryForm'
 
 function AppContent() {
   const location = useLocation()
@@ -82,6 +83,7 @@ function AppContent() {
           <Route path='/stage-notification' element={<StageNotification />} />
           <Route path='/dang-ky' element={<Register />} />
 
+          <Route path='/khoi-phuc' element={<PasswordRecoveryForm/>} />
           <Route path='/san-pham' element={<BoxSelector />} />
           <Route path='/custom-box' element={<GiftDetoxBox />} />
           <Route path='/retail-package' element={<RetailPackage />} />

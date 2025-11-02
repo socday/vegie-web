@@ -104,6 +104,10 @@
   opacity: 47%;
 }
 
+.otp-coupon-group {
+  max-width: 900px;
+}
+
 @media (max-width: 900px) {
   .register-page {
     flex-direction: column;

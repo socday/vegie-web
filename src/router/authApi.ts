@@ -105,3 +105,23 @@ export async function updateCustomer(
 
   return res.data;
 }
+
+export async function resetPasswordForm(data: {
+  email: string;
+  otpCode: string;
+  newPassword: string;
+  confirmPassword: string;
+}) {
+  try {
+    const res = await api.post("/Auth/reset-password", data, {
+      headers: { "Content-Type": "application/json" },
+    });
+    return res.data ?? { isSuccess: false, message: "Unknown response" };
+  } catch (err: any) {
+    console.error("Error resetting password:", err);
+    return {
+      isSuccess: false,
+      message: err.response?.data?.message || "Lỗi khôi phục mật khẩu",
+    };
+  }
+}
