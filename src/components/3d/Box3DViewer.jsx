@@ -33,50 +33,61 @@ function FitCameraToObject({ object3D }) {
   return null
 }
 
-// Function để apply màu carton cho model
+// Function để giữ nguyên material gốc từ GLB - không override
 function applyCartonMaterial(scene) {
-  const cartonMaterial = new THREE.MeshStandardMaterial({
-    color: '#654321', // Màu nâu carton rất đậm
-    roughness: 0.8,
-    metalness: 0.1,
-  });
-
+  // Giữ nguyên material gốc từ file GLB để hiển thị đúng texture và design
+  // Chỉ đảm bảo material được update đúng cách
   scene.traverse((child) => {
-    if (child.isMesh) {
-      // Force thay đổi material
-      child.material = cartonMaterial.clone();
-      child.material.needsUpdate = true;
-      console.log('Applied carton material to mesh:', child.name);
+    if (child.isMesh && child.material) {
+      // Đảm bảo material được cập nhật đúng
+      if (Array.isArray(child.material)) {
+        child.material.forEach(mat => {
+          if (mat) mat.needsUpdate = true;
+        });
+      } else {
+        child.material.needsUpdate = true;
+      }
+      console.log('Keeping original material for mesh:', child.name);
     }
   });
 }
 
 // Component cho Box 1 - Load model GLB
 function Box1({ position, rotation, onLoaded }) {
-  const gltf = useLoader(GLTFLoader, '/3D/hộp đóng/Hop_1.glb');
+  const gltf = useLoader(GLTFLoader, '/3D/hop-dong/Hop_1.glb');
   const meshRef = useRef();
   const groupRef = useRef();
   
-  useFrame((state) => {
+  useFrame(() => {
     if (groupRef.current) {
       groupRef.current.rotation.y += 0.01;
     }
   });
 
+  // Clone scene và giữ nguyên material gốc (texture và design từ GLB)
+  const clonedScene = React.useMemo(() => {
+    if (!gltf?.scene) return null;
+    // Clone đúng cách để giữ nguyên textures
+    const cloned = gltf.scene.clone(true); // deep clone để giữ textures
+    // Chỉ đảm bảo material được update, không override
+    applyCartonMaterial(cloned);
+    return cloned;
+  }, [gltf?.scene]);
+
   // Gọi callback khi đã có scene để fit camera
   React.useEffect(() => {
-    if (groupRef.current && gltf?.scene && onLoaded) {
-      const clonedScene = gltf.scene.clone();
-      applyCartonMaterial(clonedScene);
+    if (groupRef.current && clonedScene && onLoaded) {
       onLoaded(groupRef.current)
     }
-  }, [gltf, onLoaded])
+  }, [clonedScene, onLoaded])
+
+  if (!clonedScene) return null;
 
   return (
     <group ref={groupRef} position={position} rotation={rotation}>
       <primitive 
         ref={meshRef}
-        object={gltf.scene.clone()} 
+        object={clonedScene} 
         scale={[1, 1, 1]}
       />
     </group>
@@ -85,30 +96,40 @@ function Box1({ position, rotation, onLoaded }) {
 
 // Component cho Box 2 - Load model GLB với scale khác
 function Box2({ position, rotation, onLoaded }) {
-  const gltf = useLoader(GLTFLoader, '/3D/hộp đóng/Hop_2.glb');
+  const gltf = useLoader(GLTFLoader, '/3D/hop-dong/Hop_2.glb');
   const meshRef = useRef();
   const groupRef = useRef();
   
-  useFrame((state) => {
+  useFrame(() => {
     if (groupRef.current) {
       groupRef.current.rotation.y += 0.01;
     }
   });
 
+  // Clone scene và giữ nguyên material gốc (texture và design từ GLB)
+  const clonedScene = React.useMemo(() => {
+    if (!gltf?.scene) return null;
+    // Clone đúng cách để giữ nguyên textures
+    const cloned = gltf.scene.clone(true); // deep clone để giữ textures
+    // Chỉ đảm bảo material được update, không override
+    applyCartonMaterial(cloned);
+    return cloned;
+  }, [gltf?.scene]);
+
   // Gọi callback khi đã có scene để fit camera
   React.useEffect(() => {
-    if (groupRef.current && gltf?.scene && onLoaded) {
-      const clonedScene = gltf.scene.clone();
-      applyCartonMaterial(clonedScene);
+    if (groupRef.current && clonedScene && onLoaded) {
       onLoaded(groupRef.current)
     }
-  }, [gltf, onLoaded])
+  }, [clonedScene, onLoaded])
+
+  if (!clonedScene) return null;
 
   return (
     <group ref={groupRef} position={position} rotation={rotation}>
       <primitive 
         ref={meshRef}
-        object={gltf.scene.clone()} 
+        object={clonedScene} 
         scale={[1, 1, 1]}
       />
     </group>
@@ -125,8 +146,10 @@ function Box3DViewer({ currentBox }) {
         camera={{ position: [0, 3, 0], fov: 70 }}
         style={{ width: '100%', height: '100%' }}
       >
-        <ambientLight intensity={0.6} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
+        <ambientLight intensity={1.0} />
+        <directionalLight position={[10, 10, 5]} intensity={1.5} />
+        <directionalLight position={[-10, 5, -5]} intensity={0.8} />
+        <pointLight position={[0, 10, 0]} intensity={0.5} />
         
         <Suspense fallback={<mesh><boxGeometry args={[1, 1, 1]} /><meshStandardMaterial color="#666" /></mesh>}>
           {currentBox === 1 ? (
