@@ -4,7 +4,7 @@ body {
   background: white;
 }
 
-.main-section {
+.weekly-main-section {
   background-color: #c7defa;
   border-radius: 30px;
   display: flex;
@@ -29,7 +29,7 @@ body {
   margin-bottom: 22px;
 }
 
-.subheading {
+.weekly-subheading {
   font-weight: 700;
   font-size: 15px;
   text-transform: uppercase;
@@ -63,7 +63,7 @@ body {
   line-height: 1em;
 }
 
-.price-btn {
+.weekly-price-btn {
   width: 100px;
   height: 30px;
   background-color: #3cac3c;
@@ -77,12 +77,12 @@ body {
   padding: 0;
 }
 
-.price-btn:hover {
+.weekly-price-btn:hover {
   background-color: #347534;
 }
 
 /* Divider giống RetailPackage */
-.form-divider {
+.weekly-form-divider {
   width: 1px;
   background-color: #3a584a;
   opacity: 0.4;
@@ -91,7 +91,7 @@ body {
   margin-left: 0;
 }
 
-.health-voucher {
+.weekly-health-voucher {
   flex: 1;
   color: #315931;
   display: flex;
@@ -100,18 +100,18 @@ body {
   padding-top: 80px;
 }
 
-.health-voucher h2 {
+.weekly-health-voucher h2 {
   font-weight: 700;
   font-size: 30px;
   margin-bottom: 18px;
 }
 
-.health-voucher form {
+.weekly-health-voucher form {
   display: flex;
   flex-direction: column;
 }
 
-.health-voucher form label input[type="text"] {
+.weekly-health-voucher form label input[type="text"] {
   width: 100%;
   padding: 10px 16px;
   border-radius: 25px;
@@ -123,13 +123,13 @@ body {
   box-sizing: border-box;
 }
 
-.health-voucher form label input::placeholder {
+.weekly-health-voucher form label input::placeholder {
   text-align: left;
   font-size: 13px;
   color: #999;
 }
 
-.pay-btn {
+.weekly-pay-btn {
   width: 100px;
   height: 30px;
   background-color: white;
@@ -145,13 +145,139 @@ body {
 
 
 
-.weekly-package .fancy-btn {
+.weekly-package .weekly-fancy-btn {
   background-color: #91CF43;
   color: white;
   padding: 0.5rem 10%;
   font-weight: 500;
 }
 
-.health-voucher input {
+.weekly-health-voucher input {
   text-align: start;
+}
+
+/* Make weekly component responsive like retail */
+@media (max-width: 768px) {
+  .weekly-main-section {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+  }
+
+}
+
+/* Mobile sliding panels and toggle button (match RetailPackage mobile UX) */
+.weekly-mobile-form {
+  position: relative;
+  overflow: hidden;
+  width: 90%;
+  box-sizing: border-box;
+  border-radius: 20px;
+  height: 30rem;
+  padding: 12px 0; /* vertical breathing room; panels have inner padding */
+  background-color: #c7defa;
+}
+.weekly-mobile-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 98%;
+  height: 100%;
+  box-sizing: border-box;
+  transition: transform 0.35s ease;
+  will-change: transform;
+  display: flex;
+  align-items: flex-start;
+  padding:1rem 2rem;
+}
+.weekly-mobile-panel .weekly-panel-inner {
+  padding: 24px;
+  width: 100%;
+}
+.weekly-mobile-panel.weekly-left {
+  transform: translateX(0);
+}
+
+.weekly-mobile-panel.weekly-right {
+  transform: translateX(100%);
+}
+
+.weekly-mobile-form.weekly-show-right .weekly-mobile-panel.weekly-left {
+  transform: translateX(-100%);
+}
+
+.weekly-mobile-form.weekly-show-right .weekly-mobile-panel.weekly-right {
+  transform: translateX(0);
+}
+
+.weekly-mobile-toggle-button {
+  position: absolute;
+  /* place the button at the bottom-left corner inside the panel padding */
+  bottom: 2rem; /* aligns with .weekly-mobile-panel vertical padding (1rem) */
+  left: 4rem; /* aligns with .weekly-mobile-panel horizontal padding (2rem) */
+  padding: 0;
+  border: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 2rem;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+  z-index: 20;
+  transition: left 0.25s ease, transform 0.25s ease;
+  transform: none;
+  border: 1.5px solid #27600B;
+  font-size: 1rem;
+}
+
+.weekly-mobile-toggle-button .weekly-arrow {
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.weekly-package {
+  display: flex;
+  justify-content: center;
+}
+
+.weekly-panel-inner h2 {
+  font-weight: 700;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.weekly-panel-inner ul li {
+  font-weight: 500;
+  font-size: 1.125rem;
+}
+
+.weekly-panel-inner {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.weekly-pay-btn {
+  position: absolute;
+  bottom: 2rem;
+  left: 4rem;
+  border: 1.5px solid #27600B;
+}
+.weekly-pay-btn span{
+  font-size: 1rem;
+}
+
+.weekly-subheading {
+  margin: 0;
+  padding: 0;
+  color: #27600B;
+}
+.weekly-mobile-toggle-button.weekly-left { opacity: 1; }
+.weekly-mobile-toggle-button.weekly-right { opacity: 1; }
+
+@media (max-width: 420px) {
+  .weekly-mobile-toggle-button { width: 44px; height: 44px; left: 1.5rem; }
+  .weekly-mobile-panel .weekly-panel-inner { padding: 18px; }
 }
