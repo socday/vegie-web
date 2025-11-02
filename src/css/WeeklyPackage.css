@@ -195,6 +195,13 @@ body {
   padding: 24px;
   width: 100%;
 }
+
+.weekly-mobile-panel .weekly-panel-inner input{
+  text-align: start;
+}
+.weekly-mobile-panel .weekly-panel-inner input::placeholder{
+  text-align: start;
+}
 .weekly-mobile-panel.weekly-left {
   transform: translateX(0);
 }
