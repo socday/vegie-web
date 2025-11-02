@@ -883,6 +883,11 @@
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
+/* Giảm độ sáng cho ảnh Món Tròn Ngẫu Nhiên */
+.box-front-image.mon-tron-front {
+    filter: brightness(0.85);
+}
+
 .product-box-card.hovered .box-front-image {
     transform: translate(-50%, -60%);
     opacity: 1;

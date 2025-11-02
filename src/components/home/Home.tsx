@@ -267,10 +267,10 @@ export default function Home() {
                     />
                     
                     {/* Front image - trượt từ dưới lên */}
-                    <img 
-                      src={getFrontImage()} 
+                    <img
+                      src={getFrontImage()}
                       alt={box.title}
-                      className="box-front-image"
+                      className={`box-front-image ${box.id === 1 ? 'mon-tron-front' : ''}`}
                     />
 
                     <div className="box-number">{box.number}</div>
