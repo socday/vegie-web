@@ -148,8 +148,10 @@ body {
 .weekly-package .weekly-fancy-btn {
   background-color: #91CF43;
   color: white;
-  padding: 0.5rem 10%;
+  padding: 0.5rem 2rem;
+  border-radius: 999px;
   font-weight: 500;
+  border:none;
 }
 
 .weekly-health-voucher input {
@@ -164,7 +166,6 @@ body {
     display: flex;
   }
 
-}
 
 /* Mobile sliding panels and toggle button (match RetailPackage mobile UX) */
 .weekly-mobile-form {
@@ -277,6 +278,7 @@ body {
 .weekly-mobile-toggle-button.weekly-left { opacity: 1; }
 .weekly-mobile-toggle-button.weekly-right { opacity: 1; }
 
+}
 @media (max-width: 420px) {
   .weekly-mobile-toggle-button { width: 44px; height: 44px; left: 1.5rem; }
   .weekly-mobile-panel .weekly-panel-inner { padding: 18px; }

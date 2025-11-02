@@ -13,24 +13,30 @@ export default function WeeklyPackage() {
     const [translateX, setTranslateX] = useState(0);
 
     // === Button position offset: -32px outside the card ===
-  const rightEdgeOffset = -54;
+  const rightEdgeOffset = 48;
 
-    const computeTranslate = () => {
+    const computeTranslateW = () => {
       const card = cardRef.current;
       const btn = btnRef.current;
       if (!card || !btn) return;
       const cardRect = card.getBoundingClientRect();
       const btnRect = btn.getBoundingClientRect();
+      // debug: log measurements to help diagnose timing/layout issues
+      // (prefix so logs are identifiable when both components are mounted)
+      // eslint-disable-next-line no-console
+      console.debug("[Weekly] computeTranslate:", { cardRect, btnRect });
       const desiredLeft = cardRect.right + rightEdgeOffset - btnRect.width;
       const currentLeft = btnRect.left;
       const delta = Math.round(desiredLeft - currentLeft);
+      // eslint-disable-next-line no-console
+      console.debug("[Weekly] desiredLeft, currentLeft, delta:", desiredLeft, currentLeft, delta);
       setTranslateX(delta);
     };
 
     useLayoutEffect(() => {
-      computeTranslate();
-      window.addEventListener("resize", computeTranslate);
-      return () => window.removeEventListener("resize", computeTranslate);
+      computeTranslateW();
+      window.addEventListener("resize", computeTranslateW);
+      return () => window.removeEventListener("resize", computeTranslateW);
     }, [showRight]);
 
     const navigate = useNavigate();
@@ -153,7 +159,17 @@ export default function WeeklyPackage() {
           <button
             ref={btnRef}
             className={`weekly-mobile-toggle-button ${showRight ? "weekly-right" : "weekly-left"}`}
-            onClick={() => setShowRight(!showRight)}
+            onClick={() => {
+              // toggle the panel
+              setShowRight((s) => !s);
+              // measure/compute the needed translate after the DOM has updated
+              // requestAnimationFrame ensures we measure after layout/paint; a short
+              // setTimeout acts as a fallback for delayed layout (fonts, images).
+              requestAnimationFrame(() => {
+                computeTranslateW();
+                setTimeout(() => computeTranslateW(), 50);
+              });
+            }}
             aria-label={showRight ? "Show left content" : "Show right content"}
             style={{
               transform: showRight
