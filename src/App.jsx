@@ -40,7 +40,6 @@ import ReviewOrderForm from './components/user/profile/order/ReviewOrderForm.tsx
 import { OrderProvider } from './context/OrderContext.tsx'
 import RetailPackage from './components/home/subcription/retailpackage.tsx'
 import { AuthProvider } from './context/AuthContext'
-import TestMedia from './components/home/TestMedia'
 
 function AppContent() {
   const location = useLocation()
@@ -88,7 +87,6 @@ function AppContent() {
           <Route path='/retail-package' element={<RetailPackage />} />
           <Route path='/weekly-package' element={<WeeklyPackage />} />
           <Route path='/blind-box' element={<BlindBox />} />
-          <Route path='/test' element={<TestMedia/>} />
 
           <Route path='/box-3d' element={
               <Box3D />
