@@ -12,7 +12,7 @@
     left: -5%;
     width: 105%;
     height: 150%;
-    background-image: url('/src/assets/images/ai-menu-object1.png');
+    background-image: url('/src/assets/images/webp/ai-menu-object1.webp');
     background-size: cover;
         transform: scale(1.07);
     background-position: center top; /* top of image visible */

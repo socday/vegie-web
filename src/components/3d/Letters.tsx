@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../../css/FruitSelection.css";
 import "./styles/letters.css";
 
 // Import all images statically
-import letter1 from "../../assets/images/letter1.png";
-import letter2 from "../../assets/images/letter2.png";
-import letter3 from "../../assets/images/letter3.png";
+import letter1 from "../../assets/images/webp/letter1.webp";
+import letter2 from "../../assets/images/webp/letter2.webp";
+import letter3 from "../../assets/images/webp/letter3.webp";
 import { getAiLetterSuggestion } from "../../router/boxApi";
+import { useMediaQuery } from "react-responsive";
 
 // Lookup object
 const letters: Record<number, string> = {
@@ -26,9 +27,12 @@ export default function Letters() {
   const navigate = useNavigate();
   const location = useLocation() as { state: LettersLocationState };
   const [isAiLetter, setIsAiLetter] = useState(false);
+  const [isMobileLetter, setIsMobileLetter] = useState(false);
   const [selectedLetter, setSelectedImage] = useState(1);
   const [message, setMessage] = useState("");
 
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const isDesktop = useMediaQuery({ minWidth: 768 });
   // --- AI prompt fields ---
   const [receiver, setReceiver] = useState("");
   const [occasion, setOccasion] = useState("");
@@ -68,9 +72,17 @@ export default function Letters() {
     }
   };
 
+  const isMessageEmpty = message.trim() === "";
+  const handleMessageContinue = () => {
+    if (isMessageEmpty) {
+      alert("Vui lòng nhập lời nhắn trước khi tiếp tục!");
+      return;
+    }
+    setIsMobileLetter(!isMobileLetter);
+  }
   // === continue ===
   const handleContinue = () => {
-    if (message.trim() === "") {
+    if (isMessageEmpty) {
       alert("Vui lòng nhập lời nhắn trước khi tiếp tục!");
       return;
     }
@@ -88,15 +100,15 @@ export default function Letters() {
     <div className="fruit-selection-page">
       <div className="main-container">
         {/* LEFT SIDE */}
-        <div className="fruit-selection-left">
-          <div className="fruit-selection-title-display">
-            <h1 className="gift-box-title" style={{ color: "#91CF43" }}>
+        <div className={`fruit-selection-left letters-left ${isMobileLetter ? "mobile-letter-active" : ""}`}>
+          <div className="fruit-selection-title-display letter-title-display">
+            <h1 className="gift-box-title letter-title">
               {isAiLetter ? "AI" : ""} Letter
             </h1>
             <div className="title-line"></div>
           </div>
 
-          <div className="instructions">
+          <div className="instructions-letters">
             {isAiLetter ? (
               <>
                 <p>Bạn không giỏi viết thư ?</p>
@@ -155,9 +167,16 @@ export default function Letters() {
               required
             />
           </div>
-
           {/* Buttons */}
           <div className="number-button-group">
+            {isMobile && <>
+              <button className="d-btn d-btn-font mobile-continue-btn"
+                onClick = { () => {
+                  handleMessageContinue()
+                }}>
+                <span>Tiếp tục</span>
+              </button>
+            </>}
             {!isAiLetter ? (
               [1, 2, 3].map((num) => (
                 <button
@@ -183,8 +202,34 @@ export default function Letters() {
           </div>
         </div>
 
+        {isMobileLetter && <>
+        <div className="mobile-letter-top-bar">
+          <div className="fruit-selection-title-display letter-title-display">
+            <h1 className="gift-box-title letter-title">
+              Letter
+            </h1>
+            <div className="title-line"></div>
+          </div>
+          <div className="lazy">
+            <div className="instructions-letters">
+                  <p>Chọn 1 mẫu thư nhé</p>
+            </div>
+            <div className="number-button-group">
+              {[1, 2, 3].map((num) => (
+                <button
+                  key={num}
+                  className={`number-btn ${selectedLetter === num ? "active" : ""} ${isMobileLetter &&  "number-btn-active"}`}
+                  onClick={() => handleImageChange(num)}
+                >
+                  {num}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+        </>}
         {/* RIGHT SIDE */}
-        <div className="fruit-selection-right">
+        <div className={`fruit-selection-right letters-right ${!isMobileLetter ? "mobile-letter-active" : ""}`}>
           <div className="letter-display-area">
             <img
               src={letters[selectedLetter]}

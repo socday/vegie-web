@@ -50,6 +50,7 @@
     transform: scale(0.9);
     overflow: visible;
     transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+    
                 border-radius 0.8s ease;
     cursor: pointer;
 }
@@ -834,7 +835,7 @@
     border-radius: 25px;
     width: 413px;
     height: 451px;
-    padding: 2rem;
+    padding: 1.5rem;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -880,6 +881,11 @@
     opacity: 0;
     z-index: 2;
     transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Giảm độ sáng cho ảnh Món Tròn Ngẫu Nhiên */
+.box-front-image.mon-tron-front {
+    filter: brightness(0.85);
 }
 
 .product-box-card.hovered .box-front-image {
@@ -938,8 +944,8 @@
     color: #fff;
 }
 
-.box-description {
-    font-size: 1rem;
+.product-box-card .box-description {
+    font-size: 0.8rem;
     color: var(--dark-green);
     opacity: 0.7;
     margin: 0.5rem 0 0 0;
@@ -1112,7 +1118,7 @@
     }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
     .action-button {
         position: relative;
         width: 300px;

@@ -1,0 +1,128 @@
+.stage-notification-page {
+  display: flex;
+  min-height: 80vh;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.stage-notification-container {
+  width: 100%;
+  background-color: #D1E8FE;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  padding: 2rem;
+  border-radius: 10%;
+  position: relative;
+  overflow: hidden; /* important: clip mascot inside */
+}
+
+.stage-notification-card {
+  width: 100%;
+  padding: 2rem;
+  text-align: center;
+  border-radius: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.stage-mascot-background {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 280px;
+  height: 280px;
+  transform: translate(-50%, -40%);
+  opacity: 0.25; /* make it subtle */
+  z-index: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none; /* make sure it doesn’t block clicks */
+}
+
+.mascot-bg-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* text & button should float above mascot */
+.stage-notification-title,
+.button-container {
+  position: relative;
+  z-index: 2;
+}
+
+.stage-notification-header h2 {
+  position: relative;
+  font-size: 4rem;
+  color: #27600B;
+  margin: 0;
+  font-weight: bold;
+}
+
+.stage-notification-title {
+  font-size: 1.6rem;
+  color: #27600B;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.stage-notification-btn {
+  position: relative;           /* create its own stacking context */
+  z-index: 5;                   /* ensure it's above mascot and text */
+  background-color: white;
+  color: #27600B;
+  border: 2px solid #27600B;
+  border-radius: 200px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.stage-notification-btn:hover {
+  background-color: #27600B;
+  color: white;
+}
+
+.stage-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.stage-mascot-container{
+}
+
+.stage-image-display{
+  position: absolute;
+   top: 50%;
+  left: 50%;
+  width:100%;
+  transform: translate(-50%, -50%); /* ← perfect centering */
+}
+
+.stage-mascot-image-container {
+  height: 300px;
+  content:"";
+  width: 100%;
+}
+
+@media screen and (max-width: 787px) {
+  .stage-notification-header h2 {
+    font-size: 2.5rem;
+  }
+
+  .stage-notification-title p {
+    font-size: 1.2rem;
+  }
+
+  .stage-image-display .mascot-image{
+    width: 250px;
+  }
+}

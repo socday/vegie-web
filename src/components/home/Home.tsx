@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 
-import mascotSmile from '../../assets/images/mascot-smile.png';
+import mascotSmile from '../../assets/images/webp/mascot-smile.webp';
 import brandLogo from '../../assets/logo-brand.png';
-import vegeBefore from '../../assets/images/Homepage/VegeBefore.png';
-import vegeAfter from '../../assets/images/Homepage/VegeAfter.png';
-import stars from '../../assets/images/Homepage/Stars.png';
-import sheep from '../../assets/images/Homepage/Sheep.png';
-import mouthBefore from '../../assets/images/Homepage/MouthBefore.png';
-import mouthAfter from '../../assets/images/Homepage/MouthAfter.png';
-import rightFoot from '../../assets/images/Homepage/RightFoot.png';
-import rightHand from '../../assets/images/Homepage/RightHand.png';
-import monTronBack from '../../assets/images/Homepage/MonTronNgauNhienBack.png';
-import monTronFront from '../../assets/images/Homepage/MonTronNgauNhienFront.png';
-import tronViAnBack from '../../assets/images/Homepage/TronViAnBack.png';
-import tronViAnFront from '../../assets/images/Homepage/TronViAnFront.png';
+import vegeBefore from '../../assets/images/webp/Homepage/VegeBefore.webp';
+import vegeAfter from '../../assets/images/webp/Homepage/VegeAfter.webp';
+import stars from '../../assets/images/webp/Homepage/Stars.webp';
+import sheep from '../../assets/images/webp/Homepage/Sheep.webp';
+import mouthBefore from '../../assets/images/webp/Homepage/MouthBefore.webp';
+import mouthAfter from '../../assets/images/webp/Homepage/MouthAfter.webp';
+import rightFoot from '../../assets/images/webp/Homepage/RightFoot.webp';
+import rightHand from '../../assets/images/webp/Homepage/RightHand.webp';
+import monTronBack from '../../assets/images/webp/Homepage/MonTronNgauNhienBack.webp';
+import monTronFront from '../../assets/images/webp/Homepage/MonTronNgauNhienFront.webp';
+import tronViAnBack from '../../assets/images/webp/Homepage/TronViAnBack.webp';
+import tronViAnFront from '../../assets/images/webp/Homepage/TronViAnFront.webp';
 import mascot1 from '../../assets/mascot1.png';
 import { useNavigate } from 'react-router-dom';
 import './styles/Home.css';
@@ -218,7 +218,11 @@ export default function Home() {
                   <div className="ai-menu-expanded-content">
                       <h2 className="ai-menu-title">Khám Phá AI Menu</h2>
                       <p className="ai-menu-description">
-                          Bạn là fan của món luộc thanh đạm, hay team mê món xào đậm đà? Chỉ cần vài bước khai báo nhanh (hoặc liên kết tài khoản với hành vi mua sắm), Vegie AI sẽ ghi nhớ “gu ăn” của bạn để gợi ý món phù hợp.
+                        Bạn là fan của món luộc thanh đạm, hay team mê món xào đậm đà?
+                        <br/>
+                        Chỉ cần vài bước gợi ý nhanh
+                        <br/>
+                        VEGIE AI sẽ giúp bạn đề xuất những món ăn phù hợp
                       </p>
                       <button onClick={ () => navigate("/ai-menu")} className="ai-menu-details-button">Xem chi tiết</button>
                   </div>
@@ -263,10 +267,11 @@ export default function Home() {
                     />
                     
                     {/* Front image - trượt từ dưới lên */}
-                    <img 
-                      src={getFrontImage()} 
+                    <img
+                      src={getFrontImage()}
                       alt={box.title}
-                      className="box-front-image"
+                      loading='lazy'
+                      className={`box-front-image ${box.id === 1 ? 'mon-tron-front' : ''}`}
                     />
 
                     <div className="box-number">{box.number}</div>

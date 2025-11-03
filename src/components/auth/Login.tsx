@@ -4,6 +4,8 @@ import "../../css/Login.css";
 import { useMediaQuery } from 'react-responsive';
 import { loginUser } from "../../router/authApi";
 import LoginRegisterForm from "./LoginRegisterForm";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { extractErrorMessage } from "../utils/extractErrorMessage";
 
 
 const Login = () => {
@@ -41,6 +43,7 @@ const Login = () => {
         localStorage.setItem("accessToken", response.data.accessToken);
         localStorage.setItem("refreshToken", response.data.refreshToken);
         localStorage.setItem("userId", response.data.id);
+        window.dispatchEvent(new Event("token-update"));
         if(response.data.roles.includes("ADMIN"))
         {
           navigate("/admin");
@@ -52,13 +55,14 @@ const Login = () => {
       }
     } catch (err) {
       console.error("Login error:", err);
-      setError("");
+      setError(extractErrorMessage(err));
     } finally {
       setLoading(false);
     }
   };
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const isDesktop = useMediaQuery({ minWidth: 768 });
+    const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="login-page">
@@ -82,18 +86,25 @@ const Login = () => {
               />
             </div>
 
-            <div className="form-group">
+          <div className="form-group password-group">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Mật khẩu"
                 required
               />
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className="show-password"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />} 
+              </span>
             </div>
-
-            {error && <p style={{ color: "red" }}>{error}</p>}
+{error && <p style={{ color: "red" }}>{error}</p>}
+              
+            
 
             <div className="form-actions">
               <button type="submit" className="d-btn-font d-btn" disabled={loading}>
@@ -105,9 +116,10 @@ const Login = () => {
                  <span>Đăng ký</span>
                </Link>
               </>}
-              <Link to="/khoi-phuc-mat-khau" className="d-btn-font d-btn">
+              <Link to="/khoi-phuc-mat-khau" className="d-btn-font d-btn lr-link-btn">
                 <span>Quên mật khẩu</span>
               </Link>
+                
             </div>
           </form>
         </div>

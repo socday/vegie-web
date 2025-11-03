@@ -1,9 +1,8 @@
 import React from "react";
 import "../styles/BoxSelector.css";
-import { useNavigate } from "react-router-dom"; // 👈 import thêm
-
+import { useNavigate } from "react-router-dom";
 export default function BoxSelector() {
-      const navigate = useNavigate(); // 👈 khai báo hook để dùng navigate
+      const navigate = useNavigate();
     const handleGiftBoxClick = () => {
     navigate('/fruit-selection');
   };
@@ -12,8 +11,9 @@ export default function BoxSelector() {
     <>
     <div className="button-container">
       <button className="blindbox-btn" onClick={() => navigate("/blind-box")}>
+        <div className="blindbox-background-layer"></div>
         <span
-          className="large-text"
+          className="large-text bb-l-t"
           style={{ color: "#27600B" }}
         >
           Blind Box
@@ -29,7 +29,7 @@ export default function BoxSelector() {
         >
           Giao hàng tận nơi
         </span>
-        <span 
+        <span
             className="small-text"
           style={{
             color: "#27600B",
@@ -37,6 +37,9 @@ export default function BoxSelector() {
         >
           Được cung cấp thực đơn AI <br/>Chat với bé cừu AI dinh dưỡng về các thông tin thực phẩm rau củ quả
         </span>
+        <button className="detail-btn" onClick={(e) => { e.stopPropagation(); navigate("/blind-box"); }}>
+          <span>Xem chi tiết</span>
+        </button>
       </button>
       <button className="giftbox-btn" onClick={handleGiftBoxClick}>
         <span
@@ -71,13 +74,10 @@ export default function BoxSelector() {
         >
           Quà cá nhân hoá được tự ý thiết kế theo dạng 3D
         </span>
+        <button className="start-btn" onClick={(e) => { e.stopPropagation(); handleGiftBoxClick(); }}>
+          <span>Bắt đầu</span>
+        </button>
       </button>
-      <br />
-      <br />
-      <br />
-       <br />
-      <br />
-      <br />
       </div>
     </>
   );

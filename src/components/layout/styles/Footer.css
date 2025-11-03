@@ -1,0 +1,196 @@
+/* File: src/css/Footer.css - PHIÊN BẢN HOÀN CHỈNH */
+
+.site-footer {
+    background-color: transparent;
+    color: var(--dark-green, #27600B);
+}
+
+.footer-main {
+    background-color: #D0E9FE;
+    border-radius: 180px 180px 0px 0px;
+    padding-top: 30px;
+}
+
+.footer-content {
+    width:100%;
+    margin: 0 auto;
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+}
+
+.subscribe-column {
+    width:40%;
+}
+
+.footer-column h3 {
+    font-size: 1.25rem;
+    font-weight: 700; 
+    line-height: 1;   
+}
+
+.footer-column p {
+    font-size: 0.95rem;
+    line-height: 1.1;
+    margin: 0.5rem 0;
+}
+
+.logo-column {
+    flex-shrink: 0;
+    width:30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.footer-logo {
+    max-width: 250px;
+}
+
+.subscribe-column {
+    text-align: left;
+    width: 350px;
+    margin-left: 2rem;
+}
+
+.contact-column {
+    width:30%;
+    text-align: right;
+    margin-right: 3rem;
+}
+
+/*
+ * ==========================================================
+ *  ĐÂY LÀ PHẦN ĐƯỢC CẬP NHẬT
+ * ==========================================================
+*/
+.newsletter-form {
+    display: flex;
+    margin-top: 0.5rem;
+    border: 1.5px solid var(--dark-green, #27600B);
+    border-radius: 50px;
+    overflow: hidden;
+    background-color: #fff;
+    width:80%; 
+}
+
+.newsletter-input {
+    flex-grow: 1;
+    border: none;
+    outline: none; /* Bỏ outline khi click vào */
+    /* GIẢM PADDING DỌC ĐỂ THANH NHỎ LẠI */
+    padding: 0.2rem 0.1rem;
+
+    background: transparent;   
+    font-family: 'Inter', sans-serif;
+    color: var(--dark-green);
+    font-size: 0.9rem; /* Giảm size chữ một chút cho cân đối */
+}
+
+.newsletter-button {
+    border: none;
+    border-radius: 50px;
+    background: transparent;
+    color: var(--dark-green);
+    font-size: 0.9rem;  /* Giảm size chữ một chút cho cân đối */
+    /* GIẢM PADDING DỌC ĐỂ THANH NHỎ LẠI */
+    padding: 0.2rem 1.25rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+
+    /* THÊM DÒNG NÀY ĐỂ CHỮ KHÔNG BỊ XUỐNG DÒNG */
+    white-space: nowrap; 
+}
+
+.newsletter-button:hover {
+    background-color: var(--primary-green, #4CAF50);
+    color: #fff;
+}
+/* ... phần còn lại giữ nguyên ... */
+
+.social-icons {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+.social-icons a {
+    color: var(--dark-green);
+    font-size: 1.75rem;
+}
+.social-icons a:hover {
+    color: var(--primary-green);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 0.5rem;
+    background-color: #071F07;
+    position: relative;
+}
+.footer-bottom p {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    font-weight: 500;
+    letter-spacing: 2px;
+}
+
+@media screen and (max-width: 600px) {
+   .footer-main  {
+    border-radius: 30px 30px 0px 0;
+    padding-top: 1rem;
+   }
+
+   .footer-content {
+    height: 65px;
+    padding: 0.4rem;
+   }
+
+   .subscribe-column {
+    margin:0;
+    padding: 0;
+   }
+
+   .contact-column {
+    padding: 0;
+    margin: 0;
+   }
+   .logo-column {
+    display:none;
+   }
+   .site-footer {
+    margin-bottom: 60px;
+   }
+
+   .newsletter-form {
+    display:none;
+   }
+
+   .subscribe-column {
+    width: 50%;
+    height:100%;
+   }
+
+   .contact-column {
+    width: 30%;
+    height: 100%;
+    align-items: baseline;
+    justify-content: start;
+    text-align: start;
+    margin-left: auto;
+   }
+
+
+   .footer-content {
+    width: 90%;
+   }
+
+   .social-icons {
+    padding:0;
+    margin:0;
+    justify-content: space-evenly;
+   }
+}

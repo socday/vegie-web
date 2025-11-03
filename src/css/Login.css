@@ -100,3 +100,31 @@
 .login-page .lr-link-btn {
   margin:0;
 }
+              
+.password-group {
+  position: relative;
+}
+
+/* ensure input leaves space for the eye button */
+.password-group input {
+  padding-right: 2.6rem;
+}
+
+/* place the eye inside the input vertically centered on the right */
+.show-password {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #27600B;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 1em;
+}
+
+.show-password:hover {
+  color: #3a8e1c;
+}

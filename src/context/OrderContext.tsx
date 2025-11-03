@@ -24,26 +24,26 @@ type OrderContextType = {
   cancelLocalOrder: (id: string) => Promise<CancelOrderResponse>;
 };
 
-  const OrderContext = createContext<OrderContextType>({
-    orders: [],
-    refreshOrders: async () => {},
-    cancelLocalOrder: async () => ({
-      isSuccess: false,
-      message: "Not implemented",
-    }),
-  });
+// ---------- Context initialization ----------
+const OrderContext = createContext<OrderContextType>({
+  orders: [],
+  refreshOrders: async () => {},
+  cancelLocalOrder: async () => ({
+    isSuccess: false,
+    message: "Not implemented",
+  }),
+});
 
+// ---------- Provider ----------
 export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
   const [orders, setOrders] = useState<Order[]>([]);
 
+  // --- Refresh all orders ---
   const refreshOrders = async () => {
-    try {
-      const token = localStorage.getItem("accessToken");
-      if (!token) {
-        console.error("Token invalid")
-        return;
-      } 
+    const token = localStorage.getItem("accessToken");
+    if (!token) return console.error("Token invalid");
 
+    try {
       const res = await getOrder();
       if (res.isSuccess) {
         const transformed = transformApiOrders(res.data);
@@ -55,6 +55,7 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  // --- Cancel an order locally and on server ---
   const cancelLocalOrder = async (id: string): Promise<CancelOrderResponse> => {
     try {
       const res = await cancelOrder(id);
@@ -71,9 +72,10 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
         console.warn("Cancel order failed on server.");
       }
 
-      // Map to the local Order shape (if we have it) and return a CancelOrderResponse
       const localOrder = orders.find((o) => o.id === id);
-      const mappedData = localOrder ? { ...localOrder, status: "da_huy" as const } : undefined;
+      const mappedData = localOrder
+        ? { ...localOrder, status: "da_huy" as const }
+        : undefined;
 
       return {
         isSuccess: Boolean(res.isSuccess),
@@ -87,6 +89,7 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  // --- Load from cache or fetch fresh on mount ---
   useEffect(() => {
     // Don't fetch orders if user is on admin route
     const isAdminRoute = window.location.pathname.startsWith('/admin');
@@ -116,21 +119,22 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
+  // --- React to token changes across tabs ---
   useEffect(() => {
-  const handleStorageChange = (e: StorageEvent) => {
-    if (e.key === "accessToken") {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key !== "accessToken") return;
+
       setOrders([]);
       localStorage.removeItem("orders_cache");
 
       if (e.newValue) {
         refreshOrders();
       }
-    }
-  };
+    };
 
-  window.addEventListener("storage", handleStorageChange);
-  return () => window.removeEventListener("storage", handleStorageChange);
-}, []);
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
   return (
     <OrderContext.Provider value={{ orders, refreshOrders, cancelLocalOrder }}>
@@ -139,5 +143,5 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-// Hook for using context
+// ---------- Hook ----------
 export const useOrders = () => useContext(OrderContext);

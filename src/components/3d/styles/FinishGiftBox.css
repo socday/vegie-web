@@ -1,4 +1,4 @@
-.finish-gift-box-title {
+.finish-giftbox-title {
   margin: 0;
   padding: 0;
   text-transform: none;
@@ -10,6 +10,7 @@
   white-space: normal; 
   word-break: break-word;
   margin-bottom: 2rem;
+  color: #91CF43;
 }
 
 .finish-giftbox-container {
@@ -18,7 +19,7 @@
   padding: 0;
   display: flex;
   flex-direction: row;
-  background-image: url("../../../assets/images/giftbox-01.png");
+  background-image: url("../../../assets/images/webp/giftbox-01.webp");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -51,7 +52,7 @@
   border: 1px solid #91CF43;
   border-radius: 32px 0 0 32px;
   background-color: #91CF43 ;
-  background-image: url("../../../assets/images/giftbox-01.png");
+  background-image: url("../../../assets/images/webp/giftbox-01.webp");
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -63,4 +64,31 @@
   max-width: 500px;
   height: auto;
   object-fit: contain;
+}
+
+@media screen and (max-width: 787px) {
+  .finish-giftbox-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fnb-left, .fnb-right {
+    width: 100%;
+    padding: 2rem;
+  }
+
+  .fnb-right {
+    display: none;
+  }
+
+  .fnb-left .finish-giftbox-title {
+    display: flex;
+    background-color: transparent;
+    color:#27600B;
+    font-size: 6rem;
+  }
+
+  .fnb-left .title-line {
+    border-color: #27600B;
+  }
 }

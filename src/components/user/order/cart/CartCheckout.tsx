@@ -22,8 +22,8 @@ export default function CartCheckout({ items, mode, onCheckout, onPayment }: Car
   const isEmpty = items.length === 0;
   const [isLoading, setIsLoading] = useState(false)
   const location = useLocation();
-
-
+  const retailPrice = 150000;
+  const weeklyPrice = 300000;
   const retailState = location.state as
     | {
         from?: string;
@@ -37,13 +37,13 @@ export default function CartCheckout({ items, mode, onCheckout, onPayment }: Car
 
   const isFromRetail = retailState?.from === "retail-package";
   const isFromWeekly = retailState?.from === "weekly-package";
-  // ✅ Set total (hardcode if retail)
-
+  
   const total = isFromRetail
-  ? 150000
+  ? retailPrice 
   : isFromWeekly
-  ? 300000
+  ? weeklyPrice
   : items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
   // ✅ State setup
   const [discountCode, setDiscountCode] = useState(localStorage.getItem("discountCode") || "");
   const [discountMessage, setDiscountMessage] = useState<string | null>(
@@ -81,9 +81,11 @@ export default function CartCheckout({ items, mode, onCheckout, onPayment }: Car
   };
 
   const handlePayment = () => {
+    if (isFromWeekly) {
+      // retailState.deliveryStartDate = "asd";
+    }
     setIsLoading(true);
     onPayment?.();
-  
   };
 
   const clearDiscountStorage = () => {
@@ -135,6 +137,7 @@ export default function CartCheckout({ items, mode, onCheckout, onPayment }: Car
   };
 
   useEffect(() => {
+    console.log("MANG QUA: ", retailState)
     const handleBeforeUnload = () => clearDiscountStorage();
 
     window.addEventListener("beforeunload", handleBeforeUnload);
@@ -149,12 +152,12 @@ export default function CartCheckout({ items, mode, onCheckout, onPayment }: Car
 {isFromRetail ? (
   <div className="cart-summary__row">
     <span className="cart-summary-name">Gói mua lẻ (1 hộp)</span>
-    <span>{(150000).toLocaleString()} đ</span>
+    <span>{(retailPrice).toLocaleString()} đ</span>
   </div>
 ) : isFromWeekly ? (
   <div className="cart-summary__row">
     <span className="cart-summary-name">Gói theo tuần (2 hộp)</span>
-    <span>{(300000).toLocaleString()} đ</span>
+    <span>{(weeklyPrice).toLocaleString()} đ</span>
   </div>
 ) : (
   items.map((item) => (
@@ -200,13 +203,13 @@ export default function CartCheckout({ items, mode, onCheckout, onPayment }: Car
 
         {mode === "checkout" ? (
           <>
-            <button onClick={handleGoToPayment} className="d-btn d-btn-font">
+            <button onClick={handleGoToPayment} className="d-btn d-btn-font mobile-cart-btn">
               <span>Tiếp tục</span>
             </button>
             <div className="cart-summary__or">
               <span>hoặc</span>
             </div>
-            <a href="/vegie-care" className="d-btn d-btn-font">
+            <a href="/vegie-care" className="d-btn d-btn-font mobile-cart-btn">
               <span>Quay lại</span>
             </a>
           </>
@@ -215,14 +218,14 @@ export default function CartCheckout({ items, mode, onCheckout, onPayment }: Car
             <button
               onClick={isFromRetail || isFromWeekly? handlePayment : handleCheckoutClick}
               disabled={isEmpty || isLoading}
-              className="d-btn d-btn-font"
+              className="d-btn d-btn-font mobile-cart-btn"
             >
               {isLoading ?<span >Xử lý...</span> : <span>Thanh toán</span>}
             </button>
             <div className="cart-summary__or">
               <span>hoặc</span>
             </div>
-            <a href="/gio-hang" className="d-btn d-btn-font">
+            <a href="/gio-hang" className="d-btn d-btn-font mobile-cart-btn">
               <span>Xem lại giỏ hàng</span>
             </a>
           </>
