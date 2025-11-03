@@ -218,42 +218,43 @@
 }
 
 .users-section {
-  flex: 1;
+  flex: 0.7;
+  min-width: 300px;
 }
 
 .users-section.orders-section {
-  flex: 1.5;
+  flex: 2;
 }
 
 .users-section-title {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: #2d3a4a;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .users-fields-grid {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .users-field {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   align-items: center;
 }
 
 .users-label {
-  font-size: 12px;
+  font-size: 11px;
   color: #6b7785;
   font-weight: 500;
-  width: 150px;
+  width: 120px;
   flex-shrink: 0;
 }
 
 .users-value {
-  font-size: 14px;
+  font-size: 12px;
   color: #2d3a4a;
   flex: 1;
 }
@@ -291,19 +292,40 @@
   gap: 8px;
   padding: 8px 12px;
   border-bottom: 1px solid #cde5ff;
-  min-height: 50px;
+  min-height: 45px;
   align-items: center;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .users-orders-table .row > div:nth-child(1) {
-  flex: 1.5;
+  flex: 0.6;
+  font-size: 12px;
 }
 
-.users-orders-table .row > div:nth-child(2),
+.users-orders-table .row > div:nth-child(2) {
+  flex: 1.2;
+  font-size: 12px;
+}
+
 .users-orders-table .row > div:nth-child(3),
+.users-orders-table .row .quantity-cell {
+  flex: 0.5;
+  font-size: 12px;
+  font-weight: 600;
+  color: #7cc043;
+  text-align: center;
+}
+
 .users-orders-table .row > div:nth-child(4) {
-  flex: 1;
+  flex: 0.8;
+  font-size: 12px;
+}
+
+.users-orders-table .row > div:nth-child(5),
+.users-orders-table .row > div:nth-child(6),
+.users-orders-table .row > div:nth-child(7) {
+  flex: 0.9;
+  font-size: 12px;
 }
 
 .users-orders-table .row.header {
@@ -422,6 +444,13 @@ body.admin-dark-mode .users-orders-table .row.header {
 }
 
 /* Order Detail Modal */
+.order-detail-modal.modal-content {
+  max-height: 80vh !important;
+  overflow: hidden !important;
+  display: flex;
+  flex-direction: column;
+}
+
 .order-detail-modal {
   background: #f5fbff;
   border: 1px solid #cde5ff;
@@ -429,15 +458,37 @@ body.admin-dark-mode .users-orders-table .row.header {
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
+.order-detail-modal .users-editor-header {
+  flex-shrink: 0;
+}
+
 .order-detail-modal .detail-body {
-  max-height: calc(80vh - 60px);
+  flex: 1;
   overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  overflow-x: visible;
+  scrollbar-width: thin;
+  -ms-overflow-style: auto;
+  min-height: 0;
+  padding: 16px;
+  box-sizing: border-box;
 }
 
 .order-detail-modal .detail-body::-webkit-scrollbar {
-  display: none;
+  width: 8px;
+}
+
+.order-detail-modal .detail-body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.order-detail-modal .detail-body::-webkit-scrollbar-thumb {
+  background: #cde5ff;
+  border-radius: 4px;
+}
+
+.order-detail-modal .detail-body::-webkit-scrollbar-thumb:hover {
+  background: #a0d0ff;
 }
 
 .order-detail-modal .order-title {
@@ -488,12 +539,19 @@ body.admin-dark-mode .users-orders-table .row.header {
 .order-detail-modal .products-table {
   border: 1px solid #cde5ff;
   border-radius: 8px;
-  overflow: hidden;
+  overflow: visible;
   background: white;
+  max-height: none;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .order-detail-modal .products-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr 0.5fr 1fr;
+  gap: 2px;
   padding: 8px 12px;
   background: #e9f5ff;
   font-weight: 600;
@@ -503,15 +561,31 @@ body.admin-dark-mode .users-orders-table .row.header {
 }
 
 .order-detail-modal .products-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr 0.5fr 1fr;
+  gap: 2px;
   padding: 8px 12px;
   font-size: 14px;
   border-bottom: 1px solid #f0f0f0;
   color: #2d3a4a;
+  align-items: center;
+}
+
+.order-detail-modal .products-row:nth-child(odd) {
+  background-color: #f8fcff;
 }
 
 .order-detail-modal .products-row:last-child {
   border-bottom: none;
+}
+
+.order-detail-modal .products-row div:nth-child(2) {
+  font-weight: 600;
+  color: #7cc043;
+}
+
+.order-detail-modal .products-row div:nth-child(3) {
+  font-weight: 500;
 }
 
 .order-detail-modal .products-row button {
@@ -527,6 +601,25 @@ body.admin-dark-mode .users-orders-table .row.header {
 
 .order-detail-modal .products-row button:hover {
   background: #f0f0f0;
+}
+
+.order-detail-modal .products-expanded-row {
+  display: grid;
+  grid-template-columns: 2fr 0.5fr 1fr;
+  border-top: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+  background-color: #f9f9f9;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.order-detail-modal .products-expanded-row > div {
+  grid-column: 1 / -1;
+  padding-left: 20px;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 /* Dark Mode for Order Detail Modal */

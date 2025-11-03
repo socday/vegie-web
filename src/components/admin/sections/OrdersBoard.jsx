@@ -331,8 +331,26 @@ export default function OrdersBoard({ orders = [], boxNameById, onRefresh, users
                    <div>Đơn giá</div>
                  </div>
                  {(selected.details || []).map((d, idx) => {
+                  // Debug: log first detail to see structure
+                  if (idx === 0) {
+                    console.log('OrdersBoard - selected order:', selected)
+                    console.log('OrdersBoard - first detail:', d)
+                    console.log('OrdersBoard - all details:', selected.details)
+                  }
+                  
                   const hasExtraInfo = d.vegetables?.length > 0 || d.greetingMessage || d.boxDescription || d.letterScription || d.giftBoxOrderId
                   const isExpanded = expandedDetails[idx]
+                  
+                  // Debug: log hasExtraInfo for first detail
+                  if (idx === 0) {
+                    console.log('OrdersBoard - hasExtraInfo:', hasExtraInfo, {
+                      vegetables: d.vegetables,
+                      greetingMessage: d.greetingMessage,
+                      boxDescription: d.boxDescription,
+                      letterScription: d.letterScription,
+                      giftBoxOrderId: d.giftBoxOrderId
+                    })
+                  }
                   
                   return (
                     <React.Fragment key={idx}>

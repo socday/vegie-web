@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
+import { useOutletContext } from 'react-router-dom'
 import { getUsers, getAllOrders, getUser } from '../../../router/adminApi'
-import { getOrderById } from '../../../router/orderApi'
+import OrderDetailModal from '../sections/OrderDetailModal'
 import '../styles/users.css'
 
 function getStatusText(status) {
@@ -28,25 +29,10 @@ function getPaymentStatusText(paymentStatus) {
   return paymentMap[paymentStatus] || paymentStatus
 }
 
-function getPaymentMethodText(method) {
-  const methodMap = {
-    'Cash': 'Tiền mặt',
-    'Card': 'Thẻ',
-    'Transfer': 'Chuyển khoản',
-    'PayOS': 'PayOS',
-    'CashOnDelivery': 'Thanh toán khi nhận hàng'
-  }
-  return methodMap[method] || method
-}
-
-function getOrderDate(order) {
-  if (order.orderDate) {
-    return new Date(order.orderDate)
-  }
-  return new Date()
-}
-
 export default function UsersPage() {
+  const context = useOutletContext() || {}
+  const { boxTypes: contextBoxTypes = [] } = context
+  
   const [loading, setLoading] = useState(true)
   const [users, setUsers] = useState([])
   const [selectedUserId, setSelectedUserId] = useState(null)
@@ -60,45 +46,54 @@ export default function UsersPage() {
   const [orderCurrentPage, setOrderCurrentPage] = useState(1)
   const [selectedOrder, setSelectedOrder] = useState(null)
   const [showOrderDetail, setShowOrderDetail] = useState(false)
-  const [expandedDetails, setExpandedDetails] = useState({})
-  const [loadingOrderDetail, setLoadingOrderDetail] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
   const pageSize = 11
-  const orderPageSize = 10
+  const orderPageSize = 11
 
   const selectedUser = useMemo(() => users.find(x => x.id === selectedUserId) || null, [users, selectedUserId])
+  
+  // Create boxNameById function
+  const boxNameById = useMemo(() => {
+    const map = new Map()
+    contextBoxTypes.forEach((b) => map.set(b.id, b.name))
+    return (id) => map.get(id) || 'Unknown'
+  }, [contextBoxTypes])
 
-  const totalPages = Math.max(1, Math.ceil(users.length / pageSize))
-  const pageItems = users.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+  // Filter users based on search query
+  const filteredUsers = useMemo(() => {
+    if (!searchQuery.trim()) {
+      return users
+    }
+    const query = searchQuery.toLowerCase().trim()
+    return users.filter(user => {
+      const fullName = (user.fullName || '').toLowerCase()
+      const email = (user.email || '').toLowerCase()
+      const phoneNumber = (user.phoneNumber || '').toLowerCase()
+      return fullName.includes(query) || 
+             email.includes(query) || 
+             phoneNumber.includes(query)
+    })
+  }, [users, searchQuery])
+
+  // Reset to page 1 when search changes
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [searchQuery])
+
+  const totalPages = Math.max(1, Math.ceil(filteredUsers.length / pageSize))
+  const pageItems = filteredUsers.slice((currentPage - 1) * pageSize, currentPage * pageSize)
 
   const orderTotalPages = Math.max(1, Math.ceil(userOrders.length / orderPageSize))
   const orderPageItems = userOrders.slice((orderCurrentPage - 1) * orderPageSize, orderCurrentPage * orderPageSize)
 
-  const handleOrderClick = async (order) => {
+  const handleOrderClick = (order) => {
+    setSelectedOrder(order)
     setShowOrderDetail(true)
-    setLoadingOrderDetail(true)
-    setExpandedDetails({})
-    
-    try {
-      const response = await getOrderById(order.id)
-      if (response.isSuccess && response.data) {
-        setSelectedOrder(response.data)
-      } else {
-        console.error('Failed to load order details:', response.message)
-        setSelectedOrder(order) // Fallback to basic order data
-      }
-    } catch (error) {
-      console.error('Error loading order details:', error)
-      setSelectedOrder(order) // Fallback to basic order data
-    } finally {
-      setLoadingOrderDetail(false)
-    }
   }
 
   const handleCloseOrderDetail = () => {
     setShowOrderDetail(false)
     setSelectedOrder(null)
-    setExpandedDetails({})
-    setLoadingOrderDetail(false)
   }
 
   useEffect(() => {
@@ -129,8 +124,6 @@ export default function UsersPage() {
     setOrderCurrentPage(1)
     setSelectedOrder(null)
     setShowOrderDetail(false)
-    setExpandedDetails({})
-    setLoadingOrderDetail(false)
   }
 
   const handleUserClick = (userId) => {
@@ -169,6 +162,26 @@ export default function UsersPage() {
     <div className="users-page">
       <div className="users-header-section">
         <div className="chart-title users-title">Danh sách người dùng</div>
+        <div style={{ marginTop: '16px' }}>
+          <input
+            type="text"
+            placeholder="Tìm kiếm theo tên, email hoặc số điện thoại..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={{
+              width: '100%',
+              maxWidth: '500px',
+              padding: '10px 16px',
+              fontSize: '14px',
+              border: '1px solid #ddd',
+              borderRadius: '8px',
+              outline: 'none',
+              transition: 'border-color 0.2s',
+            }}
+            onFocus={(e) => e.target.style.borderColor = '#7cc043'}
+            onBlur={(e) => e.target.style.borderColor = '#ddd'}
+          />
+        </div>
       </div>
       
       <div className="users-table-section">
@@ -204,6 +217,13 @@ export default function UsersPage() {
                 <div>{user.isLockedOut ? 'Bị khóa' : 'Hoạt động'}</div>
               </div>
             ))}
+            {!loading && !error && filteredUsers.length === 0 && searchQuery && (
+              <div className="users-row">
+                <div style={{ width: '100%', textAlign: 'center', padding: '20px', color: '#666' }}>
+                  Không tìm thấy người dùng nào phù hợp với "{searchQuery}"
+                </div>
+              </div>
+            )}
           </div>
           {!loading && !error && (
             <div className="users-pagination">
@@ -322,6 +342,9 @@ export default function UsersPage() {
                   <div className="users-section-title">Đơn hàng của khách hàng</div>
                   <div className="users-orders-table">
                     <div className="row header">
+                      <div>ID</div>
+                      <div>Box</div>
+                      <div>Số lượng</div>
                       <div>Ngày đặt</div>
                       <div>Tổng tiền</div>
                       <div>Trạng thái</div>
@@ -330,27 +353,34 @@ export default function UsersPage() {
                     <div className="users-orders-table-body">
                       {loadingOrders && (
                         <div className="row">
-                          <div>Đang tải...</div>
+                          <div style={{ width: '100%', textAlign: 'center' }}>Đang tải...</div>
                         </div>
                       )}
                       {!loadingOrders && userOrders.length === 0 && (
                         <div className="row">
-                          <div>Không có đơn hàng</div>
+                          <div style={{ width: '100%', textAlign: 'center' }}>Không có đơn hàng</div>
                         </div>
                       )}
-                      {!loadingOrders && orderPageItems.map((order) => (
-                        <div 
-                          key={order.id} 
-                          className="row"
-                          onClick={() => handleOrderClick(order)}
-                          style={{ cursor: 'pointer' }}
-                        >
-                          <div>{new Date(order.orderDate).toLocaleDateString('vi-VN')}</div>
-                          <div>{order.finalPrice.toLocaleString('vi-VN')} VND</div>
-                          <div>{getStatusText(order.status)}</div>
-                          <div>{getPaymentStatusText(order.paymentStatus)}</div>
-                        </div>
-                      ))}
+                      {!loadingOrders && orderPageItems.map((order) => {
+                        const qty = order.details?.reduce((s, d) => s + d.quantity, 0) || 0
+                        const boxNames = order.details?.map((d) => boxNameById(d.boxTypeId)).join(', ') || '-'
+                        return (
+                          <div 
+                            key={order.id} 
+                            className="row"
+                            onClick={() => handleOrderClick(order)}
+                            style={{ cursor: 'pointer' }}
+                          >
+                            <div>#{order.id.slice(0, 6)}</div>
+                            <div>{boxNames}</div>
+                            <div className="quantity-cell">{qty}</div>
+                            <div>{new Date(order.orderDate).toLocaleDateString('vi-VN')}</div>
+                            <div>{order.finalPrice.toLocaleString('vi-VN')} VND</div>
+                            <div>{getStatusText(order.status)}</div>
+                            <div>{getPaymentStatusText(order.paymentStatus)}</div>
+                          </div>
+                        )
+                      })}
                     </div>
                   </div>
                   {!loadingOrders && userOrders.length > 0 && (
@@ -387,162 +417,11 @@ export default function UsersPage() {
         </>
       )}
 
-      {/* {showOrderDetail && (
-        <>
-          <div className="modal-overlay" onClick={handleCloseOrderDetail} style={{ zIndex: 1100 }}></div>
-          <div className="order-detail-modal modal-content" style={{ zIndex: 1101, width: '600px', left: 'auto', right: '5%' }}>
-            <div className="users-editor-header">
-              <div className="users-editor-title">
-                {loadingOrderDetail ? 'Đang tải...' : `Chi tiết đơn hàng ${selectedOrder ? '#' + selectedOrder.id.slice(0,6) : ''}`}
-              </div>
-              <button className="modal-close" onClick={handleCloseOrderDetail}>×</button>
-            </div>
-            {loadingOrderDetail ? (
-              <div style={{ padding: '40px', textAlign: 'center' }}>
-                <div>Đang tải chi tiết đơn hàng...</div>
-              </div>
-            ) : selectedOrder ? (
-              <div className="detail-body" style={{ padding: '16px' }}>
-                <div className="order-title" style={{ fontSize: '16px', fontWeight: '600', marginBottom: '12px', color: '#2d3a4a' }}>
-                #{selectedOrder.id.slice(0,6)} · {getStatusText(selectedOrder.status)}
-                </div>
-                <div className="detail-item" style={{ marginBottom: '8px', fontSize: '14px' }}>
-                <b>Ngày:</b> {getOrderDate(selectedOrder).toLocaleString('vi-VN')}
-                </div>
-                <div className="detail-item" style={{ marginBottom: '8px', fontSize: '14px' }}>
-                <b>Thanh toán:</b> {getPaymentMethodText(selectedOrder.paymentMethod) || '-'} ({getPaymentStatusText(selectedOrder.paymentStatus) || '-'})
-                </div>
-                <div className="detail-item" style={{ marginBottom: '8px', fontSize: '14px' }}>
-                <b>Giảm giá:</b> {selectedOrder.discountCode || '-'}
-                </div>
-                <div className="detail-item" style={{ marginBottom: '8px', fontSize: '14px' }}>
-                <b>Tổng giá:</b> {(selectedOrder.totalPrice || 0).toLocaleString('vi-VN')} VND
-                </div>
-                <div className="detail-item" style={{ marginBottom: '16px', fontSize: '14px' }}>
-                  <b>Tổng thanh toán:</b> {(selectedOrder.finalPrice || selectedOrder.totalPrice || 0).toLocaleString('vi-VN')} VND
-                </div>
-
-                {(selectedOrder.address || selectedOrder.deliveryTo || selectedOrder.phoneNumber || selectedOrder.allergyNote || selectedOrder.preferenceNote) && (
-                <div className="delivery-section" style={{ marginBottom: '16px' }}>
-                  <div className="detail-section-title" style={{ fontSize: '14px', fontWeight: '600', marginBottom: '8px', color: '#2d3a4a' }}>
-                    Thông tin giao hàng
-                  </div>
-                  <div className="detail-item" style={{ marginBottom: '6px', fontSize: '14px' }}>
-                    <b>Địa chỉ:</b> {selectedOrder.address || '-'}
-                  </div>
-                  <div className="detail-item" style={{ marginBottom: '6px', fontSize: '14px' }}>
-                    <b>Người nhận:</b> {selectedOrder.deliveryTo || '-'}
-                  </div>
-                  <div className="detail-item" style={{ marginBottom: '6px', fontSize: '14px' }}>
-                    <b>Số điện thoại:</b> {selectedOrder.phoneNumber || '-'}
-                  </div>
-                  {selectedOrder.allergyNote && (
-                    <div className="detail-item" style={{ marginBottom: '6px', fontSize: '14px' }}>
-                      <b>Dị ứng:</b> {selectedOrder.allergyNote}
-                    </div>
-                  )}
-                  {selectedOrder.preferenceNote && (
-                    <div className="detail-item" style={{ marginBottom: '6px', fontSize: '14px' }}>
-                      <b>Sở thích:</b> {selectedOrder.preferenceNote}
-                    </div>
-                  )}
-                </div>
-                )}
-                {selectedOrder.payOSPaymentUrl && (
-                <div className="payment-section" style={{ marginBottom: '16px' }}>
-                  <div className="detail-section-title" style={{ fontSize: '14px', fontWeight: '600', marginBottom: '8px', color: '#2d3a4a' }}>
-                    Thông tin thanh toán
-                  </div>
-                  <div className="detail-item" style={{ marginBottom: '6px', fontSize: '14px' }}>
-                    <b>PayOS URL:</b> <a href={selectedOrder.payOSPaymentUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#7cc043', textDecoration: 'underline' }}>Xem link thanh toán</a>
-                  </div>
-                  {selectedOrder.payOSOrderCode && (
-                    <div className="detail-item" style={{ marginBottom: '6px', fontSize: '14px' }}>
-                      <b>PayOS Code:</b> {selectedOrder.payOSOrderCode}
-                    </div>
-                  )}
-                </div>
-                )}
-                <div className="products-title" style={{ fontSize: '14px', fontWeight: '600', marginBottom: '8px', marginTop: '16px', color: '#2d3a4a' }}>
-                Sản phẩm
-                </div>
-                <div className="products-table" style={{ border: '1px solid #cde5ff', borderRadius: '8px', overflow: 'hidden' }}>
-                <div className="products-header" style={{ display: 'flex', padding: '8px 12px', background: '#e9f5ff', fontWeight: '600', fontSize: '14px', borderBottom: '1px solid #cde5ff' }}>
-                  <div style={{ flex: 2 }}>Tên</div>
-                  <div style={{ flex: 0.5 }}>SL</div>
-                  <div style={{ flex: 1 }}>Đơn giá</div>
-                </div>
-                {(selectedOrder.details || []).map((d, idx) => {
-                  const hasExtraInfo = d.vegetables?.length > 0 || d.greetingMessage || d.boxDescription || d.letterScription || d.giftBoxOrderId
-                  const isExpanded = expandedDetails[idx]
-                  
-                  return (
-                    <React.Fragment key={idx}>
-                      <div className="products-row" style={{ display: 'flex', padding: '8px 12px', fontSize: '14px', borderBottom: '1px solid #f0f0f0' }}>
-                        <div style={{ flex: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <div>{d.boxTypeName || `Box #${d.boxTypeId}`}</div>
-                          {hasExtraInfo && (
-                            <button
-                              onClick={() => setExpandedDetails(prev => ({ ...prev, [idx]: !prev[idx] }))}
-                              style={{
-                                background: 'transparent',
-                                border: 'none',
-                                cursor: 'pointer',
-                                fontSize: '12px',
-                                color: '#7cc043',
-                                padding: '2px 6px',
-                                borderRadius: '4px',
-                              }}
-                            >
-                              {isExpanded ? '▲ Thu gọn' : '▼ Chi tiết'}
-                            </button>
-                          )}
-                        </div>
-                        <div style={{ flex: 0.5 }}>{d.quantity}</div>
-                        <div style={{ flex: 1 }}>{(d.unitPrice||0).toLocaleString('vi-VN')} VND</div>
-                      </div>
-                      {isExpanded && hasExtraInfo && (
-                        <div style={{ padding: '8px 12px 8px 32px', fontSize: '13px', borderBottom: '1px solid #f0f0f0', background: '#f9f9f9' }}>
-                          {d.vegetables && d.vegetables.length > 0 && (
-                            <div style={{ marginBottom: '4px' }}>
-                              <b>Nguyên liệu:</b> {d.vegetables.join(', ')}
-                            </div>
-                          )}
-                          {d.greetingMessage && (
-                            <div style={{ marginBottom: '4px' }}>
-                              <b>Lời chúc:</b> {d.greetingMessage}
-                            </div>
-                          )}
-                          {d.boxDescription && (
-                            <div style={{ marginBottom: '4px' }}>
-                              <b>Chi tiết hộp:</b> {d.boxDescription}
-                            </div>
-                          )}
-                          {d.letterScription && (
-                            <div style={{ marginBottom: '4px' }}>
-                              <b>Chi tiết thư:</b> {d.letterScription}
-                            </div>
-                          )}
-                          {d.giftBoxOrderId && (
-                            <div style={{ marginBottom: '4px' }}>
-                              <b>Gift Box Order ID:</b> {d.giftBoxOrderId}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </React.Fragment>
-                  )
-                })}
-                </div>
-              </div>
-            ) : (
-              <div style={{ padding: '40px', textAlign: 'center', color: '#dc3545' }}>
-                Không thể tải thông tin đơn hàng
-              </div>
-            )}
-          </div>
-        </>
-      )}  */}
+      <OrderDetailModal
+        order={selectedOrder}
+        isOpen={showOrderDetail}
+        onClose={handleCloseOrderDetail}
+      />
     </div>
   )
 }
