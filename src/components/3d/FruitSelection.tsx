@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import OpenBox3DViewer from './OpenBox3DViewer';
-
+import { useMediaQuery } from 'react-responsive';
+import "../../css/FruitSelection.css";
 type FruitType = 'Cà rốt' | 'Súp lơ' | 'Bắp' | 'Cà chua';
 
 interface FruitsState {
@@ -39,6 +40,8 @@ export default function FruitSelection() {
   const [fruitAnimation, setFruitAnimation] = useState<FruitAnimationState | null>(null);
   const [removeFruit, setRemoveFruit] = useState<RemoveFruitState | null>(null);
 
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const isDesktop = useMediaQuery({ minWidth: 768 });
   const handleQuantityChange = (fruit: FruitType, change: number) => {
   setSelectedFruits(prev => {
     const newQuantity = prev[fruit] + change;
@@ -102,25 +105,34 @@ export default function FruitSelection() {
           </div>
 
           <div className="instructions">
+            {isDesktop && 
+            <>
             <p>Hãy chọn <strong>TỐI ĐA 5 loại</strong> trong danh sách sản phẩm</p>
             <p><strong>Một loại số lượng tối đa là 3</strong></p>
             <p>Box được đóng gói thùng deco sạch sẽ</p>
+            </>}
+            {isMobile && 
+            <>
+            <p>Hãy chọn <strong>TỐI ĐA 5 loại</strong> </p> <p> trong danh sách sản phẩm</p>
+            <p><strong>Một loại số lượng tối đa là 3</strong></p>
+            </>}
+            {isMobile &&<button className="d-btn d-btn-font mobile-continue-btn" onClick={handleContinue}>Tiếp tục</button>}
           </div>
 
           <div className="product-selection-container">
             <div className="product-list">
-{(Object.keys(selectedFruits) as (keyof FruitsState)[]).map((fruit) => (
-  <div key={fruit} className="product-item">
-    <span className="fruit-name">{fruit}</span>
-    <div className="cart-quantity">
-      <button
-        className="cart-quantity-button cart-decrease-style"
-        onClick={() => handleQuantityChange(fruit, -1)}
-        disabled={selectedFruits[fruit] === 0}
-      >
-        -
-      </button>
-      <span>{selectedFruits[fruit]}</span>
+            {(Object.keys(selectedFruits) as (keyof FruitsState)[]).map((fruit) => (
+              <div key={fruit} className="product-item">
+                <span className="fruit-name fruit-name-mobile">{fruit}</span>
+                <div className="cart-quantity">
+                  <button
+                    className="cart-quantity-button cart-decrease-style"
+                    onClick={() => handleQuantityChange(fruit, -1)}
+                    disabled={selectedFruits[fruit] === 0}
+                  >
+                  -</button>
+      
+      <span className='quantity-fruit'>{selectedFruits[fruit]}</span>
       <button
         className="cart-quantity-button cart-increase-style"
         onClick={() => handleQuantityChange(fruit, 1)}
@@ -145,7 +157,7 @@ export default function FruitSelection() {
                 selectedFruits={selectedFruits}
               />
             </div>
-            <button className="continue-btn" onClick={handleContinue}>Tiếp tục</button>
+            {isDesktop &&<button className="continue-btn" onClick={handleContinue}>Tiếp tục</button>}
           </div>
         </div>
       </div>

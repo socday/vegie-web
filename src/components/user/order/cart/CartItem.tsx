@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../cart/styles/Cart.css";
-import BlindBoxImage from "../../../../assets/images/blind-box-object.png";
+import BlindBoxImage from "../../../../assets/images/webp/blind-box-object.webp";
 
 type CartItemProps = {
   id: string;
@@ -56,18 +56,19 @@ export default function CartItem({
         <div className="cart-quantity">
           <button
             onClick={decrease}
-            className="cart-quantity-button cart-decrease-style"
+            className="cart-quantity-button cart-decrease-style "
           >
             -
           </button>
           <span>{quantity}</span>
           <button
             onClick={increase}
-            className="cart-quantity-button cart-increase-style"
+            className="cart-quantity-button cart-increase-style "
           >
             +
           </button>
         </div>
+        <p className="cart-item-price">{price.toLocaleString()}đ</p>
       </div>
     </div>
   );

@@ -51,13 +51,12 @@ export interface changePasswordRequest {
 }
 
 export interface Customer {
-  firstName: string;
-  lastName: string;
   fullName: string;
   email: string;
   phone: string;
   address: string;
-  imgURL: string | null;
+  imgURL: string;
+  avatar?: File | null;
 };
 
 export interface GetCustomerResponse {

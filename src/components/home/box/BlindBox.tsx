@@ -3,11 +3,14 @@ import "../styles/BlindBox.css";
 import { addCartItem, updateCartItem } from "../../../router/cartApi";
 import { Item } from "../../../router/types/cartResponse";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 
 export default function BlindBox() {
     const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const userId = localStorage.getItem("userId");
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const isDesktop = useMediaQuery({ minWidth: 768 });
   // Hardcoded Blind Box data
   const box = {
     id: "ca108cad-a026-4dea-b3d1-62f7fcc51ef9",
@@ -64,20 +67,36 @@ export default function BlindBox() {
 
           <div className="controls">
             <div className="quantity-control">
-              <button className="bb-quantity-btn" onClick={decreaseQuantity}>
+              <button className="bb-quantity-btn bb-l" onClick={decreaseQuantity}>
                 −
               </button>
               <span className="quantity-display">{quantity}</span>
-              <button className="bb-quantity-btn" onClick={increaseQuantity}>
+              <button className="bb-quantity-btn bb-r" onClick={increaseQuantity}>
                 +
               </button>
             </div>
-            <button className="price-btn">
+            <button className="price-btn bb-price-btn">
               <span>
                 {(box.price * quantity).toLocaleString()} ₫
                 </span>
             </button>
           </div>
+          {isMobile && <>
+          <div className="bb-form-button">
+          <a href="/retail-package"  className="action-btn mua-le fancy-btn bb-btn-m">
+            <span className="action-btn-text">Mua lẻ</span>
+          </a>
+
+          <a href="weekly-package" className="fancy-btn action-btn mua-theo-tuan bb-btn-m">
+            <span className="action-btn-text">Mua theo tuần</span>
+          </a>
+
+          <button className="fancy-btn action-btn them-gio bb-btn-p bb-btn-m"
+        onClick={() => handleQuantityChange(box.id, quantity)}>
+            <span className="action-btn-text">Thêm vào giỏ</span>
+          </button>
+          </div>
+          </>}
         </div>
 
         {/* Right Section */}

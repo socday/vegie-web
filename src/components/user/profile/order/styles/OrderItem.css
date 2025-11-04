@@ -121,13 +121,15 @@
 }
 
 @media screen  and (max-width: 768px) {
-  .order-item {
-  }
   p,
   span {
     font-size: 0.75rem;
   }
   .order-left, .order-right {
+  }
+
+  .sub-tabs span{
+    font-size: 0.6rem;
   }
 
   .order-right {

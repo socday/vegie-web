@@ -10,6 +10,7 @@ const NavBar = () => {
     const isDesktop = useMediaQuery({ query: '(min-width: 769px)' });
     const [isOpen, setIsOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
+    const isLogin = localStorage.getItem("accessToken");
 
     // Highlight search matches in the current page
     useEffect(() => {
@@ -97,7 +98,15 @@ const NavBar = () => {
                                     <FiMenu />
                                 </button>
                                 <ul className={`nav-icons ${isOpen ? 'open' : ''}`}>
-                                    <li><NavLink to="/profile" title="Hồ sơ"><FiUser /></NavLink></li>
+                                    <li>
+                                    <NavLink
+                                        to={isLogin ? "/profile" : "/dang-nhap"}
+                                        title={isLogin ? "Hồ sơ" : "Đăng nhập"}
+                                    >
+                                        <FiUser />
+                                    </NavLink>
+                                    </li>
+
                                     <li><NavLink to="/gio-hang"><FiShoppingCart /></NavLink></li>
                                     <li><NavLink to="/thong-bao"><FiBell /></NavLink></li>
                                 </ul>
@@ -112,7 +121,7 @@ const NavBar = () => {
                             <form className="search-form" onSubmit={handleSubmit}>
                                 <input
                                     type="text"
-                                    placeholder="Tìm kiếm trong trang..."
+                                    placeholder="Tìm kiếm" 
                                     className="search-input"
                                     value={searchTerm}
                                     onChange={e => setSearchTerm(e.target.value)}

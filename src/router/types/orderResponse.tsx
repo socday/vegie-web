@@ -52,7 +52,7 @@ export type CreateOrderRequest = {
   phoneNumber: string;
   allergyNote: string;
   preferenceNote: string;
-  deliveryStartDate?: string;
+  deliveryStartDate?: Date;
   weeklyPackagePrice?: number;
 };
 

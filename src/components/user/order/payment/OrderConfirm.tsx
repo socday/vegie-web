@@ -3,6 +3,7 @@ import "./styles/OrderConfirm.css";
 import { getCustomer } from "../../../../router/authApi";
 import { GetCustomerResponse } from "../../../../router/types/authResponse";
 import { CartCheckOut } from "../../../../router/types/cartResponse";
+import { useMediaQuery } from "react-responsive";
 
 type OrderConfirmationProps = {
   onPaymentChange: (method: number) => void;
@@ -22,6 +23,8 @@ const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+  const isDesktop = useMediaQuery({ query: "(min-width: 769px)" });
   const handlePaymentChange = (method: number) => {
     setSelectedMethod(method);
     onPaymentChange(method);
@@ -34,7 +37,7 @@ const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
         const res = await getCustomer();
         setCustomer(res);
 
-        const name = `${res.data?.firstName ?? ""} ${res.data?.lastName ?? ""}`.trim();
+        const name = `${res.data?.fullName ?? ""} ${res.data?.fullName ?? ""}`.trim();
         setDeliveryTo(name);
         setAddress(res.data?.address ?? "");
         setPhoneNumber(res.data?.phone ?? "");
@@ -79,7 +82,10 @@ const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
   return (
     <div className="order-confirmation">
       <h3>Xác nhận đơn hàng</h3>
-
+      {isMobile &&  
+      <>
+      <div className="order-line"> </div>
+      </>}
       <div className="order-confirmation__address">
         {editable ? (
           <div className="edit-section">
@@ -119,6 +125,21 @@ const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
           </div>
         ) : (
           <>
+            {isMobile && <>
+              <span><strong> Địa chỉ nhận hàng </strong> </span>
+              <div className="just-to-have-a-pencil">
+                <div className="not-pencil">
+                <span>
+                  <strong>{deliveryTo}:</strong> {phoneNumber}
+                </span>
+                <span>{address}</span>
+                </div>
+                <button className="mobile-edit-btn" onClick={toggleEdit}>
+                  ✎
+                </button>
+              </div>
+            </>} 
+            {isDesktop && <>
             <span>
               <strong>{deliveryTo}:</strong> {address}
             </span>
@@ -126,11 +147,13 @@ const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
             <button className="edit-btn" onClick={toggleEdit}>
               ✎
             </button>
+            </>}
           </>
         )}
       </div>
 
-      <h4>Phương thức giao hàng</h4>
+      {isDesktop && <h4>Phương thức giao hàng</h4>}
+      {isMobile && <h4> <strong>Phương thức giao hàng</strong> </h4>}
       <div className="order-confirmation__shipping">
         <label>
           <input
@@ -139,11 +162,12 @@ const OrderConfirmation: React.FC<OrderConfirmationProps> = ({
             defaultChecked
             onChange={() => onCheckoutDataChange({ deliveryMethod: 1 })}
           />
-          Bình thường <span>Miễn phí</span>
+          Bình thường <span>{isDesktop && "Miễn phí"}</span>
         </label>
       </div>
 
-      <h4>Phương thức thanh toán</h4>
+      {isMobile && <h4> <strong>Phương thức thanh toán</strong> </h4>} 
+      {isDesktop && <h4>Phương thức thanh toán</h4>}  
       <div className="order-confirmation__payment">
         <label>
           <input

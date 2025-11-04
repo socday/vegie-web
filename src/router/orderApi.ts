@@ -1,6 +1,6 @@
 // api/orderApi.ts
 import { api } from "./api"; 
-import { CreateGiftBoxRequest, CreateGiftBoxResponse, CreateOrderRequest, CreateOrderResponse, Order, OrderResponse, PaymentLinkResponse, UpdateOrderStatusRequest, UpdateOrderStatusResponse } from "./types/orderResponse";
+import { CreateGiftBoxRequest, CreateGiftBoxResponse, CreateOrderRequest, CreateOrderResponse, Order, OrderResponse, PaymentLinkResponse, ReviewOrder, UpdateOrderStatusRequest, UpdateOrderStatusResponse } from "./types/orderResponse";
 
 export async function getOrder(): Promise<OrderResponse> {
   const token = localStorage.getItem("accessToken");
@@ -49,7 +49,6 @@ export async function createOrder(payload: CreateOrderRequest): Promise<CreateOr
       Authorization: `Bearer ${token}`,
     },
   });
-
   return res.data;
 }
 
@@ -177,6 +176,21 @@ export async function createWeeklyPackageOrder(payload: CreateOrderRequest): Pro
     throw new Error("User not authenticated");
   } 
   const res = await api.post<CreateOrderResponse>("/Orders/weekly", payload, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res.data;
+}
+
+export async function reviewOrder(payload: ReviewOrder): Promise<any> {
+  const token = localStorage.getItem("accessToken");
+  if (!token) {
+    throw new Error("User not authenticated");
+  }
+
+  const res = await api.post<any>("/Review", payload, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,

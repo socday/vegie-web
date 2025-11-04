@@ -60,9 +60,10 @@
   color: #6EA42E;
 }
 
+
+
 @media screen and (min-width: 800px) {
-    .footer-mobile {
-        display: none;
-    }
-    
+  .footer-mobile {
+      display: none;
+  }
 }

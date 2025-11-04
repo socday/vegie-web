@@ -1,13 +1,15 @@
 import React, { Suspense } from 'react';
-import { useLoader } from '@react-three/fiber';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
+import useLazyGLTF from '../useLazyGLTF';
 
 // Component cho mô hình cà rốt
 // 🔧 ĐIỀU CHỈNH DEFAULT PROPS: Thay đổi giá trị mặc định cho position, scale, rotation
 function CarrotModel({ position = [0, 0, 0], scale = [1, 1, 1], rotation = [0, 0, 0] }) {
-  const gltf = useLoader(GLTFLoader, '/3D/fruits/carrot.glb');
-  
+  const gltf = useLazyGLTF('/3D/fruits/carrot.glb');
+
+  // If not loaded yet, render nothing (the Suspense wrapper provides a fallback)
+  if (!gltf) return null;
+
   // Apply material để dễ nhìn thấy
   const clonedScene = gltf.scene.clone();
   clonedScene.traverse((child) => {

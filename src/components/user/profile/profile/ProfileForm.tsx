@@ -3,6 +3,7 @@ import { useMediaQuery } from "react-responsive";
 import "../styles/Profile.css";
 import { Customer } from "../../../../router/types/authResponse";
 import { getCustomer, updateCustomer } from "../../../../router/authApi";
+import { extractErrorMessage } from "../../../utils/extractErrorMessage";
 
 type ProfileFormProps = {
   onChangePassword: () => void;
@@ -19,6 +20,25 @@ export default function ProfileForm({ onChangePassword }: ProfileFormProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
 
+  const isValidPhone = (phone: string) => {
+  const vnPhoneRegex = /^(0|\+84)(\d{9,10})$/;
+  return vnPhoneRegex.test(phone);
+  };
+
+  const isCustomerChanged = () => {
+  if (!customer || !originalCustomer) return false;
+
+  // Compare basic fields
+  const fields: (keyof Customer)[] = ["fullName", "phone", "address"];
+  for (let field of fields) {
+    if (customer[field] !== originalCustomer[field]) return true;
+  }
+
+  // Check if a new file is selected
+  if (selectedFile) return true;
+
+  return false;
+};
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -26,19 +46,17 @@ export default function ProfileForm({ onChangePassword }: ProfileFormProps) {
       setPreview(URL.createObjectURL(file)); // show preview
     }
   };
-  // Fetch customer info on mount
-useEffect(() => {
+
+  useEffect(() => {
   const fetchCustomer = async () => {
     try {
       setLoading(true);
       const response = await getCustomer();
 
-      // If response.data holds the actual customer
       const user = response.data ?? response;
 
       const mappedCustomer: Customer = {
-        firstName: user.firstName,
-        lastName: user.lastName,
+
         fullName: user.fullName, 
         email: user.email,
         phone: user.phone,
@@ -57,14 +75,20 @@ useEffect(() => {
   fetchCustomer();
 }, []);
 
-  // Handle input change
   const handleChange = (field: keyof Customer, value: string) => {
     setCustomer((prev) => (prev ? { ...prev, [field]: value } : prev));
   };
 
-  // Save to API
   const handleSave = async () => {
   if (!customer) return;
+  if (!isValidPhone(customer.phone)) {
+    alert("Số điện thoại không hợp lệ");
+  return;
+  }
+  if (!isCustomerChanged()) {
+    alert("Dữ liệu chưa thay đổi!");
+    return; // don't call API
+  }
   try {
     const formData = new FormData();
     formData.append("firstName", customer.fullName);
@@ -73,16 +97,18 @@ useEffect(() => {
     formData.append("gender", "0");
     formData.append("address", customer.address);
     if (selectedFile) {
-      formData.append("file", selectedFile);
+      formData.append("avatar", selectedFile);
     }
 
     const updated = await updateCustomer(formData); // updateCustomer must send multipart
+    console.log("UPDATED DATA LA: ", updated);
     setCustomer(updated);
     setOriginalCustomer(updated);
+    window.location.reload();
     alert("Cập nhật thành công!");
   } catch (err) {
     console.error("Update failed:", err);
-    alert("Cập nhật thất bại!");
+    alert(`Cập nhật thất bại! ${extractErrorMessage(err)}` );
   }
 };
 

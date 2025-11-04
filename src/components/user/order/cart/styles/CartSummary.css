@@ -102,3 +102,19 @@
 .cart-summary__or:not(:empty)::after {
   margin-left: .75em;
 }
+
+.cart-summary__form .mobile-cart-btn {
+    padding: 0.5rem 4rem;
+}
+
+.cart-summary span {
+  font-size: 1.2rem;
+}
+
+.cart-summary__form span {
+  font-size: 1rem;
+}
+
+.head2 {
+  color: #27600B;
+}

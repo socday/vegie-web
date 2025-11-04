@@ -65,3 +65,40 @@
 .orders .profile-form-actions button{
     border:none;
 }
+
+@media screen and (max-width: 787px) {
+
+    .ps-image {
+    }
+    .profile-subscription {
+        justify-content: center;
+        height: max-content;
+    }
+
+    .profile-subscription-right {
+        padding: 2rem 0;
+        width: 100%;
+        justify-content: center;
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .p-w-package {
+        width: 90%;
+        margin-bottom: 1rem;
+        border: none;
+        color:#27600B;
+        font-size: 2rem;
+        font-weight: 600;
+
+    }
+
+    .profile-subscription-right .form-fields input{
+        width:90%;
+        padding: 1rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

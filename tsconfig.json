@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "jsx": "react-jsx",        // ✅ or "react-jsxdev" if using React 18
+    "jsx": "react-jsx",      
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
@@ -8,5 +8,5 @@
     "allowJs": true,
     "esModuleInterop": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "custom.d.ts"]
 }

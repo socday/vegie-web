@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../css/StageNotification.css';
-import mascot from '../../assets/images/mascot-smile.png';
+import './styles/StageNotification.css';
+import mascot from '../../assets/images/webp/mascot-smile.webp';
 
 export default function StageNotification({ type }) {
   const navigate = useNavigate();
@@ -10,6 +10,7 @@ export default function StageNotification({ type }) {
   const isRestorePassword = type === 'restore-password';
   const isRegisterSuccess = type === 'register-success';
   const isOrderSuccess = type === 'order-success';
+  const isOrderFailed = type === 'order-failed';
   const isPaymentSuccess = type === 'payment-success';
   const isSubscriptionSuccess = type === 'subscription-success';
   const isProfileUpdateSuccess = type === 'profile-update-success';
@@ -21,7 +22,7 @@ export default function StageNotification({ type }) {
     // Determine where to go depending on type
     if (isRegisterSuccess || isRestorePassword || isChangePasswordSuccess) {
       navigate('/dang-nhap');
-    } else if (isOrderSuccess || isPaymentSuccess || isSubscriptionSuccess) {
+    } else if (isOrderSuccess || isPaymentSuccess || isSubscriptionSuccess || isOrderFailed) {
       navigate('/trang-chu');
     } else if (isPaymentFailed) {
       navigate('/thanh-toan');
@@ -35,6 +36,7 @@ export default function StageNotification({ type }) {
     if (isRestorePassword) return 'Khôi phục mật khẩu thành công';
     if (isRegisterSuccess) return 'Đăng ký thành công';
     if (isOrderSuccess) return 'Đặt hàng thành công';
+    if (isOrderFailed) return 'Đặt hàng không thành công';
     if (isPaymentSuccess) return 'Thanh toán thành công';
     if (isSubscriptionSuccess) return 'Đăng ký gói thành công';
     if (isProfileUpdateSuccess) return 'Cập nhật hồ sơ thành công';
@@ -43,9 +45,8 @@ export default function StageNotification({ type }) {
     return 'Trang không xác định';
   };
 
-  // --- DESCRIPTION / PARAGRAPH LOGIC ---
   const getParagraph = () => {
-    if (isPaymentFailed)
+    if (isPaymentFailed || isOrderFailed)
       return 'Quý khách vui lòng thử lại hoặc liên hệ bộ phận hỗ trợ để được giúp đỡ.';
     if (isPaymentSuccess)
       return 'Sau khi xác nhận thanh toán, đơn hàng của bạn sẽ được nhận 100 điểm.';
@@ -54,7 +55,7 @@ export default function StageNotification({ type }) {
     if (isOrderSuccess)
       return 'Sau khi xác nhận thông tin, đơn hàng của bạn sẽ được nhận 100 điểm.';
     if (isRegisterSuccess)
-      return 'Tài khoản của bạn đã được tạo thành công. Hãy đăng nhập để tiếp tục.';
+      return 'Tài khoản của bạn đã được tạo thành công';
     if (isRestorePassword)
       return 'Mật khẩu của bạn đã được đặt lại. Hãy đăng nhập với mật khẩu mới.';
     if (isProfileUpdateSuccess)

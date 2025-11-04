@@ -137,3 +137,140 @@
   border-radius: 6px;
   padding: 0.5rem 1rem;
 }
+
+/* Responsive: mobile/tablet adjustments */
+@media (max-width: 768px) {
+  .order-confirmation {
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+
+  .order-confirmation h3 {
+    font-size: 1.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .order-confirmation h4 {
+    font-size: 1.125rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  /* Stack address content and keep the edit button at the end */
+  .order-confirmation__address {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .order-confirmation__address span {
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .edit-btn {
+    align-self: flex-end;
+    padding: 0.25rem;
+  }
+
+  /* Make shipping/payment options full width and easier to tap */
+  .order-confirmation__shipping,
+  .order-confirmation__payment {
+    gap: 0.75rem;
+  }
+
+  .order-confirmation label {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.5rem;
+  }
+
+  .order-confirmation input[type="radio"] {
+    margin-right: 10px;
+  }
+
+  /* Edit section inputs should be full width on mobile */
+  .edit-section {
+    padding: 0.5rem;
+    width: 100%;
+  }
+
+  .edit-section input[type="text"] {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .edit-section {
+    display: flex;
+     flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .order-confirmation {
+    padding: 0.5rem;
+  }
+
+  .order-confirmation label,
+  .order-confirmation h4{
+    font-size: 1.25rem;
+  }
+    
+  .order-confirmation h3 {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+
+  /* Slightly reduce paddings to save space */
+  .order-confirmation label {
+    padding: 0.4rem;
+  }
+
+  .save-btn, .cancel-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+
+  .order-confirmation .order-confirmation__address {
+    margin-bottom:0;
+    border:none;
+  }
+
+  .order-confirmation__address span{
+    font-size:1.25rem;
+  }
+  .order-line {
+    display: flex;
+    content: "";
+    width: 40%;
+    border: 2px solid #91CF43;
+  }
+
+  .just-to-have-a-pencil {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 0;
+  }
+
+  .not-pencil {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-edit-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 2rem;
+    color: #27600B;
+    margin-left: auto;
+    line-height: 0.5;
+    padding-bottom: 1rem;
+  }
+}

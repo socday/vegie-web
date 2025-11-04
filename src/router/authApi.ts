@@ -1,6 +1,8 @@
 import axios from "axios";
 import { api } from "./api";
 import { changePasswordRequest, Customer, GetCustomerResponse, LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from "./types/authResponse";
+import { useNavigate } from "react-router-dom";
+import { AttachFnType } from "@react-three/fiber";
 
 export async function loginUser(payload: LoginRequest): Promise<LoginResponse> {
   const res = await api.post<LoginResponse>("/Auth/login", payload, {
@@ -23,15 +25,33 @@ export async function registerUser (payload: RegisterRequest) : Promise <Registe
 
 export async function changePassword (payload: changePasswordRequest) : Promise <any>
 {
-  let token = localStorage.getItem("accessToken");
   const res = await api.post<RegisterResponse> ("/Auth/", payload, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`
     },
   });
   return res.data;
 }
+
+  export async function forgotPassword(email: string): Promise<any> {
+    const res = await api.post<any> ("/Auth/forgot-password",
+      { email }, 
+      {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return res.data;
+  }
+
+  export async function getCustomer (): Promise<GetCustomerResponse> {
+    const res = await api.get<GetCustomerResponse> ("/Customers/me", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return res.data;
+  }
 
 // Helper function to refresh access token
 async function refreshAccessToken(): Promise<{ accessToken: string; refreshToken?: string } | null> {
@@ -70,8 +90,7 @@ export async function checkAuth() {
   }
 
   try {
-    // Try with current token first
-    const response = await api.get("/Auth/current-user", {
+    const response = await api.get("/Auth/check-token", {
       headers: { Authorization: `Bearer ${token}` },
     });
     
@@ -118,20 +137,6 @@ export async function checkAuth() {
   return { isAuthenticated: false, user: null, token: null };
 }
 
-  export async function forgotPassword(email: string): Promise<any> {
-    
-  }
-
-  export async function getCustomer (): Promise<GetCustomerResponse> {
-    let token = localStorage.getItem("accessToken");
-    const res = await api.get<GetCustomerResponse> ("/Customers/me", {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-    });
-    return res.data;
-  }
 
 export async function updateCustomer(
   payload:
@@ -142,10 +147,10 @@ export async function updateCustomer(
         phoneNumber: string;
         gender: number;
         address: string;
-        imgURL: string | File;
+        avatar: File | null;
       }
 ): Promise<Customer> {
-  const token = localStorage.getItem("accessToken");
+  console.log("DANG UPDATE CUSTOMER");
   const isFormData = payload instanceof FormData;
 
   const res = await api.put("/Customers/me", payload, {
@@ -153,9 +158,28 @@ export async function updateCustomer(
       "Content-Type": isFormData
         ? "multipart/form-data"
         : "application/json",
-      Authorization: `Bearer ${token}`,
     },
   });
 
   return res.data;
+}
+
+export async function resetPasswordForm(data: {
+  email: string;
+  otpCode: string;
+  newPassword: string;
+  confirmPassword: string;
+}) {
+  try {
+    const res = await api.post("/Auth/reset-password", data, {
+      headers: { "Content-Type": "application/json" },
+    });
+    return res.data ?? { isSuccess: false, message: "Unknown response" };
+  } catch (err: any) {
+    console.error("Error resetting password:", err);
+    return {
+      isSuccess: false,
+      message: err.response?.data?.message || "Lỗi khôi phục mật khẩu",
+    };
+  }
 }

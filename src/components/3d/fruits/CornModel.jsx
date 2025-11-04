@@ -1,13 +1,14 @@
 import React, { Suspense } from 'react';
-import { useLoader } from '@react-three/fiber';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
+import useLazyGLTF from '../useLazyGLTF';
 
 // Component cho mô hình bắp
 // 🔧 ĐIỀU CHỈNH DEFAULT PROPS: Thay đổi giá trị mặc định cho position, scale, rotation
 function CornModel({ position = [0, 0, 0], scale = [1, 1, 1], rotation = [0, 0, 0] }) {
-  const gltf = useLoader(GLTFLoader, '/3D/fruits/corn.glb');
-  
+  const gltf = useLazyGLTF('/3D/fruits/corn.glb');
+
+  if (!gltf) return null;
+
   // Apply material để dễ nhìn thấy
   const clonedScene = gltf.scene.clone();
   clonedScene.traverse((child) => {
