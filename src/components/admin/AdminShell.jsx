@@ -58,7 +58,6 @@ export default function AdminShell() {
         getStatistics(formatDate(previousMonthStart), formatDate(previousMonthEnd))
       ])
       
-      console.log('AdminShell - loaded users:', u.length)
       setOrders(o)
       setBoxTypes(b)
       setUsers(u)
@@ -78,11 +77,9 @@ export default function AdminShell() {
 
   // Listen for refresh events from child components
   useEffect(() => {
-    const handleOrdersRefresh = (event) => {
-      const newOrders = event.detail
-      if (newOrders) {
-        setOrders(newOrders)
-      }
+    const handleOrdersRefresh = async () => {
+      // Reload all data when refresh event is triggered
+      await loadData()
     }
 
     const handleBoxTypesRefresh = (event) => {

@@ -139,6 +139,17 @@ export async function getAllOrders(): Promise<OrderDTO[]> {
   return [];
 }
 
+export async function getOrderById(id: string): Promise<{ isSuccess: boolean; data: OrderDTO; message: string; exception: string | null; }> {
+  const token = localStorage.getItem("accessToken");
+  const res = await api.get(`/Orders/${id}/with-giftbox`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+  });
+  if (res.data?.isSuccess) {
+    return { isSuccess: true, data: res.data.data as OrderDTO, message: res.data.message || '', exception: res.data.exception || null };
+  }
+  return { isSuccess: false, data: null as any, message: res.data?.message || 'Failed to fetch order', exception: res.data?.exception || null };
+}
+
 export async function getAllBoxTypes(): Promise<BoxTypeDTO[]> {
   const token = localStorage.getItem("accessToken");
   const res = await api.get("/BoxTypes", {
@@ -201,7 +212,6 @@ export async function getStatistics(startDate: string, endDate: string): Promise
   
   
   if (res.data?.isSuccess) {
-    console.log(res.data.data)
     return res.data.data as StatisticsResponse
   };
   return null;

@@ -119,19 +119,16 @@ export default function Home() {
               src={vegeBefore}
               alt="Vegie Before"
               className="hero-image hero-image-before"
-              loading= "lazy"
             />
             <img
               src={vegeAfter}
               alt="Vegie After"
               className="hero-image hero-image-after"
-              loading= "lazy"
             />
             <img
               src={stars}
               alt="Stars"
               className="hero-image hero-image-stars"
-              loading= "lazy"
             />
             
             <div className="sheep-overlay-group">
@@ -139,43 +136,36 @@ export default function Home() {
                 src={mouthBefore}
                 alt="Mouth Before"
                 className="mouth-image mouth-before"
-                loading= "lazy"
               />
               <img
                 src={mouthAfter}
                 alt="Mouth After"
                 className="mouth-image mouth-after"
-                loading= "lazy"
               />
               <img
                 src={sheep}
                 alt="Sheep"
                 className="sheep-image"
-                loading= "lazy"
               />
               <img
                 src={rightFoot}
                 alt="Right Foot"
                 className="sheep-accessory sheep-foot"
-                loading= "lazy"
               />
               <img
                 src={rightHand}
                 alt="Right Hand"
                 className="sheep-accessory sheep-hand"
-                loading= "lazy"
               />
               <img
                 src={rightFoot}
                 alt="Left Foot"
                 className="sheep-accessory sheep-foot-left"
-                loading= "lazy"
               />
               <img
                 src={rightHand}
                 alt="Left Hand"
                 className="sheep-accessory sheep-hand-left"
-                loading= "lazy"
               />
               <button  onClick={() => navigate("/fruit-selection")} className="gift-box-button">Gift Box</button>
               <button  onClick={() => navigate("/blind-box")} className="blind-box-button">Blind Box</button>
@@ -271,11 +261,11 @@ export default function Home() {
                     />
                     
                     {/* Front image - trượt từ dưới lên */}
-                    <img 
-                      src={getFrontImage()} 
+                    <img
+                      src={getFrontImage()}
                       alt={box.title}
-                      className="box-front-image"
-                      loading= "lazy"
+                      loading='lazy'
+                      className={`box-front-image ${box.id === 1 ? 'mon-tron-front' : ''}`}
                     />
 
                     <div className="box-number">{box.number}</div>
