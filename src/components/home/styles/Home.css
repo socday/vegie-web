@@ -1161,7 +1161,117 @@
         width:70%;
     }
 
+    .hero-wrapper {
+        width: 60%;
+    }
+
+    .hero-section {
+        width:80%;
+    }
+
+    .home-page-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
     .box-description {
         font-size: 1.1rem;
     }
+    /* --- Mobile hero adjustments: make hero actions smaller & repositioned --- */
+    .hero-section {
+        height: auto;
+        margin: 2.5rem 0 2rem 0;
+        padding: 0 1rem;
+    }
+
+    .hero-wrapper {
+        width: 100%;
+        max-width: 420px;
+        height: auto;
+        aspect-ratio: 4 / 3;
+        border-radius: 28px;
+        transform: scale(0.95);
+        padding: 0.5rem;
+    }
+
+    .hero-wrapper.hovered {
+        width: 95%;
+        max-width: 480px;
+        border-radius: 22px;
+    }
+
+    .sheep-image {
+        height: 180px;
+    }
+
+    .sheep-foot, .sheep-foot-left {
+        height: 28px;
+        top: 76%;
+    }
+
+    .sheep-hand, .sheep-hand-left {
+        height: 32px;
+        top: 58%;
+    }
+
+    .hero-image-stars{
+        width: 600px;
+        height: 340px;
+    }
+
+    .mouth-after {
+        width: 32px;
+        height: auto;
+    }
+
+    /* Make the circular action buttons smaller on mobile */
+    .gift-box-button,
+    .blind-box-button,
+    .detox-box-button {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        border-width: 2px;
+        font-size: 14px;
+        transform: translate(-50%, -50%) scale(0.2);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .hero-wrapper.hovered .gift-box-button {
+        top: 26%;
+        left: 82%;
+        transform: translate(-50%, -50%) scale(0.9);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .hero-wrapper.hovered .blind-box-button {
+        top: 50%;
+        left: 18%;
+        transform: translate(-50%, -50%) scale(0.9);
+        opacity: 1;
+        pointer-events: auto;
+        transition-delay: 0.05s;
+    }
+
+    .hero-wrapper.hovered .detox-box-button {
+        top: 74%;
+        left: 76%;
+        transform: translate(-50%, -50%) scale(0.9);
+        opacity: 1;
+        pointer-events: auto;
+        transition-delay: 0.1s;
+    }
+
+    /* Slightly reduce the sheep and mouth animations on small screens */
+    .hero-wrapper.hovered .sheep-image {
+        transform: translateY(-18px) scale(1.05);
+    }
+
+    .hero-wrapper.hovered .mouth-image {
+        transform: translate(-50%, -50%) translateY(-20px) scale(1.03);
+    }
+
 }

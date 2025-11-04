@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setLoading(false);
       return;
     }
+    console.log("Có token");
 
     try {
       const res = await getCustomer();

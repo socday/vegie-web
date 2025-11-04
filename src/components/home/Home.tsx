@@ -109,8 +109,7 @@ export default function Home() {
       </svg>
       <div className="home-page-container">
         <section className='hero-section'>
-          {isDesktop && 
-          <>
+
           <div 
             className={`hero-wrapper ${isHeroHovered ? 'hovered' : ''}`}
             onMouseEnter={() => setIsHeroHovered(true)}
@@ -183,13 +182,8 @@ export default function Home() {
               <button  onClick={() => navigate("/ai-menu")} className="detox-box-button">Ai Menu</button>
             </div>
           </div>
-          </>}
-          {isMobile &&
-          <>
-          <div className='mascot-mainpage-image'>
-            <img src={mascot1} alt="Vegie Care Logo" className="brand-logo-mainpage" />
-          </div>
-          </>}
+
+
         </section>
       
       <div className='normal-spacing'></div> 

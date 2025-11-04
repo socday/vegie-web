@@ -196,6 +196,12 @@ export function startSilentRefresh() {
           refreshToken,
         });
 
+        // Ensure response has expected structure and is successful before using it
+        if (!refreshRes.data || refreshRes.status !== 200 || !refreshRes.data.isSuccess || !refreshRes.data.data) {
+          isRefreshing = false;
+          return;
+        }
+
         const { accessToken, refreshToken: newRefresh, id } = refreshRes.data.data;
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", newRefresh);
@@ -211,9 +217,10 @@ export function startSilentRefresh() {
       } catch (error) {
         isRefreshing = false;
         console.error("❌ Immediate refresh failed:", error);
-        setTimeout(() => startSilentRefresh(), 2000);
+        return;
       }
     })();
+    
 
     return;
   }
