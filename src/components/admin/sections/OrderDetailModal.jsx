@@ -205,37 +205,73 @@ export default function OrderDetailModal({ order, isOpen, onClose }) {
                       <div>{d.quantity}</div>
                       <div>{(d.unitPrice||0).toLocaleString('vi-VN')} VND</div>
                     </div>
-                    {isExpanded && hasExtraInfo && (
-                      <div className="products-expanded-row">
-                        <div style={{ paddingLeft: '20px', paddingTop: '4px', paddingBottom: '4px' }}>
-                          {d.vegetables && d.vegetables.length > 0 && (
-                            <div className="detail-item" style={{ marginTop: '2px' }}>
-                              <b>Nguyên liệu:</b> {d.vegetables.join(', ')}
-                            </div>
-                          )}
-                          {d.greetingMessage && (
-                            <div className="detail-item" style={{ marginTop: '2px' }}>
-                              <b>Lời chúc:</b> {d.greetingMessage}
-                            </div>
-                          )}
-                          {d.boxDescription && (
-                            <div className="detail-item" style={{ marginTop: '2px' }}>
-                              <b>Chi tiết hộp:</b> {d.boxDescription}
-                            </div>
-                          )}
-                          {d.letterScription && (
-                            <div className="detail-item" style={{ marginTop: '2px' }}>
-                              <b>Chi tiết thư:</b> {d.letterScription}
-                            </div>
-                          )}
-                          {d.giftBoxOrderId && (
-                            <div className="detail-item" style={{ marginTop: '2px' }}>
-                              <b>Gift Box Order ID:</b> {d.giftBoxOrderId}
-                            </div>
-                          )}
+                    {isExpanded && hasExtraInfo && (() => {
+                      // Parse greetingMessage để tách thông tin
+                      let vegetablesWithQuantity = null
+                      let cleanGreetingMessage = d.greetingMessage || null
+                      
+                      if (d.greetingMessage) {
+                        // Tách theo dấu | để lấy các phần thông tin
+                        const parts = d.greetingMessage.split('|')
+                        
+                        // Phần đầu: lời chúc thực sự
+                        if (parts[0]) {
+                          cleanGreetingMessage = parts[0].trim()
+                        }
+                        
+                        // Phần cuối: "Cà rốt 3, Súp lơ 0, Bắp 0, Cà chua 0"
+                        if (parts[2]) {
+                          const rawVegetables = parts[2].trim()
+                          // Parse từng item: "Cà rốt 3", "Súp lơ 0", etc.
+                          const vegetableItems = rawVegetables.split(',').map(item => {
+                            const trimmed = item.trim()
+                            // Tách tên và số lượng (số lượng ở cuối)
+                            const match = trimmed.match(/^(.+?)\s+(\d+)$/)
+                            if (match) {
+                              return {
+                                name: match[1].trim(),
+                                quantity: parseInt(match[2], 10)
+                              }
+                            }
+                            return null
+                          }).filter(item => item !== null && item.quantity > 0) // Lọc bỏ số lượng = 0
+                          
+                          if (vegetableItems.length > 0) {
+                            vegetablesWithQuantity = vegetableItems.map(item => `${item.name}: ${item.quantity}`).join(', ')
+                          }
+                        }
+                      }
+                      
+                      // Ưu tiên hiển thị vegetablesWithQuantity, nếu không có thì dùng d.vegetables
+                      const displayVegetables = vegetablesWithQuantity || (d.vegetables && d.vegetables.length > 0 ? d.vegetables.join(', ') : null)
+                      
+                      return (
+                        <div className="products-expanded-row">
+                          <div style={{ paddingLeft: '20px', paddingTop: '4px', paddingBottom: '4px' }}>
+                            {displayVegetables && (
+                              <div className="detail-item" style={{ marginTop: '2px' }}>
+                                <b>Nguyên liệu:</b> {displayVegetables}
+                              </div>
+                            )}
+                            {cleanGreetingMessage && (
+                              <div className="detail-item" style={{ marginTop: '2px' }}>
+                                <b>Lời chúc:</b> {cleanGreetingMessage}
+                              </div>
+                            )}
+                            {d.boxDescription &&(
+                              <div className="detail-item" style={{ marginTop: '2px' }}>
+                                <b>Mẫu hộp:</b> {d.boxDescription}
+                              </div>
+                            )}
+                            {d.letterScription && (
+                              <div className="detail-item" style={{ marginTop: '2px' }}>
+                                <b>Mẫu thư:</b> {d.letterScription}
+                              </div>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )
+                    })()}
                   </React.Fragment>
                 )
               })}

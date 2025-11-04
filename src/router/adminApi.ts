@@ -141,7 +141,7 @@ export async function getAllOrders(): Promise<OrderDTO[]> {
 
 export async function getOrderById(id: string): Promise<{ isSuccess: boolean; data: OrderDTO; message: string; exception: string | null; }> {
   const token = localStorage.getItem("accessToken");
-  const res = await api.get(`/Orders/${id}`, {
+  const res = await api.get(`/Orders/${id}/with-giftbox`, {
     headers: token ? { Authorization: `Bearer ${token}` } : undefined,
   });
   if (res.data?.isSuccess) {
