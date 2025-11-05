@@ -131,7 +131,6 @@
 
 /* Google Login Styles */
 .google-login-container {
-  margin-top: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -150,6 +149,25 @@
   white-space: nowrap;
 }
 
+.divider-or {
+  display: flex; 
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.divider-or span {
+  font-size: 1rem; 
+  color: #27600B; 
+  font-weight: 500;
+}
+
+.divider-line {
+  flex: 1; 
+  height: 1px; 
+  background-color: #3a8e1c; 
+  margin: 0 10px; 
+}
 .divider::before,
 .divider::after {
   content: "";

@@ -41,7 +41,6 @@ export default function PrivateRoute({ children }: { children: JSX.Element }) {
       >
         <WaveText />
         <p style={{ marginTop: "1rem", fontSize: "1.1rem", color: "#333" }}>
-          Checking authentication... ({countdown}s)
         </p>
       </div>
     );

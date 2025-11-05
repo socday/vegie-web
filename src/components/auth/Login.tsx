@@ -291,6 +291,13 @@ const Login = () => {
                 
             </div>
 
+            <div className="divider-or"> 
+              <span className="divider-line"></span>
+              <span>
+                Hoặc  
+              </span>
+              <span className="divider-line"></span>
+            </div>
             <div className="google-login-container">
               <button 
                 type="button" 
