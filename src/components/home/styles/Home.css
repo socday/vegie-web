@@ -1279,4 +1279,17 @@
         transform: translate(-50%, -50%) translateY(-20px) scale(1.03);
     }
 
+    .intro-section:hover .action-button {
+        max-height:0rem;
+        min-height: 0rem;
+        font-size: 0.1rem;
+    }
+
+    .intro-section:hover .content-bubble {
+        padding: 1rem 2.3rem;
+    }
+
+    .tab-item-container {
+    }
 }
+
