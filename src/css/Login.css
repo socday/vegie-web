@@ -128,3 +128,75 @@
 .show-password:hover {
   color: #3a8e1c;
 }
+
+/* Google Login Styles */
+.google-login-container {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  color: #666;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #e0e0e0;
+  align-self: center;
+}
+
+.divider::before {
+  margin-right: 1rem;
+}
+
+.divider::after {
+  margin-left: 1rem;
+}
+
+.google-login-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.google-login-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.google-login-btn .google-icon {
+  flex-shrink: 0;
+  z-index: 1;
+  position: relative;
+}
+
+.google-login-btn:hover .google-icon path[fill="#4285F4"] {
+  fill: white;
+}
+
+.google-login-btn:hover .google-icon path[fill="#34A853"] {
+  fill: white;
+}
+
+.google-login-btn:hover .google-icon path[fill="#FBBC05"] {
+  fill: white;
+}
+
+.google-login-btn:hover .google-icon path[fill="#EA4335"] {
+  fill: white;
+}

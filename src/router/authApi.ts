@@ -183,3 +183,15 @@ export async function resetPasswordForm(data: {
     };
   }
 }
+
+export async function loginWithGoogle(accessToken: string): Promise<LoginResponse> {
+  const res = await api.post<LoginResponse>("/Auth/login/google", 
+    { tokenId: accessToken }, 
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return res.data;
+}
