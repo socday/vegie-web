@@ -1221,8 +1221,16 @@
     }
 
     .hero-image-stars{
-        width: 600px;
+        width: 400px;
         height: 340px;
+    }
+    
+    .hero-image-before {
+        width: 200px;
+    }
+
+    .hero-image-after {
+        width: 400px;
     }
 
     .mouth-after {
