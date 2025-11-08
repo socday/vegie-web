@@ -188,7 +188,7 @@ export default function Letters() {
                 </button>
               ))
             ) : (
-              <button className="d-btn d-btn-font" onClick={handleCreateWish}>
+              <button className="d-btn d-btn-font mobile-continue-btn" onClick={handleCreateWish}>
                 <span>Tạo lời chúc</span>
               </button>
             )}
