@@ -17,7 +17,7 @@ export default function BlindBox() {
     // id: "69807b28-0187-4d52-95fe-c6ede9ab412d",
     name: "Blind Box",
     description: "Random mystery box with surprise items",
-    price: 70000,
+    price: 150000,
   };
 
   const [items, setItems] = useState<Item[]>([]);
