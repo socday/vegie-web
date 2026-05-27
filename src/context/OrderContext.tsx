@@ -40,9 +40,6 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
 
   // --- Refresh all orders ---
   const refreshOrders = async () => {
-    const token = localStorage.getItem("accessToken");
-    if (!token) return console.error("Token invalid");
-
     try {
       const res = await getOrder();
       if (res.isSuccess) {
@@ -103,37 +100,12 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
         setOrders(JSON.parse(cached));
       } catch (e) {
         // If cache is invalid, fetch fresh data
-        const token = localStorage.getItem("accessToken");
-        const userId = localStorage.getItem("userId");
-        if (token && userId) {
-          refreshOrders();
-        }
+        refreshOrders();
       }
     } else {
-      // Only fetch if no cache exists and user is authenticated
-      const token = localStorage.getItem("accessToken");
-      const userId = localStorage.getItem("userId");
-      if (token && userId) {
-        refreshOrders();
-      }
+      // Fetch if no cache exists
+      refreshOrders();
     }
-  }, []);
-
-  // --- React to token changes across tabs ---
-  useEffect(() => {
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key !== "accessToken") return;
-
-      setOrders([]);
-      localStorage.removeItem("orders_cache");
-
-      if (e.newValue) {
-        refreshOrders();
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
   return (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom'
@@ -16,7 +16,6 @@ import BlindBox from './components/home/box/BlindBox'
 import ScrollToTop from "./components/notifications/ScrollToTop"
 import Payment from './components/user/order/payment/Payment'
 import Profile from './components/user/profile/Profile'
-import PrivateRoute from './router/PrivateRoute'
 import AdminShell from './components/admin/AdminShell'
 import DashboardPage from './components/admin/pages/DashboardPage'
 import OrdersPage from './components/admin/pages/OrdersPage'
@@ -39,36 +38,15 @@ import StageNotificationWrapper from './components/notifications/StageNotificati
 import ReviewOrderForm from './components/user/profile/order/ReviewOrderForm.tsx'
 import { OrderProvider } from './context/OrderContext.tsx'
 import RetailPackage from './components/home/subcription/retailpackage.tsx'
-import { AuthProvider } from './context/AuthContext'
 import PasswordRecoveryForm from './components/auth/PasswordRecoveryForm'
 
 function AppContent() {
   const location = useLocation()
-  const [authTick, setAuthTick] = useState(0)
   const isAdminRoute = location.pathname.startsWith('/admin')
-
-  useEffect(() => {
-    const onStorage = (e) => {
-      if (e.key === 'accessToken' || e.key === 'refreshToken') {
-        setAuthTick((t) => t + 1)
-      }
-    }
-    window.addEventListener('storage', onStorage)
-    return () => window.removeEventListener('storage', onStorage)
-  }, [])
-
-  // Trigger rerender when tokens change in same tab
-  useEffect(() => {
-    const onAuthEvent = () => setAuthTick((t) => t + 1)
-    window.addEventListener('auth-change', onAuthEvent)
-    return () => window.removeEventListener('auth-change', onAuthEvent)
-  }, [])
-
-  // Silent refresh is now handled in AuthContext to avoid duplicate calls
   return (
     <>
       <div className='app-layout'> 
-      {isAdminRoute ? null : <NavBar key={`nav-${authTick}`} />}
+      {isAdminRoute ? null : <NavBar />}
       <ScrollToTop />
       <OrderProvider>
         <Routes>
@@ -95,21 +73,13 @@ function AppContent() {
 
           <Route path='/profile-test' element={<Profile />} />
 
-          <Route path='/ai-menu' element={
-            <PrivateRoute>
-              <AiMenu />
-            </PrivateRoute>
-          } />
+          <Route path='/ai-menu' element={<AiMenu />} />
 
           <Route path='/ai-menu-test' element={<AiMenu />} />
 
           <Route path='/fruit-selection' element={<FruitSelection />} />
 
-          <Route path='/today-menu' element={
-            <PrivateRoute>
-              <TodayMenu />
-            </PrivateRoute>
-          } />
+          <Route path='/today-menu' element={<TodayMenu />} />
 
           <Route path='/finish-giftbox' element={<FinishGiftBox />} />
           <Route path='/letters' element={<Letters />} />
@@ -120,35 +90,15 @@ function AppContent() {
           <Route path="/noti/:type" element={<StageNotificationWrapper />} />
           <Route path="/:type" element={<StageNotificationWrapper />} />
 
-          <Route path="/thong-bao" element={
-            <PrivateRoute>
-              <UserNotification />
-            </PrivateRoute>
-          } />
+          <Route path="/thong-bao" element={<UserNotification />} />
 
-          <Route path="/profile" element={
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          } />
+          <Route path="/profile" element={<Profile />} />
 
-          <Route path="/gio-hang" element={
-            <PrivateRoute>
-              <Cart />
-            </PrivateRoute>
-          } />
+          <Route path="/gio-hang" element={<Cart />} />
 
-          <Route path="/thanh-toan" element={
-            <PrivateRoute>
-              <Payment />
-            </PrivateRoute>
-          } />
+          <Route path="/thanh-toan" element={<Payment />} />
 
-          <Route path="/review-order/:orderId" element={
-            <PrivateRoute>
-              <ReviewOrderForm />
-            </PrivateRoute>
-          } />
+          <Route path="/review-order/:orderId" element={<ReviewOrderForm />} />
 
           {/* Khu vực admin */}
               <Route path='/admin' element={<AdminShell />} >
@@ -164,7 +114,7 @@ function AppContent() {
         </Routes>
       </OrderProvider>
     </div>      
-      {isAdminRoute ? null : <Footer key={`footer-${authTick}`} />}
+      {isAdminRoute ? null : <Footer />}
 
 <FooterMobile />
     </>
