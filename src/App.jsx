@@ -67,7 +67,6 @@ function AppContent() {
   // Silent refresh is now handled in AuthContext to avoid duplicate calls
   return (
     <>
-    <AuthProvider>
       <div className='app-layout'> 
       {isAdminRoute ? null : <NavBar key={`nav-${authTick}`} />}
       <ScrollToTop />
@@ -168,7 +167,6 @@ function AppContent() {
       {isAdminRoute ? null : <Footer key={`footer-${authTick}`} />}
 
 <FooterMobile />
-</AuthProvider>
     </>
   )
 }
